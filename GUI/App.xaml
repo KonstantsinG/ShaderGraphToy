@@ -14,6 +14,8 @@
         <SolidColorBrush x:Key="Gray_05" Color="#FFB6BAC3"/>
         <SolidColorBrush x:Key="Gray_06" Color="#FFEBECED"/>
 
+        <SolidColorBrush x:Key="ConsoleGreen" Color="#FF33D026"/>
+
     </Application.Resources>
     
 </Application>

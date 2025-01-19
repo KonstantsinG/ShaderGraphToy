@@ -5,7 +5,7 @@
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
              xmlns:glWpfControl="clr-namespace:OpenTK.Wpf;assembly=GLWpfControl"
              xmlns:local="clr-namespace:GUI.Components"
-             mc:Ignorable="d" 
+             mc:Ignorable="d"
              d:DesignHeight="800" d:DesignWidth="600">
 
     <Grid Background="{StaticResource Gray_02}">
@@ -15,9 +15,7 @@
             <RowDefinition Height="55*"/>
         </Grid.RowDefinitions>
 
-        <glWpfControl:GLWpfControl x:Name="openTkControl" Margin="10,10,10,0"
-                                   Render="OpenTkControl_OnRender"
-                                   Ready="OpenTkControl_Ready"/>
+        <glWpfControl:GLWpfControl x:Name="openTkControl" Margin="10,10,10,0"/>
 
         <Grid Grid.Row="1" Margin="10,-10" Panel.ZIndex="-1">
 
@@ -41,19 +39,28 @@
                 <Rectangle Height="35" VerticalAlignment="Top" Fill="{StaticResource Gray_06}"
                        RadiusX="7" RadiusY="7" Grid.ColumnSpan="7"/>
 
-                <Image Source="../Images/toStart_icon.png" Height="30" MouseDown="ToStart_MouseDown"
-                   Grid.Column="0" Margin="0,5,0,0"/>
+                <Image Source="../Images/toStart_icon.png" Height="30"
+                       Grid.Column="0" Margin="0,5,0,0">
+                    <Image.InputBindings>
+                        <MouseBinding MouseAction="LeftClick" Command="{Binding BreakClickCommand}"/>
+                    </Image.InputBindings>
+                </Image>
 
-                <Image Source="../Images/pause_icon.png" Height="18" MouseDown="Pause_MouseDown"
-                   Name="pauseButton" Grid.Column="1" Margin="0,5,0,0"/>
+                <Image Source="{Binding PauseButtonImage, NotifyOnSourceUpdated=True}"
+                       Height="18" Name="pauseButton" Grid.Column="1" Margin="0,5,0,0">
+                    <Image.InputBindings>
+                        <MouseBinding MouseAction="LeftClick" Command="{Binding PauseClickCommand}"/>
+                    </Image.InputBindings>
+                </Image>
 
-                <TextBlock Text="32.73" FontSize="13" FontWeight="Bold" HorizontalAlignment="Right"
-                       Margin="0,14,0,0" Name="timeCounter" Grid.Column="2"/>
+                <TextBlock Text="{Binding TimeDisplay, NotifyOnSourceUpdated=True, NotifyOnTargetUpdated=True, Mode=TwoWay}"
+                           FontSize="13" FontWeight="Bold" HorizontalAlignment="Right"
+                           Margin="0,14,0,0" Name="timeCounter" Grid.Column="2"/>
 
-                <TextBlock Text="124.5 fps" FontSize="13" FontWeight="Bold" HorizontalAlignment="Center"
+                <TextBlock Text="{Binding FpsDisplay, NotifyOnSourceUpdated=True, NotifyOnTargetUpdated=True, Mode=TwoWay}" FontSize="13" FontWeight="Bold" HorizontalAlignment="Center"
                        Margin="0,14,0,0" Name="fpsCounter" Grid.Column="3"/>
 
-                <TextBlock Text="800 x 450" FontSize="13" FontWeight="Bold" HorizontalAlignment="Center"
+                <TextBlock Text="{Binding ResolutionDisplay, NotifyOnSourceUpdated=True, NotifyOnTargetUpdated=True, Mode=TwoWay}" FontSize="13" FontWeight="Bold" HorizontalAlignment="Center"
                        Margin="0,14,0,0" Name="resolutionDisplay" Grid.Column="4"/>
 
                 <Image Source="../Images/fullscreen_icon.png" Height="15" Width="15" Grid.Column="6"
@@ -61,6 +68,30 @@
 
             </Grid>
 
+        </Grid>
+
+        <Grid Grid.Row="1" Margin="0,45,0,0">
+
+            <StackPanel Margin="20,0,0,0">
+
+                <TextBlock Text="Rendering info:"
+                           Foreground="{StaticResource Gray_06}" FontWeight="Bold"
+                           FontSize="15" Margin="0,0,0,10"/>
+
+                <WrapPanel>
+
+                    <TextBlock Text="NVIDIA Optimus status: "
+                               Foreground="{StaticResource Gray_05}" FontWeight="Light"
+                               FontSize="12"/>
+
+                    <TextBlock Text="{Binding NvidiaOptimusStatus, NotifyOnSourceUpdated=True, Mode=OneWay}"
+                               Foreground="{StaticResource ConsoleGreen}" FontWeight="Normal"
+                               FontSize="12"/>
+
+                </WrapPanel>
+
+            </StackPanel>
+            
         </Grid>
 
     </Grid>

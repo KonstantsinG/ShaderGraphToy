@@ -12,6 +12,8 @@ namespace GUI
     {
         private nint _nvapiIdx = nint.Zero;
 
+        public bool IsNvapiActive { get; set; } = false;
+
         protected override void OnStartup(StartupEventArgs e)
         {
             base.OnStartup(e);
@@ -27,7 +29,6 @@ namespace GUI
         }
 
 
-
         private void EnableGPUHighPerformance()
         {
             try
@@ -36,10 +37,12 @@ namespace GUI
                     _nvapiIdx = NativeLibrary.Load("nvapi64.dll");
                 else
                     _nvapiIdx = NativeLibrary.Load("nvapi32.dll");
+
+                IsNvapiActive = true;
             }
             catch (Exception ex)
             {
-                MessageBox.Show(ex.Message, "GPU high performance setup failed", MessageBoxButton.OK, MessageBoxImage.Error);
+                IsNvapiActive = false;
             }
         }
     }
