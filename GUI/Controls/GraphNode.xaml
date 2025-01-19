@@ -1,0 +1,31 @@
+﻿<UserControl x:Class="GUI.Controls.GraphNode"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             mc:Ignorable="d" 
+             Height="200" Width="140"
+             MouseLeftButtonDown="Grid_MouseLeftButtonDown"
+             MouseLeftButtonUp="Grid_MouseLeftButtonUp"
+             MouseMove="Grid_MouseMove">
+    
+    <Grid>
+
+        <Rectangle Fill="#FF3B3E42" RadiusX="10" RadiusY="10"/>
+
+        <TextBlock Text="Hello, it's a graph node!" Foreground="White"
+                   FontSize="11" FontWeight="Light" Margin="0,5,0,0"
+                   HorizontalAlignment="Center"/>
+
+        <Ellipse x:Name="ConnectorPoint" Width="12" Height="12" Fill="Red"
+                 HorizontalAlignment="Right" VerticalAlignment="Top"
+                 Margin="0,-4,-4,0"
+                 MouseLeftButtonDown="ConnectorPoint_MouseLeftButtonDown"
+                 MouseLeftButtonUp="ConnectorPoint_MouseLeftButtonUp"/>
+        
+        <TextBox Text="Enter here something..."
+                 HorizontalAlignment="Center" VerticalAlignment="Center"/>
+
+    </Grid>
+    
+</UserControl>

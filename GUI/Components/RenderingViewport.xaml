@@ -1,0 +1,68 @@
+﻿<UserControl x:Class="GUI.Components.RenderingViewport"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:glWpfControl="clr-namespace:OpenTK.Wpf;assembly=GLWpfControl"
+             xmlns:local="clr-namespace:GUI.Components"
+             mc:Ignorable="d" 
+             d:DesignHeight="800" d:DesignWidth="600">
+
+    <Grid Background="{StaticResource Gray_02}">
+
+        <Grid.RowDefinitions>
+            <RowDefinition Height="45*"/>
+            <RowDefinition Height="55*"/>
+        </Grid.RowDefinitions>
+
+        <glWpfControl:GLWpfControl x:Name="openTkControl" Margin="10,10,10,0"
+                                   Render="OpenTkControl_OnRender"
+                                   Ready="OpenTkControl_Ready"/>
+
+        <Grid Grid.Row="1" Margin="10,-10" Panel.ZIndex="-1">
+
+            <Grid.RowDefinitions>
+                <RowDefinition Height="40"/>
+                <RowDefinition/>
+            </Grid.RowDefinitions>
+
+            <Grid Grid.Row="0">
+
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="30"/>
+                    <ColumnDefinition Width="30"/>
+                    <ColumnDefinition Width="60"/>
+                    <ColumnDefinition Width="80"/>
+                    <ColumnDefinition Width="60"/>
+                    <ColumnDefinition/>
+                    <ColumnDefinition Width="30"/>
+                </Grid.ColumnDefinitions>
+
+                <Rectangle Height="35" VerticalAlignment="Top" Fill="{StaticResource Gray_06}"
+                       RadiusX="7" RadiusY="7" Grid.ColumnSpan="7"/>
+
+                <Image Source="../Images/toStart_icon.png" Height="30" MouseDown="ToStart_MouseDown"
+                   Grid.Column="0" Margin="0,5,0,0"/>
+
+                <Image Source="../Images/pause_icon.png" Height="18" MouseDown="Pause_MouseDown"
+                   Name="pauseButton" Grid.Column="1" Margin="0,5,0,0"/>
+
+                <TextBlock Text="32.73" FontSize="13" FontWeight="Bold" HorizontalAlignment="Right"
+                       Margin="0,14,0,0" Name="timeCounter" Grid.Column="2"/>
+
+                <TextBlock Text="124.5 fps" FontSize="13" FontWeight="Bold" HorizontalAlignment="Center"
+                       Margin="0,14,0,0" Name="fpsCounter" Grid.Column="3"/>
+
+                <TextBlock Text="800 x 450" FontSize="13" FontWeight="Bold" HorizontalAlignment="Center"
+                       Margin="0,14,0,0" Name="resolutionDisplay" Grid.Column="4"/>
+
+                <Image Source="../Images/fullscreen_icon.png" Height="15" Width="15" Grid.Column="6"
+                   HorizontalAlignment="Center" VerticalAlignment="Top" Margin="0,16,0,0"/>
+
+            </Grid>
+
+        </Grid>
+
+    </Grid>
+
+</UserControl>
