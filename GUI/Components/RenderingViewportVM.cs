@@ -15,6 +15,7 @@ using System.Reflection.Metadata;
 using System.Runtime.InteropServices;
 using System.Windows;
 using System.Security.Cryptography.Pkcs;
+using System.Windows.Input;
 
 namespace GUI.Components
 {

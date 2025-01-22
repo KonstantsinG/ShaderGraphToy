@@ -3,18 +3,15 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:local="clr-namespace:GUI"
              StartupUri="MainWindow.xaml">
-    
+
     <Application.Resources>
 
-        <SolidColorBrush x:Key="Gray_00" Color="#FF111213"/>
-        <SolidColorBrush x:Key="Gray_01" Color="#FF212327"/>
-        <SolidColorBrush x:Key="Gray_02" Color="#FF2C2E33"/>
-        <SolidColorBrush x:Key="Gray_03" Color="#FF535761"/>
-        <SolidColorBrush x:Key="Gray_04" Color="#FF8D919E"/>
-        <SolidColorBrush x:Key="Gray_05" Color="#FFB6BAC3"/>
-        <SolidColorBrush x:Key="Gray_06" Color="#FFEBECED"/>
-
-        <SolidColorBrush x:Key="ConsoleGreen" Color="#FF33D026"/>
+        <ResourceDictionary>
+            <ResourceDictionary.MergedDictionaries>
+                <ResourceDictionary Source="Styles/UserControlsStylesDictionary.xaml"/>
+                <ResourceDictionary Source="Styles/ColorsDictionary.xaml"/>
+            </ResourceDictionary.MergedDictionaries>
+        </ResourceDictionary>
 
     </Application.Resources>
     

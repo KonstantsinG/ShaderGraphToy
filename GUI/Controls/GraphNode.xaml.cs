@@ -20,87 +20,92 @@ namespace GUI.Controls
     /// </summary>
     public partial class GraphNode : UserControl
     {
-        private bool isDragging = false;
-        private Point mouseOffset;
-        private bool isConnecting = false;
+        private StackPanel _numberPanel = null;
+        private StackPanel _vec2Panel = null;
+        private StackPanel _vec3Panel = null;
+        private StackPanel _vec4Panel = null;
+        private StackPanel _boolPanel = null;
+        private StackPanel _colorPanel = null;
 
-        public event EventHandler<ConnectionEventArgs> ConnectionStarted;
-        public event EventHandler<ConnectionEventArgs> ConnectionEnded;
+        private StackPanel _selectedPanel = null;
+
 
         public GraphNode()
         {
             InitializeComponent();
         }
 
-        private void Grid_MouseLeftButtonDown(object sender, MouseButtonEventArgs e)
+        private void ComboBox_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
-            if (!isConnecting) // Не начинаем перетаскивание, если идет создание соединения
+            string val = (string)( (ComboBoxItem)( ((ComboBox)sender).SelectedValue ) ).Content;
+            
+            switch (val)
             {
-                isDragging = true;
-                mouseOffset = e.GetPosition(this);
-                this.CaptureMouse();
+                case "Число":
+                    SelectPanel(ref _numberPanel);
+                    break;
+
+                case "Вектор 2":
+                    SelectPanel(ref _vec2Panel);
+                    break;
+
+                case "Вектор 3":
+                    SelectPanel(ref _vec3Panel);
+                    break;
+
+                case "Вектор 4":
+                    SelectPanel(ref _vec4Panel);
+                    break;
+
+                case "Логическое значение":
+                    SelectPanel(ref _boolPanel);
+                    break;
+
+                case "Цвет":
+                    SelectPanel(ref _colorPanel);
+                    break;
             }
-            e.Handled = true;
         }
 
-        private void Grid_MouseLeftButtonUp(object sender, MouseButtonEventArgs e)
+
+        private void SelectPanel(ref StackPanel panel)
         {
-            if (isDragging)
-            {
-                isDragging = false;
-                this.ReleaseMouseCapture();
-            }
+            if (panel == null) FindAllPanels();
+
+            _numberPanel.Visibility = Visibility.Collapsed;
+            _vec2Panel.Visibility = Visibility.Collapsed;
+            _vec3Panel.Visibility = Visibility.Collapsed;
+            _vec4Panel.Visibility = Visibility.Collapsed;
+            _boolPanel.Visibility = Visibility.Collapsed;
+            _colorPanel.Visibility = Visibility.Collapsed;
+
+            _selectedPanel = panel;
+            panel.Visibility = Visibility.Visible;
         }
 
-        private void Grid_MouseMove(object sender, MouseEventArgs e)
+        private void FindAllPanels()
         {
-            if (isDragging)
-            {
-                Point currentPosition = e.GetPosition(this.Parent as Canvas);
-
-                Canvas.SetLeft(this, currentPosition.X - mouseOffset.X);
-                Canvas.SetTop(this, currentPosition.Y - mouseOffset.Y);
-            }
+            _numberPanel = FindPanel("numberPanel");
+            _vec2Panel = FindPanel("vec2Panel");
+            _vec3Panel = FindPanel("vec3Panel");
+            _vec4Panel = FindPanel("vec4Panel");
+            _boolPanel = FindPanel("boolPanel");
+            _colorPanel = FindPanel("colorPanel");
         }
 
-        private void ConnectorPoint_MouseLeftButtonDown(object sender, MouseButtonEventArgs e)
+        private StackPanel FindPanel(string uid)
         {
-            isConnecting = true;
-            ConnectionStarted?.Invoke(this, new ConnectionEventArgs
-            {
-                StartControl = this,
-                ConnectionPoint = ConnectorPoint
-            });
-            e.Handled = true;
-        }
+            StackPanel outerPanel = (StackPanel)graphNode.NodeContent;
 
-        private void ConnectorPoint_MouseLeftButtonUp(object sender, MouseButtonEventArgs e)
-        {
-            if (isConnecting)
+            foreach (FrameworkElement el in outerPanel.Children)
             {
-                isConnecting = false;
-                ConnectionEnded?.Invoke(this, new ConnectionEventArgs
+                if (el is StackPanel)
                 {
-                    StartControl = this,
-                    ConnectionPoint = ConnectorPoint
-                });
+                    if (el.Uid == uid) return (StackPanel)el;
+                }
             }
-            e.Handled = true;
+
+            return null;
         }
-
-        public Point GetConnectorPosition()
-        {
-            return ConnectorPoint.TranslatePoint(
-                new Point(ConnectorPoint.ActualWidth / 2, ConnectorPoint.ActualHeight / 2),
-                this.Parent as Canvas);
-        }
-    }
-
-
-
-    public class ConnectionEventArgs : EventArgs
-    {
-        public GraphNode StartControl { get; set; }
-        public Ellipse ConnectionPoint { get; set; }
     }
 }

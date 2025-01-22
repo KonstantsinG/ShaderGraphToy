@@ -1,5 +1,7 @@
 ﻿using OpenTK.Graphics.OpenGL;
 using OpenTK.Wpf;
+using System.Security.Principal;
+using System.Windows;
 using System.Windows.Controls;
 
 namespace GUI.Components

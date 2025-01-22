@@ -1,0 +1,40 @@
+﻿<UserControl x:Class="GUI.Components.GraphCanvas"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:local="clr-namespace:GUI.Components"
+             xmlns:controls="clr-namespace:GUI.Controls"
+             mc:Ignorable="d" 
+             d:DesignHeight="800" d:DesignWidth="700">
+    
+    <Grid>
+
+        <ScrollViewer HorizontalScrollBarVisibility="Visible"
+                      VerticalScrollBarVisibility="Visible"
+                      x:Name="scrollViewer">
+
+            <Canvas Background="{StaticResource Gray_01}" AllowDrop="True" Panel.ZIndex="-5"
+                    x:Name="mainCanvas" SizeChanged="mainCanvas_SizeChanged"
+                    PreviewMouseWheel="mainCanvas_PreviewMouseWheel"
+                    Width="3000" Height="3000">
+
+                <Canvas.LayoutTransform>
+                    <ScaleTransform x:Name="scaleTransform" 
+                                    ScaleX="1" 
+                                    ScaleY="1"/>
+                </Canvas.LayoutTransform>
+
+                <Canvas.RenderTransform>
+                    <TranslateTransform x:Name="translateTransform"/>
+                </Canvas.RenderTransform>
+
+                <controls:GraphNode Canvas.Top="300" Canvas.Left="400"/>
+
+            </Canvas>
+
+        </ScrollViewer>
+
+    </Grid>
+    
+</UserControl>

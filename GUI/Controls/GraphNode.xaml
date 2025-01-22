@@ -2,30 +2,219 @@
              xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
-             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
-             mc:Ignorable="d" 
-             Height="200" Width="140"
-             MouseLeftButtonDown="Grid_MouseLeftButtonDown"
-             MouseLeftButtonUp="Grid_MouseLeftButtonUp"
-             MouseMove="Grid_MouseMove">
-    
-    <Grid>
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:xctk="http://schemas.xceed.com/wpf/xaml/toolkit"
+             xmlns:controls="clr-namespace:GUI.Controls"
+             mc:Ignorable="d"
+             Height="Auto" Width="170">
 
-        <Rectangle Fill="#FF3B3E42" RadiusX="10" RadiusY="10"/>
+    <controls:GraphNodeBase HeaderColor="{StaticResource PastelGreen}" HeaderText="Константа"
+                            x:Name="graphNode">
+        <controls:GraphNodeBase.NodeContent>
+            <StackPanel Margin="0,15,0,10">
 
-        <TextBlock Text="Hello, it's a graph node!" Foreground="White"
-                   FontSize="11" FontWeight="Light" Margin="0,5,0,0"
-                   HorizontalAlignment="Center"/>
+                <ComboBox Margin="10,0" SelectionChanged="ComboBox_SelectionChanged">
+                    <ComboBox.Items>
 
-        <Ellipse x:Name="ConnectorPoint" Width="12" Height="12" Fill="Red"
-                 HorizontalAlignment="Right" VerticalAlignment="Top"
-                 Margin="0,-4,-4,0"
-                 MouseLeftButtonDown="ConnectorPoint_MouseLeftButtonDown"
-                 MouseLeftButtonUp="ConnectorPoint_MouseLeftButtonUp"/>
-        
-        <TextBox Text="Enter here something..."
-                 HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                        <ComboBoxItem Content="Число"/>
+                        <ComboBoxItem Content="Вектор 2"/>
+                        <ComboBoxItem Content="Вектор 3"/>
+                        <ComboBoxItem Content="Вектор 4"/>
+                        <ComboBoxItem Content="Логическое значение"/>
+                        <ComboBoxItem Content="Цвет"/>
 
-    </Grid>
-    
+                    </ComboBox.Items>
+                </ComboBox>
+
+                <StackPanel Orientation="Horizontal" x:Uid="numberPanel" Margin="0,10,0,0"
+                            Visibility="Collapsed">
+
+                    <TextBox Height="23" Margin="10,0,0,0" Width="100"
+                             Foreground="{StaticResource Gray_05}" Background="{StaticResource Gray_02}"
+                             BorderBrush="{StaticResource Gray_005}"/>
+
+                    <TextBlock Text="▸" Foreground="{StaticResource Gray_03}"
+                               VerticalAlignment="Center" Margin="5,0,0,0" FontSize="17"/>
+
+                    <controls:NodesConnector Margin="0,0,-80,0"/>
+
+                </StackPanel>
+
+                
+                
+                <StackPanel x:Uid="vec2Panel" Margin="0,10,0,0" Visibility="Collapsed">
+
+                    <StackPanel Orientation="Horizontal">
+
+                        <TextBox Height="23" Margin="10,0,0,0" Width="100"
+                                 Foreground="{StaticResource Gray_05}" Background="{StaticResource Gray_02}"
+                                 BorderBrush="{StaticResource Gray_005}"/>
+
+                        <TextBlock Text="x/r" Foreground="{StaticResource Gray_03}"
+                                   VerticalAlignment="Center" Margin="5,0,0,0" FontSize="15"/>
+                        
+                        <TextBlock Text="▸" Foreground="{StaticResource Gray_03}"
+                                   VerticalAlignment="Center" Margin="5,0,0,0" FontSize="17"/>
+
+                        <controls:NodesConnector Margin="0,0,-35,0"/>
+
+                    </StackPanel>
+
+                    <StackPanel Orientation="Horizontal" Margin="0,5,0,0">
+
+                        <TextBox Height="23" Margin="10,0,0,0" Width="100"
+             Foreground="{StaticResource Gray_05}" Background="{StaticResource Gray_02}"
+             BorderBrush="{StaticResource Gray_005}"/>
+
+                        <TextBlock Text="y/g" Foreground="{StaticResource Gray_03}"
+               VerticalAlignment="Center" Margin="5,0,0,0" FontSize="15"/>
+
+                    </StackPanel>
+
+                </StackPanel>
+
+
+
+                <StackPanel x:Uid="vec3Panel" Margin="0,10,0,0" Visibility="Collapsed">
+
+                    <StackPanel Orientation="Horizontal">
+
+                        <TextBox Height="23" Margin="10,0,0,0" Width="100"
+                    Foreground="{StaticResource Gray_05}" Background="{StaticResource Gray_02}"
+                    BorderBrush="{StaticResource Gray_005}"/>
+
+                        <TextBlock Text="x/r" Foreground="{StaticResource Gray_03}"
+                      VerticalAlignment="Center" Margin="5,0,0,0" FontSize="15"/>
+
+                        <TextBlock Text="▸" Foreground="{StaticResource Gray_03}"
+                      VerticalAlignment="Center" Margin="5,0,0,0" FontSize="17"/>
+
+                        <controls:NodesConnector Margin="0,0,-35,0"/>
+
+                    </StackPanel>
+
+                    <StackPanel Orientation="Horizontal" Margin="0,5,0,0">
+
+                        <TextBox Height="23" Margin="10,0,0,0" Width="100"
+Foreground="{StaticResource Gray_05}" Background="{StaticResource Gray_02}"
+BorderBrush="{StaticResource Gray_005}"/>
+
+                        <TextBlock Text="y/g" Foreground="{StaticResource Gray_03}"
+  VerticalAlignment="Center" Margin="5,0,0,0" FontSize="15"/>
+
+                    </StackPanel>
+
+                    <StackPanel Orientation="Horizontal" Margin="0,5,0,0">
+
+                        <TextBox Height="23" Margin="10,0,0,0" Width="100"
+Foreground="{StaticResource Gray_05}" Background="{StaticResource Gray_02}"
+BorderBrush="{StaticResource Gray_005}"/>
+
+                        <TextBlock Text="z/b" Foreground="{StaticResource Gray_03}"
+  VerticalAlignment="Center" Margin="5,0,0,0" FontSize="15"/>
+
+                    </StackPanel>
+
+                </StackPanel>
+
+
+
+                <StackPanel x:Uid="vec4Panel" Margin="0,10,0,0" Visibility="Collapsed">
+
+                    <StackPanel Orientation="Horizontal">
+
+                        <TextBox Height="23" Margin="10,0,0,0" Width="100"
+                    Foreground="{StaticResource Gray_05}" Background="{StaticResource Gray_02}"
+                    BorderBrush="{StaticResource Gray_005}"/>
+
+                        <TextBlock Text="x/r" Foreground="{StaticResource Gray_03}"
+                      VerticalAlignment="Center" Margin="5,0,0,0" FontSize="15"/>
+
+                        <TextBlock Text="▸" Foreground="{StaticResource Gray_03}"
+                      VerticalAlignment="Center" Margin="5,0,0,0" FontSize="17"/>
+
+                        <controls:NodesConnector Margin="0,0,-35,0"/>
+
+                    </StackPanel>
+
+                    <StackPanel Orientation="Horizontal" Margin="0,5,0,0">
+
+                        <TextBox Height="23" Margin="10,0,0,0" Width="100"
+Foreground="{StaticResource Gray_05}" Background="{StaticResource Gray_02}"
+BorderBrush="{StaticResource Gray_005}"/>
+
+                        <TextBlock Text="y/g" Foreground="{StaticResource Gray_03}"
+  VerticalAlignment="Center" Margin="5,0,0,0" FontSize="15"/>
+
+                    </StackPanel>
+
+                    <StackPanel Orientation="Horizontal" Margin="0,5,0,0">
+
+                        <TextBox Height="23" Margin="10,0,0,0" Width="100"
+Foreground="{StaticResource Gray_05}" Background="{StaticResource Gray_02}"
+BorderBrush="{StaticResource Gray_005}"/>
+
+                        <TextBlock Text="z/b" Foreground="{StaticResource Gray_03}"
+  VerticalAlignment="Center" Margin="5,0,0,0" FontSize="15"/>
+
+                    </StackPanel>
+
+                    <StackPanel Orientation="Horizontal" Margin="0,5,0,0">
+
+                        <TextBox Height="23" Margin="10,0,0,0" Width="100"
+Foreground="{StaticResource Gray_05}" Background="{StaticResource Gray_02}"
+BorderBrush="{StaticResource Gray_005}"/>
+
+                        <TextBlock Text="w/a" Foreground="{StaticResource Gray_03}"
+  VerticalAlignment="Center" Margin="5,0,0,0" FontSize="15"/>
+
+                    </StackPanel>
+
+                </StackPanel>
+
+
+
+                <StackPanel Orientation="Horizontal" x:Uid="boolPanel" Margin="0,10,0,0"
+                            Visibility="Collapsed">
+
+                    <ComboBox Margin="10,0,0,0" Width="100">
+                        <ComboBox.Items>
+
+                            <ComboBoxItem Content="Истина"/>
+                            <ComboBoxItem Content="Ложь"/>
+
+                        </ComboBox.Items>
+                    </ComboBox>
+
+                    <TextBlock Text="▸" Foreground="{StaticResource Gray_03}"
+               VerticalAlignment="Center" Margin="5,0,0,0" FontSize="17"/>
+
+                    <controls:NodesConnector Margin="0,0,-80,0"/>
+
+                </StackPanel>
+
+
+
+                <StackPanel Orientation="Horizontal" x:Uid="colorPanel" Margin="0,10,0,0"
+                            Visibility="Collapsed">
+
+                    <xctk:ColorPicker Width="130" Margin="10,0"
+                                      Background="{StaticResource Gray_02}"
+                                      BorderBrush="{StaticResource Gray_03}"
+                                      DropDownBackground="{StaticResource Gray_02}"
+                                      DropDownBorderBrush="{StaticResource Gray_005}"
+                                      HeaderBackground="{StaticResource Gray_02}"
+                                      HeaderForeground="{StaticResource Gray_05}"
+                                      TabBackground="{StaticResource Gray_02}"
+                                      TabForeground="{StaticResource Gray_05}"
+                                      Foreground="{StaticResource Gray_05}"/>
+
+                    <controls:NodesConnector Margin="0,0,-40,0"/>
+
+                </StackPanel>
+
+            </StackPanel>
+        </controls:GraphNodeBase.NodeContent>
+    </controls:GraphNodeBase>
+
 </UserControl>
