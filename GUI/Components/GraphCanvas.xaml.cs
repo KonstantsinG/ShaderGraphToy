@@ -20,32 +20,46 @@ namespace GUI.Components
     /// </summary>
     public partial class GraphCanvas : UserControl
     {
-        private double _currentZoom = 1.0;
+        // dragging Canvas params
+        private bool _draggingCanvas = false;
+        private Point _canvasDraggingOffset;
+
+        // Canvas zoom params
         private double _zoomRate = 1.1;
-        private double _minZoom = 0.5;
+        private double _minZoom = 0.4;
         private double _maxZoom = 2.0;
-
-        private double _currentTranslateX = 0.0;
-        private double _currentTranslateY = 0.0;
-
-        private int _gridStep = 50;
-        private Point _gridOffset = new Point(20, 20);
-        private int _dotSize = 3;
+        
+        // Canvas markup params
+        private int _gridStep = 60;
+        private Point _gridOffset = new Point(30, 30);
+        private int _dotSize = 4;
         private List<Ellipse> _gridDots = new List<Ellipse>();
+
+        // viewport resize params
+        private double _prevViewportWidth;
+        private double _prevViewportHeight;
 
 
         public GraphCanvas()
         {
             InitializeComponent();
+            TranslateCanvas(-2000);
+            _prevViewportWidth = ((Grid)mainCanvas.Parent).ActualWidth;
+            _prevViewportHeight = ((Grid)mainCanvas.Parent).ActualHeight;
+        }
+
+        private void TranslateCanvas(double val)
+        {
+            Matrix matr = matrixTransform.Matrix;
+            matr.Translate(val, val);
+            matrixTransform.Matrix = matr;
         }
 
 
         private void ClearCanvasGrid()
         {
             for (int i = 0; i < _gridDots.Count; i++)
-            {
                 mainCanvas.Children.Remove(_gridDots[i]);
-            }
 
             _gridDots.Clear();
         }
@@ -58,7 +72,20 @@ namespace GUI.Components
             {
                 for (int py = (int)_gridOffset.Y; py < mainCanvas.ActualHeight; py += _gridStep)
                 {
-                    Ellipse el = new Ellipse() { Height = _dotSize, Width = _dotSize, Fill = (Brush)FindResource("Gray_03") };
+                    Ellipse el = new Ellipse();
+                    if ((double)(px / _gridStep) % 5 == 0 && (double)(py / _gridStep) % 5 == 0) // highlight every 5'th dot
+                    {
+                        el.Height = _dotSize + 1;
+                        el.Width = _dotSize + 1;
+                        el.Fill = (Brush)FindResource("Gray_04");
+                    }
+                    else // regular dot
+                    {
+                        el.Height = _dotSize;
+                        el.Width = _dotSize;
+                        el.Fill = (Brush)FindResource("Gray_03");
+                    }
+
                     Panel.SetZIndex(el, -4);
                     Canvas.SetLeft(el, px);
                     Canvas.SetTop(el, py);
@@ -75,30 +102,129 @@ namespace GUI.Components
 
         private void mainCanvas_PreviewMouseWheel(object sender, MouseWheelEventArgs e)
         {
-            e.Handled = true;
-
-            double zoomDelta = e.Delta > 0 ? _zoomRate : 1 / _zoomRate;
-            double newZoom = _currentZoom * zoomDelta;
+            Matrix matrix = matrixTransform.Matrix;
+            double scale = e.Delta > 0 ? _zoomRate : 1 / _zoomRate;
+            double newZoom = matrix.M11 * scale;
 
             if (newZoom < _minZoom || newZoom > _maxZoom)
                 return;
 
-            Point mousePos = e.GetPosition(mainCanvas);
+            Point mousePosition = e.GetPosition(mainCanvas);
+            matrix.ScaleAtPrepend(scale, scale, mousePosition.X, mousePosition.Y);
 
-            scaleTransform.ScaleX = newZoom;
-            scaleTransform.ScaleY = newZoom;
+            // Canvas viewport sizes
+            double trueVpSizeX = ((Grid)mainCanvas.Parent).ActualWidth / matrix.M11;
+            double trueVpSizeY = ((Grid)mainCanvas.Parent).ActualHeight / matrix.M22;
 
-            Vector delta = new Vector(mousePos.X * (1 - zoomDelta), mousePos.Y * (1 - zoomDelta));
-            _currentTranslateX += _currentZoom * delta.X;
-            _currentTranslateY += _currentZoom * delta.Y;
+            // Canvas part before viewport
+            double trueOffsetX = -matrix.OffsetX / matrix.M11;
+            double trueOffsetY = -matrix.OffsetY / matrix.M22;
 
-            scrollViewer.ScrollToHorizontalOffset(_currentTranslateX + (scrollViewer.ActualWidth / 2));
-            scrollViewer.ScrollToVerticalOffset(_currentTranslateY + (scrollViewer.ActualHeight / 2));
+            // Canvas part after viewport (reversed)
+            double overflowX = trueVpSizeX + trueOffsetX - mainCanvas.ActualWidth;
+            double overflowY = trueVpSizeY + trueOffsetY - mainCanvas.ActualHeight;
 
-            //translateTransform.X = _currentTranslateX;
-            //translateTransform.Y = _currentTranslateY;
+            Point offsetPoint = new Point(0, 0);
 
-            _currentZoom = newZoom;
+            if (matrix.OffsetX > 0) // left side offset
+                offsetPoint.X += -matrix.OffsetX;
+
+            if (matrix.OffsetY > 0) // top side offset
+                offsetPoint.Y += -matrix.OffsetY;
+
+            if (overflowX > 0) // right side offset
+                offsetPoint.X += overflowX;
+
+            if (overflowY > 0) // bottom side offset
+                offsetPoint.Y += overflowY;
+
+            matrix.Translate(offsetPoint.X, offsetPoint.Y);
+            matrixTransform.Matrix = matrix;
+        }
+
+        private void mainCanvas_PreviewMouseDown(object sender, MouseButtonEventArgs e)
+        {
+            if (e.MiddleButton == MouseButtonState.Pressed)
+            {
+                _canvasDraggingOffset = e.GetPosition(this);
+                _draggingCanvas = true;
+                mainCanvas.CaptureMouse();
+            }
+        }
+
+        private void mainCanvas_PreviewMouseUp(object sender, MouseButtonEventArgs e)
+        {
+            if (e.MiddleButton == MouseButtonState.Released)
+            {
+                _draggingCanvas = false;
+                mainCanvas.ReleaseMouseCapture();
+            }
+        }
+
+        private void mainCanvas_PreviewMouseMove(object sender, MouseEventArgs e)
+        {
+            if (_draggingCanvas)
+            {
+                Point mousePos = e.GetPosition(this);
+                Matrix matrix = matrixTransform.Matrix;
+
+                double translateValueX = mousePos.X - _canvasDraggingOffset.X;
+                double translateValueY = mousePos.Y - _canvasDraggingOffset.Y;
+                bool translateX = CheckTranslationX(translateValueX);
+                bool translateY = CheckTranslationY(translateValueY);
+
+                if (translateX) matrix.Translate(translateValueX, 0);
+                if (translateY) matrix.Translate(0, translateValueY);
+
+                _canvasDraggingOffset = mousePos;
+                matrixTransform.Matrix = matrix;
+            }
+        }
+
+        private bool CheckTranslationX(double translateValueX)
+        {
+            Matrix tstMatrix = matrixTransform.Matrix;
+            tstMatrix.Translate(translateValueX, 0);
+
+            double trueVpSizeX = ((Grid)mainCanvas.Parent).ActualWidth / tstMatrix.M11;
+            double trueOffsetX = -tstMatrix.OffsetX / tstMatrix.M11;
+
+            if (tstMatrix.OffsetX > 0 || trueOffsetX + trueVpSizeX > mainCanvas.ActualWidth)
+                return false;
+            else
+                return true;
+        }
+
+        private bool CheckTranslationY(double translateValueY)
+        {
+            Matrix tstMatrix = matrixTransform.Matrix;
+            tstMatrix.Translate(0, translateValueY);
+
+            double trueVpSizeY = ((Grid)mainCanvas.Parent).ActualHeight / tstMatrix.M22;
+            double trueOffsetY = -tstMatrix.OffsetY / tstMatrix.M22;
+
+            if (tstMatrix.OffsetY > 0 || trueOffsetY + trueVpSizeY > mainCanvas.ActualHeight)
+                return false;
+            else
+                return true;
+        }
+
+        private void Grid_SizeChanged(object sender, SizeChangedEventArgs e)
+        {
+            double newViewportWidth = ((Grid)mainCanvas.Parent).ActualWidth;
+            double newViewportHeight = ((Grid)mainCanvas.Parent).ActualHeight;
+            double translateValueX = newViewportWidth - _prevViewportWidth;
+            double translateValueY = newViewportHeight - _prevViewportHeight;
+
+            Matrix matrix = matrixTransform.Matrix;
+            if (CheckTranslationX(translateValueX))
+                matrix.Translate(translateValueX, 0);
+            if (CheckTranslationY(translateValueY))
+                matrix.Translate(0, translateValueY);
+            matrixTransform.Matrix = matrix;
+
+            _prevViewportWidth = newViewportWidth;
+            _prevViewportHeight = newViewportHeight;
         }
     }
 }

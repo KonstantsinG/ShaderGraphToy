@@ -7,34 +7,25 @@
              xmlns:controls="clr-namespace:GUI.Controls"
              mc:Ignorable="d" 
              d:DesignHeight="800" d:DesignWidth="700">
-    
-    <Grid>
 
-        <ScrollViewer HorizontalScrollBarVisibility="Visible"
-                      VerticalScrollBarVisibility="Visible"
-                      x:Name="scrollViewer">
+    <Grid SizeChanged="Grid_SizeChanged">
 
-            <Canvas Background="{StaticResource Gray_01}" AllowDrop="True" Panel.ZIndex="-5"
-                    x:Name="mainCanvas" SizeChanged="mainCanvas_SizeChanged"
-                    PreviewMouseWheel="mainCanvas_PreviewMouseWheel"
-                    Width="3000" Height="3000">
+        <Canvas Background="{StaticResource Gray_01}" AllowDrop="True" Panel.ZIndex="-5"
+                x:Name="mainCanvas" SizeChanged="mainCanvas_SizeChanged"
+                PreviewMouseWheel="mainCanvas_PreviewMouseWheel"
+                PreviewMouseDown="mainCanvas_PreviewMouseDown"
+                PreviewMouseUp="mainCanvas_PreviewMouseUp"
+                PreviewMouseMove="mainCanvas_PreviewMouseMove"
+                Width="5000" Height="5000">
 
-                <Canvas.LayoutTransform>
-                    <ScaleTransform x:Name="scaleTransform" 
-                                    ScaleX="1" 
-                                    ScaleY="1"/>
-                </Canvas.LayoutTransform>
+            <Canvas.RenderTransform>
+                <MatrixTransform x:Name="matrixTransform"/>
+            </Canvas.RenderTransform>
 
-                <Canvas.RenderTransform>
-                    <TranslateTransform x:Name="translateTransform"/>
-                </Canvas.RenderTransform>
+            <controls:GraphNode Canvas.Top="1969" Canvas.Left="2330"/>
 
-                <controls:GraphNode Canvas.Top="300" Canvas.Left="400"/>
-
-            </Canvas>
-
-        </ScrollViewer>
+        </Canvas>
 
     </Grid>
-    
+
 </UserControl>
