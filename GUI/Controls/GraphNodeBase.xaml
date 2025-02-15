@@ -5,7 +5,8 @@
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:local="clr-namespace:GUI.Controls"
              mc:Ignorable="d"
-             d:DesignHeight="200" d:DesignWidth="150">
+             d:DesignHeight="200" d:DesignWidth="180"
+             MinHeight="200" MinWidth="180">
 
     <Grid MouseEnter="Grid_MouseEnter" MouseLeave="Grid_MouseLeave">
 
@@ -34,8 +35,51 @@
 
         </Grid>
 
-        <ContentPresenter Grid.Row="1"
-                          Content="{Binding NodeContent, RelativeSource={RelativeSource AncestorType=UserControl}}"/>
+        <Grid Grid.Row="1">
+
+            <Grid.RowDefinitions>
+                <RowDefinition Height="40*"/>
+                <RowDefinition Height="60*"/>
+            </Grid.RowDefinitions>
+
+            <Grid>
+
+                <StackPanel Margin="10,10,10,0">
+
+                    <ComboBox Margin="0,0,0,5"
+                              SelectionChanged="OperationsComboBox_SelectionChanged"
+                              ItemsSource="{Binding NodeOperations, RelativeSource={RelativeSource AncestorType=UserControl}}">
+
+                        <ComboBox.ItemTemplate>
+                            <DataTemplate>
+                                <TextBlock Text="{Binding Name}" ToolTip="{Binding Description}" />
+                            </DataTemplate>
+                        </ComboBox.ItemTemplate>
+
+                    </ComboBox>
+
+                    <ComboBox ItemsSource="{Binding NodeSubOperations, RelativeSource={RelativeSource AncestorType=UserControl}}">
+
+                        <ComboBox.ItemTemplate>
+                            <DataTemplate>
+                                <TextBlock Text="{Binding Name}" ToolTip="{Binding Description}" />
+                            </DataTemplate>
+                        </ComboBox.ItemTemplate>
+
+                    </ComboBox>
+
+                </StackPanel>
+                
+            </Grid>
+
+            <Grid Grid.Row="1">
+                
+                <ContentPresenter Grid.Row="1"
+                                  Content="{Binding NodeContent, RelativeSource={RelativeSource AncestorType=UserControl}}"/>
+                
+            </Grid>
+            
+        </Grid>
 
     </Grid>
     

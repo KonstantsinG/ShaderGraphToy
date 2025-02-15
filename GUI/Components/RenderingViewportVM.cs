@@ -1,21 +1,11 @@
-﻿using GUI.Graphics;
-using GUI.Utilities;
-using System;
-using System.Collections.Generic;
+﻿using GUI.Utilities;
 using System.ComponentModel;
 using System.Diagnostics;
-using System.Linq;
 using System.Runtime.CompilerServices;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Media.Imaging;
 using OpenTK.Graphics.OpenGL;
 using OpenTK.Wpf;
-using System.Reflection.Metadata;
-using System.Runtime.InteropServices;
-using System.Windows;
-using System.Security.Cryptography.Pkcs;
-using System.Windows.Input;
+using ShaderGraph.Graphics;
 
 namespace GUI.Components
 {
@@ -117,8 +107,7 @@ namespace GUI.Components
         public double ViewportWidth { get; set; }
         public double ViewportHeight { get; set; }
         #endregion
-
-
+        
         private Shader _shaderProgram;
         private int VAO, VBO, EBO;
         private Stopwatch _timer;

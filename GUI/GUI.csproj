@@ -52,4 +52,8 @@
     <Folder Include="Properties\" />
   </ItemGroup>
 
+  <ItemGroup>
+    <ProjectReference Include="..\ShaderGraph\ShaderGraph.csproj" />
+  </ItemGroup>
+
 </Project>

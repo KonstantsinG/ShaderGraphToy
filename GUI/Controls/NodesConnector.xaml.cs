@@ -28,12 +28,12 @@ namespace GUI.Controls
 
         private void Grid_MouseEnter(object sender, MouseEventArgs e)
         {
-            outlineEllipse.Fill = (SolidColorBrush)FindResource("HighlightBlue");
+            ellipse.Fill = (SolidColorBrush)FindResource("HighlightBlue");
         }
 
         private void Grid_MouseLeave(object sender, MouseEventArgs e)
         {
-            outlineEllipse.Fill = (SolidColorBrush)FindResource("PastelGreen");
+            ellipse.Fill = (SolidColorBrush)FindResource("Gray_02");
         }
     }
 }

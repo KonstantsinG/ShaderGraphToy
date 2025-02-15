@@ -1,4 +1,5 @@
-﻿using System;
+﻿using GUI.Controls;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -46,6 +47,10 @@ namespace GUI.Components
             TranslateCanvas(-2000);
             _prevViewportWidth = ((Grid)mainCanvas.Parent).ActualWidth;
             _prevViewportHeight = ((Grid)mainCanvas.Parent).ActualHeight;
+
+            GraphNodeBase nodeBase = new GraphNodeBase();
+            nodeBase.LoadNodeTypeData("Константа");
+            mainCanvas.Children.Add(nodeBase);
         }
 
         private void TranslateCanvas(double val)

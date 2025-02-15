@@ -12,7 +12,8 @@
         <Ellipse x:Name="outlineEllipse" Width="13" Height="13"
                  Fill="{StaticResource PastelGreen}"/>
 
-        <Ellipse Width="11" Height="11" Fill="{StaticResource Gray_02}"/>
+        <Ellipse Width="11" Height="11" Fill="{StaticResource Gray_02}"
+                 x:Name="ellipse"/>
 
     </Grid>
     

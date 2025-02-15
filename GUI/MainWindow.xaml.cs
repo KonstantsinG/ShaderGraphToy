@@ -1,7 +1,7 @@
 ﻿using GUI.Controls;
-using GUI.Graphics;
 using OpenTK.Graphics.OpenGL;
 using OpenTK.Wpf;
+using ShaderGraph.Assemblers;
 using System.Diagnostics;
 using System.Diagnostics.Tracing;
 using System.Runtime.InteropServices;

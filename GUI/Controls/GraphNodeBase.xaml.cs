@@ -1,5 +1,8 @@
-﻿using System;
+﻿using ShaderGraph.Assemblers;
+using ShaderGraph.ComponentModel;
+using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -46,6 +49,10 @@ namespace GUI.Controls
 
         public static readonly DependencyProperty HeaderTextProperty =
             DependencyProperty.Register("HeaderText", typeof(string), typeof(GraphNodeBase), new PropertyMetadata("Node Type"));
+
+
+        public ObservableCollection<GraphNodeOperationInfo> NodeOperations { get; set; } = new ObservableCollection<GraphNodeOperationInfo>();
+        public ObservableCollection<GraphNodeSubOperationInfo> NodeSubOperations { get; set; } = new ObservableCollection<GraphNodeSubOperationInfo>();
 
 
         private bool _isTaken = false;
@@ -105,6 +112,26 @@ namespace GUI.Controls
                     }
                 }
             }
+        }
+
+
+
+        public void LoadNodeTypeData(string typeName)
+        {
+            GraphNodeTypeInfo info = GraphNodesAssembler.Instance.GetTypeInfo(typeName);
+
+            HeaderText = info.Name;
+            HeaderColor = (SolidColorBrush)FindResource(info.Color);
+
+            NodeOperations.Clear();
+            foreach ( var op in info.OperationsTypes) NodeOperations.Add(op);
+        }
+
+        private void OperationsComboBox_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            NodeSubOperations.Clear();
+            var subs = (((ComboBox)sender).SelectedItem as GraphNodeOperationInfo).SubTypes;
+            foreach ( var sub in subs) NodeSubOperations.Add(sub);
         }
     }
 }

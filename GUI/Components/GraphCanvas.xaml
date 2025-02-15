@@ -22,8 +22,6 @@
                 <MatrixTransform x:Name="matrixTransform"/>
             </Canvas.RenderTransform>
 
-            <controls:GraphNode Canvas.Top="1969" Canvas.Left="2330"/>
-
         </Canvas>
 
     </Grid>
