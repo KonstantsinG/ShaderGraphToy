@@ -22,9 +22,9 @@
                    RadiusX="4" RadiusY="4"/>
 
         <Grid Grid.Row="0"
-              MouseLeftButtonDown="headerPanel_MouseLeftButtonDown"
-              MouseLeftButtonUp="headerPanel_MouseLeftButtonUp"
-              MouseMove="headerPanel_MouseMove">
+              MouseLeftButtonDown="HeaderPanel_MouseLeftButtonDown"
+              MouseLeftButtonUp="HeaderPanel_MouseLeftButtonUp"
+              MouseMove="HeaderPanel_MouseMove">
 
             <Rectangle Fill="{Binding HeaderColor, RelativeSource={RelativeSource AncestorType=UserControl}}"
                        RadiusX="4" RadiusY="4" x:Name="headerPanel"/>
@@ -73,7 +73,7 @@
             </Grid>
 
             <Grid Grid.Row="1">
-                
+
                 <ContentPresenter Grid.Row="1"
                                   Content="{Binding NodeContent, RelativeSource={RelativeSource AncestorType=UserControl}}"/>
                 

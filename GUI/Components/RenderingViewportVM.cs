@@ -12,12 +12,12 @@ namespace GUI.Components
     internal class RenderingViewportVM : INotifyPropertyChanged
     {
         #region PROPS
-        private RelayCommand _pauseClickCommand = null;
+        private RelayCommand? _pauseClickCommand = null;
         public RelayCommand PauseClickCommand
         {
             get
             {
-                if (_pauseClickCommand == null) _pauseClickCommand = new RelayCommand(OnPauseRendering);
+                _pauseClickCommand ??= new RelayCommand(OnPauseRendering);
                 return _pauseClickCommand;
             }
             set
@@ -27,12 +27,12 @@ namespace GUI.Components
             }
         }
 
-        private RelayCommand _breakClickCommand = null;
+        private RelayCommand? _breakClickCommand = null;
         public RelayCommand BreakClickCommand
         {
             get
             {
-                if (_breakClickCommand == null) _breakClickCommand = new RelayCommand(OnBreakRendering);
+                _breakClickCommand ??= new RelayCommand(OnBreakRendering);
                 return _breakClickCommand;
             }
             set
@@ -43,7 +43,7 @@ namespace GUI.Components
         }
 
         private bool _renderingPaused = false;
-        private BitmapImage _pauseButtonImage = new BitmapImage(new Uri("../Images/pause_icon.png", UriKind.Relative));
+        private BitmapImage _pauseButtonImage = new(new Uri("../Images/pause_icon.png", UriKind.Relative));
         public BitmapImage PauseButtonImage
         {
             get => _pauseButtonImage;
@@ -108,9 +108,9 @@ namespace GUI.Components
         public double ViewportHeight { get; set; }
         #endregion
         
-        private Shader _shaderProgram;
+        private Shader? _shaderProgram;
         private int VAO, VBO, EBO;
-        private Stopwatch _timer;
+        private Stopwatch? _timer;
         private long _totalDelta = 0;
         private long _framesRendered = 0;
 
@@ -119,17 +119,17 @@ namespace GUI.Components
         public void OpenTkControl_Ready()
         {
             float[] verts =
-            {
+            [
                  1.0f,  1.0f, 0.0f,  // top right
                  1.0f, -1.0f, 0.0f,  // bottom right
                 -1.0f, -1.0f, 0.0f,  // bottom left
                 -1.0f,  1.0f, 0.0f   // top left
-            };
+            ];
             uint[] inds =
-            {
+            [
                 0, 1, 3,
                 1, 2, 3
-            };
+            ];
 
             VBO = GL.GenBuffer();
             GL.BindBuffer(BufferTarget.ArrayBuffer, VBO);
@@ -162,9 +162,9 @@ namespace GUI.Components
 
             UpdateRenderingStats(delta);
 
-            _shaderProgram.Use();
+            _shaderProgram!.Use();
 
-            double timeVal = _timer.Elapsed.TotalSeconds;
+            double timeVal = _timer!.Elapsed.TotalSeconds;
             int timeLoc = GL.GetUniformLocation(_shaderProgram.Handle, "Time");
             GL.Uniform1(timeLoc, (float)timeVal);
             int resLoc = GL.GetUniformLocation(_shaderProgram.Handle, "Resolution");
@@ -177,13 +177,13 @@ namespace GUI.Components
 
         private void OnBreakRendering()
         {
-            if (_timer.IsRunning) _timer.Restart();
+            if (_timer!.IsRunning) _timer.Restart();
             else _timer.Reset();
         }
 
         private void OnPauseRendering()
         {
-            if (_timer.IsRunning) _timer.Stop();
+            if (_timer!.IsRunning) _timer.Stop();
             else _timer.Start();
 
             TogglePauseButtonImage();
@@ -195,7 +195,7 @@ namespace GUI.Components
             _totalDelta += delta.Milliseconds;
             _framesRendered++;
 
-            if (_timer.ElapsedMilliseconds % 60 < 10)
+            if (_timer!.ElapsedMilliseconds % 60 < 10)
             {
                 TimeDisplay = $"{_timer.Elapsed.Seconds}.{_timer.Elapsed.Milliseconds / 10} sec";
                 ResolutionDisplay = $"{(int)ViewportWidth} x {(int)ViewportHeight}";
@@ -221,8 +221,7 @@ namespace GUI.Components
         public event PropertyChangedEventHandler? PropertyChanged;
         public void OnPropertyChanged([CallerMemberName] string prop = "")
         {
-            if (PropertyChanged != null)
-                PropertyChanged(this, new PropertyChangedEventArgs(prop));
+            PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(prop));
         }
     }
 }

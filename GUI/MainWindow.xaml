@@ -29,9 +29,9 @@
 
         <Rectangle Width="10" Height="96" RadiusX="5" RadiusY="5" 
                    HorizontalAlignment="Right" x:Name="resizeRect"
-                   MouseLeftButtonDown="resizeRect_MouseLeftButtonDown"
-                   MouseLeftButtonUp="resizeRect_MouseLeftButtonUp"
-                   MouseMove="resizeRect_MouseMove">
+                   MouseLeftButtonDown="ResizeRect_MouseLeftButtonDown"
+                   MouseLeftButtonUp="ResizeRect_MouseLeftButtonUp"
+                   MouseMove="ResizeRect_MouseMove">
             <Rectangle.Style>
                 <Style TargetType="Rectangle">
                     <Setter Property="Fill" Value="{StaticResource Gray_005}"/>

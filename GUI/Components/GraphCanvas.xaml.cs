@@ -26,15 +26,15 @@ namespace GUI.Components
         private Point _canvasDraggingOffset;
 
         // Canvas zoom params
-        private double _zoomRate = 1.1;
-        private double _minZoom = 0.4;
-        private double _maxZoom = 2.0;
+        private const double ZOOM_RATE = 1.1;
+        private const double MIN_ZOOM = 0.4;
+        private const double MAX_ZOOM = 2.0;
         
         // Canvas markup params
-        private int _gridStep = 60;
-        private Point _gridOffset = new Point(30, 30);
-        private int _dotSize = 4;
-        private List<Ellipse> _gridDots = new List<Ellipse>();
+        private const int GRID_STEP = 60;
+        private Point _gridOffset = new(30, 30);
+        private const int DOT_SIZE = 4;
+        private readonly List<Ellipse> _gridDots = [];
 
         // viewport resize params
         private double _prevViewportWidth;
@@ -48,7 +48,7 @@ namespace GUI.Components
             _prevViewportWidth = ((Grid)mainCanvas.Parent).ActualWidth;
             _prevViewportHeight = ((Grid)mainCanvas.Parent).ActualHeight;
 
-            GraphNodeBase nodeBase = new GraphNodeBase();
+            GraphNodeBase nodeBase = new();
             nodeBase.LoadNodeTypeData("Константа");
             mainCanvas.Children.Add(nodeBase);
         }
@@ -73,21 +73,21 @@ namespace GUI.Components
         {
             ClearCanvasGrid();
 
-            for (int px = (int)_gridOffset.X; px < mainCanvas.ActualWidth; px += _gridStep)
+            for (int px = (int)_gridOffset.X; px < mainCanvas.ActualWidth; px += GRID_STEP)
             {
-                for (int py = (int)_gridOffset.Y; py < mainCanvas.ActualHeight; py += _gridStep)
+                for (int py = (int)_gridOffset.Y; py < mainCanvas.ActualHeight; py += GRID_STEP)
                 {
-                    Ellipse el = new Ellipse();
-                    if ((double)(px / _gridStep) % 5 == 0 && (double)(py / _gridStep) % 5 == 0) // highlight every 5'th dot
+                    Ellipse el = new();
+                    if ((double)(px / GRID_STEP) % 5 == 0 && (double)(py / GRID_STEP) % 5 == 0) // highlight every 5'th dot
                     {
-                        el.Height = _dotSize + 1;
-                        el.Width = _dotSize + 1;
+                        el.Height = DOT_SIZE + 1;
+                        el.Width = DOT_SIZE + 1;
                         el.Fill = (Brush)FindResource("Gray_04");
                     }
                     else // regular dot
                     {
-                        el.Height = _dotSize;
-                        el.Width = _dotSize;
+                        el.Height = DOT_SIZE;
+                        el.Width = DOT_SIZE;
                         el.Fill = (Brush)FindResource("Gray_03");
                     }
 
@@ -100,18 +100,18 @@ namespace GUI.Components
             }
         }
 
-        private void mainCanvas_SizeChanged(object sender, SizeChangedEventArgs e)
+        private void MainCanvas_SizeChanged(object sender, SizeChangedEventArgs e)
         {
             DrawMarkup();
         }
 
-        private void mainCanvas_PreviewMouseWheel(object sender, MouseWheelEventArgs e)
+        private void MainCanvas_PreviewMouseWheel(object sender, MouseWheelEventArgs e)
         {
             Matrix matrix = matrixTransform.Matrix;
-            double scale = e.Delta > 0 ? _zoomRate : 1 / _zoomRate;
+            double scale = e.Delta > 0 ? ZOOM_RATE : 1 / ZOOM_RATE;
             double newZoom = matrix.M11 * scale;
 
-            if (newZoom < _minZoom || newZoom > _maxZoom)
+            if (newZoom < MIN_ZOOM || newZoom > MAX_ZOOM)
                 return;
 
             Point mousePosition = e.GetPosition(mainCanvas);
@@ -129,7 +129,7 @@ namespace GUI.Components
             double overflowX = trueVpSizeX + trueOffsetX - mainCanvas.ActualWidth;
             double overflowY = trueVpSizeY + trueOffsetY - mainCanvas.ActualHeight;
 
-            Point offsetPoint = new Point(0, 0);
+            Point offsetPoint = new(0, 0);
 
             if (matrix.OffsetX > 0) // left side offset
                 offsetPoint.X += -matrix.OffsetX;
@@ -147,7 +147,7 @@ namespace GUI.Components
             matrixTransform.Matrix = matrix;
         }
 
-        private void mainCanvas_PreviewMouseDown(object sender, MouseButtonEventArgs e)
+        private void MainCanvas_PreviewMouseDown(object sender, MouseButtonEventArgs e)
         {
             if (e.MiddleButton == MouseButtonState.Pressed)
             {
@@ -157,7 +157,7 @@ namespace GUI.Components
             }
         }
 
-        private void mainCanvas_PreviewMouseUp(object sender, MouseButtonEventArgs e)
+        private void MainCanvas_PreviewMouseUp(object sender, MouseButtonEventArgs e)
         {
             if (e.MiddleButton == MouseButtonState.Released)
             {
@@ -166,7 +166,7 @@ namespace GUI.Components
             }
         }
 
-        private void mainCanvas_PreviewMouseMove(object sender, MouseEventArgs e)
+        private void MainCanvas_PreviewMouseMove(object sender, MouseEventArgs e)
         {
             if (_draggingCanvas)
             {

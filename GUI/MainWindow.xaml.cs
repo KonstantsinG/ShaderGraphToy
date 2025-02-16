@@ -28,20 +28,20 @@ namespace GUI
         }
 
 
-        private void resizeRect_MouseLeftButtonDown(object sender, System.Windows.Input.MouseButtonEventArgs e)
+        private void ResizeRect_MouseLeftButtonDown(object sender, System.Windows.Input.MouseButtonEventArgs e)
         {
             _isDraggingResizeRect = true;
             _resizeStartPoint = e.GetPosition(this);
             resizeRect.CaptureMouse();
         }
 
-        private void resizeRect_MouseLeftButtonUp(object sender, System.Windows.Input.MouseButtonEventArgs e)
+        private void ResizeRect_MouseLeftButtonUp(object sender, System.Windows.Input.MouseButtonEventArgs e)
         {
             _isDraggingResizeRect = false;
             resizeRect.ReleaseMouseCapture();
         }
 
-        private void resizeRect_MouseMove(object sender, System.Windows.Input.MouseEventArgs e)
+        private void ResizeRect_MouseMove(object sender, System.Windows.Input.MouseEventArgs e)
         {
             if (_isDraggingResizeRect)
             {

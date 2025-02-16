@@ -1,5 +1,6 @@
 ﻿using System.Configuration;
 using System.Data;
+using System.Globalization;
 using System.Runtime.InteropServices;
 using System.Windows;
 
@@ -17,6 +18,9 @@ namespace GUI
         protected override void OnStartup(StartupEventArgs e)
         {
             base.OnStartup(e);
+
+            Thread.CurrentThread.CurrentCulture = CultureInfo.InvariantCulture;
+            Thread.CurrentThread.CurrentUICulture = CultureInfo.InvariantCulture;
 
             EnableGPUHighPerformance();
             Exit += AppExit;
@@ -40,7 +44,7 @@ namespace GUI
 
                 IsNvapiActive = true;
             }
-            catch (Exception ex)
+            catch (Exception)
             {
                 IsNvapiActive = false;
             }

@@ -1,5 +1,5 @@
 ﻿using Newtonsoft.Json.Linq;
-using ShaderGraph.ComponentModel;
+using ShaderGraph.ComponentModel.Info;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -10,25 +10,25 @@ namespace ShaderGraph.Assemblers
 {
     public class GraphNodesAssembler
     {
-        private string _graphNodesTypesPath = "JsonData/graphNodesTypes.json";
+        private readonly string _graphNodesTypesPath = "JsonData/graphNodesTypes.json";
 
-        public static readonly GraphNodesAssembler Instance = new GraphNodesAssembler();
+        public static readonly GraphNodesAssembler Instance = new();
 
         private GraphNodesAssembler()
         {
         }
 
 
-        public GraphNodeTypeInfo GetTypeInfo(string type)
+        public GraphNodeTypeInfo? GetTypeInfo(string type)
         {
             string jsonContent = File.ReadAllText(_graphNodesTypesPath);
             JObject jObject = JObject.Parse(jsonContent);
-            JArray graphNodesTypesArray = jObject["GraphNodesTypes"] as JArray;
+            JArray? graphNodesTypesArray = jObject["GraphNodesTypes"] as JArray;
 
-            foreach (var node in graphNodesTypesArray)
+            foreach (var node in graphNodesTypesArray!)
             {
                 if (node["Name"]?.ToString() == type)
-                    return node.ToObject<GraphNodeTypeInfo>();
+                    return node.ToObject<GraphNodeTypeInfo>()!;
             }
 
             return null;

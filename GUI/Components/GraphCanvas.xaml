@@ -11,11 +11,11 @@
     <Grid SizeChanged="Grid_SizeChanged">
 
         <Canvas Background="{StaticResource Gray_01}" AllowDrop="True" Panel.ZIndex="-5"
-                x:Name="mainCanvas" SizeChanged="mainCanvas_SizeChanged"
-                PreviewMouseWheel="mainCanvas_PreviewMouseWheel"
-                PreviewMouseDown="mainCanvas_PreviewMouseDown"
-                PreviewMouseUp="mainCanvas_PreviewMouseUp"
-                PreviewMouseMove="mainCanvas_PreviewMouseMove"
+                x:Name="mainCanvas" SizeChanged="MainCanvas_SizeChanged"
+                PreviewMouseWheel="MainCanvas_PreviewMouseWheel"
+                PreviewMouseDown="MainCanvas_PreviewMouseDown"
+                PreviewMouseUp="MainCanvas_PreviewMouseUp"
+                PreviewMouseMove="MainCanvas_PreviewMouseMove"
                 Width="5000" Height="5000">
 
             <Canvas.RenderTransform>

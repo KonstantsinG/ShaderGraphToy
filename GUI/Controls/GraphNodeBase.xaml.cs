@@ -1,5 +1,5 @@
 ﻿using ShaderGraph.Assemblers;
-using ShaderGraph.ComponentModel;
+using ShaderGraph.ComponentModel.Info;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
@@ -51,8 +51,8 @@ namespace GUI.Controls
             DependencyProperty.Register("HeaderText", typeof(string), typeof(GraphNodeBase), new PropertyMetadata("Node Type"));
 
 
-        public ObservableCollection<GraphNodeOperationInfo> NodeOperations { get; set; } = new ObservableCollection<GraphNodeOperationInfo>();
-        public ObservableCollection<GraphNodeSubOperationInfo> NodeSubOperations { get; set; } = new ObservableCollection<GraphNodeSubOperationInfo>();
+        public ObservableCollection<GraphNodeOperationInfo> NodeOperations { get; set; } = [];
+        public ObservableCollection<GraphNodeSubOperationInfo> NodeSubOperations { get; set; } = [];
 
 
         private bool _isTaken = false;
@@ -75,20 +75,20 @@ namespace GUI.Controls
             borderRect.Fill = (Brush)FindResource("Gray_00");
         }
 
-        private void headerPanel_MouseLeftButtonDown(object sender, MouseButtonEventArgs e)
+        private void HeaderPanel_MouseLeftButtonDown(object sender, MouseButtonEventArgs e)
         {
             _isTaken = true;
             _mouseOffset = e.GetPosition(this);
             headerPanel.CaptureMouse();
         }
 
-        private void headerPanel_MouseLeftButtonUp(object sender, MouseButtonEventArgs e)
+        private void HeaderPanel_MouseLeftButtonUp(object sender, MouseButtonEventArgs e)
         {
             _isTaken = false;
             headerPanel.ReleaseMouseCapture();
         }
 
-        private void headerPanel_MouseMove(object sender, MouseEventArgs e)
+        private void HeaderPanel_MouseMove(object sender, MouseEventArgs e)
         {
             if (_isTaken)
             {
@@ -118,7 +118,7 @@ namespace GUI.Controls
 
         public void LoadNodeTypeData(string typeName)
         {
-            GraphNodeTypeInfo info = GraphNodesAssembler.Instance.GetTypeInfo(typeName);
+            GraphNodeTypeInfo info = GraphNodesAssembler.Instance.GetTypeInfo(typeName)!;
 
             HeaderText = info.Name;
             HeaderColor = (SolidColorBrush)FindResource(info.Color);
@@ -130,7 +130,7 @@ namespace GUI.Controls
         private void OperationsComboBox_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
             NodeSubOperations.Clear();
-            var subs = (((ComboBox)sender).SelectedItem as GraphNodeOperationInfo).SubTypes;
+            var subs = (((ComboBox)sender).SelectedItem as GraphNodeOperationInfo)!.SubTypes;
             foreach ( var sub in subs) NodeSubOperations.Add(sub);
         }
     }
