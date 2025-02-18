@@ -1,9 +1,6 @@
 ﻿using Newtonsoft.Json.Linq;
 using Newtonsoft.Json;
 using ShaderGraph.ComponentModel.Implementation;
-using System;
-using System.Collections.Generic;
-using System.Drawing;
 using System.Diagnostics.CodeAnalysis;
 
 namespace ShaderGraph.Converters
@@ -18,12 +15,12 @@ namespace ShaderGraph.Converters
 
             return type switch
             {
-                IGraphNodeComponent.ComponentType.Inscription => jsonObject.ToObject<InscriptionComponent>(serializer),
-                IGraphNodeComponent.ComponentType.Input => jsonObject.ToObject<InputComponent>(serializer),
-                IGraphNodeComponent.ComponentType.Vector => jsonObject.ToObject<VectorComponent>(serializer),
-                IGraphNodeComponent.ComponentType.Matrix => jsonObject.ToObject<MatrixComponent>(serializer),
-                IGraphNodeComponent.ComponentType.List => jsonObject.ToObject<ListComponent>(serializer),
-                IGraphNodeComponent.ComponentType.Color => jsonObject.ToObject<ColorComponent>(serializer),
+                IGraphNodeComponent.ComponentType.Inscription => jsonObject.ToObject<InscriptionComponentData>(serializer),
+                IGraphNodeComponent.ComponentType.Input => jsonObject.ToObject<InputComponentData>(serializer),
+                IGraphNodeComponent.ComponentType.Vector => jsonObject.ToObject<VectorComponentData>(serializer),
+                IGraphNodeComponent.ComponentType.Matrix => jsonObject.ToObject<MatrixComponentData>(serializer),
+                IGraphNodeComponent.ComponentType.List => jsonObject.ToObject<ListComponentData>(serializer),
+                IGraphNodeComponent.ComponentType.Color => jsonObject.ToObject<ColorComponentData>(serializer),
                 _ => throw new NotSupportedException($"Unknown type: {type}"),
             };
         }

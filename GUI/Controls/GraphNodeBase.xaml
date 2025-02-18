@@ -5,6 +5,7 @@
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:xctk="http://schemas.xceed.com/wpf/xaml/toolkit"
              xmlns:local="clr-namespace:GUI.Controls"
+             xmlns:comps="clr-namespace:GUI.Controls.GraphNodeComponents"
              mc:Ignorable="d"
              MinHeight="200" MinWidth="180">
 
@@ -86,160 +87,32 @@
 
                     </Grid>
 
-                    <WrapPanel>
-
-                        <local:NodesConnector Margin="0,0,5,0"/>
-                        <TextBlock Style="{StaticResource GrayTextBlock}" Text="Inscription"/>
-                        <local:NodesConnector Margin="5,0,0,0"/>
-
-                    </WrapPanel>
+                    <local:InscriptionComponent/>
 
                     <Border Height="2" VerticalAlignment="Top" Margin="0,5"
                             Background="{StaticResource Gray_02}"/>
 
-                    <StackPanel>
-
-                        <TextBlock Style="{StaticResource GrayTextBlock}" Text="Input"/>
-
-                        <WrapPanel>
-
-                            <local:NodesConnector Margin="0,0,5,0"/>
-                            <TextBox Style="{StaticResource GrayTextBox}" Text="0.0000"/>
-
-                        </WrapPanel>
-
-                    </StackPanel>
+                    <comps:InputComponent/>
 
                     <Border Height="2" VerticalAlignment="Top" Margin="0,0,0,5"
                             Background="{StaticResource Gray_02}"/>
 
-                    <StackPanel>
-
-                        <TextBlock Style="{StaticResource GrayTextBlock}" Text="Vector"/>
-
-                        <ComboBox Width="130" Margin="0,0,0,5" HorizontalAlignment="Left">
-                            <ComboBox.Items>
-
-                                <ComboBoxItem Content="Вектор 2"/>
-                                <ComboBoxItem Content="Вектор 3"/>
-                                <ComboBoxItem Content="Вектор 4"/>
-
-                            </ComboBox.Items>
-                        </ComboBox>
-
-                        <WrapPanel>
-
-                            <TextBlock Style="{StaticResource GrayTextBlock}" Text="x/r:  "/>
-
-                            <TextBox Style="{StaticResource GrayTextBox}" Text="0.1111"/>
-
-                        </WrapPanel>
-
-                        <WrapPanel>
-
-                            <TextBlock Style="{StaticResource GrayTextBlock}" Text="y/g: "/>
-
-                            <TextBox Style="{StaticResource GrayTextBox}" Text="0.2222"/>
-
-                        </WrapPanel>
-
-                        <WrapPanel>
-
-                            <TextBlock Text="z/b: " Foreground="{StaticResource Gray_04}"/>
-
-                            <TextBox Style="{StaticResource GrayTextBox}" Text="0.3333"/>
-
-                        </WrapPanel>
-
-                    </StackPanel>
+                    <comps:VectorComponent/>
 
                     <Border Height="2" VerticalAlignment="Top" Margin="0,5,0,5"
                             Background="{StaticResource Gray_02}"/>
 
-                    <StackPanel>
-
-                        <TextBlock Style="{StaticResource GrayTextBlock}" Text="Matrix"/>
-
-                        <ComboBox Width="130" Margin="0,0,0,5" HorizontalAlignment="Left">
-                            <ComboBox.Items>
-
-                                <ComboBoxItem Content="Матрица 2 x 2"/>
-                                <ComboBoxItem Content="Матрица 2 x 3"/>
-                                <ComboBoxItem Content="Матрица 2 x 4"/>
-
-                                <ComboBoxItem Content="Матрица 3 x 2"/>
-                                <ComboBoxItem Content="Матрица 3 x 3"/>
-                                <ComboBoxItem Content="Матрица 3 x 4"/>
-
-                                <ComboBoxItem Content="Матрица 4 x 2"/>
-                                <ComboBoxItem Content="Матрица 4 x 3"/>
-                                <ComboBoxItem Content="Матрица 4 x 4"/>
-
-                            </ComboBox.Items>
-                        </ComboBox>
-
-                        <WrapPanel>
-
-                            <TextBlock Style="{StaticResource GrayTextBlock}" Text="a11: "/>
-                            <TextBox Style="{StaticResource GrayTextBoxSmall}"/>
-
-                            <TextBlock Style="{StaticResource GrayTextBlock}" Text="a12: "/>
-                            <TextBox Style="{StaticResource GrayTextBoxSmall}"/>
-
-                            <TextBlock Style="{StaticResource GrayTextBlock}" Text="a13: "/>
-                            <TextBox Style="{StaticResource GrayTextBoxSmall}"/>
-
-                        </WrapPanel>
-
-                        <WrapPanel>
-
-                            <TextBlock Style="{StaticResource GrayTextBlock}" Text="a21: "/>
-                            <TextBox Style="{StaticResource GrayTextBoxSmall}"/>
-
-                            <TextBlock Style="{StaticResource GrayTextBlock}" Text="a22: "/>
-                            <TextBox Style="{StaticResource GrayTextBoxSmall}"/>
-
-                            <TextBlock Style="{StaticResource GrayTextBlock}" Text="a23: "/>
-                            <TextBox Style="{StaticResource GrayTextBoxSmall}"/>
-
-                        </WrapPanel>
-
-                        <WrapPanel>
-
-                            <TextBlock Style="{StaticResource GrayTextBlock}" Text="a31: "/>
-                            <TextBox Style="{StaticResource GrayTextBoxSmall}"/>
-
-                            <TextBlock Style="{StaticResource GrayTextBlock}" Text="a32: "/>
-                            <TextBox Style="{StaticResource GrayTextBoxSmall}"/>
-
-                            <TextBlock Style="{StaticResource GrayTextBlock}" Text="a33: "/>
-                            <TextBox Style="{StaticResource GrayTextBoxSmall}"/>
-
-                        </WrapPanel>
-
-                    </StackPanel>
+                    <comps:MatrixComponent/>
 
                     <Border Height="2" VerticalAlignment="Top" Margin="0,5,0,5"
                             Background="{StaticResource Gray_02}"/>
 
-                    <StackPanel>
-
-                        <TextBlock Style="{StaticResource GrayTextBlock}" Text="List"/>
-
-                        <ComboBox Width="130" Margin="0,0,0,5" HorizontalAlignment="Left"/>
-
-                    </StackPanel>
+                    <comps:ListComponent/>
 
                     <Border Height="2" VerticalAlignment="Top" Margin="0,5,0,5"
                             Background="{StaticResource Gray_02}"/>
 
-                    <StackPanel>
-
-                        <TextBlock Style="{StaticResource GrayTextBlock}" Text="Color"/>
-
-                        <xctk:ColorPicker/>
-
-                    </StackPanel>
+                    <comps:ColorComponent/>
 
                 </StackPanel>
                 

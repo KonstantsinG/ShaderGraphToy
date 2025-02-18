@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace ShaderGraph.ComponentModel.Implementation
 {
-    public class MatrixComponent : IGraphNodeComponent
+    public class MatrixComponentData : IGraphNodeComponent
     {
         public required string Title { get; set; }
         public required List<string> Contents { get; set; }

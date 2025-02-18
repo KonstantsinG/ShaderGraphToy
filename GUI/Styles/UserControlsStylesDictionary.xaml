@@ -166,7 +166,7 @@
 
     <Style x:Key="GrayTextBoxSmall" TargetType="TextBox">
         <Setter Property="Height" Value="20"/>
-        <Setter Property="Width" Value="40"/>
+        <Setter Property="Width" Value="50"/>
         <Setter Property="Margin" Value="0,0,5,5"/>
         <Setter Property="HorizontalAlignment" Value="Left"/>
         <Setter Property="Foreground" Value="{DynamicResource Gray_05}"/>

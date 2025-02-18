@@ -1,0 +1,70 @@
+﻿<UserControl x:Class="GUI.Controls.GraphNodeComponents.MatrixComponent"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:local="clr-namespace:GUI.Controls.GraphNodeComponents"
+             mc:Ignorable="d" 
+             d:DesignHeight="180" d:DesignWidth="300">
+
+    <StackPanel>
+
+        <TextBlock Style="{StaticResource GrayTextBlock}" Text="Matrix"/>
+
+        <ComboBox Width="130" Margin="0,0,0,5" HorizontalAlignment="Left">
+            <ComboBox.Items>
+
+                <ComboBoxItem Content="Матрица 2 x 2"/>
+                <ComboBoxItem Content="Матрица 2 x 3"/>
+                <ComboBoxItem Content="Матрица 2 x 4"/>
+
+                <ComboBoxItem Content="Матрица 3 x 2"/>
+                <ComboBoxItem Content="Матрица 3 x 3"/>
+                <ComboBoxItem Content="Матрица 3 x 4"/>
+
+                <ComboBoxItem Content="Матрица 4 x 2"/>
+                <ComboBoxItem Content="Матрица 4 x 3"/>
+                <ComboBoxItem Content="Матрица 4 x 4"/>
+
+            </ComboBox.Items>
+        </ComboBox>
+
+        <WrapPanel>
+
+            <TextBox Style="{StaticResource GrayTextBoxSmall}"/>
+            <TextBox Style="{StaticResource GrayTextBoxSmall}"/>
+            <TextBox Style="{StaticResource GrayTextBoxSmall}"/>
+            <TextBox Style="{StaticResource GrayTextBoxSmall}"/>
+
+        </WrapPanel>
+
+        <WrapPanel>
+
+            <TextBox Style="{StaticResource GrayTextBoxSmall}"/>
+            <TextBox Style="{StaticResource GrayTextBoxSmall}"/>
+            <TextBox Style="{StaticResource GrayTextBoxSmall}"/>
+            <TextBox Style="{StaticResource GrayTextBoxSmall}"/>
+
+        </WrapPanel>
+
+        <WrapPanel>
+
+            <TextBox Style="{StaticResource GrayTextBoxSmall}"/>
+            <TextBox Style="{StaticResource GrayTextBoxSmall}"/>
+            <TextBox Style="{StaticResource GrayTextBoxSmall}"/>
+            <TextBox Style="{StaticResource GrayTextBoxSmall}"/>
+
+        </WrapPanel>
+
+        <WrapPanel>
+
+            <TextBox Style="{StaticResource GrayTextBoxSmall}"/>
+            <TextBox Style="{StaticResource GrayTextBoxSmall}"/>
+            <TextBox Style="{StaticResource GrayTextBoxSmall}"/>
+            <TextBox Style="{StaticResource GrayTextBoxSmall}"/>
+
+        </WrapPanel>
+
+    </StackPanel>
+
+</UserControl>

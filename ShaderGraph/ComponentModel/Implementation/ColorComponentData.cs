@@ -6,11 +6,9 @@ using System.Threading.Tasks;
 
 namespace ShaderGraph.ComponentModel.Implementation
 {
-    public class VectorComponent : IGraphNodeComponent
+    public class ColorComponentData : IGraphNodeComponent
     {
         public required string Title { get; set; }
-        public required List<string> Contents { get; set; }
-        public required bool IsControlable { get; set; }
-        public required bool IsReadonly { get; set; }
+        public required string Content { get; set; }
     }
 }
