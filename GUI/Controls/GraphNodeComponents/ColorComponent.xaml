@@ -10,9 +10,10 @@
 
     <StackPanel>
 
-        <TextBlock Style="{StaticResource GrayTextBlock}" Text="Color"/>
+        <TextBlock Style="{StaticResource GrayTextBlock}"
+                   Text="{Binding Path=Model.Title, RelativeSource={RelativeSource AncestorType=UserControl}, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
 
-        <xctk:ColorPicker/>
+        <xctk:ColorPicker SelectedColor="{Binding Path=Model.Content, RelativeSource={RelativeSource AncestorType=UserControl}, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
 
     </StackPanel>
 

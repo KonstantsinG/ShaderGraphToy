@@ -57,15 +57,6 @@ namespace GUI.Controls.GraphNodeComponents
         public VectorComponent()
         {
             InitializeComponent();
-
-            VectorComponentData data = new()
-            {
-                Title = "Vector TEST",
-                Contents = [ "0.15", "0.16" ],
-                IsReadonly = true,
-                IsControlable = true
-            };
-            Model = data;
         }
 
         private void ComboBox_SelectionChanged(object sender, SelectionChangedEventArgs e)
