@@ -3,6 +3,8 @@
     {
       "Name": "Константа",
       "Color": "PastelGreen",
+      "UsingOperations": true,
+      "UsingSubOperations": true,
 
       "OperationsTypes": [
         {
@@ -41,6 +43,8 @@
         {
           "Name": "Специальная константа",
           "Description": "Постоянное значение определённого типа, выбранное пользователем из предоставленного списка",
+          "UsingOperations": true,
+          "UsingSubOperations": true,
 
           "SubTypes": [
             {
@@ -76,6 +80,8 @@
     {
       "Name": "Входные данные",
       "Color": "PastelCyan",
+      "UsingOperations": true,
+      "UsingSubOperations": false,
 
       "OperationsTypes": [
         {
@@ -131,28 +137,18 @@
     {
       "Name": "Выходные данные",
       "Color": "PastelRed",
+      "UsingOperations": false,
+      "UsingSubOperations": false,
 
       "OperationsTypes": [
         {
-          "Name": "Цвет пикселя",
-          "Description": "Финальный цвет текущего пикселя на экране",
+          "Name": "Выходные данные",
+          "Description": "Цвет и непрозрачность текущего пикселя на экране",
           "SubTypes": [
             {
               "Name": "",
               "Description": "",
-              "TypeId": 311
-            }
-          ]
-        },
-
-        {
-          "Name": "Непрозрачность",
-          "Description": "Непрозрачность текущего пикселя на экране",
-          "SubTypes": [
-            {
-              "Name": "",
-              "Description": "",
-              "TypeId": 312
+              "TypeId": 310
             }
           ]
         }
@@ -162,6 +158,8 @@
     {
       "Name": "Математические операции",
       "Color": "PastelBlue",
+      "UsingOperations": true,
+      "UsingSubOperations": true,
 
       "OperationsTypes": [
         {

@@ -7,22 +7,28 @@ namespace ShaderGraph.Converters
 {
     public class ComponentTypesConverter : JsonConverter<IGraphNodeComponent>
     {
-        [return: MaybeNull]
         public override IGraphNodeComponent ReadJson(JsonReader reader, Type objectType, IGraphNodeComponent? existingValue, bool hasExistingValue, JsonSerializer serializer)
         {
-            var jsonObject = JObject.Load(reader);
-            IGraphNodeComponent.ComponentType type = (IGraphNodeComponent.ComponentType)Enum.Parse(typeof(IGraphNodeComponent.ComponentType), jsonObject["Type"]?.ToString() ?? "");
+            var obj = JObject.Load(reader);
+            var type = obj["Type"]?.ToString().Trim();
 
             return type switch
             {
-                IGraphNodeComponent.ComponentType.Inscription => jsonObject.ToObject<InscriptionComponentData>(serializer),
-                IGraphNodeComponent.ComponentType.Input => jsonObject.ToObject<InputComponentData>(serializer),
-                IGraphNodeComponent.ComponentType.Vector => jsonObject.ToObject<VectorComponentData>(serializer),
-                IGraphNodeComponent.ComponentType.Matrix => jsonObject.ToObject<MatrixComponentData>(serializer),
-                IGraphNodeComponent.ComponentType.List => jsonObject.ToObject<ListComponentData>(serializer),
-                IGraphNodeComponent.ComponentType.Color => jsonObject.ToObject<ColorComponentData>(serializer),
-                _ => throw new NotSupportedException($"Unknown type: {type}"),
+                "Inscription" => CreateComponent<InscriptionComponentData>(obj, serializer),
+                "Input" => CreateComponent<InputComponentData>(obj, serializer),
+                "Vector" => CreateComponent<VectorComponentData>(obj, serializer),
+                "Matrix" => CreateComponent<MatrixComponentData>(obj, serializer),
+                "List" => CreateComponent<ListComponentData>(obj, serializer),
+                "Color" => CreateComponent<ColorComponentData>(obj, serializer),
+                _ => throw new JsonSerializationException($"Unknown component type: {type}")
             };
+        }
+
+        private static T CreateComponent<T>(JObject obj, JsonSerializer serializer) where T : IGraphNodeComponent
+        {
+            var component = Activator.CreateInstance<T>();
+            serializer.Populate(obj.CreateReader(), component);
+            return component;
         }
 
         public override void WriteJson(JsonWriter writer, IGraphNodeComponent? value, JsonSerializer serializer)

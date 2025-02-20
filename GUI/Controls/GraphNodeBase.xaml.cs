@@ -1,8 +1,12 @@
-﻿using ShaderGraph.Assemblers;
+﻿using GUI.Controls.GraphNodeComponents;
+using GUI.Utilities;
+using ShaderGraph.Assemblers;
+using ShaderGraph.ComponentModel.Implementation;
 using ShaderGraph.ComponentModel.Info;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
+using System.ComponentModel;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -15,44 +19,48 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
+using Xceed.Wpf.Toolkit.PropertyGrid.Attributes;
 
 namespace GUI.Controls
 {
     /// <summary>
     /// Логика взаимодействия для GraphNodeBase.xaml
     /// </summary>
-    public partial class GraphNodeBase : UserControl
+    public partial class GraphNodeBase : UserControl, INotifyPropertyChanged
     {
-        public object NodeContent
+        public static readonly DependencyProperty ContentModelProperty = DependencyProperty.Register(
+            nameof(ContentModel), typeof(GraphNodeTypeContentInfo), typeof(GraphNodeBase), new PropertyMetadata(null));
+
+        public GraphNodeTypeContentInfo? ContentModel
         {
-            get { return GetValue(NodeContentProperty); }
-            set { SetValue(NodeContentProperty, value); }
+            get => (GraphNodeTypeContentInfo?)GetValue(ContentModelProperty);
+            set => SetValue(ContentModelProperty, value);
         }
 
-        public static readonly DependencyProperty NodeContentProperty =
-            DependencyProperty.Register("Content", typeof(object), typeof(GraphNodeBase), new PropertyMetadata(null));
+        public static readonly DependencyProperty NodeModelProperty = DependencyProperty.Register(
+            nameof(NodeModel), typeof(GraphNodeTypeInfo), typeof(GraphNodeBase), new PropertyMetadata(null));
 
-        public Brush HeaderColor
+        public GraphNodeTypeInfo? NodeModel
         {
-            get { return (Brush)GetValue(HeaderColorProperty); }
-            set { SetValue(HeaderColorProperty, value); }
+            get => (GraphNodeTypeInfo?)GetValue(NodeModelProperty);
+            set => SetValue(NodeModelProperty, value);
         }
 
-        public static readonly DependencyProperty HeaderColorProperty =
-            DependencyProperty.Register("HeaderColor", typeof(Brush), typeof(GraphNodeBase), new PropertyMetadata(Brushes.IndianRed));
-
-        public string HeaderText
+        private bool _isConnectorsVisible = false;
+        public bool IsConnectorsVisible
         {
-            get { return (string)GetValue(HeaderTextProperty); }
-            set { SetValue(HeaderTextProperty, value); }
+            get => _isConnectorsVisible;
+            set
+            {
+                _isConnectorsVisible = value;
+                OnPropertyChanged(nameof(IsConnectorsVisible));
+            }
         }
-
-        public static readonly DependencyProperty HeaderTextProperty =
-            DependencyProperty.Register("HeaderText", typeof(string), typeof(GraphNodeBase), new PropertyMetadata("Node Type"));
 
 
         public ObservableCollection<GraphNodeOperationInfo> NodeOperations { get; set; } = [];
         public ObservableCollection<GraphNodeSubOperationInfo> NodeSubOperations { get; set; } = [];
+        public ObservableCollection<UserControl> NodeComponents { get; set; } = [];
 
 
         private bool _isTaken = false;
@@ -119,19 +127,67 @@ namespace GUI.Controls
         public void LoadNodeTypeData(string typeName)
         {
             GraphNodeTypeInfo info = GraphNodesAssembler.Instance.GetTypeInfo(typeName)!;
+            NodeModel = info;
 
-            HeaderText = info.Name;
-            HeaderColor = (SolidColorBrush)FindResource(info.Color);
-
-            NodeOperations.Clear();
-            foreach ( var op in info.OperationsTypes) NodeOperations.Add(op);
+            if (!info.UsingOperations)
+            {
+                int id = info.OperationsTypes[0].SubTypes[0].TypeId;
+                LoadNodeContent(id);
+            }
+            else
+            {
+                NodeOperations.Clear();
+                foreach (var op in info.OperationsTypes) NodeOperations.Add(op);
+            }
         }
 
         private void OperationsComboBox_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
-            NodeSubOperations.Clear();
-            var subs = (((ComboBox)sender).SelectedItem as GraphNodeOperationInfo)!.SubTypes;
-            foreach ( var sub in subs) NodeSubOperations.Add(sub);
+            if (!NodeModel!.UsingSubOperations)
+            {
+                int id = (((ComboBox)sender).SelectedItem as GraphNodeOperationInfo)!.SubTypes[0].TypeId;
+                LoadNodeContent(id);
+            }
+            else
+            {
+                NodeSubOperations.Clear();
+                var subs = (((ComboBox)sender).SelectedItem as GraphNodeOperationInfo)!.SubTypes;
+                foreach (var sub in subs) NodeSubOperations.Add(sub);
+            }
+        }
+
+        private void SubOperationsComboBox_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            var item = ((ComboBox)sender).SelectedItem as GraphNodeSubOperationInfo;
+            if (item != null)
+            {
+                LoadNodeContent(item.TypeId);
+            }
+            else
+            {
+                ContentModel = null;
+                NodeComponents.Clear();
+                IsConnectorsVisible = false;
+            }
+        }
+
+        private void LoadNodeContent(int id)
+        {
+            var compsData = GraphNodesAssembler.Instance.GetTypeContentInfo(id);
+            ContentModel = compsData!;
+
+            var comps = GraphComponentsFactory.ConstructComponents(compsData!.Components);
+            NodeComponents.Clear();
+            foreach (var comp in comps) NodeComponents.Add(comp);
+            IsConnectorsVisible = true;
+        }
+
+
+        public event PropertyChangedEventHandler? PropertyChanged;
+
+        protected virtual void OnPropertyChanged(string propertyName)
+        {
+            PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
         }
     }
 }

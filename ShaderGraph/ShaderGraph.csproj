@@ -8,10 +8,14 @@
 
   <ItemGroup>
     <None Remove="JsonData\graphNodesTypes.json" />
+    <None Remove="JsonData\graphNodesTypesContent.json" />
   </ItemGroup>
 
   <ItemGroup>
     <Content Include="JsonData\graphNodesTypes.json">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="JsonData\graphNodesTypesContent.json">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
   </ItemGroup>

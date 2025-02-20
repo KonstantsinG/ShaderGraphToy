@@ -9,6 +9,8 @@ namespace ShaderGraph.ComponentModel.Implementation
 {
     public class ColorComponentData : IGraphNodeComponent, INotifyPropertyChanged
     {
+        public required string Type { get; set; }
+
         private string _title = "";
         public required string Title
         {
@@ -20,13 +22,15 @@ namespace ShaderGraph.ComponentModel.Implementation
             }
         }
 
-        private string _content = "";
+        private string _content = "#FF535761";
         public required string Content
         {
             get => _content;
             set
             {
-                _content = value;
+                if (value != null) _content = value;
+                else _content = "#FF535761";
+
                 OnPropertyChanged(nameof(Content));
             }
         }

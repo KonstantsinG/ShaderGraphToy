@@ -6,9 +6,15 @@
              xmlns:xctk="http://schemas.xceed.com/wpf/xaml/toolkit"
              xmlns:local="clr-namespace:GUI.Controls"
              xmlns:comps="clr-namespace:GUI.Controls.GraphNodeComponents"
+             xmlns:utls="clr-namespace:GUI.Utilities"
              mc:Ignorable="d"
-             MinHeight="200" MinWidth="180">
+             MinHeight="50" MinWidth="180">
 
+    <UserControl.Resources>
+        <BooleanToVisibilityConverter x:Key="boolToVis"/>
+        <utls:ColorResourceConverter x:Key="strToColor"/>
+    </UserControl.Resources>
+    
     <Grid MouseEnter="Grid_MouseEnter" MouseLeave="Grid_MouseLeave">
 
         <Grid.RowDefinitions>
@@ -27,11 +33,11 @@
               MouseLeftButtonUp="HeaderPanel_MouseLeftButtonUp"
               MouseMove="HeaderPanel_MouseMove">
 
-            <Rectangle Fill="{Binding HeaderColor, RelativeSource={RelativeSource AncestorType=UserControl}}"
+            <Rectangle Fill="{Binding Path=NodeModel.Color, RelativeSource={RelativeSource AncestorType=UserControl}, Converter={StaticResource strToColor}, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
                        RadiusX="4" RadiusY="4" x:Name="headerPanel"/>
 
-            <TextBlock Text="{Binding HeaderText, RelativeSource={RelativeSource AncestorType=UserControl}}"
-                       HorizontalAlignment="Center" VerticalAlignment="Center"
+            <TextBlock Text="{Binding Path=NodeModel.Name, RelativeSource={RelativeSource AncestorType=UserControl}, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
+                       HorizontalAlignment="Center" VerticalAlignment="Center" Margin="10,0"
                        FontSize="16" FontWeight="Medium" Foreground="{StaticResource Gray_06}"/>
 
         </Grid>
@@ -49,6 +55,7 @@
 
                     <ComboBox Margin="0,0,0,5"
                               SelectionChanged="OperationsComboBox_SelectionChanged"
+                              Visibility="{Binding Path=NodeModel.UsingOperations, RelativeSource={RelativeSource AncestorType=UserControl}, Converter={StaticResource boolToVis}, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
                               ItemsSource="{Binding NodeOperations, RelativeSource={RelativeSource AncestorType=UserControl}}">
 
                         <ComboBox.ItemTemplate>
@@ -59,7 +66,9 @@
 
                     </ComboBox>
 
-                    <ComboBox ItemsSource="{Binding NodeSubOperations, RelativeSource={RelativeSource AncestorType=UserControl}}">
+                    <ComboBox ItemsSource="{Binding NodeSubOperations, RelativeSource={RelativeSource AncestorType=UserControl}}"
+                              Visibility="{Binding Path=NodeModel.UsingSubOperations, RelativeSource={RelativeSource AncestorType=UserControl}, Converter={StaticResource boolToVis}, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
+                              SelectionChanged="SubOperationsComboBox_SelectionChanged">
 
                         <ComboBox.ItemTemplate>
                             <DataTemplate>
@@ -80,46 +89,19 @@
                     <Border Height="2" VerticalAlignment="Top" Margin="0,0,0,5"
                             Background="{StaticResource Gray_02}"/>
 
-                    <Grid Margin="-12,0,-12,5">
+                    <Grid Margin="-12,0,-12,5"
+                          Visibility="{Binding IsConnectorsVisible, RelativeSource={RelativeSource AncestorType=UserControl}, Converter={StaticResource boolToVis}, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}">
 
-                        <local:NodesConnector HorizontalAlignment="Left"/>
-                        <local:NodesConnector HorizontalAlignment="Right"/>
+                        <local:NodesConnector HorizontalAlignment="Left"
+                                              Visibility="{Binding Path=ContentModel.HasInput, RelativeSource={RelativeSource AncestorType=UserControl}, Converter={StaticResource boolToVis}, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
+                        <local:NodesConnector HorizontalAlignment="Right"
+                                              Visibility="{Binding Path=ContentModel.HasOutput, RelativeSource={RelativeSource AncestorType=UserControl}, Converter={StaticResource boolToVis}, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
 
                     </Grid>
 
-                    <local:InscriptionComponent/>
-
-                    <Border Height="2" VerticalAlignment="Top" Margin="0,5"
-                            Background="{StaticResource Gray_02}"/>
-
-                    <comps:InputComponent/>
-
-                    <Border Height="2" VerticalAlignment="Top" Margin="0,0,0,5"
-                            Background="{StaticResource Gray_02}"/>
-
-                    <comps:VectorComponent/>
-
-                    <Border Height="2" VerticalAlignment="Top" Margin="0,5,0,5"
-                            Background="{StaticResource Gray_02}"/>
-
-                    <comps:MatrixComponent/>
-
-                    <Border Height="2" VerticalAlignment="Top" Margin="0,5,0,5"
-                            Background="{StaticResource Gray_02}"/>
-
-                    <comps:ListComponent/>
-
-                    <Border Height="2" VerticalAlignment="Top" Margin="0,5,0,5"
-                            Background="{StaticResource Gray_02}"/>
-
-                    <comps:ColorComponent/>
+                    <ItemsControl ItemsSource="{Binding NodeComponents, RelativeSource={RelativeSource AncestorType=UserControl}, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
 
                 </StackPanel>
-                
-                
-
-                <ContentPresenter Grid.Row="1"
-                                  Content="{Binding NodeContent, RelativeSource={RelativeSource AncestorType=UserControl}}"/>
                 
             </Grid>
             

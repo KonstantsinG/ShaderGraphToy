@@ -51,6 +51,26 @@ namespace GUI.Components
             GraphNodeBase nodeBase = new();
             nodeBase.LoadNodeTypeData("Константа");
             mainCanvas.Children.Add(nodeBase);
+            Canvas.SetLeft(nodeBase, 20);
+            Canvas.SetTop(nodeBase, 20);
+
+            nodeBase = new();
+            nodeBase.LoadNodeTypeData("Входные данные");
+            mainCanvas.Children.Add(nodeBase);
+            Canvas.SetLeft(nodeBase, 300);
+            Canvas.SetTop(nodeBase, 20);
+
+            nodeBase = new();
+            nodeBase.LoadNodeTypeData("Выходные данные");
+            mainCanvas.Children.Add(nodeBase);
+            Canvas.SetLeft(nodeBase, 20);
+            Canvas.SetTop(nodeBase, 200);
+
+            nodeBase = new();
+            nodeBase.LoadNodeTypeData("Математические операции");
+            mainCanvas.Children.Add(nodeBase);
+            Canvas.SetLeft(nodeBase, 300);
+            Canvas.SetTop(nodeBase, 200);
         }
 
         private void TranslateCanvas(double val)

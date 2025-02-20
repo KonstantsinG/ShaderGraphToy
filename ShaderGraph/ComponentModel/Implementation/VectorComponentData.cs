@@ -9,6 +9,8 @@ namespace ShaderGraph.ComponentModel.Implementation
 {
     public class VectorComponentData : IGraphNodeComponent, INotifyPropertyChanged
     {
+        public required string Type { get; set; }
+
         private string _title = "";
         public required string Title
         {

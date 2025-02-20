@@ -1,5 +1,5 @@
 ﻿{
-  "GgraphNodesTypesContent": [
+  "GraphNodesTypesContent": [
     {
       "TypeId": 111,
       "Name": "Constant_UserConstant_Number",
@@ -288,40 +288,28 @@
     },
 
     {
-      "TypeId": 311,
-      "Name": "OutputData_PixelColor",
-      "HasInput": true,
+      "TypeId": 310,
+      "Name": "OutputData",
+      "HasInput": false,
       "HasOutput": false,
-      "InputType": "VecN",
+      "InputType": null,
       "OutputType": null,
 
       "Components": [
         {
           "Type": "Inscription",
           "Title": "Цвет RGBA",
-          "HasInput": false,
+          "HasInput": true,
           "HasOutput": false,
-          "InputType": null,
+          "InputType": "VecN",
           "OutputType": null
-        }
-      ]
-    },
-
-    {
-      "TypeId": 312,
-      "Name": "OutputData_PixelOpacity",
-      "HasInput": true,
-      "HasOutput": false,
-      "InputType": "VecN",
-      "OutputType": null,
-
-      "Components": [
+        },
         {
           "Type": "Inscription",
           "Title": "Непрозрачность",
-          "HasInput": false,
+          "HasInput": true,
           "HasOutput": false,
-          "InputType": null,
+          "InputType": "Number",
           "OutputType": null
         }
       ]

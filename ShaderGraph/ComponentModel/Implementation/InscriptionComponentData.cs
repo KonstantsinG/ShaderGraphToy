@@ -5,6 +5,8 @@ namespace ShaderGraph.ComponentModel.Implementation
 {
     public class InscriptionComponentData : IGraphNodeComponent, INotifyPropertyChanged
     {
+        public required string Type { get; set; }
+
         private string _title = "";
         public required string Title
         {
