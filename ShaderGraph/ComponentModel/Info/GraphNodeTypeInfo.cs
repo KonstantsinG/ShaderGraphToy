@@ -20,6 +20,20 @@ namespace ShaderGraph.ComponentModel.Info
             }
         }
 
+        private string _description = "";
+        public required string Description
+        {
+            get => _description;
+            set
+            {
+                _description = value;
+                OnPropertyChanged(nameof(Description));
+            }
+        }
+
+        public required List<string> Synonyms { get; set; }
+        public required int TypeId { get; set; }
+
         private string _color = "#FF51B143";
         public required string Color
         {

@@ -11,5 +11,6 @@ namespace ShaderGraph.ComponentModel.Info
         public required int TypeId { get; set; }
         public required string Name { get; set; }
         public required string Description { get; set; }
+        public required List<string> Synonyms { get; set; }
     }
 }
