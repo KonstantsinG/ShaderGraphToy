@@ -11,6 +11,10 @@ namespace GUI.Components
     /// </summary>
     public partial class RenderingViewport : UserControl
     {
+        private bool _isDraggingResizeRect = false;
+        private Point _resizeStartPoint;
+
+
         public RenderingViewport()
         {
             InitializeComponent();
@@ -37,6 +41,46 @@ namespace GUI.Components
                 MinorVersion = 3
             };
             openTkControl.Start(settings);
+        }
+
+
+
+        private void ResizeRectangle_MouseLeftButtonDown(object sender, System.Windows.Input.MouseButtonEventArgs e)
+        {
+            _isDraggingResizeRect = true;
+            _resizeStartPoint = e.GetPosition(this);
+            resizeRect.CaptureMouse();
+        }
+
+        private void ResizeRectangle_MouseLeftButtonUp(object sender, System.Windows.Input.MouseButtonEventArgs e)
+        {
+            _isDraggingResizeRect = false;
+            resizeRect.ReleaseMouseCapture();
+        }
+
+        private void ResizeRectangle_MouseMove(object sender, System.Windows.Input.MouseEventArgs e)
+        {
+            if (_isDraggingResizeRect)
+            {
+                Point currentPoint = e.GetPosition(this);
+                double deltaY = -(currentPoint.Y - _resizeStartPoint.Y);
+
+                double totalHeight = infoRow.ActualHeight + viewportRow.ActualHeight;
+                double newInfoHeight = infoRow.ActualHeight + deltaY;
+                double newViewportHeight = totalHeight - newInfoHeight;
+
+                double minHeight = totalHeight * 0.2;
+                if (newInfoHeight < minHeight || newViewportHeight < minHeight)
+                    return;
+
+                double infoRatio = newInfoHeight / totalHeight;
+                double viewportRatio = newViewportHeight / totalHeight;
+
+                infoRow.Height = new GridLength(infoRatio, GridUnitType.Star);
+                viewportRow.Height = new GridLength(viewportRatio, GridUnitType.Star);
+
+                _resizeStartPoint = currentPoint;
+            }
         }
     }
 }

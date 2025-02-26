@@ -49,25 +49,25 @@ namespace GUI.Components
             _prevViewportHeight = ((Grid)mainCanvas.Parent).ActualHeight;
 
             GraphNodeBase nodeBase = new();
-            nodeBase.LoadNodeTypeData("Константа");
+            (nodeBase.DataContext as GraphNodeBaseVM)!.LoadNodeTypeData("Константа");
             mainCanvas.Children.Add(nodeBase);
             Canvas.SetLeft(nodeBase, 20);
             Canvas.SetTop(nodeBase, 20);
 
             nodeBase = new();
-            nodeBase.LoadNodeTypeData("Входные данные");
+            (nodeBase.DataContext as GraphNodeBaseVM)!.LoadNodeTypeData("Входные данные");
             mainCanvas.Children.Add(nodeBase);
             Canvas.SetLeft(nodeBase, 300);
             Canvas.SetTop(nodeBase, 20);
 
             nodeBase = new();
-            nodeBase.LoadNodeTypeData("Выходные данные");
+            (nodeBase.DataContext as GraphNodeBaseVM)!.LoadNodeTypeData("Выходные данные");
             mainCanvas.Children.Add(nodeBase);
             Canvas.SetLeft(nodeBase, 20);
             Canvas.SetTop(nodeBase, 200);
 
             nodeBase = new();
-            nodeBase.LoadNodeTypeData("Математические операции");
+            (nodeBase.DataContext as GraphNodeBaseVM)!.LoadNodeTypeData("Математические операции");
             mainCanvas.Children.Add(nodeBase);
             Canvas.SetLeft(nodeBase, 300);
             Canvas.SetTop(nodeBase, 200);
@@ -173,6 +173,7 @@ namespace GUI.Components
             {
                 _canvasDraggingOffset = e.GetPosition(this);
                 _draggingCanvas = true;
+                Cursor = Cursors.SizeAll;
                 mainCanvas.CaptureMouse();
             }
         }
@@ -182,6 +183,7 @@ namespace GUI.Components
             if (e.MiddleButton == MouseButtonState.Released)
             {
                 _draggingCanvas = false;
+                Cursor = Cursors.Arrow;
                 mainCanvas.ReleaseMouseCapture();
             }
         }

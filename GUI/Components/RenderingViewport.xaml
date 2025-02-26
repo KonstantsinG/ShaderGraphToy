@@ -11,8 +11,8 @@
     <Grid Background="{StaticResource Gray_02}">
 
         <Grid.RowDefinitions>
-            <RowDefinition Height="45*"/>
-            <RowDefinition Height="55*"/>
+            <RowDefinition Height="45*" x:Name="viewportRow"/>
+            <RowDefinition Height="55*" x:Name="infoRow"/>
         </Grid.RowDefinitions>
 
         <glWpfControl:GLWpfControl x:Name="openTkControl" Margin="10,10,10,0"/>
@@ -65,6 +65,12 @@
 
                 <Image Source="../Images/fullscreen_icon.png" Height="15" Width="15" Grid.Column="6"
                    HorizontalAlignment="Center" VerticalAlignment="Top" Margin="0,16,0,0"/>
+
+                <Rectangle Grid.ColumnSpan="7" Width="Auto" Height="10" Margin="0,0,0,-34"
+                           Panel.ZIndex="1" RadiusX="3" RadiusY="3" Cursor="SizeNS" Fill="Transparent"
+                           MouseLeftButtonDown="ResizeRectangle_MouseLeftButtonDown"
+                           MouseLeftButtonUp="ResizeRectangle_MouseLeftButtonUp"
+                           MouseMove="ResizeRectangle_MouseMove" x:Name="resizeRect"/>
 
             </Grid>
 

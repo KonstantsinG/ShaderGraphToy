@@ -4,12 +4,132 @@
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:GUI.Windows"
-        mc:Ignorable="d"
-        Title="Graph nodes browser" Height="450" Width="800">
-    
+        xmlns:wrp="clr-namespace:ShaderGraph.ComponentModel.Info.Wrappers;assembly=ShaderGraph"
+        mc:Ignorable="d" ResizeMode="NoResize"
+        Title="Graph nodes browser" Height="500" Width="400"
+        Background="{StaticResource Gray_005}">
+
+    <Window.Resources>
+        <BooleanToVisibilityConverter x:Key="boolToVis"/>
+
+        <HierarchicalDataTemplate DataType="{x:Type wrp:TreeViewerItem}" 
+                                ItemsSource="{Binding Children}">
+            <Grid Margin="2">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="Auto"/>
+                    <ColumnDefinition Width="*"/>
+                </Grid.ColumnDefinitions>
+
+                <StackPanel Grid.Column="0" Orientation="Horizontal" Margin="2">
+                    <TextBlock Text="{Binding Model.Name}" FontSize="14" FontWeight="Light"
+                               Foreground="{StaticResource Gray_05}"/>
+                </StackPanel>
+            </Grid>
+        </HierarchicalDataTemplate>
+    </Window.Resources>
+
     <Grid>
-        
-        
+        <Grid.RowDefinitions>
+            <RowDefinition Height="10*"/>
+            <RowDefinition Height="70*"/>
+            <RowDefinition Height="20*"/>
+        </Grid.RowDefinitions>
+
+        <Grid Grid.Row="0" Background="{StaticResource Gray_01}">
+
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="85*"/>
+                <ColumnDefinition Width="15*"/>
+            </Grid.ColumnDefinitions>
+
+            <TextBox Background="{StaticResource Gray_005}" BorderBrush="{x:Null}" Grid.Column="0"
+                     FontSize="15" Margin="30,10,0,5" Foreground="{StaticResource Gray_05}"
+                     FontWeight="Light" VerticalContentAlignment="Center" x:Name="searchBox"
+                     Text="{Binding SearchText, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
+
+            <Grid Grid.Column="1" Margin="-25,10,0,5">
+
+                <Rectangle Height="30" Width="30">
+
+                    <Rectangle.Style>
+                        <Style TargetType="Rectangle">
+                            <Setter Property="Fill" Value="{StaticResource Gray_005}"/>
+                            <Setter Property="Stroke" Value="Transparent"/>
+                            <Setter Property="StrokeThickness" Value="1"/>
+
+                            <Style.Triggers>
+                                <Trigger Property="IsMouseOver" Value="True">
+                                    <Setter Property="Fill" Value="{StaticResource Gray_01}"/>
+                                    <Setter Property="Stroke" Value="{StaticResource HighlightBlue}"/>
+                                </Trigger>
+
+                                <Trigger Property="IsFocused" Value="True">
+                                    <Setter Property="Stroke" Value="{StaticResource HighlightBlue}"/>
+                                </Trigger>
+                            </Style.Triggers>
+                        </Style>
+                    </Rectangle.Style>
+
+                </Rectangle>
+                
+                <Image Source="/Images/cross_icon.png" Height="30" Width="30" IsHitTestVisible="False"/>
+
+            </Grid>
+
+        </Grid>
+
+        <Grid Grid.Row="1" Background="{StaticResource Gray_01}" Margin="10,10,10,0">
+
+            <TreeView ItemsSource="{Binding TreeItems}"
+                    VirtualizingStackPanel.IsVirtualizing="True" VirtualizingStackPanel.VirtualizationMode="Recycling"
+                    x:Name="treeView">
+
+                <TreeView.Template>
+                    <ControlTemplate>
+                        <ScrollViewer VerticalScrollBarVisibility="Hidden"
+                          HorizontalScrollBarVisibility="Hidden">
+                            <ItemsPresenter/>
+                        </ScrollViewer>
+                    </ControlTemplate>
+                </TreeView.Template>
+
+                <TreeView.ItemContainerStyle>
+                    <Style TargetType="{x:Type TreeViewItem}">
+                        <Setter Property="IsExpanded" 
+                    Value="{Binding IsExpanded, Mode=TwoWay}"/>
+                    </Style>
+                </TreeView.ItemContainerStyle>
+
+            </TreeView>
+
+        </Grid>
+
+        <Grid Grid.Row="2" Background="{StaticResource Gray_005}">
+
+            <Grid.RowDefinitions>
+                <RowDefinition Height="60*"/>
+                <RowDefinition Height="40*"/>
+            </Grid.RowDefinitions>
+
+            <ScrollViewer HorizontalScrollBarVisibility="Disabled" VerticalScrollBarVisibility="Hidden"
+                          BorderThickness="1" BorderBrush="{StaticResource Gray_00}">
+
+                <TextBlock Text="{Binding SelectedDescription, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
+                           Foreground="{StaticResource Gray_05}" FontSize="13" Margin="10" TextWrapping="Wrap"/>
+
+            </ScrollViewer>
+
+            <StackPanel Orientation="Horizontal" Grid.Row="1">
+
+                <Button Content="Добавить" Style="{StaticResource GrayButton}"
+                        Height="25" Width="100" Margin="10,0"/>
+
+                <Button Content="Отмена" Style="{StaticResource GrayButton}"
+                        Height="25" Width="100"/>
+
+            </StackPanel>
+
+        </Grid>
         
     </Grid>
     

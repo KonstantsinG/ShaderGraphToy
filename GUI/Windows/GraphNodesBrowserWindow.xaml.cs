@@ -1,5 +1,9 @@
-﻿using System;
+﻿using GUI.Utilities;
+using ShaderGraph.ComponentModel.Info.Wrappers;
+using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
+using System.ComponentModel;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -22,6 +26,11 @@ namespace GUI.Windows
         public GraphNodesBrowserWindow()
         {
             InitializeComponent();
+
+            var vm = new GraphNodesBrowserWindowVM();
+            treeView.SelectedItemChanged += vm.TreeView_SelectedItemChanged;
+            searchBox.TextChanged += vm.SearchBox_TextChanged;
+            DataContext = vm;
         }
     }
 }

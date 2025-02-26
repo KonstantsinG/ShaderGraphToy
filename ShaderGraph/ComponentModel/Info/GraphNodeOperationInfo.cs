@@ -1,4 +1,5 @@
-﻿using System;
+﻿using ShaderGraph.ComponentModel.Info.Wrappers;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Reflection.Metadata;
@@ -7,7 +8,7 @@ using System.Threading.Tasks;
 
 namespace ShaderGraph.ComponentModel.Info
 {
-    public class GraphNodeOperationInfo
+    public class GraphNodeOperationInfo : ITreeViewerItem
     {
         public required string Name { get; set; }
         public required string Description { get; set; }

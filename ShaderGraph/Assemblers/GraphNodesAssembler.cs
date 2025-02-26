@@ -37,6 +37,19 @@ namespace ShaderGraph.Assemblers
             return null;
         }
 
+        public List<GraphNodeTypeInfo> GetTypesInfo()
+        {
+            List<GraphNodeTypeInfo> infos = [];
+            string jsonContent = File.ReadAllText(_graphNodesTypesPath);
+            JObject jObject = JObject.Parse(jsonContent);
+            JArray? graphNodesTypesArray = jObject["GraphNodesTypes"] as JArray;
+
+            foreach (var node in graphNodesTypesArray!)
+                infos.Add(node.ToObject<GraphNodeTypeInfo>()!);
+
+            return infos;
+        }
+
         public GraphNodeTypeContentInfo? GetTypeContentInfo(int id)
         {
             var settings = new JsonSerializerSettings

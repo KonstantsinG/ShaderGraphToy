@@ -2,7 +2,7 @@
 using System.Globalization;
 using System.Windows.Data;
 
-namespace GUI.Utilities
+namespace GUI.Utilities.Converters
 {
     [ValueConversion(typeof(IList), typeof(string))]
     public class MatrixIndexConverter : IValueConverter

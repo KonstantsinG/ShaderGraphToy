@@ -1,4 +1,5 @@
 ﻿using GUI.Controls;
+using GUI.Windows;
 using OpenTK.Graphics.OpenGL;
 using OpenTK.Wpf;
 using ShaderGraph.Assemblers;
@@ -25,6 +26,9 @@ namespace GUI
         public MainWindow()
         {
             InitializeComponent();
+
+            GraphNodesBrowserWindow w = new();
+            w.Show();
         }
 
 

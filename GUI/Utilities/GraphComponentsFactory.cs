@@ -1,6 +1,9 @@
 ﻿using GUI.Controls;
 using GUI.Controls.GraphNodeComponents;
+using ShaderGraph.Assemblers;
 using ShaderGraph.ComponentModel.Implementation;
+using ShaderGraph.ComponentModel.Info;
+using ShaderGraph.ComponentModel.Info.Wrappers;
 using System;
 using System.CodeDom;
 using System.Collections.Generic;
@@ -34,6 +37,42 @@ namespace GUI.Utilities
                 controls.Add(ConstructComponent(comp));
 
             return controls;
+        }
+
+        public static IEnumerable<TreeViewerItem> GetNodeTypesInfo()
+        {
+            IEnumerable<TreeViewerItem> types = [];
+            List<GraphNodeTypeInfo> data = GraphNodesAssembler.Instance.GetTypesInfo();
+            TreeViewerItem? currType;
+            TreeViewerItem? currSubType;
+            TreeViewerItem? currSubSubType;
+
+            foreach (GraphNodeTypeInfo type in data)
+            {
+                currType = new TreeViewerItem() { Model = type };
+
+                if (type.UsingOperations)
+                {
+                    foreach (GraphNodeOperationInfo subType in type.OperationsTypes)
+                    {
+                        currSubType = new TreeViewerItem() { Model = subType };
+                        currType.Children.Add(currSubType);
+
+                        if (type.UsingSubOperations)
+                        {
+                            foreach (GraphNodeSubOperationInfo subSubType in subType.SubTypes)
+                            {
+                                currSubSubType = new TreeViewerItem() { Model = subSubType };
+                                currSubType.Children.Add(currSubSubType);
+                            }
+                        }
+                    }
+                }
+
+                types = types.Append(currType);
+            }
+
+            return types;
         }
     }
 }

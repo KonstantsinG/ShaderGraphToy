@@ -7,7 +7,7 @@
         xmlns:controls="clr-namespace:GUI.Controls"
         xmlns:comps="clr-namespace:GUI.Components"
         mc:Ignorable="d"
-        Title="MainWindow" Height="800" Width="1300">
+        Title="ShaderGraph Application" Height="800" Width="1300">
 
     <Grid Background="#FF27282D">
 
@@ -31,7 +31,7 @@
                    HorizontalAlignment="Right" x:Name="resizeRect"
                    MouseLeftButtonDown="ResizeRect_MouseLeftButtonDown"
                    MouseLeftButtonUp="ResizeRect_MouseLeftButtonUp"
-                   MouseMove="ResizeRect_MouseMove">
+                   MouseMove="ResizeRect_MouseMove" Cursor="SizeWE">
             <Rectangle.Style>
                 <Style TargetType="Rectangle">
                     <Setter Property="Fill" Value="{StaticResource Gray_005}"/>

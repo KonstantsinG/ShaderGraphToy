@@ -4,13 +4,13 @@
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:local="clr-namespace:GUI.Controls.GraphNodeComponents"
-             xmlns:utl="clr-namespace:GUI.Utilities"
+             xmlns:conv="clr-namespace:GUI.Utilities.Converters"
              mc:Ignorable="d" 
              d:DesignHeight="150" d:DesignWidth="170">
 
     <UserControl.Resources>
         <BooleanToVisibilityConverter x:Key="BoolToVis"/>
-        <utl:ListIndexConverter x:Key="ListIdx"/>
+        <conv:ListIndexConverter x:Key="ListIdx"/>
     </UserControl.Resources>
     
     <StackPanel>

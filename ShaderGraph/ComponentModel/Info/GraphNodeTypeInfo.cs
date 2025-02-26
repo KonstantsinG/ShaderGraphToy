@@ -1,4 +1,5 @@
-﻿using System;
+﻿using ShaderGraph.ComponentModel.Info.Wrappers;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Linq;
@@ -7,7 +8,7 @@ using System.Threading.Tasks;
 
 namespace ShaderGraph.ComponentModel.Info
 {
-    public class GraphNodeTypeInfo : INotifyPropertyChanged
+    public class GraphNodeTypeInfo : INotifyPropertyChanged, ITreeViewerItem
     {
         private string _name = "";
         public required string Name
