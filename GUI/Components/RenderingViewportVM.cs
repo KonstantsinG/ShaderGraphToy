@@ -93,7 +93,7 @@ namespace GUI.Components
             get
             {
                 if (_nvidiaOptimusStatus == string.Empty)
-                    _nvidiaOptimusStatus = ((App)App.Current).IsNvapiActive ? "Forced GPU selection" : "Unavailable";
+                    _nvidiaOptimusStatus = ((App)App.Current).IsNvapiActive ? "Принудительный выбор GPU" : "Недоступен";
 
                 return _nvidiaOptimusStatus;
             }
@@ -197,7 +197,7 @@ namespace GUI.Components
 
             if (_timer!.ElapsedMilliseconds % 60 < 10)
             {
-                TimeDisplay = $"{_timer.Elapsed.Seconds}.{_timer.Elapsed.Milliseconds / 10} sec";
+                TimeDisplay = $"{_timer.Elapsed.Seconds}.{_timer.Elapsed.Milliseconds / 10} сек";
                 ResolutionDisplay = $"{(int)ViewportWidth} x {(int)ViewportHeight}";
             }
             if (_totalDelta >= 1000)

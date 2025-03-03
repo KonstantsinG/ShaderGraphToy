@@ -1,22 +1,27 @@
 ﻿using GUI.Utilities;
 using ShaderGraph.ComponentModel.Info.Wrappers;
-using System;
-using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.ComponentModel;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Controls;
 using System.Windows;
+using System.Windows.Input;
 
 namespace GUI.Windows
 {
     public class GraphNodesBrowserWindowVM : INotifyPropertyChanged
     {
-        private List<TreeViewerItem>? _sourceItems;
+        private readonly List<TreeViewerItem>? _sourceItems;
 
-        public ObservableCollection<TreeViewerItem> TreeItems { get; set; } = [];
+        private ObservableCollection<TreeViewerItem> _treeItems = [];
+        public ObservableCollection<TreeViewerItem> TreeItems
+        {
+            get => _treeItems;
+            set
+            {
+                _treeItems = value;
+                OnPropertyChanged(nameof(TreeItems));
+            }
+        }
 
         private string _selectedDescription = string.Empty;
         public string SelectedDescription
@@ -40,17 +45,36 @@ namespace GUI.Windows
             }
         }
 
+        private TreeViewerItem? _selectedItem;
+
+        public delegate void TreeViewerCallback(int? nodeId);
+        public event TreeViewerCallback ItemCreated = delegate { };
+
 
         public GraphNodesBrowserWindowVM()
         {
             _sourceItems = GraphComponentsFactory.GetNodeTypesInfo().ToList();
-            TreeItems = new ObservableCollection<TreeViewerItem>(new List<TreeViewerItem>(_sourceItems!));
+            TreeItems = new ObservableCollection<TreeViewerItem>(_sourceItems!);
         }
 
         public void TreeView_SelectedItemChanged(object sender, RoutedPropertyChangedEventArgs<object> e)
         {
-            TreeViewerItem item = (((TreeView)sender).SelectedItem as TreeViewerItem)!;
-            SelectedDescription = item.Model!.Description;
+            if (((TreeView)sender).SelectedItem is TreeViewerItem item)
+            {
+                _selectedItem = item;
+                SelectedDescription = item.Model!.Description;
+            }
+            else
+            {
+                _selectedItem = null;
+                SelectedDescription = string.Empty;
+            }
+        }
+
+        public void CrossRect_MouseDown(object sender, MouseButtonEventArgs e)
+        {
+            TreeItems = DeepCopyTreeViewerItems(_sourceItems!);
+            SearchText = string.Empty;
         }
 
         public void SearchBox_TextChanged(object sender, TextChangedEventArgs e)
@@ -58,29 +82,32 @@ namespace GUI.Windows
             TreeViewerItem? item;
             TreeViewerItem? subItem;
             TreeViewerItem? subSubItem;
-            TreeItems = new ObservableCollection<TreeViewerItem>(new List<TreeViewerItem>(_sourceItems!));
+            TreeItems = DeepCopyTreeViewerItems(_sourceItems!);
             if (SearchText == string.Empty) return;
 
             for (int i = 0; i < TreeItems.Count; i++)
             {
                 item = TreeItems[i];
+                item.IsExpanded = true;
 
                 for (int j = 0; j < item.Children.Count; j++)
                 {
                     subItem = item.Children[j];
+                    subItem.IsExpanded = true;
 
                     for (int k = 0; k < subItem.Children.Count; k++)
                     {
                         subSubItem = subItem.Children[k];
+                        subSubItem.IsExpanded = true;
 
-                        if (!subSubItem.Model!.Synonyms.Any(s => s.StartsWith(SearchText)))
+                        if (!subSubItem.Model!.Synonyms.Any(s => s.Contains(SearchText, StringComparison.CurrentCultureIgnoreCase)))
                         {
                             subItem.Children.RemoveAt(k);
                             k--;
                         }
                     }
 
-                    if (!subItem.Model!.Synonyms.Any(s => s.StartsWith(SearchText)))
+                    if (!subItem.Model!.Synonyms.Any(s => s.Contains(SearchText, StringComparison.CurrentCultureIgnoreCase)))
                     {
                         if (subItem.Children.Count > 0)
                         {
@@ -93,7 +120,7 @@ namespace GUI.Windows
                     }
                 }
 
-                if (!item.Model!.Synonyms.Any(s => s.StartsWith(SearchText)))
+                if (!item.Model!.Synonyms.Any(s => s.Contains(SearchText, StringComparison.CurrentCultureIgnoreCase)))
                 {
                     if (item.Children.Count > 0)
                     {
@@ -107,30 +134,38 @@ namespace GUI.Windows
             }
         }
 
-        private List<TreeViewerItem> GetTreeItemsDeepCopy(List<TreeViewerItem> source)
+        public void AddButton_Click(object sender, RoutedEventArgs e)
         {
-            List<TreeViewerItem> destinnation = [];
-            List<TreeViewerItem> newSubItems;
-            List<TreeViewerItem> newSubSubItems;
+            ItemCreated.Invoke(_selectedItem?.Model!.TypeId);
+        }
+
+        public void CancelButton_Click(object sender, RoutedEventArgs e)
+        {
+            ItemCreated.Invoke(null);
+        }
+
+        public static ObservableCollection<TreeViewerItem> DeepCopyTreeViewerItems(List<TreeViewerItem> source)
+        {
+            ObservableCollection<TreeViewerItem> copy = [];
 
             foreach (var item in source)
+                copy.Add(DeepCopyTreeViewerItem(item));
+
+            return copy;
+        }
+
+        private static TreeViewerItem DeepCopyTreeViewerItem(TreeViewerItem original)
+        {
+            TreeViewerItem copy = new ()
             {
-                newSubItems = [];
+                Model = original.Model,
+                IsExpanded = original.IsExpanded
+            };
 
-                foreach (var subItem in item.Children)
-                {
-                    newSubSubItems = [];
+            foreach (var child in original.Children)
+                copy.Children.Add(DeepCopyTreeViewerItem(child));
 
-                    foreach (var subSubItem in subItem.Children)
-                    {
-                        newSubSubItems.Add(subSubItem);
-                    }
-
-                    //newSubItems.Add(newSubItems);
-                }
-            }
-
-            return destinnation;
+            return copy;
         }
 
 

@@ -7,7 +7,6 @@ namespace ShaderGraph.ComponentModel.Info.Wrappers
     public class TreeViewerItem : INotifyPropertyChanged
     {
         public ObservableCollection<TreeViewerItem> Children { get; set; } = [];
-        public ICommand? ClickCommand { get; }
 
         private ITreeViewerItem? _model = null;
         public ITreeViewerItem? Model

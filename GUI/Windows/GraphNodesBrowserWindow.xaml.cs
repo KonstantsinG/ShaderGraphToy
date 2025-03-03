@@ -1,20 +1,4 @@
-﻿using GUI.Utilities;
-using ShaderGraph.ComponentModel.Info.Wrappers;
-using System;
-using System.Collections.Generic;
-using System.Collections.ObjectModel;
-using System.ComponentModel;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.Windows;
-using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
-using System.Windows.Input;
-using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Shapes;
+﻿using System.Windows;
 
 namespace GUI.Windows
 {
@@ -30,6 +14,10 @@ namespace GUI.Windows
             var vm = new GraphNodesBrowserWindowVM();
             treeView.SelectedItemChanged += vm.TreeView_SelectedItemChanged;
             searchBox.TextChanged += vm.SearchBox_TextChanged;
+            crossRect.MouseDown += vm.CrossRect_MouseDown;
+
+            addButton.Click += vm.AddButton_Click;
+            cancelButton.Click += vm.CancelButton_Click;
             DataContext = vm;
         }
     }

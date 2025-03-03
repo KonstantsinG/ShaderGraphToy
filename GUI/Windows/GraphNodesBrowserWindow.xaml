@@ -6,7 +6,7 @@
         xmlns:local="clr-namespace:GUI.Windows"
         xmlns:wrp="clr-namespace:ShaderGraph.ComponentModel.Info.Wrappers;assembly=ShaderGraph"
         mc:Ignorable="d" ResizeMode="NoResize"
-        Title="Graph nodes browser" Height="500" Width="400"
+        Title="Обозреватель графовых узлов" Height="500" Width="400"
         Background="{StaticResource Gray_005}">
 
     <Window.Resources>
@@ -49,7 +49,7 @@
 
             <Grid Grid.Column="1" Margin="-25,10,0,5">
 
-                <Rectangle Height="30" Width="30">
+                <Rectangle Height="30" Width="30" x:Name="crossRect">
 
                     <Rectangle.Style>
                         <Style TargetType="Rectangle">
@@ -80,7 +80,7 @@
 
         <Grid Grid.Row="1" Background="{StaticResource Gray_01}" Margin="10,10,10,0">
 
-            <TreeView ItemsSource="{Binding TreeItems}"
+            <TreeView ItemsSource="{Binding TreeItems, UpdateSourceTrigger=PropertyChanged}"
                     VirtualizingStackPanel.IsVirtualizing="True" VirtualizingStackPanel.VirtualizationMode="Recycling"
                     x:Name="treeView">
 
@@ -122,10 +122,10 @@
             <StackPanel Orientation="Horizontal" Grid.Row="1">
 
                 <Button Content="Добавить" Style="{StaticResource GrayButton}"
-                        Height="25" Width="100" Margin="10,0"/>
+                        Height="25" Width="100" Margin="10,0" x:Name="addButton"/>
 
                 <Button Content="Отмена" Style="{StaticResource GrayButton}"
-                        Height="25" Width="100"/>
+                        Height="25" Width="100" x:Name="cancelButton"/>
 
             </StackPanel>
 

@@ -80,13 +80,13 @@
 
             <StackPanel Margin="20,0,0,0">
 
-                <TextBlock Text="Rendering info:"
+                <TextBlock Text="Информация о рендеринге:"
                            Foreground="{StaticResource Gray_06}" FontWeight="Bold"
                            FontSize="15" Margin="0,0,0,10"/>
 
                 <WrapPanel>
 
-                    <TextBlock Text="NVIDIA Optimus status: "
+                    <TextBlock Text="Статус NVIDIA Optimus: "
                                Foreground="{StaticResource Gray_05}" FontWeight="Light"
                                FontSize="12"/>
 
