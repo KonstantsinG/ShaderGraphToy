@@ -145,9 +145,8 @@ namespace GUI.Components
             GL.BindBuffer(BufferTarget.ElementArrayBuffer, EBO);
             GL.BufferData(BufferTarget.ElementArrayBuffer, inds.Length * sizeof(float), inds, BufferUsageHint.StaticDraw);
 
-            string vertPath = System.IO.Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "Shaders/triangleShader.vert");
-            //string fragPath = "Shaders/triangleShader.frag";
-            string fragPath = System.IO.Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "Shaders/HappyJumpingShader.frag");
+            string vertPath = System.IO.Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "Shaders/plane.vert");
+            string fragPath = System.IO.Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "Shaders/rainbowSlices.frag");
             _shaderProgram = new Shader(vertPath, fragPath);
             _shaderProgram.Use();
 
