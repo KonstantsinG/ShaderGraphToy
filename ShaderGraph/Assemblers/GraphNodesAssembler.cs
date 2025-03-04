@@ -2,11 +2,7 @@
 using Newtonsoft.Json.Linq;
 using ShaderGraph.ComponentModel.Info;
 using ShaderGraph.Converters;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+using ShaderGraph.ComponentModel.Implementation;
 
 namespace ShaderGraph.Assemblers
 {

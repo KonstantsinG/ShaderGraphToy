@@ -1,14 +1,9 @@
 ﻿using Newtonsoft.Json;
 using Newtonsoft.Json.Converters;
-using ShaderGraph.ComponentModel.Implementation;
+using ShaderGraph.ComponentModel.Implementation.NodeComponents;
 using ShaderGraph.Converters;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
-namespace ShaderGraph.ComponentModel.Info
+namespace ShaderGraph.ComponentModel.Implementation
 {
     public class GraphNodeTypeContentInfo
     {

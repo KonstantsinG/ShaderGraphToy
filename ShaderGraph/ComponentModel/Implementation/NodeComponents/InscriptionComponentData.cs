@@ -1,7 +1,7 @@
 ﻿using ShaderGraph.Converters;
 using System.ComponentModel;
 
-namespace ShaderGraph.ComponentModel.Implementation
+namespace ShaderGraph.ComponentModel.Implementation.NodeComponents
 {
     public class InscriptionComponentData : IGraphNodeComponent, INotifyPropertyChanged
     {

@@ -54,7 +54,7 @@ namespace GUI.Windows
         public GraphNodesBrowserWindowVM()
         {
             _sourceItems = GraphComponentsFactory.GetNodeTypesInfo().ToList();
-            TreeItems = new ObservableCollection<TreeViewerItem>(_sourceItems!);
+            TreeItems = DeepCopyTreeViewerItems(_sourceItems!);
         }
 
         public void TreeView_SelectedItemChanged(object sender, RoutedPropertyChangedEventArgs<object> e)

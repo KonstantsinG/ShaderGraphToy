@@ -1,13 +1,8 @@
-﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using System.ComponentModel;
 
-namespace ShaderGraph.ComponentModel.Implementation
+namespace ShaderGraph.ComponentModel.Implementation.NodeComponents
 {
-    public class MatrixComponentData : IGraphNodeComponent, INotifyPropertyChanged
+    public class VectorComponentData : IGraphNodeComponent, INotifyPropertyChanged
     {
         public required string Type { get; set; }
 
@@ -22,8 +17,8 @@ namespace ShaderGraph.ComponentModel.Implementation
             }
         }
 
-        private List<List<string>> _contents = [];
-        public required List<List<string>> Contents
+        private List<string> _contents = [];
+        public required List<string> Contents
         {
             get => _contents;
             set
@@ -39,7 +34,7 @@ namespace ShaderGraph.ComponentModel.Implementation
             get => _isControlable;
             set
             {
-                _isControlable = value;
+                _isControlable= value;
                 OnPropertyChanged(nameof(IsControlable));
             }
         }

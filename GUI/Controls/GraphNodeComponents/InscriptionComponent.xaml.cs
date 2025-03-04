@@ -1,4 +1,4 @@
-﻿using ShaderGraph.ComponentModel.Implementation;
+﻿using ShaderGraph.ComponentModel.Implementation.NodeComponents;
 using System.Windows;
 using System.Windows.Controls;
 

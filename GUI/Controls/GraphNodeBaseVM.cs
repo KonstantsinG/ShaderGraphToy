@@ -1,13 +1,9 @@
 ﻿using GUI.Utilities;
 using ShaderGraph.Assemblers;
 using ShaderGraph.ComponentModel.Info;
-using System;
-using System.Collections.Generic;
+using ShaderGraph.ComponentModel.Implementation;
 using System.Collections.ObjectModel;
 using System.ComponentModel;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Controls;
 
 namespace GUI.Controls

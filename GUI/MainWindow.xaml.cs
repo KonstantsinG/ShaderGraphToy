@@ -26,9 +26,6 @@ namespace GUI
         public MainWindow()
         {
             InitializeComponent();
-
-            GraphNodesBrowserWindow w = new();
-            w.Show();
         }
 
 

@@ -1,15 +1,9 @@
 ﻿using GUI.Controls;
 using GUI.Controls.GraphNodeComponents;
 using ShaderGraph.Assemblers;
-using ShaderGraph.ComponentModel.Implementation;
+using ShaderGraph.ComponentModel.Implementation.NodeComponents;
 using ShaderGraph.ComponentModel.Info;
 using ShaderGraph.ComponentModel.Info.Wrappers;
-using System;
-using System.CodeDom;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Controls;
 
 namespace GUI.Utilities

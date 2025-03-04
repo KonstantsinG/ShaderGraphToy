@@ -1,7 +1,6 @@
 ﻿using Newtonsoft.Json.Linq;
 using Newtonsoft.Json;
-using ShaderGraph.ComponentModel.Implementation;
-using System.Diagnostics.CodeAnalysis;
+using ShaderGraph.ComponentModel.Implementation.NodeComponents;
 
 namespace ShaderGraph.Converters
 {

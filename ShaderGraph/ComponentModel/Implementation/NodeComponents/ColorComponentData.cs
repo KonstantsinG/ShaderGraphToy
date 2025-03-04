@@ -1,13 +1,8 @@
-﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using System.ComponentModel;
 
-namespace ShaderGraph.ComponentModel.Implementation
+namespace ShaderGraph.ComponentModel.Implementation.NodeComponents
 {
-    public class ListComponentData : IGraphNodeComponent, INotifyPropertyChanged
+    public class ColorComponentData : IGraphNodeComponent, INotifyPropertyChanged
     {
         public required string Type { get; set; }
 
@@ -22,14 +17,16 @@ namespace ShaderGraph.ComponentModel.Implementation
             }
         }
 
-        private List<string> _contents = [];
-        public required List<string> Contents
+        private string _content = "#FF535761";
+        public required string Content
         {
-            get => _contents;
+            get => _content;
             set
             {
-                _contents = value;
-                OnPropertyChanged(nameof(Contents));
+                if (value != null) _content = value;
+                else _content = "#FF535761";
+
+                OnPropertyChanged(nameof(Content));
             }
         }
 

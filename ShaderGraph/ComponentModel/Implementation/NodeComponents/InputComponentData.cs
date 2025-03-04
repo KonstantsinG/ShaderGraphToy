@@ -1,12 +1,7 @@
 ﻿using ShaderGraph.Converters;
-using System;
-using System.Collections.Generic;
 using System.ComponentModel;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
-namespace ShaderGraph.ComponentModel.Implementation
+namespace ShaderGraph.ComponentModel.Implementation.NodeComponents
 {
     public class InputComponentData : IGraphNodeComponent, INotifyPropertyChanged
     {
