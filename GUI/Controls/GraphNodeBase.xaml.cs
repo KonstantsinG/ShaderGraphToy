@@ -13,6 +13,8 @@ namespace GUI.Controls
         private bool _isTaken = false;
         private Point _mouseOffset;
 
+        public int NodeId {  get; set; }
+
 
         public GraphNodeBase()
         {

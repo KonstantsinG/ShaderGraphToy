@@ -1,7 +1,9 @@
 ﻿using GUI.Controls;
+using System.Diagnostics;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Input;
+using System.Windows.Interop;
 using System.Windows.Media;
 using System.Windows.Shapes;
 
@@ -12,9 +14,8 @@ namespace GUI.Components
     /// </summary>
     public partial class GraphCanvas : UserControl
     {
-        // dragging Canvas params
-        private bool _draggingCanvas = false;
-        private Point _canvasDraggingOffset;
+        private Point _mouseOffset;
+        private bool _holdingMouse = false;
 
         // Canvas zoom params
         private const double ZOOM_RATE = 1.1;
@@ -30,6 +31,19 @@ namespace GUI.Components
         // viewport resize params
         private double _prevViewportWidth;
         private double _prevViewportHeight;
+        
+        public static Cursor ZoomCursor { get; } = new Cursor(System.IO.Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "Images/zoom_cursor.cur"));
+
+        private enum MouseInputModes
+        {
+            Cursor,
+            Movement,
+            Zoom
+        }
+
+        private MouseInputModes _mouseInputMode = MouseInputModes.Cursor;
+        private MouseInputModes _prevInputMode = MouseInputModes.Cursor;
+        private Cursor _prevCursor = Cursors.Arrow;
 
 
         public GraphCanvas()
@@ -39,31 +53,14 @@ namespace GUI.Components
             _prevViewportWidth = ((Grid)mainCanvas.Parent).ActualWidth;
             _prevViewportHeight = ((Grid)mainCanvas.Parent).ActualHeight;
 
-            GraphNodeBase nodeBase = new();
-            (nodeBase.DataContext as GraphNodeBaseVM)!.LoadNodeTypeData("Константа");
-            mainCanvas.Children.Add(nodeBase);
-            Canvas.SetLeft(nodeBase, 20);
-            Canvas.SetTop(nodeBase, 20);
-
-            nodeBase = new();
-            (nodeBase.DataContext as GraphNodeBaseVM)!.LoadNodeTypeData("Входные данные");
-            mainCanvas.Children.Add(nodeBase);
-            Canvas.SetLeft(nodeBase, 300);
-            Canvas.SetTop(nodeBase, 20);
-
-            nodeBase = new();
-            (nodeBase.DataContext as GraphNodeBaseVM)!.LoadNodeTypeData("Выходные данные");
-            mainCanvas.Children.Add(nodeBase);
-            Canvas.SetLeft(nodeBase, 20);
-            Canvas.SetTop(nodeBase, 200);
-
-            nodeBase = new();
-            (nodeBase.DataContext as GraphNodeBaseVM)!.LoadNodeTypeData("Математические операции");
-            mainCanvas.Children.Add(nodeBase);
-            Canvas.SetLeft(nodeBase, 300);
-            Canvas.SetTop(nodeBase, 200);
-
             cursorLine.Background = (SolidColorBrush)FindResource("Gray_03");
+
+            GraphCanvasVM vm = new()
+            {
+                placeNodeOnCanvas = PlaceNodeOnCanvas
+            };
+            addRect.MouseDown += vm.AddRect_MouseDown;
+            DataContext = vm;
         }
 
         private void TranslateCanvas(double val)
@@ -118,16 +115,24 @@ namespace GUI.Components
             DrawMarkup();
         }
 
+
+
         private void MainCanvas_PreviewMouseWheel(object sender, MouseWheelEventArgs e)
         {
-            Matrix matrix = matrixTransform.Matrix;
             double scale = e.Delta > 0 ? ZOOM_RATE : 1 / ZOOM_RATE;
+            Point mousePosition = e.GetPosition(mainCanvas);
+
+            ZoomCanvas(mousePosition, scale);
+        }
+
+        private void ZoomCanvas(Point mousePosition, double scale)
+        {
+            Matrix matrix = matrixTransform.Matrix;
             double newZoom = matrix.M11 * scale;
 
             if (newZoom < MIN_ZOOM || newZoom > MAX_ZOOM)
                 return;
 
-            Point mousePosition = e.GetPosition(mainCanvas);
             matrix.ScaleAtPrepend(scale, scale, mousePosition.X, mousePosition.Y);
 
             // Canvas viewport sizes
@@ -164,10 +169,19 @@ namespace GUI.Components
         {
             if (e.MiddleButton == MouseButtonState.Pressed)
             {
-                _canvasDraggingOffset = e.GetPosition(this);
-                _draggingCanvas = true;
+                _mouseOffset = e.GetPosition(this);
+                _mouseInputMode = MouseInputModes.Movement;
                 Cursor = Cursors.SizeAll;
                 mainCanvas.CaptureMouse();
+                _holdingMouse = true;
+            }
+            else if (e.LeftButton == MouseButtonState.Pressed)
+            {
+                _mouseOffset = e.GetPosition(this);
+                _holdingMouse = true;
+
+                if (_mouseInputMode != MouseInputModes.Cursor)
+                    mainCanvas.CaptureMouse();
             }
         }
 
@@ -175,31 +189,58 @@ namespace GUI.Components
         {
             if (e.MiddleButton == MouseButtonState.Released)
             {
-                _draggingCanvas = false;
-                Cursor = Cursors.Arrow;
+                _mouseInputMode = _prevInputMode;
+                Cursor = _prevCursor;
                 mainCanvas.ReleaseMouseCapture();
+                _holdingMouse = false;
+            }
+            else if (e.LeftButton == MouseButtonState.Released)
+            {
+                mainCanvas.ReleaseMouseCapture();
+                _holdingMouse = false;
             }
         }
 
         private void MainCanvas_PreviewMouseMove(object sender, MouseEventArgs e)
         {
-            if (_draggingCanvas)
+            if (!_holdingMouse) return;
+
+            switch (_mouseInputMode)
             {
-                Point mousePos = e.GetPosition(this);
-                Matrix matrix = matrixTransform.Matrix;
+                case MouseInputModes.Cursor:
+                    // selection area stuff
+                    break;
 
-                double translateValueX = mousePos.X - _canvasDraggingOffset.X;
-                double translateValueY = mousePos.Y - _canvasDraggingOffset.Y;
-                bool translateX = CheckTranslationX(translateValueX);
-                bool translateY = CheckTranslationY(translateValueY);
+                case MouseInputModes.Movement:
+                    Point mousePos = e.GetPosition(this);
+                    Matrix matrix = matrixTransform.Matrix;
 
-                if (translateX) matrix.Translate(translateValueX, 0);
-                if (translateY) matrix.Translate(0, translateValueY);
+                    double translateValueX = mousePos.X - _mouseOffset.X;
+                    double translateValueY = mousePos.Y - _mouseOffset.Y;
+                    bool translateX = CheckTranslationX(translateValueX);
+                    bool translateY = CheckTranslationY(translateValueY);
 
-                _canvasDraggingOffset = mousePos;
-                matrixTransform.Matrix = matrix;
+                    if (translateX) matrix.Translate(translateValueX, 0);
+                    if (translateY) matrix.Translate(0, translateValueY);
+
+                    _mouseOffset = mousePos;
+                    matrixTransform.Matrix = matrix;
+                    break;
+
+                case MouseInputModes.Zoom:
+                    double delta = e.GetPosition(this).Y - _mouseOffset.Y;
+                    if (Math.Abs(delta) > 5)
+                    {
+                        double scale = delta < 0 ? ZOOM_RATE : 1 / ZOOM_RATE;
+                        Point mousePosition = e.GetPosition(mainCanvas);
+                        ZoomCanvas(mousePosition, scale);
+                        _mouseOffset = e.GetPosition(this);
+                    }
+                    break;
             }
         }
+
+
 
         private bool CheckTranslationX(double translateValueX)
         {
@@ -245,6 +286,52 @@ namespace GUI.Components
 
             _prevViewportWidth = newViewportWidth;
             _prevViewportHeight = newViewportHeight;
+        }
+
+
+
+        private void CursorRect_MouseDown(object sender, MouseButtonEventArgs e)
+        {
+            _mouseInputMode = MouseInputModes.Cursor;
+            _prevInputMode = MouseInputModes.Cursor;
+            Cursor = Cursors.Arrow;
+            _prevCursor = Cursors.Arrow;
+            cursorLine.Background = (SolidColorBrush)FindResource("Gray_03");
+            moveLine.Background = (SolidColorBrush)FindResource("Gray_005");
+            zoomLine.Background = (SolidColorBrush)FindResource("Gray_005");
+        }
+
+        private void MoveRect_MouseDown(object sender, MouseButtonEventArgs e)
+        {
+            _mouseInputMode = MouseInputModes.Movement;
+            _prevInputMode = MouseInputModes.Movement;
+            Cursor = Cursors.SizeAll;
+            _prevCursor = Cursors.SizeAll;
+            cursorLine.Background = (SolidColorBrush)FindResource("Gray_005");
+            moveLine.Background = (SolidColorBrush)FindResource("Gray_03");
+            zoomLine.Background = (SolidColorBrush)FindResource("Gray_005");
+        }
+
+        private void ZoomRect_MouseDown(object sender, MouseButtonEventArgs e)
+        {
+            _mouseInputMode = MouseInputModes.Zoom;
+            _prevInputMode = MouseInputModes.Zoom;
+            Cursor = ZoomCursor;
+            _prevCursor = ZoomCursor;
+            cursorLine.Background = (SolidColorBrush)FindResource("Gray_005");
+            moveLine.Background = (SolidColorBrush)FindResource("Gray_005");
+            zoomLine.Background = (SolidColorBrush)FindResource("Gray_03");
+        }
+
+
+        public void PlaceNodeOnCanvas(GraphNodeBase node)
+        {
+            mainCanvas.Children.Add(node);
+
+            double px = ((((Grid)mainCanvas.Parent).ActualWidth / matrixTransform.Matrix.M11) / 2) + (-matrixTransform.Matrix.OffsetX / matrixTransform.Matrix.M11);
+            double py = (((Grid)mainCanvas.Parent).ActualHeight / matrixTransform.Matrix.M22 / 2) + (-matrixTransform.Matrix.OffsetY / matrixTransform.Matrix.M22);
+            Canvas.SetLeft(node, px);
+            Canvas.SetTop(node, py);
         }
     }
 }

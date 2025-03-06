@@ -26,7 +26,7 @@
             </Style.Triggers>
 
         </Style>
-        
+
     </UserControl.Resources>
 
     <Grid SizeChanged="Grid_SizeChanged">
@@ -54,7 +54,7 @@
 
             <Grid Grid.Column="1">
 
-                <Rectangle Height="30" Width="30" x:Name="cursorRect"/>
+                <Rectangle Height="30" Width="30" x:Name="cursorRect" MouseDown="CursorRect_MouseDown"/>
                 <Image Source="/Images/cursor_icon.png" Height="20" Width="20" IsHitTestVisible="False"/>
                 <Border Height="1" VerticalAlignment="Bottom" Margin="7,0,7,5" x:Name="cursorLine"
                         Background="{StaticResource Gray_005}"/>
@@ -63,7 +63,7 @@
 
             <Grid Grid.Column="2">
 
-                <Rectangle Height="30" Width="30" x:Name="moveRect"/>
+                <Rectangle Height="30" Width="30" x:Name="moveRect" MouseDown="MoveRect_MouseDown"/>
                 <Image Source="/Images/move_icon.png" Height="20" Width="20" IsHitTestVisible="False"/>
                 <Border Height="1" VerticalAlignment="Bottom" Margin="7,0,7,5" x:Name="moveLine"
                         Background="{StaticResource Gray_005}"/>
@@ -72,7 +72,7 @@
 
             <Grid Grid.Column="3">
 
-                <Rectangle Height="30" Width="30" x:Name="zoomRect"/>
+                <Rectangle Height="30" Width="30" x:Name="zoomRect" MouseDown="ZoomRect_MouseDown"/>
                 <Image Source="/Images/zoom_icon.png" Height="20" Width="20" IsHitTestVisible="False"/>
                 <Border Height="1" VerticalAlignment="Bottom" Margin="7,0,7,5" x:Name="zoomLine"
                         Background="{StaticResource Gray_005}"/>

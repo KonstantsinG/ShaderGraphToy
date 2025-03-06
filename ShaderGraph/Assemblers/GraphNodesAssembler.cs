@@ -33,6 +33,21 @@ namespace ShaderGraph.Assemblers
             return null;
         }
 
+        public GraphNodeTypeInfo? GetTypeInfo(int id)
+        {
+            string jsonContent = File.ReadAllText(_graphNodesTypesPath);
+            JObject jObject = JObject.Parse(jsonContent);
+            JArray? graphNodesTypesArray = jObject["GraphNodesTypes"] as JArray;
+
+            foreach (var node in graphNodesTypesArray!)
+            {
+                if (node["TypeId"]?.ToString() == id.ToString())
+                    return node.ToObject<GraphNodeTypeInfo>()!;
+            }
+
+            return null;
+        }
+
         public List<GraphNodeTypeInfo> GetTypesInfo()
         {
             List<GraphNodeTypeInfo> infos = [];

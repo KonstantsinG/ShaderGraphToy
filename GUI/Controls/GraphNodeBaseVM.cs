@@ -43,6 +43,28 @@ namespace GUI.Controls
             }
         }
 
+        private int _selectedOperationIndex = -1;
+        public int SelectedOperationIndex
+        {
+            get => _selectedOperationIndex;
+            set
+            {
+                _selectedOperationIndex = value;
+                OnPropertyChanged(nameof(SelectedOperationIndex));
+            }
+        }
+
+        private int _selectedSubOperationIndex = -1;
+        public int SelectedSubOperationIndex
+        {
+            get => _selectedSubOperationIndex;
+            set
+            {
+                _selectedSubOperationIndex = value;
+                OnPropertyChanged(nameof(SelectedSubOperationIndex));
+            }
+        }
+
         public ObservableCollection<GraphNodeOperationInfo> NodeOperations { get; set; } = [];
         public ObservableCollection<GraphNodeSubOperationInfo> NodeSubOperations { get; set; } = [];
         public ObservableCollection<UserControl> NodeComponents { get; set; } = [];
@@ -103,6 +125,36 @@ namespace GUI.Controls
             NodeComponents.Clear();
             foreach (var comp in comps) NodeComponents.Add(comp);
             IsConnectorsVisible = true;
+        }
+
+        public void ConstructNode(int nodeId)
+        {
+            string strId = nodeId.ToString();
+            int idFirstPart = int.Parse(strId[0].ToString());
+
+            GraphNodeTypeInfo info = GraphNodesAssembler.Instance.GetTypeInfo(idFirstPart)!;
+            NodeModel = info;
+
+            if (!info.UsingOperations)
+            {
+                int id = info.OperationsTypes[0].SubTypes[0].TypeId;
+                LoadNodeContent(id);
+            }
+            else
+            {
+                NodeOperations.Clear();
+                foreach (var op in info.OperationsTypes) NodeOperations.Add(op);
+
+                if (strId.Length == 2)
+                {
+                    SelectedOperationIndex = int.Parse(strId[1].ToString()) - 1;
+                }
+                else if (strId.Length == 3)
+                {
+                    SelectedOperationIndex = int.Parse(strId[1].ToString()) - 1;
+                    SelectedSubOperationIndex = int.Parse(strId[2].ToString()) - 1;
+                }
+            }
         }
 
 

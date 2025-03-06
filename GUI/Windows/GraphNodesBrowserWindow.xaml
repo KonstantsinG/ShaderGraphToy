@@ -7,6 +7,7 @@
         xmlns:wrp="clr-namespace:ShaderGraph.ComponentModel.Info.Wrappers;assembly=ShaderGraph"
         mc:Ignorable="d" ResizeMode="NoResize"
         Title="Обозреватель графовых узлов" Height="500" Width="400"
+        WindowStartupLocation="CenterScreen"
         Background="{StaticResource Gray_005}">
 
     <Window.Resources>

@@ -55,7 +55,8 @@
 
                     <ComboBox Margin="0,0,0,5" x:Name="operationsCBox"
                               Visibility="{Binding Path=NodeModel.UsingOperations, Converter={StaticResource boolToVis}, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
-                              ItemsSource="{Binding NodeOperations}">
+                              ItemsSource="{Binding NodeOperations}"
+                              SelectedIndex="{Binding SelectedOperationIndex, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}">
 
                         <ComboBox.ItemTemplate>
                             <DataTemplate>
@@ -66,6 +67,7 @@
                     </ComboBox>
 
                     <ComboBox ItemsSource="{Binding NodeSubOperations}" x:Name="subOperationsCBox"
+                              SelectedIndex="{Binding SelectedSubOperationIndex, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
                               Visibility="{Binding Path=NodeModel.UsingSubOperations, Converter={StaticResource boolToVis}, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}">
 
                         <ComboBox.ItemTemplate>
