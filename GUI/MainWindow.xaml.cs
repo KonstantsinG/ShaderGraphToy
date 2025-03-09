@@ -66,5 +66,15 @@ namespace GUI
                 _resizeStartPoint = currentPoint;
             }
         }
+
+        private void Window_PreviewKeyDown(object sender, System.Windows.Input.KeyEventArgs e)
+        {
+            graphCanvas.InvokePreviewKeyDown(sender, e);
+        }
+
+        private void Window_PreviewKeyUp(object sender, System.Windows.Input.KeyEventArgs e)
+        {
+            graphCanvas.InvokePreviewKeyUp(sender, e);
+        }
     }
 }

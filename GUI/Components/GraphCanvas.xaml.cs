@@ -1,10 +1,12 @@
 ﻿using GUI.Controls;
 using System.Diagnostics;
+using System.Runtime.CompilerServices;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Input;
 using System.Windows.Interop;
 using System.Windows.Media;
+using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
 
 namespace GUI.Components
@@ -15,24 +17,37 @@ namespace GUI.Components
     public partial class GraphCanvas : UserControl
     {
         private Point _mouseOffset;
+        private Point _selectionOffset;
         private bool _holdingMouse = false;
+
+        private bool _shiftPressed = false;
+        private bool _ctrlPressed = false;
 
         // Canvas zoom params
         private const double ZOOM_RATE = 1.1;
         private const double MIN_ZOOM = 0.4;
         private const double MAX_ZOOM = 2.0;
-        
+
         // Canvas markup params
         private const int GRID_STEP = 60;
         private Point _gridOffset = new(30, 30);
-        private const int DOT_SIZE = 4;
-        private readonly List<Ellipse> _gridDots = [];
+        private const int DOT_SIZE = 3;
+        private WriteableBitmap? _gridBitmap;
 
         // viewport resize params
         private double _prevViewportWidth;
         private double _prevViewportHeight;
+
+        public delegate void NodeSelectionHandler(GraphNodeBase? node, bool shiftPressed = false);
+        public delegate void NodesActionsHandler(List<GraphNodeBase> nodes);
+
+        public event EventHandler NodesBrowserOpened = delegate { };
+        public event NodeSelectionHandler NodeSelectionToggled = delegate { };
+        public event NodesActionsHandler NodesRemoved = delegate { };
         
         public static Cursor ZoomCursor { get; } = new Cursor(System.IO.Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "Images/zoom_cursor.cur"));
+        
+        private List<GraphNodeBase> _selectedNodes = [];
 
         private enum MouseInputModes
         {
@@ -55,11 +70,10 @@ namespace GUI.Components
 
             cursorLine.Background = (SolidColorBrush)FindResource("Gray_03");
 
-            GraphCanvasVM vm = new()
-            {
-                placeNodeOnCanvas = PlaceNodeOnCanvas
-            };
-            addRect.MouseDown += vm.AddRect_MouseDown;
+            GraphCanvasVM vm = new() { placeNodeOnCanvas = PlaceNodeOnCanvas };
+            NodesBrowserOpened += vm.OpenNodesBrowser;
+            NodeSelectionToggled += vm.SelectNode;
+            NodesRemoved += vm.RemoveNodes;
             DataContext = vm;
         }
 
@@ -71,48 +85,93 @@ namespace GUI.Components
         }
 
 
-        private void ClearCanvasGrid()
+        private void MainCanvas_SizeChanged(object sender, SizeChangedEventArgs e)
         {
-            for (int i = 0; i < _gridDots.Count; i++)
-                mainCanvas.Children.Remove(_gridDots[i]);
-
-            _gridDots.Clear();
+            DrawMarkup();
         }
 
         private void DrawMarkup()
         {
-            ClearCanvasGrid();
+            int segmentSize = GRID_STEP * 5;
 
-            for (int px = (int)_gridOffset.X; px < mainCanvas.ActualWidth; px += GRID_STEP)
+            Color gray03 = ((SolidColorBrush)FindResource("Gray_03")).Color;
+            Color gray04 = ((SolidColorBrush)FindResource("Gray_04")).Color;
+
+            WriteableBitmap segment = CreateGridSegment(segmentSize, gray03, gray04);
+
+            ImageBrush gridBrush = new()
             {
-                for (int py = (int)_gridOffset.Y; py < mainCanvas.ActualHeight; py += GRID_STEP)
-                {
-                    Ellipse el = new();
-                    if ((double)(px / GRID_STEP) % 5 == 0 && (double)(py / GRID_STEP) % 5 == 0) // highlight every 5'th dot
-                    {
-                        el.Height = DOT_SIZE + 1;
-                        el.Width = DOT_SIZE + 1;
-                        el.Fill = (Brush)FindResource("Gray_04");
-                    }
-                    else // regular dot
-                    {
-                        el.Height = DOT_SIZE;
-                        el.Width = DOT_SIZE;
-                        el.Fill = (Brush)FindResource("Gray_03");
-                    }
+                ImageSource = segment,
+                TileMode = TileMode.Tile,
+                Viewport = new Rect(0, 0, segmentSize, segmentSize),
+                ViewportUnits = BrushMappingMode.Absolute
+            };
 
-                    Panel.SetZIndex(el, -4);
-                    Canvas.SetLeft(el, px);
-                    Canvas.SetTop(el, py);
-                    _gridDots.Add(el);
-                    mainCanvas.Children.Add(el);
-                }
-            }
+            Rectangle gridRect = new()
+            {
+                Width = mainCanvas.ActualWidth,
+                Height = mainCanvas.ActualHeight,
+                Fill = gridBrush,
+                IsHitTestVisible = false
+            };
+
+            Panel.SetZIndex(gridRect, -4);
+            mainCanvas.Children.Add(gridRect);
         }
 
-        private void MainCanvas_SizeChanged(object sender, SizeChangedEventArgs e)
+        private WriteableBitmap CreateGridSegment(int segmentSize, Color gray03, Color gray04)
         {
-            DrawMarkup();
+            double dpiScale = 1.0;
+            double dpi = 96 * dpiScale;
+
+            WriteableBitmap segment = new WriteableBitmap(
+                (int)(segmentSize * dpiScale),
+                (int)(segmentSize * dpiScale),
+                dpi, dpi, PixelFormats.Pbgra32, null);
+
+            for (int i = 0; i < 5; i++)
+            {
+                for (int j = 0; j < 5; j++)
+                {
+                    bool isBigDot = i == 0 && j == 0;
+                    Color color = isBigDot ? gray04 : gray03;
+
+                    int radius = isBigDot ? DOT_SIZE / 2 + 1 : DOT_SIZE / 2;
+                    DrawCircle(segment, i * GRID_STEP + GRID_STEP / 2, j * GRID_STEP + GRID_STEP / 2, color, radius);
+                }
+            }
+
+            return segment;
+        }
+
+        private void DrawCircle(WriteableBitmap bitmap, int x, int y, Color color, int radius)
+        {
+            int width = bitmap.PixelWidth;
+            int height = bitmap.PixelHeight;
+            int bytesPerPixel = (bitmap.Format.BitsPerPixel + 7) / 8;
+
+            for (int i = -radius; i <= radius; i++)
+            {
+                for (int j = -radius; j <= radius; j++)
+                {
+                    double distance = Math.Sqrt(i * i + j * j);
+                    double alpha = 1.0;
+
+                    if (distance > radius - 0.5 && distance <= radius + 0.5)
+                        alpha = 1.0 - (distance - (radius - 0.5));
+                    else if (distance > radius + 0.5)
+                        continue;
+
+                    int px = x + i;
+                    int py = y + j;
+
+                    if (px >= 0 && px < width && py >= 0 && py < height)
+                    {
+                        byte[] pixelData = [color.B, color.G, color.R, (byte)(color.A * alpha)];
+                        bitmap.WritePixels(new Int32Rect(px, py, 1, 1), pixelData, bytesPerPixel, 0);
+                    }
+                }
+            }
         }
 
 
@@ -165,23 +224,67 @@ namespace GUI.Components
             matrixTransform.Matrix = matrix;
         }
 
+        public void InvokePreviewKeyDown(object sender, KeyEventArgs e)
+        {
+            if (e.IsRepeat) return;
+
+            _shiftPressed = e.KeyboardDevice.IsKeyDown(Key.LeftShift) || e.KeyboardDevice.IsKeyDown(Key.RightShift);
+            _ctrlPressed = e.KeyboardDevice.IsKeyDown(Key.LeftCtrl) || e.KeyboardDevice.IsKeyDown(Key.RightCtrl);
+
+            if (_ctrlPressed && e.Key == Key.N) NodesBrowserOpened.Invoke(sender, e);
+            else if (e.Key == Key.Delete) RemoveSelectedNodes();
+        }
+
+        public void InvokePreviewKeyUp(object sender, KeyEventArgs e)
+        {
+            if (e.IsRepeat) return;
+
+            _shiftPressed = e.KeyboardDevice.IsKeyDown(Key.LeftShift) || e.KeyboardDevice.IsKeyDown(Key.RightShift);
+            _ctrlPressed = e.KeyboardDevice.IsKeyDown(Key.LeftCtrl) || e.KeyboardDevice.IsKeyDown(Key.RightCtrl);
+        }
+
         private void MainCanvas_PreviewMouseDown(object sender, MouseButtonEventArgs e)
         {
-            if (e.MiddleButton == MouseButtonState.Pressed)
+            _mouseOffset = e.GetPosition(this);
+            _holdingMouse = true;
+
+            if (e.LeftButton == MouseButtonState.Pressed)
             {
-                _mouseOffset = e.GetPosition(this);
+                if (_mouseInputMode != MouseInputModes.Cursor) // you need to leave an opportunity for cursor to interact with the canvas children
+                    mainCanvas.CaptureMouse();
+                else
+                {
+                    if (e.Source is GraphNodeBase node) // if you press on the GraphNode, you need to select them and deselect others
+                    {
+                        _selectionOffset = e.GetPosition(mainCanvas);
+
+                        if (_shiftPressed)
+                        {
+                            if (node.Selected) _selectedNodes.Remove(node); // if shift pressed and this node is already selected - deselect him
+                            else if (!_selectedNodes.Contains(node)) _selectedNodes.Add(node);
+                        }
+                        else
+                        {
+                            if (_selectedNodes.Count > 1) return; // if some nodes selected and shift is up - do nothing with selection area
+
+                            _selectedNodes.Clear();
+                            _selectedNodes.Add(node);
+                        }
+
+                        NodeSelectionToggled.Invoke(node, _shiftPressed);
+                    }
+                    else if (e.Source is Canvas) // if you press ont the canvas, you need to deselect all the GraphNodes
+                    {
+                        _selectedNodes.Clear();
+                        NodeSelectionToggled.Invoke(null);
+                    }
+                }
+            }
+            else if (e.MiddleButton == MouseButtonState.Pressed) // mouse wheel always for movement state
+            {
                 _mouseInputMode = MouseInputModes.Movement;
                 Cursor = Cursors.SizeAll;
                 mainCanvas.CaptureMouse();
-                _holdingMouse = true;
-            }
-            else if (e.LeftButton == MouseButtonState.Pressed)
-            {
-                _mouseOffset = e.GetPosition(this);
-                _holdingMouse = true;
-
-                if (_mouseInputMode != MouseInputModes.Cursor)
-                    mainCanvas.CaptureMouse();
             }
         }
 
@@ -191,14 +294,10 @@ namespace GUI.Components
             {
                 _mouseInputMode = _prevInputMode;
                 Cursor = _prevCursor;
-                mainCanvas.ReleaseMouseCapture();
-                _holdingMouse = false;
             }
-            else if (e.LeftButton == MouseButtonState.Released)
-            {
-                mainCanvas.ReleaseMouseCapture();
-                _holdingMouse = false;
-            }
+
+            mainCanvas.ReleaseMouseCapture();
+            _holdingMouse = false;
         }
 
         private void MainCanvas_PreviewMouseMove(object sender, MouseEventArgs e)
@@ -208,6 +307,8 @@ namespace GUI.Components
             switch (_mouseInputMode)
             {
                 case MouseInputModes.Cursor:
+                    TryMoveSelectedNodes(e);
+
                     // selection area stuff
                     break;
 
@@ -323,6 +424,16 @@ namespace GUI.Components
             zoomLine.Background = (SolidColorBrush)FindResource("Gray_03");
         }
 
+        private void AddRect_MouseDown(object sender, MouseButtonEventArgs e)
+        {
+            NodesBrowserOpened.Invoke(sender, e);
+        }
+
+        private void RemoveRect_MouseDown(object sender, MouseButtonEventArgs e)
+        {
+            RemoveSelectedNodes();
+        }
+
 
         public void PlaceNodeOnCanvas(GraphNodeBase node)
         {
@@ -330,8 +441,37 @@ namespace GUI.Components
 
             double px = ((((Grid)mainCanvas.Parent).ActualWidth / matrixTransform.Matrix.M11) / 2) + (-matrixTransform.Matrix.OffsetX / matrixTransform.Matrix.M11);
             double py = (((Grid)mainCanvas.Parent).ActualHeight / matrixTransform.Matrix.M22 / 2) + (-matrixTransform.Matrix.OffsetY / matrixTransform.Matrix.M22);
-            Canvas.SetLeft(node, px);
-            Canvas.SetTop(node, py);
+            node.RenderTransform = new TranslateTransform(px, py);
+        }
+
+        private void RemoveSelectedNodes()
+        {
+            foreach (GraphNodeBase node in _selectedNodes)
+                mainCanvas.Children.Remove(node);
+
+            NodesRemoved.Invoke(_selectedNodes);
+            _selectedNodes.Clear();
+        }
+
+        private bool TryMoveSelectedNodes(MouseEventArgs e)
+        {
+            if (_selectedNodes.Count == 0) return false;
+
+            TranslateTransform tr;
+            TranslateTransform oldTr;
+            Point currentPosition = e.GetPosition(mainCanvas);
+
+            foreach (GraphNodeBase node in _selectedNodes)
+            {
+                oldTr = node.RenderTransform as TranslateTransform ?? new(0, 0);
+                tr = new(oldTr.X + currentPosition.X - _selectionOffset.X, oldTr.Y + currentPosition.Y - _selectionOffset.Y);
+
+                node.RenderTransform = tr;
+            }
+
+            _selectionOffset = currentPosition;
+
+            return true;
         }
     }
 }

@@ -7,7 +7,8 @@
         xmlns:controls="clr-namespace:GUI.Controls"
         xmlns:comps="clr-namespace:GUI.Components"
         mc:Ignorable="d"
-        Title="Визуальный редактор шейдеров" Height="800" Width="1300">
+        Title="Визуальный редактор шейдеров" Height="800" Width="1300"
+        PreviewKeyDown="Window_PreviewKeyDown" PreviewKeyUp="Window_PreviewKeyUp">
 
     <Grid Background="#FF27282D">
 
@@ -16,13 +17,7 @@
             <ColumnDefinition x:Name="viewportColumn" Width="42*"/>
         </Grid.ColumnDefinitions>
 
-        <ContentPresenter>
-            <ContentPresenter.Content>
-
-                <comps:GraphCanvas/>
-
-            </ContentPresenter.Content>
-        </ContentPresenter>
+        <comps:GraphCanvas x:Name="graphCanvas"/>
 
         <Border Background="{StaticResource Gray_005}" Width="3"
                 HorizontalAlignment="Right"/>
@@ -44,13 +39,7 @@
             </Rectangle.Style>
         </Rectangle>
 
-        <ContentPresenter Grid.Column="1">
-            <ContentPresenter.Content>
-
-                <comps:RenderingViewport/>
-
-            </ContentPresenter.Content>
-        </ContentPresenter>
+        <comps:RenderingViewport Grid.Column="1"/>
 
     </Grid>
     

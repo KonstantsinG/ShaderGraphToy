@@ -134,6 +134,17 @@ namespace GUI.Windows
             }
         }
 
+        public void SearchBoxKeyPressed(object sender, KeyEventArgs e)
+        {
+            if (e.Key == Key.Enter)
+            {
+                if (_selectedItem == null)
+                    _selectedItem = TreeItems.FirstOrDefault();
+
+                ItemCreated.Invoke(_selectedItem?.Model!.TypeId);
+            }
+        }
+
         public void AddButton_Click(object sender, RoutedEventArgs e)
         {
             ItemCreated.Invoke(_selectedItem?.Model!.TypeId);

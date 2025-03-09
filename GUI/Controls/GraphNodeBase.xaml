@@ -30,8 +30,7 @@
 
         <Grid Grid.Row="0"
               MouseLeftButtonDown="HeaderPanel_MouseLeftButtonDown"
-              MouseLeftButtonUp="HeaderPanel_MouseLeftButtonUp"
-              MouseMove="HeaderPanel_MouseMove">
+              MouseLeftButtonUp="HeaderPanel_MouseLeftButtonUp">
 
             <Rectangle Fill="{Binding Path=NodeModel.Color, Converter={StaticResource strToColor}, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
                        RadiusX="4" RadiusY="4" x:Name="headerPanel"/>

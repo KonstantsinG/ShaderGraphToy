@@ -91,14 +91,16 @@
 
             <Grid Grid.Column="5">
 
-                <Rectangle Height="30" Width="30" x:Name="addRect" Stroke="{StaticResource Gray_02}"/>
+                <Rectangle Height="30" Width="30" x:Name="addRect" Stroke="{StaticResource Gray_02}"
+                           MouseDown="AddRect_MouseDown"/>
                 <Image Source="/Images/plus_icon.png" Height="20" Width="20" IsHitTestVisible="False"/>
 
             </Grid>
 
             <Grid Grid.Column="6">
 
-                <Rectangle Height="30" Width="30" x:Name="removeRect" Stroke="{StaticResource Gray_02}"/>
+                <Rectangle Height="30" Width="30" x:Name="removeRect" Stroke="{StaticResource Gray_02}"
+                           MouseDown="RemoveRect_MouseDown"/>
                 <Image Source="/Images/remove_icon.png" Height="20" Width="20" IsHitTestVisible="False"/>
 
             </Grid>
@@ -106,12 +108,13 @@
         </Grid>
 
         <Canvas Background="{StaticResource Gray_01}" AllowDrop="True" Panel.ZIndex="-5"
+                RenderOptions.CachingHint="Cache" RenderOptions.ClearTypeHint="Enabled"
                 x:Name="mainCanvas" SizeChanged="MainCanvas_SizeChanged"
                 PreviewMouseWheel="MainCanvas_PreviewMouseWheel"
                 PreviewMouseDown="MainCanvas_PreviewMouseDown"
                 PreviewMouseUp="MainCanvas_PreviewMouseUp"
                 PreviewMouseMove="MainCanvas_PreviewMouseMove"
-                Width="5000" Height="5000" Grid.Row="1">
+                Width="5000" Height="4950" Grid.Row="1">
 
             <Canvas.RenderTransform>
                 <MatrixTransform x:Name="matrixTransform"/>

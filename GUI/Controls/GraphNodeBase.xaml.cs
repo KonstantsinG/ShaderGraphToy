@@ -10,10 +10,9 @@ namespace GUI.Controls
     /// </summary>
     public partial class GraphNodeBase : UserControl
     {
-        private bool _isTaken = false;
-        private Point _mouseOffset;
-
-        public int NodeId {  get; set; }
+        public int NodeId { get; set; }
+        public bool Selected { get; private set; }
+        public bool HeaderGrabbed { get; private set; }
 
 
         public GraphNodeBase()
@@ -29,51 +28,38 @@ namespace GUI.Controls
 
         private void Grid_MouseEnter(object sender, MouseEventArgs e)
         {
-            borderRect.Fill = (Brush)FindResource("HighlightBlue");
+            if (!Selected) borderRect.Fill = (Brush)FindResource("HighlightBlue");
         }
 
         private void Grid_MouseLeave(object sender, MouseEventArgs e)
         {
-            borderRect.Fill = (Brush)FindResource("Gray_00");
+            if (!Selected) borderRect.Fill = (Brush)FindResource("Gray_00");
+        }
+
+        public void ToggleSelection(bool isSelected)
+        {
+            Selected = isSelected;
+
+            if (isSelected)
+            {
+                borderRect.Fill = (Brush)FindResource("SelectedBlue");
+                borderRect.Margin = new Thickness(-3);
+            }
+            else
+            {
+                borderRect.Fill = (Brush)FindResource("Gray_00");
+                borderRect.Margin = new Thickness(-1);
+            }
         }
 
         private void HeaderPanel_MouseLeftButtonDown(object sender, MouseButtonEventArgs e)
         {
-            _isTaken = true;
-            _mouseOffset = e.GetPosition(this);
-            headerPanel.CaptureMouse();
+            HeaderGrabbed = true;
         }
 
         private void HeaderPanel_MouseLeftButtonUp(object sender, MouseButtonEventArgs e)
         {
-            _isTaken = false;
-            headerPanel.ReleaseMouseCapture();
-        }
-
-        private void HeaderPanel_MouseMove(object sender, MouseEventArgs e)
-        {
-            if (_isTaken)
-            {
-                Point currentPosition;
-
-                if (Parent is Canvas)
-                {
-                    currentPosition = e.GetPosition(Parent as Canvas);
-
-                    Canvas.SetLeft(this, currentPosition.X - _mouseOffset.X);
-                    Canvas.SetTop(this, currentPosition.Y - _mouseOffset.Y);
-                }
-                else
-                {
-                    if (((UserControl)Parent).Parent is Canvas)
-                    {
-                        currentPosition = e.GetPosition(((UserControl)Parent).Parent as Canvas);
-
-                        Canvas.SetLeft((UserControl)Parent, currentPosition.X - _mouseOffset.X);
-                        Canvas.SetTop((UserControl)Parent, currentPosition.Y - _mouseOffset.Y);
-                    }
-                }
-            }
+            HeaderGrabbed = false;
         }
     }
 }

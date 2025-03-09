@@ -11,10 +11,12 @@ namespace GUI.Components
         private GraphNodesBrowserWindow? _nodesBrowser = null;
         private static int _nodesCounter = 0;
 
+        private readonly List<GraphNodeBase> _nodes = [];
+
         public Action<GraphNodeBase>? placeNodeOnCanvas;
 
 
-        public void AddRect_MouseDown(object sender, MouseButtonEventArgs e)
+        public void OpenNodesBrowser(object? sender, EventArgs? e)
         {
             _nodesBrowser?.Close();
 
@@ -32,10 +34,39 @@ namespace GUI.Components
             {
                 GraphNodeBase node = new();
                 ((GraphNodeBaseVM)node.DataContext!).ConstructNode((int)nodeId);
+
                 node.NodeId = _nodesCounter++;
+                _nodes.Add(node);
 
                 placeNodeOnCanvas?.Invoke(node);
             }
+        }
+
+        public void SelectNode(GraphNodeBase? node, bool shiftPressed)
+        {
+            if (node != null)
+            {
+                if (node.Selected && shiftPressed)
+                    node.ToggleSelection(false);
+                else
+                    node.ToggleSelection(true);
+            }
+
+            if (!shiftPressed)
+            {
+                foreach (GraphNodeBase n in _nodes)
+                {
+                    if (node != null && node == n) continue;
+
+                    if (n.Selected) n.ToggleSelection(false);
+                }
+            }
+        }
+
+        public void RemoveNodes(List<GraphNodeBase> nodes)
+        {
+            foreach (GraphNodeBase node in nodes)
+                _nodes.Remove(node);
         }
 
 

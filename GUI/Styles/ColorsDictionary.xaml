@@ -21,5 +21,6 @@
 
     <SolidColorBrush x:Key="ConsoleGreen" Color="#FF33D026"/>
     <SolidColorBrush x:Key="HighlightBlue" Color="#FF707CA9"/>
+    <SolidColorBrush x:Key="SelectedBlue" Color="#FF879ADE"/>
 
 </ResourceDictionary>
