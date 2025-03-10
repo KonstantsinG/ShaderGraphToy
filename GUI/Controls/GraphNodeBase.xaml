@@ -28,15 +28,13 @@
         <Rectangle Fill="{StaticResource Gray_005}" Grid.RowSpan="2"
                    RadiusX="4" RadiusY="4"/>
 
-        <Grid Grid.Row="0"
-              MouseLeftButtonDown="HeaderPanel_MouseLeftButtonDown"
-              MouseLeftButtonUp="HeaderPanel_MouseLeftButtonUp">
+        <Grid Grid.Row="0">
 
             <Rectangle Fill="{Binding Path=NodeModel.Color, Converter={StaticResource strToColor}, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
-                       RadiusX="4" RadiusY="4" x:Name="headerPanel"/>
+                       RadiusX="4" RadiusY="4" x:Name="headerPanel" MouseLeftButtonDown="HeaderPanel_MouseLeftButtonDown"/>
 
             <TextBlock Text="{Binding Path=NodeModel.Name, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
-                       HorizontalAlignment="Center" VerticalAlignment="Center" Margin="10,0"
+                       HorizontalAlignment="Center" VerticalAlignment="Center" Margin="10,0" IsHitTestVisible="False"
                        FontSize="16" FontWeight="Medium" Foreground="{StaticResource Gray_06}"/>
 
         </Grid>

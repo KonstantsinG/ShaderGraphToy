@@ -16,9 +16,11 @@ namespace GUI.Components
     /// </summary>
     public partial class GraphCanvas : UserControl
     {
+        #region PARAMS
         private Point _mouseOffset;
         private Point _selectionOffset;
         private bool _holdingMouse = false;
+        private bool _nodeHeaderGrabbed = false;
 
         private bool _shiftPressed = false;
         private bool _ctrlPressed = false;
@@ -30,9 +32,7 @@ namespace GUI.Components
 
         // Canvas markup params
         private const int GRID_STEP = 60;
-        private Point _gridOffset = new(30, 30);
         private const int DOT_SIZE = 3;
-        private WriteableBitmap? _gridBitmap;
 
         // viewport resize params
         private double _prevViewportWidth;
@@ -47,7 +47,7 @@ namespace GUI.Components
         
         public static Cursor ZoomCursor { get; } = new Cursor(System.IO.Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "Images/zoom_cursor.cur"));
         
-        private List<GraphNodeBase> _selectedNodes = [];
+        private readonly List<GraphNodeBase> _selectedNodes = [];
 
         private enum MouseInputModes
         {
@@ -59,6 +59,7 @@ namespace GUI.Components
         private MouseInputModes _mouseInputMode = MouseInputModes.Cursor;
         private MouseInputModes _prevInputMode = MouseInputModes.Cursor;
         private Cursor _prevCursor = Cursors.Arrow;
+        #endregion
 
 
         public GraphCanvas()
@@ -69,6 +70,7 @@ namespace GUI.Components
             _prevViewportHeight = ((Grid)mainCanvas.Parent).ActualHeight;
 
             cursorLine.Background = (SolidColorBrush)FindResource("Gray_03");
+            mainCanvas.Focus();
 
             GraphCanvasVM vm = new() { placeNodeOnCanvas = PlaceNodeOnCanvas };
             NodesBrowserOpened += vm.OpenNodesBrowser;
@@ -85,6 +87,7 @@ namespace GUI.Components
         }
 
 
+        #region CANVAS MARKUP
         private void MainCanvas_SizeChanged(object sender, SizeChangedEventArgs e)
         {
             DrawMarkup();
@@ -119,12 +122,12 @@ namespace GUI.Components
             mainCanvas.Children.Add(gridRect);
         }
 
-        private WriteableBitmap CreateGridSegment(int segmentSize, Color gray03, Color gray04)
+        private static WriteableBitmap CreateGridSegment(int segmentSize, Color gray03, Color gray04)
         {
             double dpiScale = 1.0;
             double dpi = 96 * dpiScale;
 
-            WriteableBitmap segment = new WriteableBitmap(
+            WriteableBitmap segment = new(
                 (int)(segmentSize * dpiScale),
                 (int)(segmentSize * dpiScale),
                 dpi, dpi, PixelFormats.Pbgra32, null);
@@ -144,7 +147,7 @@ namespace GUI.Components
             return segment;
         }
 
-        private void DrawCircle(WriteableBitmap bitmap, int x, int y, Color color, int radius)
+        private static void DrawCircle(WriteableBitmap bitmap, int x, int y, Color color, int radius)
         {
             int width = bitmap.PixelWidth;
             int height = bitmap.PixelHeight;
@@ -173,9 +176,10 @@ namespace GUI.Components
                 }
             }
         }
+        #endregion
 
 
-
+        #region INPUT HANDLERS
         private void MainCanvas_PreviewMouseWheel(object sender, MouseWheelEventArgs e)
         {
             double scale = e.Delta > 0 ? ZOOM_RATE : 1 / ZOOM_RATE;
@@ -184,6 +188,199 @@ namespace GUI.Components
             ZoomCanvas(mousePosition, scale);
         }
 
+        // Hotkeys only for Canvas focus state
+        private void MainCanvas_PreviewKeyDown(object sender, KeyEventArgs e)
+        {
+            if (!mainCanvas.IsKeyboardFocused || e.IsRepeat) return;
+
+            if (e.Key == Key.D1) CursorRect_MouseDown(sender, null);
+            else if (e.Key == Key.D2) MoveRect_MouseDown(sender, null);
+            else if (e.Key == Key.D3) ZoomRect_MouseDown(sender, null);
+        }
+
+        // global Hotkeys
+        public void InvokePreviewKeyDown(object sender, KeyEventArgs e)
+        {
+            if (e.IsRepeat) return;
+
+            _shiftPressed = e.KeyboardDevice.IsKeyDown(Key.LeftShift) || e.KeyboardDevice.IsKeyDown(Key.RightShift);
+            _ctrlPressed = e.KeyboardDevice.IsKeyDown(Key.LeftCtrl) || e.KeyboardDevice.IsKeyDown(Key.RightCtrl);
+
+            if (_ctrlPressed && e.Key == Key.N) NodesBrowserOpened.Invoke(sender, e);
+            else if (e.Key == Key.Delete) RemoveSelectedNodes();
+        }
+
+        public void InvokePreviewKeyUp(object sender, KeyEventArgs e)
+        {
+            if (e.IsRepeat) return;
+
+            _shiftPressed = e.KeyboardDevice.IsKeyDown(Key.LeftShift) || e.KeyboardDevice.IsKeyDown(Key.RightShift);
+            _ctrlPressed = e.KeyboardDevice.IsKeyDown(Key.LeftCtrl) || e.KeyboardDevice.IsKeyDown(Key.RightCtrl);
+        }
+
+        private void MainCanvas_PreviewMouseDown(object sender, MouseButtonEventArgs e)
+        {
+            _mouseOffset = e.GetPosition(this);
+            _holdingMouse = true;
+
+            if (e.MiddleButton == MouseButtonState.Pressed)
+            {
+                _mouseInputMode = MouseInputModes.Movement;
+                Cursor = Cursors.SizeAll;
+                mainCanvas.CaptureMouse();
+            }
+            else if (e.LeftButton == MouseButtonState.Pressed)
+            {
+                MainCanvas_PreviewLeftMouseDown(sender, e);
+            }
+        }
+
+        private void MainCanvas_PreviewLeftMouseDown(object sender, MouseButtonEventArgs e)
+        {
+            if (_mouseInputMode == MouseInputModes.Cursor)
+            {
+                if (e.Source is GraphNodeBase node)
+                {
+                    _selectionOffset = e.GetPosition(mainCanvas);
+                    if (_selectedNodes.Count < 2) _nodeHeaderGrabbed = false; // you can move multiple nodes by grabbing them in any region
+
+                    if (_shiftPressed)
+                    {
+                        if (node.Selected) _selectedNodes.Remove(node);
+                        else if (!_selectedNodes.Contains(node)) _selectedNodes.Add(node);
+                    }
+                    else
+                    {
+                        if (_selectedNodes.Count > 1) return;
+
+                        _selectedNodes.Clear();
+                        _selectedNodes.Add(node);
+                    }
+
+                    // vm controls logical selection
+                    NodeSelectionToggled.Invoke(node, _shiftPressed);
+                }
+                else if (e.Source is Canvas)
+                {
+                    mainCanvas.Focus();
+                    _selectedNodes.Clear();
+                    NodeSelectionToggled.Invoke(null);
+                }
+            }
+
+            else mainCanvas.CaptureMouse();
+        }
+
+        public void GraphNode_HeaderPanelPressed(object sender, MouseEventArgs e)
+        {
+            // you can move single node only by grabbing it on header
+            _nodeHeaderGrabbed = true;
+        }
+
+        private void MainCanvas_PreviewMouseUp(object sender, MouseButtonEventArgs e)
+        {
+            if (e.MiddleButton == MouseButtonState.Released)
+            {
+                _mouseInputMode = _prevInputMode;
+                Cursor = _prevCursor;
+                _selectionOffset = e.GetPosition(mainCanvas); // reset mouse offset to prevent tp bugs
+            }
+
+            mainCanvas.ReleaseMouseCapture();
+            _holdingMouse = false;
+        }
+
+        private void MainCanvas_PreviewMouseMove(object sender, MouseEventArgs e)
+        {
+            if (!_holdingMouse) return;
+
+            switch (_mouseInputMode)
+            {
+                case MouseInputModes.Cursor:
+                    // if you can't move selected nodes - start  drawing selection area
+                    if (!TryMoveSelectedNodes(e))
+                        break;
+
+                    break;
+
+                case MouseInputModes.Movement:
+                    Point mousePos = e.GetPosition(this);
+                    Matrix matrix = matrixTransform.Matrix;
+
+                    double translateValueX = mousePos.X - _mouseOffset.X;
+                    double translateValueY = mousePos.Y - _mouseOffset.Y;
+                    bool translateX = CheckTranslationX(translateValueX);
+                    bool translateY = CheckTranslationY(translateValueY);
+
+                    if (translateX) matrix.Translate(translateValueX, 0);
+                    if (translateY) matrix.Translate(0, translateValueY);
+
+                    _mouseOffset = mousePos;
+                    matrixTransform.Matrix = matrix;
+                    break;
+
+                case MouseInputModes.Zoom:
+                    double delta = e.GetPosition(this).Y - _mouseOffset.Y;
+                    if (Math.Abs(delta) > 5)
+                    {
+                        double scale = delta < 0 ? ZOOM_RATE : 1 / ZOOM_RATE;
+                        Point mousePosition = e.GetPosition(mainCanvas);
+                        ZoomCanvas(mousePosition, scale);
+                        _mouseOffset = e.GetPosition(this);
+                    }
+                    break;
+            }
+        }
+        #endregion
+
+
+        #region TOOLBAR HANDLERS
+        private void CursorRect_MouseDown(object sender, MouseButtonEventArgs? e)
+        {
+            _mouseInputMode = MouseInputModes.Cursor;
+            _prevInputMode = MouseInputModes.Cursor;
+            Cursor = Cursors.Arrow;
+            _prevCursor = Cursors.Arrow;
+            cursorLine.Background = (SolidColorBrush)FindResource("Gray_03");
+            moveLine.Background = (SolidColorBrush)FindResource("Gray_005");
+            zoomLine.Background = (SolidColorBrush)FindResource("Gray_005");
+        }
+
+        private void MoveRect_MouseDown(object sender, MouseButtonEventArgs? e)
+        {
+            _mouseInputMode = MouseInputModes.Movement;
+            _prevInputMode = MouseInputModes.Movement;
+            Cursor = Cursors.SizeAll;
+            _prevCursor = Cursors.SizeAll;
+            cursorLine.Background = (SolidColorBrush)FindResource("Gray_005");
+            moveLine.Background = (SolidColorBrush)FindResource("Gray_03");
+            zoomLine.Background = (SolidColorBrush)FindResource("Gray_005");
+        }
+
+        private void ZoomRect_MouseDown(object sender, MouseButtonEventArgs? e)
+        {
+            _mouseInputMode = MouseInputModes.Zoom;
+            _prevInputMode = MouseInputModes.Zoom;
+            Cursor = ZoomCursor;
+            _prevCursor = ZoomCursor;
+            cursorLine.Background = (SolidColorBrush)FindResource("Gray_005");
+            moveLine.Background = (SolidColorBrush)FindResource("Gray_005");
+            zoomLine.Background = (SolidColorBrush)FindResource("Gray_03");
+        }
+
+        private void AddRect_MouseDown(object sender, MouseButtonEventArgs e)
+        {
+            NodesBrowserOpened.Invoke(sender, e);
+        }
+
+        private void RemoveRect_MouseDown(object sender, MouseButtonEventArgs e)
+        {
+            RemoveSelectedNodes();
+        }
+        #endregion
+
+
+        #region EXTRA METHODS
         private void ZoomCanvas(Point mousePosition, double scale)
         {
             Matrix matrix = matrixTransform.Matrix;
@@ -224,125 +421,7 @@ namespace GUI.Components
             matrixTransform.Matrix = matrix;
         }
 
-        public void InvokePreviewKeyDown(object sender, KeyEventArgs e)
-        {
-            if (e.IsRepeat) return;
-
-            _shiftPressed = e.KeyboardDevice.IsKeyDown(Key.LeftShift) || e.KeyboardDevice.IsKeyDown(Key.RightShift);
-            _ctrlPressed = e.KeyboardDevice.IsKeyDown(Key.LeftCtrl) || e.KeyboardDevice.IsKeyDown(Key.RightCtrl);
-
-            if (_ctrlPressed && e.Key == Key.N) NodesBrowserOpened.Invoke(sender, e);
-            else if (e.Key == Key.Delete) RemoveSelectedNodes();
-        }
-
-        public void InvokePreviewKeyUp(object sender, KeyEventArgs e)
-        {
-            if (e.IsRepeat) return;
-
-            _shiftPressed = e.KeyboardDevice.IsKeyDown(Key.LeftShift) || e.KeyboardDevice.IsKeyDown(Key.RightShift);
-            _ctrlPressed = e.KeyboardDevice.IsKeyDown(Key.LeftCtrl) || e.KeyboardDevice.IsKeyDown(Key.RightCtrl);
-        }
-
-        private void MainCanvas_PreviewMouseDown(object sender, MouseButtonEventArgs e)
-        {
-            _mouseOffset = e.GetPosition(this);
-            _holdingMouse = true;
-
-            if (e.LeftButton == MouseButtonState.Pressed)
-            {
-                if (_mouseInputMode != MouseInputModes.Cursor) // you need to leave an opportunity for cursor to interact with the canvas children
-                    mainCanvas.CaptureMouse();
-                else
-                {
-                    if (e.Source is GraphNodeBase node) // if you press on the GraphNode, you need to select them and deselect others
-                    {
-                        _selectionOffset = e.GetPosition(mainCanvas);
-
-                        if (_shiftPressed)
-                        {
-                            if (node.Selected) _selectedNodes.Remove(node); // if shift pressed and this node is already selected - deselect him
-                            else if (!_selectedNodes.Contains(node)) _selectedNodes.Add(node);
-                        }
-                        else
-                        {
-                            if (_selectedNodes.Count > 1) return; // if some nodes selected and shift is up - do nothing with selection area
-
-                            _selectedNodes.Clear();
-                            _selectedNodes.Add(node);
-                        }
-
-                        NodeSelectionToggled.Invoke(node, _shiftPressed);
-                    }
-                    else if (e.Source is Canvas) // if you press ont the canvas, you need to deselect all the GraphNodes
-                    {
-                        _selectedNodes.Clear();
-                        NodeSelectionToggled.Invoke(null);
-                    }
-                }
-            }
-            else if (e.MiddleButton == MouseButtonState.Pressed) // mouse wheel always for movement state
-            {
-                _mouseInputMode = MouseInputModes.Movement;
-                Cursor = Cursors.SizeAll;
-                mainCanvas.CaptureMouse();
-            }
-        }
-
-        private void MainCanvas_PreviewMouseUp(object sender, MouseButtonEventArgs e)
-        {
-            if (e.MiddleButton == MouseButtonState.Released)
-            {
-                _mouseInputMode = _prevInputMode;
-                Cursor = _prevCursor;
-            }
-
-            mainCanvas.ReleaseMouseCapture();
-            _holdingMouse = false;
-        }
-
-        private void MainCanvas_PreviewMouseMove(object sender, MouseEventArgs e)
-        {
-            if (!_holdingMouse) return;
-
-            switch (_mouseInputMode)
-            {
-                case MouseInputModes.Cursor:
-                    TryMoveSelectedNodes(e);
-
-                    // selection area stuff
-                    break;
-
-                case MouseInputModes.Movement:
-                    Point mousePos = e.GetPosition(this);
-                    Matrix matrix = matrixTransform.Matrix;
-
-                    double translateValueX = mousePos.X - _mouseOffset.X;
-                    double translateValueY = mousePos.Y - _mouseOffset.Y;
-                    bool translateX = CheckTranslationX(translateValueX);
-                    bool translateY = CheckTranslationY(translateValueY);
-
-                    if (translateX) matrix.Translate(translateValueX, 0);
-                    if (translateY) matrix.Translate(0, translateValueY);
-
-                    _mouseOffset = mousePos;
-                    matrixTransform.Matrix = matrix;
-                    break;
-
-                case MouseInputModes.Zoom:
-                    double delta = e.GetPosition(this).Y - _mouseOffset.Y;
-                    if (Math.Abs(delta) > 5)
-                    {
-                        double scale = delta < 0 ? ZOOM_RATE : 1 / ZOOM_RATE;
-                        Point mousePosition = e.GetPosition(mainCanvas);
-                        ZoomCanvas(mousePosition, scale);
-                        _mouseOffset = e.GetPosition(this);
-                    }
-                    break;
-            }
-        }
-
-
-
+        // check if this translation will be in canvas region on X
         private bool CheckTranslationX(double translateValueX)
         {
             Matrix tstMatrix = matrixTransform.Matrix;
@@ -357,6 +436,7 @@ namespace GUI.Components
                 return true;
         }
 
+        // check if this translation will be in canvas region on Y
         private bool CheckTranslationY(double translateValueY)
         {
             Matrix tstMatrix = matrixTransform.Matrix;
@@ -389,54 +469,9 @@ namespace GUI.Components
             _prevViewportHeight = newViewportHeight;
         }
 
-
-
-        private void CursorRect_MouseDown(object sender, MouseButtonEventArgs e)
-        {
-            _mouseInputMode = MouseInputModes.Cursor;
-            _prevInputMode = MouseInputModes.Cursor;
-            Cursor = Cursors.Arrow;
-            _prevCursor = Cursors.Arrow;
-            cursorLine.Background = (SolidColorBrush)FindResource("Gray_03");
-            moveLine.Background = (SolidColorBrush)FindResource("Gray_005");
-            zoomLine.Background = (SolidColorBrush)FindResource("Gray_005");
-        }
-
-        private void MoveRect_MouseDown(object sender, MouseButtonEventArgs e)
-        {
-            _mouseInputMode = MouseInputModes.Movement;
-            _prevInputMode = MouseInputModes.Movement;
-            Cursor = Cursors.SizeAll;
-            _prevCursor = Cursors.SizeAll;
-            cursorLine.Background = (SolidColorBrush)FindResource("Gray_005");
-            moveLine.Background = (SolidColorBrush)FindResource("Gray_03");
-            zoomLine.Background = (SolidColorBrush)FindResource("Gray_005");
-        }
-
-        private void ZoomRect_MouseDown(object sender, MouseButtonEventArgs e)
-        {
-            _mouseInputMode = MouseInputModes.Zoom;
-            _prevInputMode = MouseInputModes.Zoom;
-            Cursor = ZoomCursor;
-            _prevCursor = ZoomCursor;
-            cursorLine.Background = (SolidColorBrush)FindResource("Gray_005");
-            moveLine.Background = (SolidColorBrush)FindResource("Gray_005");
-            zoomLine.Background = (SolidColorBrush)FindResource("Gray_03");
-        }
-
-        private void AddRect_MouseDown(object sender, MouseButtonEventArgs e)
-        {
-            NodesBrowserOpened.Invoke(sender, e);
-        }
-
-        private void RemoveRect_MouseDown(object sender, MouseButtonEventArgs e)
-        {
-            RemoveSelectedNodes();
-        }
-
-
         public void PlaceNodeOnCanvas(GraphNodeBase node)
         {
+            node.HeaderPressed += GraphNode_HeaderPanelPressed;
             mainCanvas.Children.Add(node);
 
             double px = ((((Grid)mainCanvas.Parent).ActualWidth / matrixTransform.Matrix.M11) / 2) + (-matrixTransform.Matrix.OffsetX / matrixTransform.Matrix.M11);
@@ -455,7 +490,7 @@ namespace GUI.Components
 
         private bool TryMoveSelectedNodes(MouseEventArgs e)
         {
-            if (_selectedNodes.Count == 0) return false;
+            if (_selectedNodes.Count == 0 || !_nodeHeaderGrabbed) return false;
 
             TranslateTransform tr;
             TranslateTransform oldTr;
@@ -473,5 +508,6 @@ namespace GUI.Components
 
             return true;
         }
+        #endregion
     }
 }

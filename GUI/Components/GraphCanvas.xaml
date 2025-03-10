@@ -114,7 +114,8 @@
                 PreviewMouseDown="MainCanvas_PreviewMouseDown"
                 PreviewMouseUp="MainCanvas_PreviewMouseUp"
                 PreviewMouseMove="MainCanvas_PreviewMouseMove"
-                Width="5000" Height="4950" Grid.Row="1">
+                PreviewKeyDown="MainCanvas_PreviewKeyDown"
+                Width="5000" Height="4950" Grid.Row="1" Focusable="True">
 
             <Canvas.RenderTransform>
                 <MatrixTransform x:Name="matrixTransform"/>

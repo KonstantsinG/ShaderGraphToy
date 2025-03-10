@@ -12,7 +12,8 @@ namespace GUI.Controls
     {
         public int NodeId { get; set; }
         public bool Selected { get; private set; }
-        public bool HeaderGrabbed { get; private set; }
+
+        public event MouseButtonEventHandler HeaderPressed = delegate { };
 
 
         public GraphNodeBase()
@@ -54,12 +55,7 @@ namespace GUI.Controls
 
         private void HeaderPanel_MouseLeftButtonDown(object sender, MouseButtonEventArgs e)
         {
-            HeaderGrabbed = true;
-        }
-
-        private void HeaderPanel_MouseLeftButtonUp(object sender, MouseButtonEventArgs e)
-        {
-            HeaderGrabbed = false;
+            HeaderPressed.Invoke(this, e);
         }
     }
 }
