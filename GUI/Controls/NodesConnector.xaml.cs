@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Diagnostics.Eventing.Reader;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -20,20 +21,48 @@ namespace GUI.Controls
     /// </summary>
     public partial class NodesConnector : UserControl
     {
+        private bool _isBusy = false;
+        public bool IsBusy
+        {
+            get => _isBusy;
+            set
+            {
+                if (value) ellipse.Fill = (SolidColorBrush)FindResource(NodeColor);
+                else ellipse.Fill = (SolidColorBrush)FindResource("Gray_02");
+
+                _isBusy = value;
+            }
+        }
+
+        public bool IsInput { get; set; }
+        public int NodeId { get; set; }
+        public int ConnectorId { get; set; }
+        public string NodeColor { get; set; } = string.Empty;
+
+
         public NodesConnector()
         {
             InitializeComponent();
         }
 
 
+        public Point GetGlobalCenter(FrameworkElement el)
+        {
+            Point localCenter = new(ActualWidth / 2, ActualHeight / 2);
+            GeneralTransform transform = TransformToVisual(el);
+
+            return transform.Transform(localCenter);
+        }
+
+
         private void Grid_MouseEnter(object sender, MouseEventArgs e)
         {
-            ellipse.Fill = (SolidColorBrush)FindResource("HighlightBlue");
+            if (!IsBusy) ellipse.Fill = (SolidColorBrush)FindResource("HighlightBlue");
         }
 
         private void Grid_MouseLeave(object sender, MouseEventArgs e)
         {
-            ellipse.Fill = (SolidColorBrush)FindResource("Gray_02");
+            if (!IsBusy) ellipse.Fill = (SolidColorBrush)FindResource("Gray_02");
         }
     }
 }

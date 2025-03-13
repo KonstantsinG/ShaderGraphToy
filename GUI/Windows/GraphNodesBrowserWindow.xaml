@@ -96,8 +96,8 @@
 
                 <TreeView.ItemContainerStyle>
                     <Style TargetType="{x:Type TreeViewItem}">
-                        <Setter Property="IsExpanded" 
-                    Value="{Binding IsExpanded, Mode=TwoWay}"/>
+                        <Setter Property="IsExpanded" Value="{Binding IsExpanded, Mode=TwoWay}"/>
+                        <EventSetter Event="PreviewKeyDown" Handler="TreeViewItem_PreviewKeyDown"/>
                     </Style>
                 </TreeView.ItemContainerStyle>
 

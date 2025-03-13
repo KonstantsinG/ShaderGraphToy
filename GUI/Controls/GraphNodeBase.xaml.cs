@@ -10,18 +10,23 @@ namespace GUI.Controls
     /// </summary>
     public partial class GraphNodeBase : UserControl
     {
-        public int NodeId { get; set; }
         public bool Selected { get; private set; }
 
         public event MouseButtonEventHandler HeaderPressed = delegate { };
+        public event MouseEventHandler ConnectorPressed = delegate { };
 
 
         public GraphNodeBase()
         {
             InitializeComponent();
 
+            inputConnector.IsInput = true;
+            outputConnector.IsInput = false;
+
             GraphNodeBaseVM vm = new();
             DataContext = vm;
+            vm.GetOwnConnectors = GetConnectors;
+            vm.RaiseConnectorPressedEvent = RaiseConnectorPressedEvent;
             operationsCBox.SelectionChanged += vm.OperationsComboBox_SelectionChanged;
             subOperationsCBox.SelectionChanged += vm.SubOperationsComboBox_SelectionChanged;
         }
@@ -56,6 +61,21 @@ namespace GUI.Controls
         private void HeaderPanel_MouseLeftButtonDown(object sender, MouseButtonEventArgs e)
         {
             HeaderPressed.Invoke(this, e);
+        }
+
+        public List<NodesConnector> GetConnectors()
+        {
+            List<NodesConnector> conns = [];
+
+            if (inputConnector.Visibility == Visibility.Visible) conns.Add(inputConnector);
+            if (outputConnector.Visibility == Visibility.Visible) conns.Add(outputConnector);
+
+            return conns;
+        }
+
+        public void RaiseConnectorPressedEvent(object sender, MouseEventArgs e)
+        {
+            ConnectorPressed.Invoke(sender, e);
         }
     }
 }

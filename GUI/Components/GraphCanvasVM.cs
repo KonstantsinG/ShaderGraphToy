@@ -9,7 +9,6 @@ namespace GUI.Components
     public class GraphCanvasVM : INotifyPropertyChanged
     {
         private GraphNodesBrowserWindow? _nodesBrowser = null;
-        private static int _nodesCounter = 0;
 
         private readonly List<GraphNodeBase> _nodes = [];
 
@@ -35,9 +34,7 @@ namespace GUI.Components
                 GraphNodeBase node = new();
                 ((GraphNodeBaseVM)node.DataContext!).ConstructNode((int)nodeId);
 
-                node.NodeId = _nodesCounter++;
                 _nodes.Add(node);
-
                 placeNodeOnCanvas?.Invoke(node);
             }
         }

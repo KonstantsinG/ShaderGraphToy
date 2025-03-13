@@ -1,5 +1,6 @@
 ﻿using GUI.Controls;
 using System.Diagnostics;
+using System.Net;
 using System.Runtime.CompilerServices;
 using System.Windows;
 using System.Windows.Controls;
@@ -8,6 +9,7 @@ using System.Windows.Interop;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
+using System.Windows.Shell;
 
 namespace GUI.Components
 {
@@ -20,7 +22,8 @@ namespace GUI.Components
         private Point _mouseOffset;
         private Point _selectionOffset;
         private bool _holdingMouse = false;
-        private bool _nodeHeaderGrabbed = false;
+
+        private ConnectorsSpline? _spline;
 
         private bool _shiftPressed = false;
         private bool _ctrlPressed = false;
@@ -45,7 +48,7 @@ namespace GUI.Components
         public event NodeSelectionHandler NodeSelectionToggled = delegate { };
         public event NodesActionsHandler NodesRemoved = delegate { };
         
-        public static Cursor ZoomCursor { get; } = new Cursor(System.IO.Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "Images/zoom_cursor.cur"));
+        public static Cursor ZoomCursor { get; } = new(System.IO.Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "Images/zoom_cursor.cur"));
         
         private readonly List<GraphNodeBase> _selectedNodes = [];
 
@@ -56,6 +59,15 @@ namespace GUI.Components
             Zoom
         }
 
+        private enum CursorModes
+        {
+            None,
+            NodesMovement,
+            SplineDrawing,
+            AreaSelecting
+        }
+
+        private CursorModes _cursorMode = CursorModes.None;
         private MouseInputModes _mouseInputMode = MouseInputModes.Cursor;
         private MouseInputModes _prevInputMode = MouseInputModes.Cursor;
         private Cursor _prevCursor = Cursors.Arrow;
@@ -242,7 +254,7 @@ namespace GUI.Components
                 if (e.Source is GraphNodeBase node)
                 {
                     _selectionOffset = e.GetPosition(mainCanvas);
-                    if (_selectedNodes.Count < 2) _nodeHeaderGrabbed = false; // you can move multiple nodes by grabbing them in any region
+                    if (_selectedNodes.Count >= 2) _cursorMode = CursorModes.NodesMovement; // you can move multiple nodes by grabbing them in any region
 
                     if (_shiftPressed)
                     {
@@ -274,7 +286,28 @@ namespace GUI.Components
         public void GraphNode_HeaderPanelPressed(object sender, MouseEventArgs e)
         {
             // you can move single node only by grabbing it on header
-            _nodeHeaderGrabbed = true;
+            _cursorMode = CursorModes.NodesMovement;
+        }
+
+        public void GraphNode_ConnectorPressed(object sender, MouseEventArgs e)
+        {
+            NodesConnector conn = (NodesConnector)sender;
+            conn.IsBusy = true;
+
+            // get global node connector center
+            _mouseOffset = conn.GetGlobalCenter(mainCanvas);
+
+            _spline = new();
+            Color color1 = ((SolidColorBrush)FindResource("Gray_05")).Color;
+            Color color2 = ((SolidColorBrush)FindResource(conn.NodeColor)).Color;
+
+            if (conn.IsInput) _spline.EndConnector = (NodesConnector)sender;
+            else _spline.StartConnector = (NodesConnector)sender;
+            
+            _spline.Define(_mouseOffset, color1, color2, conn.IsInput);
+
+            mainCanvas.Children.Add(_spline.Path);
+            _cursorMode = CursorModes.SplineDrawing;
         }
 
         private void MainCanvas_PreviewMouseUp(object sender, MouseButtonEventArgs e)
@@ -286,6 +319,10 @@ namespace GUI.Components
                 _selectionOffset = e.GetPosition(mainCanvas); // reset mouse offset to prevent tp bugs
             }
 
+            if (_cursorMode == CursorModes.SplineDrawing)
+                BindSpline(e);
+
+            _cursorMode = CursorModes.None;
             mainCanvas.ReleaseMouseCapture();
             _holdingMouse = false;
         }
@@ -297,37 +334,26 @@ namespace GUI.Components
             switch (_mouseInputMode)
             {
                 case MouseInputModes.Cursor:
-                    // if you can't move selected nodes - start  drawing selection area
-                    if (!TryMoveSelectedNodes(e))
-                        break;
-
+                    switch (_cursorMode)
+                    {
+                        case CursorModes.NodesMovement:
+                            MoveSelectedNodes(e);
+                            break;
+                        case CursorModes.AreaSelecting:
+                            // Selection Area stuff
+                            break;
+                        case CursorModes.SplineDrawing:
+                            DrawSpline(e);
+                            break;
+                    }
                     break;
 
                 case MouseInputModes.Movement:
-                    Point mousePos = e.GetPosition(this);
-                    Matrix matrix = matrixTransform.Matrix;
-
-                    double translateValueX = mousePos.X - _mouseOffset.X;
-                    double translateValueY = mousePos.Y - _mouseOffset.Y;
-                    bool translateX = CheckTranslationX(translateValueX);
-                    bool translateY = CheckTranslationY(translateValueY);
-
-                    if (translateX) matrix.Translate(translateValueX, 0);
-                    if (translateY) matrix.Translate(0, translateValueY);
-
-                    _mouseOffset = mousePos;
-                    matrixTransform.Matrix = matrix;
+                    MoveCanvas(e);
                     break;
 
                 case MouseInputModes.Zoom:
-                    double delta = e.GetPosition(this).Y - _mouseOffset.Y;
-                    if (Math.Abs(delta) > 5)
-                    {
-                        double scale = delta < 0 ? ZOOM_RATE : 1 / ZOOM_RATE;
-                        Point mousePosition = e.GetPosition(mainCanvas);
-                        ZoomCanvas(mousePosition, scale);
-                        _mouseOffset = e.GetPosition(this);
-                    }
+                    ZoomCanvas(e);
                     break;
             }
         }
@@ -472,6 +498,7 @@ namespace GUI.Components
         public void PlaceNodeOnCanvas(GraphNodeBase node)
         {
             node.HeaderPressed += GraphNode_HeaderPanelPressed;
+            node.ConnectorPressed += GraphNode_ConnectorPressed;
             mainCanvas.Children.Add(node);
 
             double px = ((((Grid)mainCanvas.Parent).ActualWidth / matrixTransform.Matrix.M11) / 2) + (-matrixTransform.Matrix.OffsetX / matrixTransform.Matrix.M11);
@@ -488,10 +515,38 @@ namespace GUI.Components
             _selectedNodes.Clear();
         }
 
-        private bool TryMoveSelectedNodes(MouseEventArgs e)
+        private void MoveCanvas(MouseEventArgs e)
         {
-            if (_selectedNodes.Count == 0 || !_nodeHeaderGrabbed) return false;
+            Point mousePos = e.GetPosition(this);
+            Matrix matrix = matrixTransform.Matrix;
 
+            double translateValueX = mousePos.X - _mouseOffset.X;
+            double translateValueY = mousePos.Y - _mouseOffset.Y;
+            bool translateX = CheckTranslationX(translateValueX);
+            bool translateY = CheckTranslationY(translateValueY);
+
+            if (translateX) matrix.Translate(translateValueX, 0);
+            if (translateY) matrix.Translate(0, translateValueY);
+
+            _mouseOffset = mousePos;
+            matrixTransform.Matrix = matrix;
+        }
+
+        private void ZoomCanvas(MouseEventArgs e)
+        {
+            double delta = e.GetPosition(this).Y - _mouseOffset.Y;
+
+            if (Math.Abs(delta) > 5)
+            {
+                double scale = delta < 0 ? ZOOM_RATE : 1 / ZOOM_RATE;
+                Point mousePosition = e.GetPosition(mainCanvas);
+                ZoomCanvas(mousePosition, scale);
+                _mouseOffset = e.GetPosition(this);
+            }
+        }
+
+        private void MoveSelectedNodes(MouseEventArgs e)
+        {
             TranslateTransform tr;
             TranslateTransform oldTr;
             Point currentPosition = e.GetPosition(mainCanvas);
@@ -505,8 +560,61 @@ namespace GUI.Components
             }
 
             _selectionOffset = currentPosition;
+        }
 
-            return true;
+        private void DrawSpline(MouseEventArgs e)
+        {
+            Point currentPoint = e.GetPosition(mainCanvas);
+            _spline!.Update(_mouseOffset, currentPoint);
+        }
+
+        private void BindSpline(MouseEventArgs e)
+        {
+            Point endPoint = e.GetPosition(mainCanvas);
+            NodesConnector? conn2 = TryFindNodesConnector(endPoint);
+
+            if (conn2 != null && !conn2.IsBusy)
+            {
+                // BIND TWO NODES
+                if (_spline!.EndConnector == null) _spline!.EndConnector = conn2;
+                else _spline!.StartConnector = conn2;
+
+                _spline.UpdateColor(((SolidColorBrush)FindResource(conn2.NodeColor)).Color, true);
+                conn2.IsBusy = true;
+                _spline!.Bezier!.Point3 = conn2.GetGlobalCenter(mainCanvas);
+            }
+            else
+            {
+                if (_spline!.StartConnector != null) _spline!.StartConnector.IsBusy = false;
+                else _spline!.EndConnector!.IsBusy = false;
+
+                mainCanvas.Children.Remove(_spline!.Path);
+            }
+        }
+
+        private NodesConnector? TryFindNodesConnector(Point endPoint)
+        {
+            NodesConnector? con = null;
+
+            VisualTreeHelper.HitTest(
+                mainCanvas,
+                null,
+                hitResult =>
+                {
+                    if (hitResult.VisualHit is Ellipse el)
+                    {
+                        if (el.Parent is Grid gr && gr.Parent is NodesConnector nc)
+                        {
+                            con = nc;
+                            return HitTestResultBehavior.Stop;
+                        }
+                    }
+                    return HitTestResultBehavior.Continue;
+                },
+                new PointHitTestParameters(endPoint)
+            );
+
+            return con;
         }
         #endregion
     }

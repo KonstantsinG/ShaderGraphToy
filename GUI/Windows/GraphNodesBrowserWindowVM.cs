@@ -136,13 +136,22 @@ namespace GUI.Windows
 
         public void SearchBoxKeyPressed(object sender, KeyEventArgs e)
         {
+            if (e.IsRepeat) return;
+
             if (e.Key == Key.Enter)
             {
-                if (_selectedItem == null)
-                    _selectedItem = TreeItems.FirstOrDefault();
-
+                _selectedItem ??= TreeItems.FirstOrDefault();
                 ItemCreated.Invoke(_selectedItem?.Model!.TypeId);
             }
+        }
+
+        public void TreeViewItem_PreviewKeyDown(object sender, KeyEventArgs e)
+        {
+            if (e.IsRepeat) return;
+            if (((TreeViewItem)sender).Header != _selectedItem) return;
+
+            if (e.Key == Key.Enter)
+                ItemCreated.Invoke(_selectedItem?.Model!.TypeId);
         }
 
         public void AddButton_Click(object sender, RoutedEventArgs e)

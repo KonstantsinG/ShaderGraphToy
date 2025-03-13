@@ -21,6 +21,14 @@ namespace GUI.Controls.GraphNodeComponents
         public InputComponent()
         {
             InitializeComponent();
+
+            inputConnector.IsInput = true;
+        }
+
+        public List<NodesConnector> GetConnectors()
+        {
+            if (Model.HasInput) return [inputConnector];
+            else return [];
         }
     }
 }

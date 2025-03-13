@@ -18,7 +18,7 @@
 
         <WrapPanel>
 
-            <local:NodesConnector Margin="0,0,5,0"
+            <local:NodesConnector Margin="0,0,5,0" x:Name="inputConnector"
                                   Visibility="{Binding Path=Model.HasInput, RelativeSource={RelativeSource AncestorType=UserControl}, Converter={StaticResource BoolToVis}, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
             
             <TextBox Style="{StaticResource GrayTextBox}"

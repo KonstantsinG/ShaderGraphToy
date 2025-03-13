@@ -23,5 +23,10 @@ namespace GUI.Windows
             cancelButton.Click += vm.CancelButton_Click;
             DataContext = vm;
         }
+
+        private void TreeViewItem_PreviewKeyDown(object sender, KeyEventArgs e)
+        {
+            ((GraphNodesBrowserWindowVM)DataContext!).TreeViewItem_PreviewKeyDown(sender, e);
+        }
     }
 }

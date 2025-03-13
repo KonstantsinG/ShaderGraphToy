@@ -21,6 +21,19 @@ namespace GUI.Controls
         public InscriptionComponent()
         {
             InitializeComponent();
+
+            inputConnector.IsInput = true;
+            outputConnector.IsInput = false;
+        }
+
+        public List<NodesConnector> GetConnectors()
+        {
+            List<NodesConnector> conns = [];
+
+            if (Model.HasInput) conns.Add(inputConnector);
+            if (Model.HasOutput) conns.Add(outputConnector);
+
+            return conns;
         }
     }
 }

@@ -5,11 +5,19 @@ using ShaderGraph.ComponentModel.Implementation;
 using System.Collections.ObjectModel;
 using System.ComponentModel;
 using System.Windows.Controls;
+using GUI.Controls.GraphNodeComponents;
+using System.Windows.Input;
 
 namespace GUI.Controls
 {
     public class GraphNodeBaseVM : INotifyPropertyChanged
     {
+        private static int _nodesCounter = 0;
+        private static int _inputsCounter = 0;
+        private static int _outputsCounter = 0;
+
+        public int NodeId { get; private set; }
+
         private GraphNodeTypeContentInfo? _contentModel;
         public GraphNodeTypeContentInfo? ContentModel
         {
@@ -69,6 +77,15 @@ namespace GUI.Controls
         public ObservableCollection<GraphNodeSubOperationInfo> NodeSubOperations { get; set; } = [];
         public ObservableCollection<UserControl> NodeComponents { get; set; } = [];
 
+        public Func<List<NodesConnector>>? GetOwnConnectors { get; set; }
+        public Action<object, MouseEventArgs>? RaiseConnectorPressedEvent;
+
+
+        public GraphNodeBaseVM()
+        {
+            NodeId = _nodesCounter++;
+        }
+
 
         public void LoadNodeTypeData(string typeName)
         {
@@ -116,6 +133,29 @@ namespace GUI.Controls
             }
         }
 
+        private void DefineConnectors()
+        {
+            List<NodesConnector> conns = GetOwnConnectors!.Invoke();
+
+            foreach (UserControl comp in NodeComponents)
+            {
+                if (comp is InputComponent inputComp)
+                    conns.AddRange(inputComp.GetConnectors());
+                else if (comp is InscriptionComponent inscComp)
+                    conns.AddRange(inscComp.GetConnectors());
+            }
+
+            foreach (NodesConnector con in conns)
+            {
+                if (con.IsInput) con.ConnectorId = _inputsCounter++;
+                else con.ConnectorId = _outputsCounter++;
+
+                con.NodeId = NodeId;
+                con.NodeColor = NodeModel!.Color;
+                con.MouseDown += NodesConnector_MouseDown;
+            }
+        }
+
         public void LoadNodeContent(int id)
         {
             var compsData = GraphNodesAssembler.Instance.GetTypeContentInfo(id);
@@ -124,6 +164,9 @@ namespace GUI.Controls
             var comps = GraphComponentsFactory.ConstructComponents(compsData!.Components);
             NodeComponents.Clear();
             foreach (var comp in comps) NodeComponents.Add(comp);
+
+            // setup all connectors data and id's
+            DefineConnectors();
             IsConnectorsVisible = true;
         }
 
@@ -155,6 +198,11 @@ namespace GUI.Controls
                     SelectedSubOperationIndex = int.Parse(strId[2].ToString()) - 1;
                 }
             }
+        }
+
+        public void NodesConnector_MouseDown(object sender, MouseEventArgs e)
+        {
+            RaiseConnectorPressedEvent?.Invoke(sender, e);
         }
 
 

@@ -31,7 +31,8 @@
         <Grid Grid.Row="0">
 
             <Rectangle Fill="{Binding Path=NodeModel.Color, Converter={StaticResource strToColor}, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
-                       RadiusX="4" RadiusY="4" x:Name="headerPanel" MouseLeftButtonDown="HeaderPanel_MouseLeftButtonDown"/>
+                       RadiusX="4" RadiusY="4" x:Name="headerPanel" MouseLeftButtonDown="HeaderPanel_MouseLeftButtonDown"
+                       Cursor="Hand"/>
 
             <TextBlock Text="{Binding Path=NodeModel.Name, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
                        HorizontalAlignment="Center" VerticalAlignment="Center" Margin="10,0" IsHitTestVisible="False"
@@ -89,9 +90,9 @@
                     <Grid Margin="-12,0,-12,5"
                           Visibility="{Binding IsConnectorsVisible, Converter={StaticResource boolToVis}, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}">
 
-                        <local:NodesConnector HorizontalAlignment="Left"
+                        <local:NodesConnector HorizontalAlignment="Left" x:Name="inputConnector"
                                               Visibility="{Binding Path=ContentModel.HasInput, Converter={StaticResource boolToVis}, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
-                        <local:NodesConnector HorizontalAlignment="Right"
+                        <local:NodesConnector HorizontalAlignment="Right" x:Name="outputConnector"
                                               Visibility="{Binding Path=ContentModel.HasOutput, Converter={StaticResource boolToVis}, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
 
                     </Grid>
