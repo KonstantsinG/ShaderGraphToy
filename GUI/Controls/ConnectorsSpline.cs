@@ -18,18 +18,32 @@ namespace GUI.Controls
         public Path? Path { get; set; }
         public BezierSegment? Bezier { get; set; }
         public int InitDirection { get; set; } = 1;
-        public bool IsFixed { get; set; } = false;
+        public Color Color1 { get; set; }
+        public Color Color2 { get; set; }
 
-        public NodesConnector? StartConnector { get; set; }
-        public NodesConnector? EndConnector { get; set; }
+        public NodesConnector? InputConnector { get; set; }
+        public NodesConnector? OutputConnector { get; set; }
+        public NodesConnector? FreeConnector
+        {
+            get
+            {
+                if (InputConnector != null) return InputConnector;
+                else if (OutputConnector != null) return OutputConnector;
+                else return null;
+            }
+        }
 
 
         public void Define(Point startPoint, Color color1, Color color2, bool direction)
         {
+            Color1 = color1;
+            Color2 = color2;
+
             Path = new()
             {
                 StrokeThickness = 5,
-                Stroke = new LinearGradientBrush(color1, color2, new Point(0, 0), new Point(1, 0))
+                Stroke = new LinearGradientBrush(color1, color2, new Point(0, 0), new Point(1, 0)),
+                IsHitTestVisible = false
             };
             Panel.SetZIndex(Path, 2);
             PathGeometry geometry = new();
@@ -42,6 +56,16 @@ namespace GUI.Controls
             if (direction) ReverseSplineGradient();
             InitDirection = direction ? 1 : -1;
             _prevDir = InitDirection;
+        }
+
+        public void Define(ConnectorsSpline sp, Color mouseColor)
+        {
+            Point stPoint = sp.InitDirection == 1 ? sp.Bezier!.Point3 : sp.GetStartPoint();
+            Color stColor = sp.InitDirection == 1 ? sp.Color1 : sp.Color2;
+
+            Define(stPoint, mouseColor, stColor, false);
+            InputConnector = sp.InputConnector;
+            OutputConnector = sp.OutputConnector;
         }
 
         public void Update(Point startPoint, Point newPoint)
@@ -58,10 +82,56 @@ namespace GUI.Controls
             _prevDir = len;
         }
 
+        public void Break()
+        {
+            InputConnector?.Disconnect();
+            OutputConnector?.Disconnect();
+        }
+
+        public Point GetStartPoint() => ((PathGeometry)Path!.Data).Figures[0].StartPoint;
+
         public void UpdateColor(Color newColor, bool first)
         {
-            if (first) ((LinearGradientBrush)Path!.Stroke).GradientStops[0].Color = newColor;
-            else ((LinearGradientBrush)Path!.Stroke).GradientStops[1].Color = newColor;
+            if (first)
+            {
+                Color1 = newColor;
+                ((LinearGradientBrush)Path!.Stroke).GradientStops[0].Color = newColor;
+            }
+            else
+            {
+                Color2 = newColor;
+                ((LinearGradientBrush)Path!.Stroke).GradientStops[1].Color = newColor;
+            }
+        }
+
+        public void UpdatePoint(Point newPoint, bool isInput)
+        {
+            if (isInput)
+            {
+                if (InitDirection == 1) // if input conn is moved and connection started from input
+                {
+                    ((PathGeometry)Path!.Data).Figures[0].StartPoint = newPoint;
+                    Update(newPoint, Bezier!.Point3);
+                }
+                else // if input conn is moved and connection started from output
+                {
+                    Bezier!.Point3 = newPoint;
+                    Update(((PathGeometry)Path!.Data).Figures[0].StartPoint, newPoint);
+                }
+            }
+            else
+            {
+                if (InitDirection == -1) // if output conn is moved and connection started from output
+                {
+                    ((PathGeometry)Path!.Data).Figures[0].StartPoint = newPoint;
+                    Update(newPoint, Bezier!.Point3);
+                }
+                else // if output conn is moved and connection started from input
+                {
+                    Bezier!.Point3 = newPoint;
+                    Update(((PathGeometry)Path!.Data).Figures[0].StartPoint, newPoint);
+                }
+            }
         }
 
         private void ReverseSplineGradient()

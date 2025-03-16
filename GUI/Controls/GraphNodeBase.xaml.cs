@@ -12,8 +12,11 @@ namespace GUI.Controls
     {
         public bool Selected { get; private set; }
 
+        public delegate void NodeStateHandler(GraphNodeBase sender);
+
         public event MouseButtonEventHandler HeaderPressed = delegate { };
         public event MouseEventHandler ConnectorPressed = delegate { };
+        public event NodeStateHandler NodeStateChanged = delegate { };
 
 
         public GraphNodeBase()
@@ -29,6 +32,23 @@ namespace GUI.Controls
             vm.RaiseConnectorPressedEvent = RaiseConnectorPressedEvent;
             operationsCBox.SelectionChanged += vm.OperationsComboBox_SelectionChanged;
             subOperationsCBox.SelectionChanged += vm.SubOperationsComboBox_SelectionChanged;
+
+            operationsCBox.SelectionChanged += RaiseNodeStateChangedEvent;
+            subOperationsCBox.SelectionChanged += RaiseNodeStateChangedEvent;
+
+        }
+
+
+        public bool ContainsConnector(NodesConnector? nc)
+        {
+            if (nc == null) return false;
+
+            foreach (NodesConnector nc2 in ((GraphNodeBaseVM)DataContext!).Connectors)
+            {
+                if (nc2 == nc) return true;
+            }
+
+            return false;
         }
 
 
@@ -76,6 +96,11 @@ namespace GUI.Controls
         public void RaiseConnectorPressedEvent(object sender, MouseEventArgs e)
         {
             ConnectorPressed.Invoke(sender, e);
+        }
+
+        private void RaiseNodeStateChangedEvent(object sender, SelectionChangedEventArgs e)
+        {
+            NodeStateChanged.Invoke(this);
         }
     }
 }

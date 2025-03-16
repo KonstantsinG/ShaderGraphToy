@@ -34,6 +34,7 @@ namespace GUI.Controls
             }
         }
 
+        public int ConnectionsCount { get; set; } = 0;
         public bool IsInput { get; set; }
         public int NodeId { get; set; }
         public int ConnectorId { get; set; }
@@ -52,6 +53,14 @@ namespace GUI.Controls
             GeneralTransform transform = TransformToVisual(el);
 
             return transform.Transform(localCenter);
+        }
+
+        public void Disconnect()
+        {
+            ConnectionsCount--;
+            
+            if (IsInput || (!IsInput && ConnectionsCount == 0))
+                IsBusy = false;
         }
 
 

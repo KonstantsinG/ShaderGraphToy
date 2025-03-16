@@ -23,7 +23,7 @@ namespace GUI.Components
         private Point _selectionOffset;
         private bool _holdingMouse = false;
 
-        private ConnectorsSpline? _spline;
+        private ConnectorsSpline? _tempSpline;
 
         private bool _shiftPressed = false;
         private bool _ctrlPressed = false;
@@ -51,6 +51,7 @@ namespace GUI.Components
         public static Cursor ZoomCursor { get; } = new(System.IO.Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "Images/zoom_cursor.cur"));
         
         private readonly List<GraphNodeBase> _selectedNodes = [];
+        private readonly List<ConnectorsSpline> _splines = [];
 
         private enum MouseInputModes
         {
@@ -292,22 +293,35 @@ namespace GUI.Components
         public void GraphNode_ConnectorPressed(object sender, MouseEventArgs e)
         {
             NodesConnector conn = (NodesConnector)sender;
+
+            // if current connector is input and it already busy - disconnect them from node
+            if (conn.IsInput && conn.IsBusy)
+            {
+                UnbindSpline(conn, e);
+                return;
+            }    
+
             conn.IsBusy = true;
 
             // get global node connector center
             _mouseOffset = conn.GetGlobalCenter(mainCanvas);
 
-            _spline = new();
+            _tempSpline = new();
             Color color1 = ((SolidColorBrush)FindResource("Gray_05")).Color;
             Color color2 = ((SolidColorBrush)FindResource(conn.NodeColor)).Color;
 
-            if (conn.IsInput) _spline.EndConnector = (NodesConnector)sender;
-            else _spline.StartConnector = (NodesConnector)sender;
+            if (conn.IsInput) _tempSpline.InputConnector = (NodesConnector)sender;
+            else _tempSpline.OutputConnector = (NodesConnector)sender;
             
-            _spline.Define(_mouseOffset, color1, color2, conn.IsInput);
+            _tempSpline.Define(_mouseOffset, color1, color2, conn.IsInput);
 
-            mainCanvas.Children.Add(_spline.Path);
+            mainCanvas.Children.Add(_tempSpline.Path);
             _cursorMode = CursorModes.SplineDrawing;
+        }
+
+        public void GraphNode_NodeStateChanged(GraphNodeBase sender)
+        {
+            RemoveSplines([sender]);
         }
 
         private void MainCanvas_PreviewMouseUp(object sender, MouseButtonEventArgs e)
@@ -499,6 +513,7 @@ namespace GUI.Components
         {
             node.HeaderPressed += GraphNode_HeaderPanelPressed;
             node.ConnectorPressed += GraphNode_ConnectorPressed;
+            node.NodeStateChanged += GraphNode_NodeStateChanged;
             mainCanvas.Children.Add(node);
 
             double px = ((((Grid)mainCanvas.Parent).ActualWidth / matrixTransform.Matrix.M11) / 2) + (-matrixTransform.Matrix.OffsetX / matrixTransform.Matrix.M11);
@@ -508,6 +523,8 @@ namespace GUI.Components
 
         private void RemoveSelectedNodes()
         {
+            RemoveSplines(_selectedNodes);
+
             foreach (GraphNodeBase node in _selectedNodes)
                 mainCanvas.Children.Remove(node);
 
@@ -557,15 +574,27 @@ namespace GUI.Components
                 tr = new(oldTr.X + currentPosition.X - _selectionOffset.X, oldTr.Y + currentPosition.Y - _selectionOffset.Y);
 
                 node.RenderTransform = tr;
+                MoveSplines(node);
             }
 
             _selectionOffset = currentPosition;
         }
 
+        private void MoveSplines(GraphNodeBase node)
+        {
+            foreach (ConnectorsSpline sp in _splines)
+            {
+                if (node.ContainsConnector(sp.InputConnector))
+                    sp.UpdatePoint(sp.InputConnector!.GetGlobalCenter(mainCanvas), true);
+                else if (node.ContainsConnector(sp.OutputConnector))
+                    sp.UpdatePoint(sp.OutputConnector!.GetGlobalCenter(mainCanvas), false);
+            }
+        }
+
         private void DrawSpline(MouseEventArgs e)
         {
             Point currentPoint = e.GetPosition(mainCanvas);
-            _spline!.Update(_mouseOffset, currentPoint);
+            _tempSpline!.Update(_mouseOffset, currentPoint);
         }
 
         private void BindSpline(MouseEventArgs e)
@@ -573,32 +602,108 @@ namespace GUI.Components
             Point endPoint = e.GetPosition(mainCanvas);
             NodesConnector? conn2 = TryFindNodesConnector(endPoint);
 
-            if (conn2 != null && !conn2.IsBusy)
+            if (IsConnectionPossible(conn2))
             {
                 // BIND TWO NODES
-                if (_spline!.EndConnector == null) _spline!.EndConnector = conn2;
-                else _spline!.StartConnector = conn2;
+                if (_tempSpline!.OutputConnector == null) _tempSpline!.OutputConnector = conn2;
+                else _tempSpline!.InputConnector = conn2;
 
-                _spline.UpdateColor(((SolidColorBrush)FindResource(conn2.NodeColor)).Color, true);
+                _tempSpline!.UpdateColor(((SolidColorBrush)FindResource(conn2!.NodeColor)).Color, true);
                 conn2.IsBusy = true;
-                _spline!.Bezier!.Point3 = conn2.GetGlobalCenter(mainCanvas);
+                _tempSpline!.Bezier!.Point3 = conn2.GetGlobalCenter(mainCanvas);
+
+                _tempSpline!.InputConnector!.ConnectionsCount++;
+                _tempSpline!.OutputConnector!.ConnectionsCount++;
+                _splines.Add(_tempSpline);
             }
             else
             {
-                if (_spline!.StartConnector != null) _spline!.StartConnector.IsBusy = false;
-                else _spline!.EndConnector!.IsBusy = false;
+                if (_tempSpline!.OutputConnector != null)
+                {
+                    // output connector may have multiple connections
+                    if (_tempSpline.OutputConnector.ConnectionsCount == 0)
+                        _tempSpline!.OutputConnector.IsBusy = false;
+                }
+                else
+                {
+                    _tempSpline!.InputConnector!.IsBusy = false;
+                }
 
-                mainCanvas.Children.Remove(_spline!.Path);
+                mainCanvas.Children.Remove(_tempSpline!.Path);
             }
+        }
+
+        private void UnbindSpline(NodesConnector conn, MouseEventArgs e)
+        {
+            ConnectorsSpline? currSpline = null;
+
+            foreach (ConnectorsSpline sp in _splines)
+            {
+                if (sp.InputConnector == conn)
+                    currSpline = sp;
+            }
+
+            if (currSpline != null)
+            {
+                _splines.Remove(currSpline);
+                mainCanvas.Children.Remove(currSpline.Path);
+                currSpline.Break();
+                currSpline.OutputConnector!.IsBusy = true;
+                currSpline.InputConnector = null;
+
+                _tempSpline = new();
+                _tempSpline.Define(currSpline, ((SolidColorBrush)FindResource("Gray_05")).Color);
+                mainCanvas.Children.Add(_tempSpline!.Path);
+                _mouseOffset = _tempSpline.GetStartPoint();
+
+                _cursorMode = CursorModes.SplineDrawing;
+                DrawSpline(e);
+            }
+        }
+
+        private void RemoveSplines(List<GraphNodeBase> nodes)
+        {
+            List<ConnectorsSpline> corpses = [];
+
+            foreach (GraphNodeBase node in nodes)
+            {
+                foreach (ConnectorsSpline sp in _splines)
+                {
+                    if (node.ContainsConnector(sp.InputConnector) || node.ContainsConnector(sp.OutputConnector))
+                        corpses.Add(sp);
+                }
+
+                foreach (ConnectorsSpline corp in corpses)
+                {
+                    corp.Break();
+                    _splines.Remove(corp);
+                    mainCanvas.Children.Remove(corp.Path);
+                }
+            }
+        }
+
+        private bool IsConnectionPossible(NodesConnector? cn)
+        {
+            if (cn != null)
+            {
+                // output may have multiple connections, input - only one
+                if (cn.IsInput && cn.IsBusy) return false;
+
+                NodesConnector cn2 = _tempSpline!.FreeConnector!;
+
+                // two connectors must be from different nodes and have opposite types
+                if (cn != cn2 && cn.NodeId != cn2.NodeId && cn.IsInput != cn2.IsInput)
+                    return true;
+            }
+
+            return false;
         }
 
         private NodesConnector? TryFindNodesConnector(Point endPoint)
         {
             NodesConnector? con = null;
 
-            VisualTreeHelper.HitTest(
-                mainCanvas,
-                null,
+            VisualTreeHelper.HitTest(mainCanvas, null,
                 hitResult =>
                 {
                     if (hitResult.VisualHit is Ellipse el)

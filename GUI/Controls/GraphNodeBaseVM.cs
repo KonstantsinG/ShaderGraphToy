@@ -17,6 +17,7 @@ namespace GUI.Controls
         private static int _outputsCounter = 0;
 
         public int NodeId { get; private set; }
+        public List<NodesConnector> Connectors { get; private set; } = [];
 
         private GraphNodeTypeContentInfo? _contentModel;
         public GraphNodeTypeContentInfo? ContentModel
@@ -135,17 +136,17 @@ namespace GUI.Controls
 
         private void DefineConnectors()
         {
-            List<NodesConnector> conns = GetOwnConnectors!.Invoke();
+            Connectors.AddRange(GetOwnConnectors!.Invoke());
 
             foreach (UserControl comp in NodeComponents)
             {
                 if (comp is InputComponent inputComp)
-                    conns.AddRange(inputComp.GetConnectors());
+                    Connectors.AddRange(inputComp.GetConnectors());
                 else if (comp is InscriptionComponent inscComp)
-                    conns.AddRange(inscComp.GetConnectors());
+                    Connectors.AddRange(inscComp.GetConnectors());
             }
 
-            foreach (NodesConnector con in conns)
+            foreach (NodesConnector con in Connectors)
             {
                 if (con.IsInput) con.ConnectorId = _inputsCounter++;
                 else con.ConnectorId = _outputsCounter++;
