@@ -3,6 +3,8 @@ using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Input;
 using System.Windows.Media;
+using System.Windows.Media.Imaging;
+using System.Xml.Linq;
 
 namespace GUI.Controls
 {
@@ -11,6 +13,9 @@ namespace GUI.Controls
     /// </summary>
     public partial class GraphNodeBase : UserControl
     {
+        private BitmapImage _minusImg = new(new Uri("../Images/minus_icon.png", UriKind.Relative));
+        private BitmapImage _arrowDownImg = new(new Uri("../Images/arrowDown_icon.png", UriKind.Relative));
+
         public bool Selected { get; private set; }
         public bool IsMinimized { get; private set; } = false;
 
@@ -53,6 +58,8 @@ namespace GUI.Controls
 
             return false;
         }
+
+        public Rect GetBoundsRect() => new(((TranslateTransform)RenderTransform).X, ((TranslateTransform)RenderTransform).Y, RenderSize.Width, RenderSize.Height);
 
 
         private void Grid_MouseEnter(object sender, MouseEventArgs e)
@@ -109,9 +116,15 @@ namespace GUI.Controls
         private void MinimizeImg_MouseLeftButtonDown(object sender, MouseButtonEventArgs e)
         {
             if (IsMinimized)
+            {
                 operationsPanel.Visibility = Visibility.Visible;
+                minimizeImg.Source = _minusImg;
+            }
             else
+            {
                 operationsPanel.Visibility = Visibility.Collapsed;
+                minimizeImg.Source = _arrowDownImg;
+            }
 
             IsMinimized = !IsMinimized;
 

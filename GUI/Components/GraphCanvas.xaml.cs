@@ -24,6 +24,7 @@ namespace GUI.Components
         private bool _holdingMouse = false;
 
         private ConnectorsSpline? _tempSpline;
+        private readonly SelectionRect _selectionArea = new();
 
         private bool _shiftPressed = false;
         private bool _ctrlPressed = false;
@@ -255,7 +256,7 @@ namespace GUI.Components
                 if (e.Source is GraphNodeBase node)
                 {
                     _selectionOffset = e.GetPosition(mainCanvas);
-                    if (_selectedNodes.Count >= 2) _cursorMode = CursorModes.NodesMovement; // you can move multiple nodes by grabbing them in any region
+                    if (_selectedNodes.Count >= 2 && node.Selected) _cursorMode = CursorModes.NodesMovement; // you can move multiple nodes by grabbing them in any region
 
                     if (_shiftPressed)
                     {
@@ -264,7 +265,7 @@ namespace GUI.Components
                     }
                     else
                     {
-                        if (_selectedNodes.Count > 1) return;
+                        if (_selectedNodes.Count > 1 && node.Selected) return;
 
                         _selectedNodes.Clear();
                         _selectedNodes.Add(node);
@@ -275,9 +276,18 @@ namespace GUI.Components
                 }
                 else if (e.Source is Canvas)
                 {
+                    _cursorMode = CursorModes.AreaSelecting;
+                    mainCanvas.Children.Add(_selectionArea);
+                    _selectionArea.Reset();
+                    _selectionArea.Offset = e.GetPosition(mainCanvas);
+                    _selectionArea.Translate(_selectionArea.Offset);
+
                     mainCanvas.Focus();
-                    _selectedNodes.Clear();
-                    NodeSelectionToggled.Invoke(null);
+                    if (!_shiftPressed)
+                    {
+                        _selectedNodes.Clear();
+                        NodeSelectionToggled.Invoke(null);
+                    }
                 }
             }
 
@@ -335,6 +345,8 @@ namespace GUI.Components
 
             if (_cursorMode == CursorModes.SplineDrawing)
                 BindSpline(e);
+            else if (_cursorMode == CursorModes.AreaSelecting)
+                CheckAreaSelection();
 
             _cursorMode = CursorModes.None;
             mainCanvas.ReleaseMouseCapture();
@@ -354,7 +366,7 @@ namespace GUI.Components
                             MoveSelectedNodes(e);
                             break;
                         case CursorModes.AreaSelecting:
-                            // Selection Area stuff
+                            DrawSelectionArea(e);
                             break;
                         case CursorModes.SplineDrawing:
                             DrawSpline(e);
@@ -560,6 +572,36 @@ namespace GUI.Components
                 Point mousePosition = e.GetPosition(mainCanvas);
                 ZoomCanvas(mousePosition, scale);
                 _mouseOffset = e.GetPosition(this);
+            }
+        }
+
+        private void DrawSelectionArea(MouseEventArgs e)
+        {
+            Point currentPosition = e.GetPosition(mainCanvas);
+
+            double x = Math.Min(currentPosition.X, _selectionArea.Offset.X);
+            double y = Math.Min(currentPosition.Y, _selectionArea.Offset.Y);
+
+            double width = Math.Abs(currentPosition.X - _selectionArea.Offset.X);
+            double height = Math.Abs(currentPosition.Y - _selectionArea.Offset.Y);
+
+            _selectionArea.Update(x, y, width, height);
+        }
+
+        private void CheckAreaSelection()
+        {
+            mainCanvas.Children.Remove(_selectionArea);
+            
+            foreach (UIElement element in mainCanvas.Children)
+            {
+                if (element is GraphNodeBase node && !node.Selected)
+                {
+                    if (_selectionArea.GetAreaRect().Contains(node.GetBoundsRect()))
+                    {
+                        node.ToggleSelection(true);
+                        _selectedNodes.Add(node);
+                    }
+                }
             }
         }
 
