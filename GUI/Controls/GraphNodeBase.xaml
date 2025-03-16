@@ -30,13 +30,22 @@
 
         <Grid Grid.Row="0">
 
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="20"/>
+                <ColumnDefinition/>
+                <ColumnDefinition Width="20"/>
+            </Grid.ColumnDefinitions>
+
             <Rectangle Fill="{Binding Path=NodeModel.Color, Converter={StaticResource strToColor}, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
                        RadiusX="4" RadiusY="4" x:Name="headerPanel" MouseLeftButtonDown="HeaderPanel_MouseLeftButtonDown"
-                       Cursor="Hand"/>
+                       Cursor="Hand" Grid.ColumnSpan="4"/>
 
+            <Image Grid.Column="0" Source="/Images/arrowDown_icon.png" Width="15" Height="15"
+                   HorizontalAlignment="Right" x:Name="minimizeImg" MouseLeftButtonDown="MinimizeImg_MouseLeftButtonDown"/>
+            
             <TextBlock Text="{Binding Path=NodeModel.Name, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
                        HorizontalAlignment="Center" VerticalAlignment="Center" Margin="10,0" IsHitTestVisible="False"
-                       FontSize="16" FontWeight="Medium" Foreground="{StaticResource Gray_06}"/>
+                       FontSize="16" FontWeight="Medium" Foreground="{StaticResource Gray_06}" Grid.Column="1"/>
 
         </Grid>
 
@@ -49,7 +58,7 @@
 
             <Grid>
 
-                <StackPanel Margin="10,10,10,0">
+                <StackPanel Margin="10,10,10,0" x:Name="operationsPanel">
 
                     <ComboBox Margin="0,0,0,5" x:Name="operationsCBox"
                               Visibility="{Binding Path=NodeModel.UsingOperations, Converter={StaticResource boolToVis}, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"

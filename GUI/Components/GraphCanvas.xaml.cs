@@ -514,6 +514,7 @@ namespace GUI.Components
             node.HeaderPressed += GraphNode_HeaderPanelPressed;
             node.ConnectorPressed += GraphNode_ConnectorPressed;
             node.NodeStateChanged += GraphNode_NodeStateChanged;
+            node.NodeSizeChanged += MoveSplines;
             mainCanvas.Children.Add(node);
 
             double px = ((((Grid)mainCanvas.Parent).ActualWidth / matrixTransform.Matrix.M11) / 2) + (-matrixTransform.Matrix.OffsetX / matrixTransform.Matrix.M11);

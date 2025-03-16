@@ -1,4 +1,5 @@
-﻿using System.Windows;
+﻿using System.Diagnostics;
+using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Input;
 using System.Windows.Media;
@@ -11,12 +12,14 @@ namespace GUI.Controls
     public partial class GraphNodeBase : UserControl
     {
         public bool Selected { get; private set; }
+        public bool IsMinimized { get; private set; } = false;
 
         public delegate void NodeStateHandler(GraphNodeBase sender);
 
         public event MouseButtonEventHandler HeaderPressed = delegate { };
         public event MouseEventHandler ConnectorPressed = delegate { };
         public event NodeStateHandler NodeStateChanged = delegate { };
+        public event NodeStateHandler NodeSizeChanged = delegate { };
 
 
         public GraphNodeBase()
@@ -101,6 +104,19 @@ namespace GUI.Controls
         private void RaiseNodeStateChangedEvent(object sender, SelectionChangedEventArgs e)
         {
             NodeStateChanged.Invoke(this);
+        }
+
+        private void MinimizeImg_MouseLeftButtonDown(object sender, MouseButtonEventArgs e)
+        {
+            if (IsMinimized)
+                operationsPanel.Visibility = Visibility.Visible;
+            else
+                operationsPanel.Visibility = Visibility.Collapsed;
+
+            IsMinimized = !IsMinimized;
+
+            UpdateLayout();
+            NodeSizeChanged.Invoke(this);
         }
     }
 }
