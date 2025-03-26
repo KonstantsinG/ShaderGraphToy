@@ -38,6 +38,7 @@ namespace GUI.Controls
             DataContext = vm;
             vm.GetOwnConnectors = GetConnectors;
             vm.RaiseConnectorPressedEvent = RaiseConnectorPressedEvent;
+            vm.HideOperationsCBoxes = HideOperationsCBoxes;
             operationsCBox.SelectionChanged += vm.OperationsComboBox_SelectionChanged;
             subOperationsCBox.SelectionChanged += vm.SubOperationsComboBox_SelectionChanged;
 
@@ -61,16 +62,6 @@ namespace GUI.Controls
 
         public Rect GetBoundsRect() => new(((TranslateTransform)RenderTransform).X, ((TranslateTransform)RenderTransform).Y, RenderSize.Width, RenderSize.Height);
 
-
-        private void Grid_MouseEnter(object sender, MouseEventArgs e)
-        {
-            if (!Selected) borderRect.Fill = (Brush)FindResource("HighlightBlue");
-        }
-
-        private void Grid_MouseLeave(object sender, MouseEventArgs e)
-        {
-            if (!Selected) borderRect.Fill = (Brush)FindResource("Gray_00");
-        }
 
         public void ToggleSelection(bool isSelected)
         {
@@ -130,6 +121,36 @@ namespace GUI.Controls
 
             UpdateLayout();
             NodeSizeChanged.Invoke(this);
+        }
+
+        public void HideOperationsCBoxes()
+        {
+            operationsPanel.Visibility = Visibility.Collapsed;
+            minimizeImg.Source = _arrowDownImg;
+            IsMinimized = true;
+
+            UpdateLayout();
+            NodeSizeChanged.Invoke(this);
+        }
+
+        private void UserControl_MouseLeftButtonDown(object sender, MouseButtonEventArgs e)
+        {
+            CaptureMouse();
+        }
+
+        private void UserControl_MouseLeftButtonUp(object sender, MouseButtonEventArgs e)
+        {
+            ReleaseMouseCapture();
+        }
+
+        private void UserControl_MouseEnter(object sender, MouseEventArgs e)
+        {
+            if (!Selected) borderRect.Fill = (Brush)FindResource("HighlightBlue");
+        }
+
+        private void UserControl_MouseLeave(object sender, MouseEventArgs e)
+        {
+            if (!Selected) borderRect.Fill = (Brush)FindResource("Gray_00");
         }
     }
 }

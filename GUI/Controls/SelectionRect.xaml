@@ -9,8 +9,8 @@
     
     <Grid>
 
-        <Rectangle x:Name="selectionRect" Width="20" Height="20" StrokeDashArray="10 3"
-                   Fill="#4CB568DA" Stroke="#FFD771FF" StrokeThickness="1" RadiusX="5" RadiusY="5">
+        <Rectangle x:Name="selectionRect" Width="20" Height="20"
+                   Fill="#4CB568DA" Stroke="#B2D771FF" StrokeThickness="1" RadiusX="5" RadiusY="5">
 
             <Rectangle.RenderTransform>
                 <TranslateTransform x:Name="transform"/>

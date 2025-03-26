@@ -8,14 +8,17 @@
              xmlns:comps="clr-namespace:GUI.Controls.GraphNodeComponents"
              xmlns:conv="clr-namespace:GUI.Utilities.Converters"
              mc:Ignorable="d"
-             MinHeight="50" MinWidth="180">
+             MinHeight="50" MinWidth="180"
+             MouseLeftButtonDown="UserControl_MouseLeftButtonDown"
+             MouseLeftButtonUp="UserControl_MouseLeftButtonUp"
+             MouseEnter="UserControl_MouseEnter" MouseLeave="UserControl_MouseLeave">
 
     <UserControl.Resources>
         <BooleanToVisibilityConverter x:Key="boolToVis"/>
         <conv:ColorResourceConverter x:Key="strToColor"/>
     </UserControl.Resources>
     
-    <Grid MouseEnter="Grid_MouseEnter" MouseLeave="Grid_MouseLeave">
+    <Grid>
 
         <Grid.RowDefinitions>
             <RowDefinition Height="14*" MinHeight="30"/>

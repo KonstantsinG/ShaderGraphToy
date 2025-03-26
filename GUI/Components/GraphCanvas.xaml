@@ -5,7 +5,7 @@
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:local="clr-namespace:GUI.Components"
              xmlns:controls="clr-namespace:GUI.Controls"
-             mc:Ignorable="d" 
+             mc:Ignorable="d"  Loaded="UserControl_Loaded"
              d:DesignHeight="800" d:DesignWidth="700">
 
     <UserControl.Resources>
@@ -115,7 +115,7 @@
                 PreviewMouseUp="MainCanvas_PreviewMouseUp"
                 PreviewMouseMove="MainCanvas_PreviewMouseMove"
                 PreviewKeyDown="MainCanvas_PreviewKeyDown"
-                Width="5000" Height="4950" Grid.Row="1" Focusable="True">
+                Width="15000" Height="14920" Grid.Row="1" Focusable="True">
 
             <Canvas.RenderTransform>
                 <MatrixTransform x:Name="matrixTransform"/>

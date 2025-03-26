@@ -79,12 +79,11 @@ namespace GUI.Components
         public GraphCanvas()
         {
             InitializeComponent();
-            TranslateCanvas(-2000);
+            TranslateCanvas(-7000);
             _prevViewportWidth = ((Grid)mainCanvas.Parent).ActualWidth;
             _prevViewportHeight = ((Grid)mainCanvas.Parent).ActualHeight;
 
             cursorLine.Background = (SolidColorBrush)FindResource("Gray_03");
-            mainCanvas.Focus();
 
             GraphCanvasVM vm = new() { placeNodeOnCanvas = PlaceNodeOnCanvas };
             NodesBrowserOpened += vm.OpenNodesBrowser;
@@ -98,6 +97,11 @@ namespace GUI.Components
             Matrix matr = matrixTransform.Matrix;
             matr.Translate(val, val);
             matrixTransform.Matrix = matr;
+        }
+
+        private void UserControl_Loaded(object sender, RoutedEventArgs e)
+        {
+            mainCanvas.Focus();
         }
 
 
@@ -277,7 +281,12 @@ namespace GUI.Components
                 else if (e.Source is Canvas)
                 {
                     _cursorMode = CursorModes.AreaSelecting;
-                    mainCanvas.Children.Add(_selectionArea);
+                    mainCanvas.CaptureMouse();
+
+                    if (!mainCanvas.Children.Contains(_selectionArea))
+                        mainCanvas.Children.Add(_selectionArea);
+                    else mainCanvas.Children.Remove(_selectionArea);
+
                     _selectionArea.Reset();
                     _selectionArea.Offset = e.GetPosition(mainCanvas);
                     _selectionArea.Translate(_selectionArea.Offset);
@@ -290,8 +299,6 @@ namespace GUI.Components
                     }
                 }
             }
-
-            else mainCanvas.CaptureMouse();
         }
 
         public void GraphNode_HeaderPanelPressed(object sender, MouseEventArgs e)

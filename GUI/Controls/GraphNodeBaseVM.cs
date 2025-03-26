@@ -80,6 +80,7 @@ namespace GUI.Controls
 
         public Func<List<NodesConnector>>? GetOwnConnectors { get; set; }
         public Action<object, MouseEventArgs>? RaiseConnectorPressedEvent;
+        public Action? HideOperationsCBoxes;
 
 
         public GraphNodeBaseVM()
@@ -183,6 +184,7 @@ namespace GUI.Controls
             {
                 int id = info.OperationsTypes[0].SubTypes[0].TypeId;
                 LoadNodeContent(id);
+                HideOperationsCBoxes?.Invoke();
             }
             else
             {
@@ -192,11 +194,13 @@ namespace GUI.Controls
                 if (strId.Length == 2)
                 {
                     SelectedOperationIndex = int.Parse(strId[1].ToString()) - 1;
+                    if (!info.UsingSubOperations) HideOperationsCBoxes?.Invoke();
                 }
                 else if (strId.Length == 3)
                 {
                     SelectedOperationIndex = int.Parse(strId[1].ToString()) - 1;
                     SelectedSubOperationIndex = int.Parse(strId[2].ToString()) - 1;
+                    HideOperationsCBoxes?.Invoke();
                 }
             }
         }
