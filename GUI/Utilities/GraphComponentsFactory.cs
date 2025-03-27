@@ -1,72 +1,69 @@
 ﻿using GUI.Controls;
 using GUI.Controls.GraphNodeComponents;
-using ShaderGraph.Assemblers;
-using ShaderGraph.ComponentModel.Implementation.NodeComponents;
-using ShaderGraph.ComponentModel.Info;
-using ShaderGraph.ComponentModel.Info.Wrappers;
+using ShaderGraph.GraphNodesImplementation.Components;
 using System.Windows.Controls;
 
 namespace GUI.Utilities
 {
     public static class GraphComponentsFactory
     {
-        public static UserControl ConstructComponent(IGraphNodeComponent data)
+        public static UserControl ConstructComponent(INodeComponent data)
         {
             return data switch
             {
-                InscriptionComponentData inscData => new InscriptionComponent() { Model = inscData },
-                InputComponentData inpData => new InputComponent() { Model = inpData },
-                VectorComponentData vecData => new VectorComponent() { Model = vecData },
-                MatrixComponentData matData => new MatrixComponent() { Model = matData },
-                ListComponentData lstData => new ListComponent() { Model = lstData },
-                ColorComponentData colorData => new ColorComponent() { Model = colorData },
-                _ => throw new ArgumentException("Unsupported component type")
+                //InscriptionComponentData inscData => new InscriptionComponent() { Model = inscData },
+                //InputComponentData inpData => new InputComponent() { Model = inpData },
+                //VectorComponentData vecData => new VectorComponent() { Model = vecData },
+                //MatrixComponentData matData => new MatrixComponent() { Model = matData },
+                //ListComponentData lstData => new ListComponent() { Model = lstData },
+                //ColorComponentData colorData => new ColorComponent() { Model = colorData },
+                //_ => throw new ArgumentException("Unsupported component type")
             };
         }
 
-        public static List<UserControl> ConstructComponents(List<IGraphNodeComponent> components)
+        public static List<UserControl> ConstructComponents(List<INodeComponent> components)
         {
             List<UserControl> controls = [];
-            foreach (IGraphNodeComponent comp in components)
+            foreach (INodeComponent comp in components)
                 controls.Add(ConstructComponent(comp));
 
             return controls;
         }
 
-        public static IEnumerable<TreeViewerItem> GetNodeTypesInfo()
-        {
-            IEnumerable<TreeViewerItem> types = [];
-            List<GraphNodeTypeInfo> data = GraphNodesAssembler.Instance.GetTypesInfo();
-            TreeViewerItem? currType;
-            TreeViewerItem? currSubType;
-            TreeViewerItem? currSubSubType;
+        //public static IEnumerable<TreeViewerItem> GetNodeTypesInfo()
+        //{
+        //    IEnumerable<TreeViewerItem> types = [];
+        //    List<GraphNodeTypeInfo> data = GraphNodesAssembler.Instance.GetTypesInfo();
+        //    TreeViewerItem? currType;
+        //    TreeViewerItem? currSubType;
+        //    TreeViewerItem? currSubSubType;
 
-            foreach (GraphNodeTypeInfo type in data)
-            {
-                currType = new TreeViewerItem() { Model = type };
+        //    foreach (GraphNodeTypeInfo type in data)
+        //    {
+        //        currType = new TreeViewerItem() { Model = type };
 
-                if (type.UsingOperations)
-                {
-                    foreach (GraphNodeOperationInfo subType in type.OperationsTypes)
-                    {
-                        currSubType = new TreeViewerItem() { Model = subType };
-                        currType.Children.Add(currSubType);
+        //        if (type.UsingOperations)
+        //        {
+        //            foreach (GraphNodeOperationInfo subType in type.OperationsTypes)
+        //            {
+        //                currSubType = new TreeViewerItem() { Model = subType };
+        //                currType.Children.Add(currSubType);
 
-                        if (type.UsingSubOperations)
-                        {
-                            foreach (GraphNodeSubOperationInfo subSubType in subType.SubTypes)
-                            {
-                                currSubSubType = new TreeViewerItem() { Model = subSubType };
-                                currSubType.Children.Add(currSubSubType);
-                            }
-                        }
-                    }
-                }
+        //                if (type.UsingSubOperations)
+        //                {
+        //                    foreach (GraphNodeSubOperationInfo subSubType in subType.SubTypes)
+        //                    {
+        //                        currSubSubType = new TreeViewerItem() { Model = subSubType };
+        //                        currSubType.Children.Add(currSubSubType);
+        //                    }
+        //                }
+        //            }
+        //        }
 
-                types = types.Append(currType);
-            }
+        //        types = types.Append(currType);
+        //    }
 
-            return types;
-        }
+        //    return types;
+        //}
     }
 }

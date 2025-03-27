@@ -1,5 +1,4 @@
-﻿using ShaderGraph.ComponentModel.Implementation.NodeComponents;
-using System.Windows;
+﻿using System.Windows;
 using System.Windows.Controls;
 
 namespace GUI.Controls.GraphNodeComponents
@@ -10,11 +9,11 @@ namespace GUI.Controls.GraphNodeComponents
     public partial class InputComponent : UserControl
     {
         public static readonly DependencyProperty ModelProperty = DependencyProperty.Register(
-            nameof(Model), typeof(InputComponentData), typeof(InputComponent), new PropertyMetadata(null));
+            nameof(Model), typeof(InputComponent), typeof(InputComponent), new PropertyMetadata(null));
 
-        public InputComponentData Model
+        public InputComponent Model
         {
-            get => (InputComponentData)GetValue(ModelProperty);
+            get => (InputComponent)GetValue(ModelProperty);
             set => SetValue(ModelProperty, value);
         }
 
@@ -27,8 +26,9 @@ namespace GUI.Controls.GraphNodeComponents
 
         public List<NodesConnector> GetConnectors()
         {
-            if (Model.HasInput) return [inputConnector];
-            else return [];
+            //if (Model.HasInput) return [inputConnector];
+            //else return [];
+            return [];
         }
     }
 }

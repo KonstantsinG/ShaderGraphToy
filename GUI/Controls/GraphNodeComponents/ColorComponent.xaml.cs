@@ -1,5 +1,4 @@
-﻿using ShaderGraph.ComponentModel.Implementation.NodeComponents;
-using System.Windows;
+﻿using System.Windows;
 using System.Windows.Controls;
 
 namespace GUI.Controls.GraphNodeComponents
@@ -10,11 +9,11 @@ namespace GUI.Controls.GraphNodeComponents
     public partial class ColorComponent : UserControl
     {
         public static readonly DependencyProperty ModelProperty = DependencyProperty.Register(
-            nameof(Model), typeof(ColorComponentData), typeof(ColorComponent), new PropertyMetadata(null));
+            nameof(Model), typeof(ColorComponent), typeof(ColorComponent), new PropertyMetadata(null));
 
-        public ColorComponentData Model
+        public ColorComponent Model
         {
-            get { return (ColorComponentData)GetValue(ModelProperty); }
+            get { return (ColorComponent)GetValue(ModelProperty); }
             set { SetValue(ModelProperty, value); }
         }
 

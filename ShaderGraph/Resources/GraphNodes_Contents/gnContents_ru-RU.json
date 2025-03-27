@@ -1,8 +1,8 @@
 ﻿{
-  "GraphNodesTypesContent": [
+  "GraphNodesContents": [
     {
+      // Constant_UserConstant_Number
       "TypeId": 111,
-      "Name": "Constant_UserConstant_Number",
       "HasInput": false,
       "HasOutput": true,
       "InputType": null,
@@ -21,8 +21,8 @@
     },
 
     {
+      // Constant_UserConstant_Vector
       "TypeId": 112,
-      "Name": "Constant_UserConstant_Vector",
       "HasInput": false,
       "HasOutput": true,
       "InputType": null,
@@ -40,8 +40,8 @@
     },
 
     {
+      // Constant_UserConstant_Matrix
       "TypeId": 113,
-      "Name": "Constant_UserConstant_Matrix",
       "HasInput": false,
       "HasOutput": true,
       "InputType": null,
@@ -59,8 +59,8 @@
     },
 
     {
+      // Constant_UserConstant_LogicValue
       "TypeId": 114,
-      "Name": "Constant_UserConstant_LogicValue",
       "HasInput": false,
       "HasOutput": true,
       "InputType": null,
@@ -76,8 +76,8 @@
     },
 
     {
+      // Constant_UserConstant_Color
       "TypeId": 115,
-      "Name": "Constant_UserConstant_Color",
       "HasInput": false,
       "HasOutput": true,
       "InputType": null,
@@ -93,8 +93,8 @@
     },
 
     {
+      // Constant_SpecialConstant_PI
       "TypeId": 121,
-      "Name": "Constant_SpecialConstant_PI",
       "HasInput": false,
       "HasOutput": true,
       "InputType": null,
@@ -113,8 +113,8 @@
     },
 
     {
+      // Constant_SpecialConstant_PHI
       "TypeId": 122,
-      "Name": "Constant_SpecialConstant_PHI",
       "HasInput": false,
       "HasOutput": true,
       "InputType": null,
@@ -133,8 +133,8 @@
     },
 
     {
+      // Constant_SpecialConstant_EXP
       "TypeId": 123,
-      "Name": "Constant_SpecialConstant_EXP",
       "HasInput": false,
       "HasOutput": true,
       "InputType": null,
@@ -153,8 +153,8 @@
     },
 
     {
+      // Constant_SpecialConstant_RotationMatrix2D
       "TypeId": 124,
-      "Name": "Constant_SpecialConstant_RotationMatrix2D",
       "HasInput": false,
       "HasOutput": true,
       "InputType": null,
@@ -173,8 +173,8 @@
     },
 
     {
+      // Constant_SpecialConstant_RotationMatrix3D
       "TypeId": 125,
-      "Name": "Constant_SpecialConstant_RotationMatrix3D",
       "HasInput": false,
       "HasOutput": true,
       "InputType": null,
@@ -211,8 +211,8 @@
     },
 
     {
-      "TypeId": 211,
-      "Name": "InputData_PixelCoords",
+      // InputData_PixelCoords
+      "TypeId": 21,
       "HasInput": false,
       "HasOutput": true,
       "InputType": null,
@@ -222,6 +222,7 @@
         {
           "Type": "Inscription",
           "Title": "Координаты X, Y",
+          "Formatting": [],
           "HasInput": false,
           "HasOutput": false,
           "InputType": null,
@@ -231,8 +232,8 @@
     },
 
     {
-      "TypeId": 221,
-      "Name": "InputData_UVCoords",
+      // InputData_UVCoords
+      "TypeId": 22,
       "HasInput": false,
       "HasOutput": true,
       "InputType": null,
@@ -248,8 +249,8 @@
     },
 
     {
-      "TypeId": 231,
-      "Name": "InputData_MouseCoords",
+      // InputData_MouseCoords
+      "TypeId": 23,
       "HasInput": false,
       "HasOutput": true,
       "InputType": null,
@@ -259,6 +260,7 @@
         {
           "Type": "Inscription",
           "Title": "Координаты мыши X, Y",
+          "Formatting": [],
           "HasInput": false,
           "HasOutput": false,
           "InputType": null,
@@ -268,8 +270,8 @@
     },
 
     {
-      "TypeId": 241,
-      "Name": "InputData_Time",
+      // InputData_Time
+      "TypeId": 24,
       "HasInput": false,
       "HasOutput": true,
       "InputType": null,
@@ -279,6 +281,7 @@
         {
           "Type": "Inscription",
           "Title": "Время (в секундах)",
+          "Formatting": [],
           "HasInput": false,
           "HasOutput": false,
           "InputType": null,
@@ -288,8 +291,8 @@
     },
 
     {
-      "TypeId": 311,
-      "Name": "OutputData",
+      // OutputData
+      "TypeId": 3,
       "HasInput": false,
       "HasOutput": false,
       "InputType": null,
@@ -299,6 +302,7 @@
         {
           "Type": "Inscription",
           "Title": "Цвет RGBA",
+          "Formatting": [],
           "HasInput": true,
           "HasOutput": false,
           "InputType": "VecN",
@@ -307,6 +311,7 @@
         {
           "Type": "Inscription",
           "Title": "Непрозрачность",
+          "Formatting": [],
           "HasInput": true,
           "HasOutput": false,
           "InputType": "Number",
@@ -316,8 +321,8 @@
     },
 
     {
+      // MatOperations_Basic_Sum
       "TypeId": 411,
-      "Name": "MatOperations_Basic_Sum",
       "HasInput": false,
       "HasOutput": true,
       "InputType": null,
@@ -327,6 +332,7 @@
         {
           "Type": "Inscription",
           "Title": "A + B",
+          "Formatting": [],
           "HasInput": false,
           "HasOutput": false,
           "InputType": null,
@@ -354,8 +360,8 @@
     },
 
     {
+      // MatOperations_Basic_Sub
       "TypeId": 412,
-      "Name": "MatOperations_Basic_Sub",
       "HasInput": false,
       "HasOutput": true,
       "InputType": null,
@@ -365,6 +371,7 @@
         {
           "Type": "Inscription",
           "Title": "A - B",
+          "Formatting": [],
           "HasInput": false,
           "HasOutput": false,
           "InputType": null,
@@ -392,8 +399,8 @@
     },
 
     {
+      // MatOperations_Basic_Mul
       "TypeId": 413,
-      "Name": "MatOperations_Basic_Mul",
       "HasInput": false,
       "HasOutput": true,
       "InputType": null,
@@ -403,6 +410,7 @@
         {
           "Type": "Inscription",
           "Title": "A * B",
+          "Formatting": [],
           "HasInput": false,
           "HasOutput": false,
           "InputType": null,
@@ -430,8 +438,8 @@
     },
 
     {
+      // MatOperations_Basic_Div
       "TypeId": 414,
-      "Name": "MatOperations_Basic_Div",
       "HasInput": false,
       "HasOutput": true,
       "InputType": null,
@@ -441,6 +449,7 @@
         {
           "Type": "Inscription",
           "Title": "A / B",
+          "Formatting": [],
           "HasInput": false,
           "HasOutput": false,
           "InputType": null,
@@ -468,8 +477,8 @@
     },
 
     {
+      // MatOperations_Basic_Inverse
       "TypeId": 415,
-      "Name": "MatOperations_Basic_Inverse",
       "HasInput": false,
       "HasOutput": true,
       "InputType": null,
@@ -479,6 +488,7 @@
         {
           "Type": "Inscription",
           "Title": "1 / A",
+          "Formatting": [],
           "HasInput": false,
           "HasOutput": false,
           "InputType": null,
@@ -497,8 +507,8 @@
     },
 
     {
+      // MatOperations_Numbers_DivRem
       "TypeId": 421,
-      "Name": "MatOperations_Numbers_DivRem",
       "HasInput": false,
       "HasOutput": true,
       "InputType": null,
@@ -508,6 +518,7 @@
         {
           "Type": "Inscription",
           "Title": "A % B",
+          "Formatting": [],
           "HasInput": false,
           "HasOutput": false,
           "InputType": null,
@@ -535,8 +546,8 @@
     },
 
     {
+      // MatOperations_Numbers_Trunc
       "TypeId": 422,
-      "Name": "MatOperations_Numbers_Trunc",
       "HasInput": false,
       "HasOutput": true,
       "InputType": null,
@@ -546,6 +557,7 @@
         {
           "Type": "Inscription",
           "Title": "Целая часть числа A",
+          "Formatting": [],
           "HasInput": false,
           "HasOutput": false,
           "InputType": null,
@@ -564,8 +576,8 @@
     },
 
     {
+      // MatOperations_Numbers_Fract
       "TypeId": 423,
-      "Name": "MatOperations_Numbers_Fract",
       "HasInput": false,
       "HasOutput": true,
       "InputType": null,
@@ -575,6 +587,7 @@
         {
           "Type": "Inscription",
           "Title": "Дробная часть числа A",
+          "Formatting": [],
           "HasInput": false,
           "HasOutput": false,
           "InputType": null,
@@ -593,8 +606,8 @@
     },
 
     {
+      // MatOperations_Numbers_Sign
       "TypeId": 424,
-      "Name": "MatOperations_Numbers_Sign",
       "HasInput": false,
       "HasOutput": true,
       "InputType": null,
@@ -604,6 +617,7 @@
         {
           "Type": "Inscription",
           "Title": "Знак числа A",
+          "Formatting": [],
           "HasInput": false,
           "HasOutput": false,
           "InputType": null,
@@ -622,8 +636,8 @@
     },
 
     {
+      // MatOperations_Vectors_CrossProd
       "TypeId": 431,
-      "Name": "MatOperations_Vectors_CrossProd",
       "HasInput": false,
       "HasOutput": true,
       "InputType": null,
@@ -633,6 +647,7 @@
         {
           "Type": "Inscription",
           "Title": "Векторное произведение A x B",
+          "Formatting": [],
           "HasInput": false,
           "HasOutput": false,
           "InputType": null,
@@ -642,6 +657,7 @@
         {
           "Type": "Inscription",
           "Title": "Значение A",
+          "Formatting": [],
           "HasInput": true,
           "HasOutput": false,
           "InputType": "VecN",
@@ -651,6 +667,7 @@
         {
           "Type": "Inscription",
           "Title": "Значение B",
+          "Formatting": [],
           "HasInput": true,
           "HasOutput": false,
           "InputType": "VecN",
@@ -660,8 +677,8 @@
     },
 
     {
+      // MatOperations_Vectors_DotProd
       "TypeId": 432,
-      "Name": "MatOperations_Vectors_DotProd",
       "HasInput": false,
       "HasOutput": true,
       "InputType": null,
@@ -671,6 +688,7 @@
         {
           "Type": "Inscription",
           "Title": "Скалярное произведение A * B",
+          "Formatting": [],
           "HasInput": false,
           "HasOutput": false,
           "InputType": null,
@@ -680,6 +698,7 @@
         {
           "Type": "Inscription",
           "Title": "Значение A",
+          "Formatting": [],
           "HasInput": true,
           "HasOutput": false,
           "InputType": "VecN",
@@ -689,6 +708,7 @@
         {
           "Type": "Inscription",
           "Title": "Значение B",
+          "Formatting": [],
           "HasInput": true,
           "HasOutput": false,
           "InputType": "VecN",
@@ -698,8 +718,8 @@
     },
 
     {
+      // MatOperations_Vectors_VectLen
       "TypeId": 433,
-      "Name": "MatOperations_Vectors_VectLen",
       "HasInput": false,
       "HasOutput": true,
       "InputType": null,
@@ -709,6 +729,7 @@
         {
           "Type": "Inscription",
           "Title": "Длина вектора A",
+          "Formatting": [],
           "HasInput": false,
           "HasOutput": false,
           "InputType": null,
@@ -718,6 +739,7 @@
         {
           "Type": "Inscription",
           "Title": "Значение A",
+          "Formatting": [],
           "HasInput": true,
           "HasOutput": false,
           "InputType": "VecN",
@@ -727,8 +749,8 @@
     },
 
     {
+      // MatOperations_Vectors_VectNorm
       "TypeId": 434,
-      "Name": "MatOperations_Vectors_VectNorm",
       "HasInput": false,
       "HasOutput": true,
       "InputType": null,
@@ -738,6 +760,7 @@
         {
           "Type": "Inscription",
           "Title": "Нормализация вектора A",
+          "Formatting": [],
           "HasInput": false,
           "HasOutput": false,
           "InputType": null,
@@ -747,6 +770,7 @@
         {
           "Type": "Inscription",
           "Title": "Значение A",
+          "Formatting": [],
           "HasInput": true,
           "HasOutput": false,
           "InputType": "VecN",
@@ -756,8 +780,8 @@
     },
 
     {
+      // MatOperations_Vectors_VectMatMul
       "TypeId": 435,
-      "Name": "MatOperations_Vectors_VectMatMul",
       "HasInput": false,
       "HasOutput": true,
       "InputType": null,
@@ -767,6 +791,7 @@
         {
           "Type": "Inscription",
           "Title": "Произведение вектора A на матрицу B",
+          "Formatting": [],
           "HasInput": false,
           "HasOutput": false,
           "InputType": null,
@@ -776,6 +801,7 @@
         {
           "Type": "Inscription",
           "Title": "Значение A",
+          "Formatting": [],
           "HasInput": true,
           "HasOutput": false,
           "InputType": "VecN",
@@ -785,6 +811,7 @@
         {
           "Type": "Inscription",
           "Title": "Значение B",
+          "Formatting": [],
           "HasInput": true,
           "HasOutput": false,
           "InputType": "MatNxM",
@@ -794,8 +821,8 @@
     },
 
     {
+      // MatOperations_Matrices_MatVectMul
       "TypeId": 441,
-      "Name": "MatOperations_Matrices_MatVectMul",
       "HasInput": false,
       "HasOutput": true,
       "InputType": null,
@@ -805,6 +832,7 @@
         {
           "Type": "Inscription",
           "Title": "Произведение матрицы A на вектор B",
+          "Formatting": [],
           "HasInput": false,
           "HasOutput": false,
           "InputType": null,
@@ -814,6 +842,7 @@
         {
           "Type": "Inscription",
           "Title": "Значение A",
+          "Formatting": [],
           "HasInput": true,
           "HasOutput": false,
           "InputType": "MatNxM",
@@ -823,6 +852,7 @@
         {
           "Type": "Inscription",
           "Title": "Значение B",
+          "Formatting": [],
           "HasInput": true,
           "HasOutput": false,
           "InputType": "VecN",
@@ -832,8 +862,8 @@
     },
 
     {
+      // MatOperations_Matrices_MatDet
       "TypeId": 442,
-      "Name": "MatOperations_Matrices_MatDet",
       "HasInput": false,
       "HasOutput": true,
       "InputType": null,
@@ -843,6 +873,7 @@
         {
           "Type": "Inscription",
           "Title": "Определитель матрицы A",
+          "Formatting": [],
           "HasInput": false,
           "HasOutput": false,
           "InputType": null,
@@ -852,6 +883,7 @@
         {
           "Type": "Inscription",
           "Title": "Значение A",
+          "Formatting": [],
           "HasInput": true,
           "HasOutput": false,
           "InputType": "MatN",

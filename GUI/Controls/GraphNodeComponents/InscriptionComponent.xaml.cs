@@ -1,5 +1,4 @@
-﻿using ShaderGraph.ComponentModel.Implementation.NodeComponents;
-using System.Windows;
+﻿using System.Windows;
 using System.Windows.Controls;
 
 namespace GUI.Controls
@@ -10,11 +9,11 @@ namespace GUI.Controls
     public partial class InscriptionComponent : UserControl
     {
         public static readonly DependencyProperty ModelProperty = DependencyProperty.Register(
-            nameof(Model), typeof(InscriptionComponentData), typeof(InscriptionComponent), new PropertyMetadata(null));
+            nameof(Model), typeof(InscriptionComponent), typeof(InscriptionComponent), new PropertyMetadata(null));
 
-        public InscriptionComponentData Model
+        public InscriptionComponent Model
         {
-            get => (InscriptionComponentData)GetValue(ModelProperty);
+            get => (InscriptionComponent)GetValue(ModelProperty);
             set => SetValue(ModelProperty, value);
         } 
 
@@ -30,8 +29,8 @@ namespace GUI.Controls
         {
             List<NodesConnector> conns = [];
 
-            if (Model.HasInput) conns.Add(inputConnector);
-            if (Model.HasOutput) conns.Add(outputConnector);
+            //if (Model.HasInput) conns.Add(inputConnector);
+            //if (Model.HasOutput) conns.Add(outputConnector);
 
             return conns;
         }

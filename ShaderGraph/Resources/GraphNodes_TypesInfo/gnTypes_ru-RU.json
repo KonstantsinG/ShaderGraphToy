@@ -6,8 +6,6 @@
       "Synonyms": [ "Константа", "Постоянное значение", "Постоянная" ],
       "TypeId": 1,
       "Color": "PastelGreen",
-      "UsingOperations": true,
-      "UsingSubOperations": true,
 
       "OperationsTypes": [
         {
@@ -16,7 +14,7 @@
           "Synonyms": [ "Константа пользователя", "Пользовательское значение" ],
           "TypeId": 11,
 
-          "SubTypes": [
+          "OperationsSubTypes": [
             {
               "Name": "Число",
               "Description": "Числовое значение с плавающей точкой или без",
@@ -55,10 +53,8 @@
           "Description": "Постоянное значение определённого типа, выбранное пользователем из предоставленного списка",
           "Synonyms": [ "Специальная константа" ],
           "TypeId": 12,
-          "UsingOperations": true,
-          "UsingSubOperations": true,
 
-          "SubTypes": [
+          "OperationsSubTypes": [
             {
               "Name": "Пи (π)",
               "Description": "Числовое значение, представляющее число Пи (3.1415...)",
@@ -100,67 +96,34 @@
       "Synonyms": [ "Входные данные", "Входная информация" ],
       "TypeId": 2,
       "Color": "PastelCyan",
-      "UsingOperations": true,
-      "UsingSubOperations": false,
 
       "OperationsTypes": [
         {
           "Name": "Координаты пикселя",
           "Description": "Коорданаты X и Y текущего пикселя на экране",
           "Synonyms": [ "Координаты пикселя", "Положение пикселя" ],
-          "TypeId": 21,
-          "SubTypes": [
-            {
-              "Name": "",
-              "Description": "",
-              "TypeId": 211
-            }
-          ]
+          "TypeId": 21
         },
 
         {
           "Name": "UV-координаты",
           "Description": "Коорданаты U и V текущего пикселя на экране, переведённые в диапазон [0, 1] или [-1, 1]",
           "Synonyms": [ "UV-координаты", "UV-координаты пикселя", "UV" ],
-          "TypeId": 22,
-          "SubTypes": [
-            {
-              "Name": "",
-              "Description": "",
-              "Synonyms": [],
-              "TypeId": 221
-            }
-          ]
+          "TypeId": 22
         },
 
         {
           "Name": "Координаты курсора",
           "Description": "Коорданаты X и Y курсора мыши на экране",
           "Synonyms": [ "Координаты курсора", "Положение курсора" ],
-          "TypeId": 23,
-          "SubTypes": [
-            {
-              "Name": "",
-              "Description": "",
-              "Synonyms": [],
-              "TypeId": 231
-            }
-          ]
+          "TypeId": 23
         },
 
         {
           "Name": "Время",
           "Description": "Время, прошедшее с момента начала симуляции",
           "Synonyms": [ "Время" ],
-          "TypeId": 24,
-          "SubTypes": [
-            {
-              "Name": "",
-              "Description": "",
-              "Synonyms": [],
-              "TypeId": 241
-            }
-          ]
+          "TypeId": 24
         }
       ]
     },
@@ -171,22 +134,13 @@
       "Synonyms": [ "Выходные данные", "Выходная информация" ],
       "TypeId": 3,
       "Color": "PastelRed",
-      "UsingOperations": false,
-      "UsingSubOperations": false,
 
       "OperationsTypes": [
         {
           "Name": "Выходные данные",
           "Description": "Цвет и непрозрачность текущего пикселя на экране",
           "Synonyms": [ "Цвет пикселя", "Непрозрачность пикселя" ],
-          "TypeId": 31,
-          "SubTypes": [
-            {
-              "Name": "",
-              "Description": "",
-              "TypeId": 311
-            }
-          ]
+          "TypeId": 31
         }
       ]
     },
@@ -197,8 +151,6 @@
       "Synonyms": [ "Математические операции", "Операции с данными" ],
       "TypeId": 4,
       "Color": "PastelBlue",
-      "UsingOperations": true,
-      "UsingSubOperations": true,
 
       "OperationsTypes": [
         {
@@ -207,7 +159,7 @@
           "Synonyms": [ "Базовые операции", "Базовые математические операции", "Универсальные операции" ],
           "TypeId": 41,
 
-          "SubTypes": [
+          "OperationsSubTypes": [
             {
               "Name": "Сумма",
               "Description": "a + b",
@@ -247,7 +199,7 @@
           "Synonyms": [ "Операции с числами", "Числовые операции" ],
           "TypeId": 42,
 
-          "SubTypes": [
+          "OperationsSubTypes": [
             {
               "Name": "Остаток от деления",
               "Description": "a % b",
@@ -269,7 +221,7 @@
             {
               "Name": "Знак",
               "Description": "f(5) = 1, f(-13) = -1",
-              "Synonyms": [ "Знак числа", "Sign"],
+              "Synonyms": [ "Знак числа", "Sign" ],
               "TypeId": 424
             }
           ]
@@ -281,7 +233,7 @@
           "Synonyms": [ "Операции с векторами", "Векторные операции" ],
           "TypeId": 43,
 
-          "SubTypes": [
+          "OperationsSubTypes": [
             {
               "Name": "Векторное произведение",
               "Description": "Площадь параллелограмма, образуемого двумя векторами",
@@ -321,7 +273,7 @@
           "Synonyms": [ "Операции с векторами", "Векторные операции" ],
           "TypeId": 44,
 
-          "SubTypes": [
+          "OperationsSubTypes": [
             {
               "Name": "Матрично-векторное произведение",
               "Description": "Произведение матрицы и вектора",

@@ -1,16 +1,5 @@
-﻿using GUI.Controls;
-using GUI.Windows;
-using OpenTK.Graphics.OpenGL;
-using OpenTK.Wpf;
-using ShaderGraph.Assemblers;
-using System.Diagnostics;
-using System.Diagnostics.Tracing;
-using System.Runtime.InteropServices;
+﻿using ShaderGraph.Serializers;
 using System.Windows;
-using System.Windows.Controls;
-using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Shapes;
 
 namespace GUI
 {

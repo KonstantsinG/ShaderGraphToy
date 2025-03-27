@@ -1,5 +1,4 @@
-﻿using ShaderGraph.ComponentModel.Implementation.NodeComponents;
-using System.ComponentModel;
+﻿using System.ComponentModel;
 using System.Windows;
 using System.Windows.Controls;
 
@@ -11,11 +10,11 @@ namespace GUI.Controls.GraphNodeComponents
     public partial class MatrixComponent : UserControl, INotifyPropertyChanged
     {
         public static readonly DependencyProperty ModelProperty = DependencyProperty.Register(
-            nameof(Model), typeof(MatrixComponentData), typeof(MatrixComponent), new PropertyMetadata(null));
+            nameof(Model), typeof(MatrixComponent), typeof(MatrixComponent), new PropertyMetadata(null));
 
-        public MatrixComponentData Model
+        public MatrixComponent Model
         {
-            get { return (MatrixComponentData)GetValue(ModelProperty); }
+            get { return (MatrixComponent)GetValue(ModelProperty); }
             set { SetValue(ModelProperty, value); }
         }
 

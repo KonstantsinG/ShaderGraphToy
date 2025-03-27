@@ -6,7 +6,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace ShaderGraph.Graphics
+namespace GUI.Graphics
 {
     public class Shader : IDisposable
     {
@@ -89,3 +89,4 @@ namespace ShaderGraph.Graphics
         }
     }
 }
+

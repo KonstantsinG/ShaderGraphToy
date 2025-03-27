@@ -4,7 +4,6 @@
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:GUI.Windows"
-        xmlns:wrp="clr-namespace:ShaderGraph.ComponentModel.Info.Wrappers;assembly=ShaderGraph"
         mc:Ignorable="d" ResizeMode="NoResize"
         Title="Обозреватель графовых узлов" Height="500" Width="400"
         WindowStartupLocation="CenterScreen"
@@ -13,7 +12,7 @@
     <Window.Resources>
         <BooleanToVisibilityConverter x:Key="boolToVis"/>
 
-        <HierarchicalDataTemplate DataType="{x:Type wrp:TreeViewerItem}" 
+        <HierarchicalDataTemplate DataType="{x:Type TextBlock}" 
                                 ItemsSource="{Binding Children}">
             <Grid Margin="2">
                 <Grid.ColumnDefinitions>

@@ -4,8 +4,7 @@ using System.Diagnostics;
 using System.Runtime.CompilerServices;
 using System.Windows.Media.Imaging;
 using OpenTK.Graphics.OpenGL;
-using OpenTK.Wpf;
-using ShaderGraph.Graphics;
+using GUI.Graphics;
 
 namespace GUI.Components
 {

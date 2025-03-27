@@ -1,5 +1,4 @@
-﻿using ShaderGraph.ComponentModel.Implementation.NodeComponents;
-using System.Windows;
+﻿using System.Windows;
 using System.Windows.Controls;
 
 namespace GUI.Controls.GraphNodeComponents
@@ -10,11 +9,11 @@ namespace GUI.Controls.GraphNodeComponents
     public partial class ListComponent : UserControl
     {
         public static readonly DependencyProperty ModelProperty = DependencyProperty.Register(
-            nameof(Model), typeof(ListComponentData), typeof(ListComponent), new PropertyMetadata(null));
+            nameof(Model), typeof(ListComponent), typeof(ListComponent), new PropertyMetadata(null));
 
-        public ListComponentData Model
+        public ListComponent Model
         {
-            get { return (ListComponentData)GetValue(ModelProperty); }
+            get { return (ListComponent)GetValue(ModelProperty); }
             set { SetValue(ModelProperty, value); }
         }
 
