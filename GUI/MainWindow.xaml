@@ -4,8 +4,7 @@
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:glWpfControl="clr-namespace:OpenTK.Wpf;assembly=GLWpfControl"
-        xmlns:controls="clr-namespace:GUI.Controls"
-        xmlns:comps="clr-namespace:GUI.Components"
+        xmlns:comps="clr-namespace:GUI.Representation.Components"
         mc:Ignorable="d"
         Title="Визуальный редактор шейдеров" Height="800" Width="1300"
         PreviewKeyDown="Window_PreviewKeyDown" PreviewKeyUp="Window_PreviewKeyUp">
