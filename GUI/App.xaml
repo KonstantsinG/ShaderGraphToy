@@ -11,7 +11,7 @@
 
                 <ResourceDictionary Source="Resources/Styles/ColorsDictionary.xaml"/>
                 <ResourceDictionary Source="Resources/Styles/UserControlsStylesDictionary.xaml"/>
-                <ResourceDictionary Source="Resources/Localization/lang.xaml"/>
+                <ResourceDictionary Source="Resources/Localization/guiLoc.xaml"/>
 
             </ResourceDictionary.MergedDictionaries>
         </ResourceDictionary>

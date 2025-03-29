@@ -6,7 +6,7 @@
              xmlns:xctk="http://schemas.xceed.com/wpf/xaml/toolkit"
              xmlns:local="clr-namespace:GUI.Representation.GraphNodes"
              xmlns:comps="clr-namespace:GUI.Representation.GraphNodes.GraphNodeComponents"
-             xmlns:conv="clr-namespace:GUI.Utilities.Converters"
+             xmlns:conv="clr-namespace:GUI.Utilities.XamlConverters"
              mc:Ignorable="d"
              MinHeight="50" MinWidth="180"
              MouseLeftButtonDown="UserControl_MouseLeftButtonDown"
@@ -64,7 +64,7 @@
                 <StackPanel Margin="10,10,10,0" x:Name="operationsPanel">
 
                     <ComboBox Margin="0,0,0,5" x:Name="operationsCBox"
-                              Visibility="{Binding Path=NodeModel.UsingOperations, Converter={StaticResource boolToVis}, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
+                              Visibility="{Binding Path=NodeModel.UsingOperations, Converter={StaticResource boolToVis}, UpdateSourceTrigger=PropertyChanged}"
                               ItemsSource="{Binding NodeOperations}"
                               SelectedIndex="{Binding SelectedOperationIndex, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}">
 
@@ -78,7 +78,7 @@
 
                     <ComboBox ItemsSource="{Binding NodeSubOperations}" x:Name="subOperationsCBox"
                               SelectedIndex="{Binding SelectedSubOperationIndex, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
-                              Visibility="{Binding Path=NodeModel.UsingSubOperations, Converter={StaticResource boolToVis}, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}">
+                              Visibility="{Binding Path=NodeModel.UsingSubOperations, Converter={StaticResource boolToVis}, UpdateSourceTrigger=PropertyChanged}">
 
                         <ComboBox.ItemTemplate>
                             <DataTemplate>

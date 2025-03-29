@@ -1,12 +1,70 @@
 ﻿using GUI.Representation.GraphNodes;
+using GUI.Utilities.DataBindings;
 using GUI.Windows;
 using System.ComponentModel;
 using System.Runtime.CompilerServices;
 
 namespace GUI.Representation.Components
 {
-    public class GraphCanvasVM : INotifyPropertyChanged
+    public class GraphCanvasVM : VmBase
     {
+        private RelayCommand? _cursorModeClickCommand = null;
+        public RelayCommand CursorModeClickCommand
+        {
+            get
+            {
+                _cursorModeClickCommand ??= new RelayCommand(EnableCursorMode);
+                return _cursorModeClickCommand;
+            }
+            set
+            {
+                _cursorModeClickCommand = value;
+                OnPropertyChanged(nameof(CursorModeClickCommand));
+            }
+        }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+        private void EnableCursorMode()
+        {
+
+        }
+
+        private void EnableMovementMode()
+        {
+
+        }
+
+        private void EnableZoomMode()
+        {
+
+        }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
         private GraphNodesBrowserWindow? _nodesBrowser = null;
 
         private readonly List<GraphNodeBase> _nodes = [];
@@ -63,13 +121,6 @@ namespace GUI.Representation.Components
         {
             foreach (GraphNodeBase node in nodes)
                 _nodes.Remove(node);
-        }
-
-
-        public event PropertyChangedEventHandler? PropertyChanged;
-        public void OnPropertyChanged([CallerMemberName] string prop = "")
-        {
-            PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(prop));
         }
     }
 }

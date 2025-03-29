@@ -1,16 +1,18 @@
-﻿using System.ComponentModel;
-using System.Diagnostics;
-using System.Runtime.CompilerServices;
+﻿using System.Diagnostics;
 using System.Windows.Media.Imaging;
 using OpenTK.Graphics.OpenGL;
 using GUI.Graphics;
 using GUI.Utilities.DataBindings;
 using GUI.Utilities.Common;
+using GUI.Resources;
 
 namespace GUI.Representation.Components
 {
-    internal class RenderingViewportVM : INotifyPropertyChanged
+    internal class RenderingViewportVM : VmBase
     {
+        private bool _renderingPaused = false;
+
+
         #region PROPS
         private RelayCommand? _pauseClickCommand = null;
         public RelayCommand PauseClickCommand
@@ -42,17 +44,6 @@ namespace GUI.Representation.Components
             }
         }
 
-        private bool _renderingPaused = false;
-        private BitmapImage _pauseButtonImage = new(new Uri("../Images/pause_icon.png", UriKind.Relative));
-        public BitmapImage PauseButtonImage
-        {
-            get => _pauseButtonImage;
-            set
-            {
-                _pauseButtonImage = value;
-                OnPropertyChanged(nameof(PauseButtonImage));
-            }
-        }
 
         private string _timeDisplay = "0.01";
         public string TimeDisplay
@@ -93,7 +84,7 @@ namespace GUI.Representation.Components
             get
             {
                 if (_nvidiaOptimusStatus == string.Empty)
-                    _nvidiaOptimusStatus = RenderingDeviceManager.IsNvapiActive ? "Принудительный выбор GPU" : "Недоступен";
+                    _nvidiaOptimusStatus = RenderingDeviceManager.IsNvapiActive ? "renderingViewport_nvapiStatusYes" : "renderingViewport_nvapiStatusNo";
 
                 return _nvidiaOptimusStatus;
             }
@@ -108,6 +99,7 @@ namespace GUI.Representation.Components
         public double ViewportHeight { get; set; }
         #endregion
         
+
         private Shader? _shaderProgram;
         private int VAO, VBO, EBO;
         private Stopwatch? _timer;
@@ -209,18 +201,7 @@ namespace GUI.Representation.Components
 
         private void TogglePauseButtonImage()
         {
-            if (_renderingPaused) PauseButtonImage = new BitmapImage(new Uri("../Images/pause_icon.png", UriKind.Relative));
-            else PauseButtonImage = new BitmapImage(new Uri("../Images/play_icon.png", UriKind.Relative));
-
             _renderingPaused = !_renderingPaused;
-        }
-
-
-
-        public event PropertyChangedEventHandler? PropertyChanged;
-        public void OnPropertyChanged([CallerMemberName] string prop = "")
-        {
-            PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(prop));
         }
     }
 }

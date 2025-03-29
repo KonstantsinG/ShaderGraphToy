@@ -12,8 +12,8 @@
     <Grid Background="#FF27282D">
 
         <Grid.ColumnDefinitions>
-            <ColumnDefinition x:Name="canvasColumn" Width="58*"/>
-            <ColumnDefinition x:Name="viewportColumn" Width="42*"/>
+            <ColumnDefinition x:Name="canvasColumn" Width="70*"/>
+            <ColumnDefinition x:Name="viewportColumn" Width="30*"/>
         </Grid.ColumnDefinitions>
 
         <comps:GraphCanvas x:Name="graphCanvas"/>

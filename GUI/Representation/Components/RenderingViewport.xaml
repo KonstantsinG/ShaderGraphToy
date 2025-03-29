@@ -5,14 +5,19 @@
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
              xmlns:glWpfControl="clr-namespace:OpenTK.Wpf;assembly=GLWpfControl"
              xmlns:local="clr-namespace:GUI.Representation.Components"
+             xmlns:conv="clr-namespace:GUI.Utilities.XamlConverters"
              mc:Ignorable="d"
-             d:DesignHeight="800" d:DesignWidth="600">
+             d:DesignHeight="800" d:DesignWidth="400">
 
+    <UserControl.Resources>
+        <conv:LocalizationResourceConverter x:Key="locConv"/>
+    </UserControl.Resources>
+    
     <Grid Background="{StaticResource Gray_02}">
 
         <Grid.RowDefinitions>
-            <RowDefinition Height="45*" x:Name="viewportRow"/>
-            <RowDefinition Height="55*" x:Name="infoRow"/>
+            <RowDefinition Height="30*" x:Name="viewportRow"/>
+            <RowDefinition Height="70*" x:Name="infoRow"/>
         </Grid.RowDefinitions>
 
         <glWpfControl:GLWpfControl x:Name="openTkControl" Margin="10,10,10,0"/>
@@ -46,8 +51,8 @@
                     </Image.InputBindings>
                 </Image>
 
-                <Image Source="{Binding PauseButtonImage, NotifyOnSourceUpdated=True}"
-                       Height="18" Name="pauseButton" Grid.Column="1" Margin="0,5,0,0">
+                <Image Source="pack://application:,,,/GUI;component/Resources/Icons/pause_icon.png"
+                       Height="18" x:Name="pauseButton" Grid.Column="1" Margin="0,5,0,0">
                     <Image.InputBindings>
                         <MouseBinding MouseAction="LeftClick" Command="{Binding PauseClickCommand}"/>
                     </Image.InputBindings>
@@ -58,13 +63,13 @@
                            Margin="0,14,0,0" Name="timeCounter" Grid.Column="2"/>
 
                 <TextBlock Text="{Binding FpsDisplay, NotifyOnSourceUpdated=True, NotifyOnTargetUpdated=True, Mode=TwoWay}" FontSize="13" FontWeight="Bold" HorizontalAlignment="Center"
-                       Margin="0,14,0,0" Name="fpsCounter" Grid.Column="3"/>
+                           Margin="0,14,0,0" Name="fpsCounter" Grid.Column="3"/>
 
                 <TextBlock Text="{Binding ResolutionDisplay, NotifyOnSourceUpdated=True, NotifyOnTargetUpdated=True, Mode=TwoWay}" FontSize="13" FontWeight="Bold" HorizontalAlignment="Center"
-                       Margin="0,14,0,0" Name="resolutionDisplay" Grid.Column="4"/>
+                           Margin="0,14,0,0" Name="resolutionDisplay" Grid.Column="4"/>
 
                 <Image Source="pack://application:,,,/GUI;component/Resources/Icons/fullscreen_icon.png" Height="15" Width="15" Grid.Column="6"
-                   HorizontalAlignment="Center" VerticalAlignment="Top" Margin="0,16,0,0"/>
+                       HorizontalAlignment="Center" VerticalAlignment="Top" Margin="0,16,0,0"/>
 
                 <Rectangle Grid.ColumnSpan="7" Width="Auto" Height="10" Margin="0,0,0,-34"
                            Panel.ZIndex="1" RadiusX="3" RadiusY="3" Cursor="SizeNS" Fill="Transparent"
@@ -90,7 +95,7 @@
                                Foreground="{StaticResource Gray_05}" FontWeight="Light"
                                FontSize="12"/>
 
-                    <TextBlock Text="{Binding NvidiaOptimusStatus, NotifyOnSourceUpdated=True, Mode=OneWay}"
+                    <TextBlock Text="{Binding NvidiaOptimusStatus, Converter={StaticResource locConv}, NotifyOnSourceUpdated=True, Mode=OneWay}"
                                Foreground="{StaticResource ConsoleGreen}" FontWeight="Normal"
                                FontSize="12"/>
 

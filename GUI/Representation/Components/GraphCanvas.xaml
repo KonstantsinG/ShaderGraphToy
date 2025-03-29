@@ -53,7 +53,11 @@
 
             <Grid Grid.Column="1">
 
-                <Rectangle Height="30" Width="30" x:Name="cursorRect" MouseDown="CursorRect_MouseDown"/>
+                <Rectangle Height="30" Width="30" x:Name="cursorRect" MouseDown="CursorRect_MouseDown">
+                    <Rectangle.InputBindings>
+                        
+                    </Rectangle.InputBindings>
+                </Rectangle>
                 <Image Source="pack://application:,,,/GUI;component/Resources/Icons/cursor_icon.png" Height="20" Width="20" IsHitTestVisible="False"/>
                 <Border Height="1" VerticalAlignment="Bottom" Margin="7,0,7,5" x:Name="cursorLine"
                         Background="{StaticResource Gray_005}"/>
@@ -106,21 +110,27 @@
 
         </Grid>
 
-        <Canvas Background="{StaticResource Gray_01}" AllowDrop="True" Panel.ZIndex="-5"
-                RenderOptions.CachingHint="Cache" RenderOptions.ClearTypeHint="Enabled"
-                x:Name="mainCanvas" SizeChanged="MainCanvas_SizeChanged"
-                PreviewMouseWheel="MainCanvas_PreviewMouseWheel"
-                PreviewMouseDown="MainCanvas_PreviewMouseDown"
-                PreviewMouseUp="MainCanvas_PreviewMouseUp"
-                PreviewMouseMove="MainCanvas_PreviewMouseMove"
-                PreviewKeyDown="MainCanvas_PreviewKeyDown"
-                Width="15000" Height="14920" Grid.Row="1" Focusable="True">
+        <Grid ClipToBounds="True" Grid.Row="1">
 
-            <Canvas.RenderTransform>
-                <MatrixTransform x:Name="matrixTransform"/>
-            </Canvas.RenderTransform>
+            <Canvas Background="{StaticResource Gray_01}" AllowDrop="True" Panel.ZIndex="-5"
+                    RenderOptions.CachingHint="Cache" RenderOptions.ClearTypeHint="Enabled"
+                    x:Name="mainCanvas" SizeChanged="MainCanvas_SizeChanged"
+                    PreviewMouseWheel="MainCanvas_PreviewMouseWheel"
+                    PreviewMouseDown="MainCanvas_PreviewMouseDown"
+                    PreviewMouseUp="MainCanvas_PreviewMouseUp"
+                    PreviewMouseMove="MainCanvas_PreviewMouseMove"
+                    PreviewKeyDown="MainCanvas_PreviewKeyDown"
+                    Width="15000" Height="14920" Grid.Row="1" Focusable="True">
 
-        </Canvas>
+                <Canvas.RenderTransform>
+                    <MatrixTransform x:Name="matrixTransform"/>
+                </Canvas.RenderTransform>
+
+                <ItemsControl/>
+
+            </Canvas>
+
+        </Grid>
 
     </Grid>
 

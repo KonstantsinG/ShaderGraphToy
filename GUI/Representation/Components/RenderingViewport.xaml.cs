@@ -1,8 +1,9 @@
-﻿using OpenTK.Graphics.OpenGL;
+﻿using GUI.Resources;
 using OpenTK.Wpf;
-using System.Security.Principal;
 using System.Windows;
 using System.Windows.Controls;
+using System.Windows.Input;
+using System.Windows.Media.Imaging;
 
 namespace GUI.Representation.Components
 {
@@ -11,6 +12,10 @@ namespace GUI.Representation.Components
     /// </summary>
     public partial class RenderingViewport : UserControl
     {
+        private static readonly BitmapImage _pauseIcon = ResourceManager.GetIconFromResources("pause_icon.png");
+        private static readonly BitmapImage _playIcon = ResourceManager.GetIconFromResources("play_icon.png");
+        private bool _paused = false;
+
         private bool _isDraggingResizeRect = false;
         private Point _resizeStartPoint;
 
@@ -45,20 +50,20 @@ namespace GUI.Representation.Components
 
 
 
-        private void ResizeRectangle_MouseLeftButtonDown(object sender, System.Windows.Input.MouseButtonEventArgs e)
+        private void ResizeRectangle_MouseLeftButtonDown(object sender, MouseButtonEventArgs e)
         {
             _isDraggingResizeRect = true;
             _resizeStartPoint = e.GetPosition(this);
             resizeRect.CaptureMouse();
         }
 
-        private void ResizeRectangle_MouseLeftButtonUp(object sender, System.Windows.Input.MouseButtonEventArgs e)
+        private void ResizeRectangle_MouseLeftButtonUp(object sender, MouseButtonEventArgs e)
         {
             _isDraggingResizeRect = false;
             resizeRect.ReleaseMouseCapture();
         }
 
-        private void ResizeRectangle_MouseMove(object sender, System.Windows.Input.MouseEventArgs e)
+        private void ResizeRectangle_MouseMove(object sender, MouseEventArgs e)
         {
             if (_isDraggingResizeRect)
             {
@@ -81,6 +86,17 @@ namespace GUI.Representation.Components
 
                 _resizeStartPoint = currentPoint;
             }
+        }
+
+        private void PauseButton_MouseLeftButtonDown(object sender, MouseButtonEventArgs e)
+        {
+            Image img = (Image)sender;
+
+            if (_paused) img.Source = _pauseIcon;
+            else img.Source = _playIcon;
+
+            _paused = !_paused;
+            ((RenderingViewportVM)DataContext)?.PauseClickCommand.Execute(null);
         }
     }
 }

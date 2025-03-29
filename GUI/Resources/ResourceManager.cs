@@ -30,8 +30,8 @@ namespace GUI.Resources
             {
                 Source = name switch
                 {
-                    "ru-RU" => new Uri($"Resources/Localization/lang.{name}.xaml", UriKind.Relative),
-                    _ => new Uri("Resources/Localization/lang.xaml", UriKind.Relative),
+                    "ru-RU" => new Uri($"Resources/Localization/guiLoc.{name}.xaml", UriKind.Relative),
+                    _ => new Uri("Resources/Localization/guiLoc.xaml", UriKind.Relative),
                 }
             };
 
@@ -41,7 +41,7 @@ namespace GUI.Resources
         internal static void SwitchLocalizationDictionaries(ResourceDictionary dict)
         {
             ResourceDictionary oldDict = (from d in Application.Current.Resources.MergedDictionaries
-                                          where d.Source != null && d.Source.OriginalString.StartsWith("Resources/Localization/lang.")
+                                          where d.Source != null && d.Source.OriginalString.StartsWith("Resources/Localization/guiLoc.")
                                           select d).First();
             if (oldDict != null)
             {

@@ -2,6 +2,12 @@
                     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
                     xmlns:v="clr-namespace:System;assembly=mscorlib">
 
+    <v:String x:Key="common_yes">Yes</v:String>
+    <v:String x:Key="common_no">No</v:String>
+    
     <v:String x:Key="garphCanvas_title">- Fragment Shader Graphic Canvas -</v:String>
+
+    <v:String x:Key="renderingViewport_nvapiStatusYes">Force GPU Selection</v:String>
+    <v:String x:Key="renderingViewport_nvapiStatusNo">Unavailable</v:String>
     
 </ResourceDictionary>

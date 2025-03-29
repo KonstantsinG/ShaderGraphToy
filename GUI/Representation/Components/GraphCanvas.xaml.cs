@@ -1,17 +1,13 @@
 ﻿using GUI.Representation.Controls;
 using GUI.Representation.GraphNodes;
 using GUI.Resources;
-using System.Diagnostics;
-using System.Net;
-using System.Runtime.CompilerServices;
+using System.Collections.ObjectModel;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Input;
-using System.Windows.Interop;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
-using System.Windows.Shell;
 
 namespace GUI.Representation.Components
 {
@@ -24,9 +20,6 @@ namespace GUI.Representation.Components
         private Point _mouseOffset;
         private Point _selectionOffset;
         private bool _holdingMouse = false;
-
-        private ConnectorsSpline? _tempSpline;
-        private readonly SelectionRect _selectionArea = new();
 
         private bool _shiftPressed = false;
         private bool _ctrlPressed = false;
@@ -44,6 +37,14 @@ namespace GUI.Representation.Components
         private double _prevViewportWidth;
         private double _prevViewportHeight;
 
+
+        private ConnectorsSpline? _tempSpline;
+        private readonly SelectionRect _selectionArea = new();
+
+        private readonly List<GraphNodeBase> _selectedNodes = [];
+        private readonly List<ConnectorsSpline> _splines = [];
+
+
         public delegate void NodeSelectionHandler(GraphNodeBase? node, bool shiftPressed = false);
         public delegate void NodesActionsHandler(List<GraphNodeBase> nodes);
 
@@ -51,10 +52,7 @@ namespace GUI.Representation.Components
         public event NodeSelectionHandler NodeSelectionToggled = delegate { };
         public event NodesActionsHandler NodesRemoved = delegate { };
         
-        public static Cursor ZoomCursor { get; } = ResourceManager.GetCursorFromResources("zoom_cursor.cur");
-        
-        private readonly List<GraphNodeBase> _selectedNodes = [];
-        private readonly List<ConnectorsSpline> _splines = [];
+        private static readonly Cursor _zoomCursor = ResourceManager.GetCursorFromResources("zoom_cursor.cur");
 
         private enum MouseInputModes
         {
@@ -81,7 +79,7 @@ namespace GUI.Representation.Components
         public GraphCanvas()
         {
             InitializeComponent();
-            TranslateCanvas(-7000);
+            TranslateCanvas(-7030);
             _prevViewportWidth = ((Grid)mainCanvas.Parent).ActualWidth;
             _prevViewportHeight = ((Grid)mainCanvas.Parent).ActualHeight;
 
@@ -334,7 +332,7 @@ namespace GUI.Representation.Components
             
             _tempSpline.Define(_mouseOffset, color1, color2, conn.IsInput);
 
-            mainCanvas.Children.Add(_tempSpline.Path);
+            mainCanvas.Children.Add(_tempSpline.Path!);
             _cursorMode = CursorModes.SplineDrawing;
         }
 
@@ -422,8 +420,8 @@ namespace GUI.Representation.Components
         {
             _mouseInputMode = MouseInputModes.Zoom;
             _prevInputMode = MouseInputModes.Zoom;
-            Cursor = ZoomCursor;
-            _prevCursor = ZoomCursor;
+            Cursor = _zoomCursor;
+            _prevCursor = _zoomCursor;
             cursorLine.Background = (SolidColorBrush)FindResource("Gray_005");
             moveLine.Background = (SolidColorBrush)FindResource("Gray_005");
             zoomLine.Background = (SolidColorBrush)FindResource("Gray_03");
@@ -681,7 +679,7 @@ namespace GUI.Representation.Components
                     _tempSpline!.InputConnector!.IsBusy = false;
                 }
 
-                mainCanvas.Children.Remove(_tempSpline!.Path);
+                mainCanvas.Children.Remove(_tempSpline!.Path!);
             }
         }
 
@@ -698,14 +696,14 @@ namespace GUI.Representation.Components
             if (currSpline != null)
             {
                 _splines.Remove(currSpline);
-                mainCanvas.Children.Remove(currSpline.Path);
+                mainCanvas.Children.Remove(currSpline.Path!);
                 currSpline.Break();
                 currSpline.OutputConnector!.IsBusy = true;
                 currSpline.InputConnector = null;
 
                 _tempSpline = new();
                 _tempSpline.Define(currSpline, ((SolidColorBrush)FindResource("Gray_05")).Color);
-                mainCanvas.Children.Add(_tempSpline!.Path);
+                mainCanvas.Children.Add(_tempSpline!.Path!);
                 _mouseOffset = _tempSpline.GetStartPoint();
 
                 _cursorMode = CursorModes.SplineDrawing;
@@ -729,7 +727,7 @@ namespace GUI.Representation.Components
                 {
                     corp.Break();
                     _splines.Remove(corp);
-                    mainCanvas.Children.Remove(corp.Path);
+                    mainCanvas.Children.Remove(corp.Path!);
                 }
             }
         }

@@ -2,7 +2,7 @@
 using System.Globalization;
 using System.Windows.Data;
 
-namespace GUI.Utilities.Converters
+namespace GUI.Utilities.XamlConverters
 {
     [ValueConversion(typeof(IList), typeof(string))]
     public class ListIndexConverter : IValueConverter
