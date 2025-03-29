@@ -30,8 +30,8 @@ namespace GUI.Representation.GraphNodes.GraphNodeComponents
         {
             List<NodesConnector> conns = [];
 
-            //if (Model.HasInput) conns.Add(inputConnector);
-            //if (Model.HasOutput) conns.Add(outputConnector);
+            if (Model.HasInput) conns.Add(inputConnector);
+            if (Model.HasOutput) conns.Add(outputConnector);
 
             return conns;
         }

@@ -27,9 +27,8 @@ namespace GUI.Representation.GraphNodes.GraphNodeComponents
 
         public List<NodesConnector> GetConnectors()
         {
-            //if (Model.HasInput) return [inputConnector];
-            //else return [];
-            return [];
+            if (Model.HasInput) return [inputConnector];
+            else return [];
         }
     }
 }

@@ -73,7 +73,7 @@
 
                 </Rectangle>
 
-                <Image Source="pack://application:,,,/GUI;component/Resources/Icons//cross_icon.png"
+                <Image Source="pack://application:,,,/GUI;component/Resources/Icons/cross_icon.png"
                        Height="30" Width="30" IsHitTestVisible="False"/>
 
             </Grid>
@@ -114,10 +114,10 @@
             </Grid.RowDefinitions>
 
             <ScrollViewer HorizontalScrollBarVisibility="Disabled" VerticalScrollBarVisibility="Hidden"
-                          BorderThickness="1" BorderBrush="{StaticResource Gray_00}">
+                          BorderThickness="1" BorderBrush="{StaticResource Gray_00}" Margin="0,10,0,5">
 
                 <TextBlock Text="{Binding SelectedDescription, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
-                           Foreground="{StaticResource Gray_05}" FontSize="13" Margin="10" TextWrapping="Wrap"/>
+                           Foreground="{StaticResource Gray_05}" FontSize="12" Margin="10,0" TextWrapping="Wrap"/>
 
             </ScrollViewer>
 

@@ -16,7 +16,13 @@
 
         public bool UsingSubOperations
         {
-            get => OperationsTypes[0].OperationsSubTypes.Count > 0;
+            get
+            {
+                if (OperationsTypes.Count > 0)
+                    return OperationsTypes[0].OperationsSubTypes.Count > 0;
+                else
+                    return false;
+            }
         }
     }
 }

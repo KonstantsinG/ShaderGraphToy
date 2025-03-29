@@ -92,7 +92,7 @@ namespace GUI.Representation.GraphNodes
         {
             if (!NodeModel!.UsingSubOperations)
             {
-                uint id = (((ComboBox)sender).SelectedItem as OperationType)!.OperationsSubTypes[0].Id;
+                uint id = (((ComboBox)sender).SelectedItem as OperationType)!.Id;
                 LoadNodeContent(id);
             }
             else
@@ -164,7 +164,7 @@ namespace GUI.Representation.GraphNodes
 
             if (!info.UsingOperations)
             {
-                uint id = info.OperationsTypes[0].OperationsSubTypes[0].Id;
+                uint id = info.Id;
                 LoadNodeContent(id);
                 HideOperationsCBoxes?.Invoke();
             }

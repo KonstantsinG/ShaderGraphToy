@@ -13,7 +13,7 @@
         <TextBlock Style="{StaticResource GrayTextBlock}"
                    Text="{Binding Path=Model.Title, RelativeSource={RelativeSource AncestorType=UserControl}, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
 
-        <xctk:ColorPicker SelectedColor="{Binding Path=Model.Content, RelativeSource={RelativeSource AncestorType=UserControl}, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
+        <xctk:ColorPicker/>
 
     </StackPanel>
 

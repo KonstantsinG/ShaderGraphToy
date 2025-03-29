@@ -43,7 +43,7 @@
                        RadiusX="4" RadiusY="4" x:Name="headerPanel" MouseLeftButtonDown="HeaderPanel_MouseLeftButtonDown"
                        Cursor="Hand" Grid.ColumnSpan="4"/>
 
-            <Image Grid.Column="0" Source="/Images/minus_icon.png" Width="12" Height="12"
+            <Image Grid.Column="0" Source="pack://application:,,,/GUI;component/Resources/Icons/minus_icon.png" Width="12" Height="12"
                    HorizontalAlignment="Right" x:Name="minimizeImg" MouseLeftButtonDown="MinimizeImg_MouseLeftButtonDown"/>
             
             <TextBlock Text="{Binding Path=NodeModel.Name, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"

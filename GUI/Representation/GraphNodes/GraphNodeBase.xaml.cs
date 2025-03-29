@@ -1,4 +1,5 @@
-﻿using System.Diagnostics;
+﻿using GUI.Resources;
+using System.Diagnostics;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Input;
@@ -13,8 +14,8 @@ namespace GUI.Representation.GraphNodes
     /// </summary>
     public partial class GraphNodeBase : UserControl
     {
-        private BitmapImage _minusImg = new(new Uri("../Images/minus_icon.png", UriKind.Relative));
-        private BitmapImage _arrowDownImg = new(new Uri("../Images/arrowDown_icon.png", UriKind.Relative));
+        private static readonly BitmapImage _minusImg = ResourceManager.GetIconFromResources("minus_icon.png");
+        private static readonly BitmapImage _arrowDownImg = ResourceManager.GetIconFromResources("arrowDown_icon.png");
 
         public bool Selected { get; private set; }
         public bool IsMinimized { get; private set; } = false;
