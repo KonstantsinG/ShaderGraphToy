@@ -81,7 +81,7 @@ namespace GUI.Representation.Components
             _nodesBrowser.Show();
         }
 
-        public void CreateGraphNode(int? nodeId)
+        public void CreateGraphNode(uint? nodeId)
         {
             _nodesBrowser?.Close();
             _nodesBrowser = null;

@@ -1,7 +1,6 @@
 ﻿using GUI.Representation.Controls;
 using GUI.Representation.GraphNodes;
 using GUI.Resources;
-using System.Collections.ObjectModel;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Input;
@@ -752,7 +751,7 @@ namespace GUI.Representation.Components
         private NodesConnector? TryFindNodesConnector(Point endPoint)
         {
             NodesConnector? con = null;
-
+            
             VisualTreeHelper.HitTest(mainCanvas, null,
                 hitResult =>
                 {

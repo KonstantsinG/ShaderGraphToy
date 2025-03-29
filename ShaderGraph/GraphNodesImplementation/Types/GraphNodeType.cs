@@ -1,6 +1,6 @@
 ﻿namespace ShaderGraph.GraphNodesImplementation.Types
 {
-    public class GraphNodeType
+    public class GraphNodeType : INodeInfo
     {
         public required uint Id { get; set; }
         public required string Name { get; set; }
