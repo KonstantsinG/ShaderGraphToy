@@ -1,6 +1,7 @@
 ﻿using GUI.Representation.Controls;
 using GUI.Representation.GraphNodes;
 using GUI.Resources;
+using System.IO;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Input;
@@ -100,6 +101,7 @@ namespace GUI.Representation.Components
 
         private void UserControl_Loaded(object sender, RoutedEventArgs e)
         {
+            // Enable Canvas hotkeys by default
             mainCanvas.Focus();
         }
 
@@ -117,7 +119,14 @@ namespace GUI.Representation.Components
             Color gray03 = ((SolidColorBrush)FindResource("Gray_03")).Color;
             Color gray04 = ((SolidColorBrush)FindResource("Gray_04")).Color;
 
-            WriteableBitmap segment = CreateGridSegment(segmentSize, gray03, gray04);
+            BitmapSource segment;
+            if (ResourceManager.IsCacheExists("bitmaps\\canvasMarkup.png"))
+                segment = ResourceManager.GetBitmapFromCache("canvasMarkup.png");
+            else
+            {
+                segment = CreateGridSegment(segmentSize, gray03, gray04);
+                ResourceManager.SaveBitmapToCache((WriteableBitmap)segment, "canvasMarkup.png");
+            }
 
             ImageBrush gridBrush = new()
             {
@@ -178,7 +187,8 @@ namespace GUI.Representation.Components
                     double alpha = 1.0;
 
                     if (distance > radius - 0.5 && distance <= radius + 0.5)
-                        alpha = 1.0 - (distance - (radius - 0.5));
+                        alpha = 1.0;
+                        //alpha = 1.0 - (distance - (radius - 0.5)); -> apply anti-aliasing
                     else if (distance > radius + 0.5)
                         continue;
 

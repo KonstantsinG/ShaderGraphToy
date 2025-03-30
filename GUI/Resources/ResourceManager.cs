@@ -1,11 +1,5 @@
-﻿using Newtonsoft.Json.Linq;
-using System;
-using System.Collections.Generic;
-using System.IO;
-using System.Linq;
+﻿using System.IO;
 using System.Reflection;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Input;
 using System.Windows.Media.Imaging;
@@ -14,6 +8,45 @@ namespace GUI.Resources
 {
     internal static class ResourceManager
     {
+        internal static bool IsCacheExists(string path)
+        {
+            string folder = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData), "ShaderGraph");
+            return File.Exists(Path.Combine(folder, path));
+        }
+
+        internal static void SaveBitmapToCache(WriteableBitmap bitmap, string file)
+        {
+            string folder = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData), "ShaderGraph", "bitmaps");
+            if (!Directory.Exists(folder)) Directory.CreateDirectory(folder);
+
+            BitmapEncoder encoder = new PngBitmapEncoder();
+            encoder.Frames.Add(BitmapFrame.Create(bitmap));
+
+            using var stream = new FileStream(Path.Combine(folder, file), FileMode.OpenOrCreate);
+            encoder.Save(stream);
+        }
+
+        internal static BitmapImage GetBitmapFromCache(string name)
+        {
+            BitmapImage bitmap = new();
+            bitmap.BeginInit();
+            bitmap.UriSource = new Uri(Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData), "ShaderGraph", "bitmaps", name), UriKind.Absolute);
+            bitmap.CacheOption = BitmapCacheOption.OnLoad;
+            bitmap.CreateOptions = BitmapCreateOptions.IgnoreColorProfile;
+            bitmap.EndInit();
+
+            return bitmap;
+        }
+
+
+        internal static bool IsResourceExists(string name)
+        {
+            Assembly assembly = Assembly.GetExecutingAssembly();
+            string[] resourceNames = assembly.GetManifestResourceNames();
+
+            return Array.Exists(resourceNames, rn => rn.EndsWith(name));
+        }
+
         internal static BitmapImage GetIconFromResources(string name)
         {
             return new BitmapImage(new Uri($"pack://application:,,,/GUI;component/Resources/Icons/{name}", UriKind.Absolute));

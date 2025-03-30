@@ -6,7 +6,7 @@
         xmlns:local="clr-namespace:GUI.Windows"
         xmlns:wrp="clr-namespace:GUI.Representation.GraphNodes.Wrappers"
         mc:Ignorable="d" ResizeMode="NoResize"
-        Title="Обозреватель графовых узлов" Height="500" Width="400"
+        Title="Обозреватель графовых узлов" Height="530" Width="400"
         WindowStartupLocation="CenterScreen"
         Background="{StaticResource Gray_005}">
 
@@ -31,9 +31,9 @@
 
     <Grid>
         <Grid.RowDefinitions>
-            <RowDefinition Height="10*"/>
-            <RowDefinition Height="70*"/>
-            <RowDefinition Height="20*"/>
+            <RowDefinition Height="9*"/>
+            <RowDefinition Height="66*"/>
+            <RowDefinition Height="25*"/>
         </Grid.RowDefinitions>
 
         <Grid Grid.Row="0" Background="{StaticResource Gray_01}">
@@ -109,8 +109,8 @@
         <Grid Grid.Row="2" Background="{StaticResource Gray_005}">
 
             <Grid.RowDefinitions>
-                <RowDefinition Height="60*"/>
-                <RowDefinition Height="40*"/>
+                <RowDefinition Height="65*"/>
+                <RowDefinition Height="35*"/>
             </Grid.RowDefinitions>
 
             <ScrollViewer HorizontalScrollBarVisibility="Disabled" VerticalScrollBarVisibility="Hidden"
