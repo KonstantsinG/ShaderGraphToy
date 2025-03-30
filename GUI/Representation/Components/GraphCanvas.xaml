@@ -1,0 +1,140 @@
+﻿<UserControl x:Class="GUI.Representation.Components.GraphCanvas"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:local="clr-namespace:GUI.Representation.Components"
+             mc:Ignorable="d" Loaded="UserControl_Loaded"
+             d:DesignHeight="800" d:DesignWidth="700">
+
+    <UserControl.Resources>
+
+        <Style TargetType="Rectangle">
+
+            <Setter Property="Fill" Value="{StaticResource Gray_005}"/>
+            <Setter Property="Stroke" Value="{StaticResource Gray_005}"/>
+            <Setter Property="StrokeThickness" Value="1"/>
+            <Setter Property="RadiusX" Value="7"/>
+            <Setter Property="RadiusY" Value="7"/>
+
+            <Style.Triggers>
+                <Trigger Property="IsMouseOver" Value="True">
+                    <Setter Property="Fill" Value="{StaticResource Gray_01}"/>
+                    <Setter Property="Stroke" Value="{StaticResource Gray_02}"/>
+                </Trigger>
+            </Style.Triggers>
+
+        </Style>
+
+    </UserControl.Resources>
+
+    <Grid SizeChanged="Grid_SizeChanged">
+
+        <Grid.RowDefinitions>
+            <RowDefinition Height="40"/>
+            <RowDefinition/>
+        </Grid.RowDefinitions>
+
+        <Grid Grid.Row="0" Background="{StaticResource Gray_005}">
+
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="10"/>
+                <ColumnDefinition Width="35"/>
+                <ColumnDefinition Width="35"/>
+                <ColumnDefinition Width="35"/>
+                <ColumnDefinition/>
+                <ColumnDefinition Width="35"/>
+                <ColumnDefinition Width="35"/>
+                <ColumnDefinition Width="10"/>
+            </Grid.ColumnDefinitions>
+
+            <Border Grid.ColumnSpan="10" Height="1" VerticalAlignment="Bottom"
+                    Background="{StaticResource Gray_02}"/>
+
+            <Grid Grid.Column="1">
+
+                <Rectangle Height="30" Width="30" x:Name="cursorRect" MouseDown="CursorRect_MouseDown">
+                    <Rectangle.InputBindings>
+                        
+                    </Rectangle.InputBindings>
+                </Rectangle>
+                <Image Source="pack://application:,,,/GUI;component/Resources/Icons/cursor_icon.png" Height="20" Width="20" IsHitTestVisible="False"/>
+                <Border Height="1" VerticalAlignment="Bottom" Margin="7,0,7,5" x:Name="cursorLine"
+                        Background="{StaticResource Gray_005}"/>
+
+            </Grid>
+
+            <Grid Grid.Column="2">
+
+                <Rectangle Height="30" Width="30" x:Name="moveRect" MouseDown="MoveRect_MouseDown"/>
+                <Image Source="pack://application:,,,/GUI;component/Resources/Icons/move_icon.png" Height="20" Width="20" IsHitTestVisible="False"/>
+                <Border Height="1" VerticalAlignment="Bottom" Margin="7,0,7,5" x:Name="moveLine"
+                        Background="{StaticResource Gray_005}"/>
+
+            </Grid>
+
+            <Grid Grid.Column="3">
+
+                <Rectangle Height="30" Width="30" x:Name="zoomRect" MouseDown="ZoomRect_MouseDown"/>
+                <Image Source="pack://application:,,,/GUI;component/Resources/Icons/zoom_icon.png" Height="20" Width="20" IsHitTestVisible="False"/>
+                <Border Height="1" VerticalAlignment="Bottom" Margin="7,0,7,5" x:Name="zoomLine"
+                        Background="{StaticResource Gray_005}"/>
+
+            </Grid>
+
+            <Grid Grid.Column="4">
+
+                <TextBlock Text="{DynamicResource garphCanvas_title}" Foreground="{StaticResource Gray_04}"
+                           HorizontalAlignment="Center" VerticalAlignment="Center"
+                           FontWeight="Light" FontSize="13"/>
+
+            </Grid>
+
+
+
+            <Grid Grid.Column="5">
+
+                <Rectangle Height="30" Width="30" x:Name="addRect" Stroke="{StaticResource Gray_02}">
+                    <Rectangle.InputBindings>
+                        <MouseBinding MouseAction="LeftClick" Command="{Binding AddNodeClickCommand}"/>
+                    </Rectangle.InputBindings>
+                </Rectangle>
+                <Image Source="pack://application:,,,/GUI;component/Resources/Icons/plus_icon.png" Height="20" Width="20" IsHitTestVisible="False"/>
+
+            </Grid>
+
+            <Grid Grid.Column="6">
+
+                <Rectangle Height="30" Width="30" x:Name="removeRect" Stroke="{StaticResource Gray_02}"
+                           MouseDown="RemoveRect_MouseDown"/>
+                <Image Source="pack://application:,,,/GUI;component/Resources/Icons/remove_icon.png" Height="20" Width="20" IsHitTestVisible="False"/>
+
+            </Grid>
+
+        </Grid>
+
+        <Grid ClipToBounds="True" Grid.Row="1">
+
+            <Canvas Background="{StaticResource Gray_01}" AllowDrop="True" Panel.ZIndex="-5"
+                    RenderOptions.CachingHint="Cache" RenderOptions.ClearTypeHint="Enabled"
+                    x:Name="mainCanvas" SizeChanged="MainCanvas_SizeChanged"
+                    PreviewMouseWheel="MainCanvas_PreviewMouseWheel"
+                    PreviewMouseDown="MainCanvas_PreviewMouseDown"
+                    PreviewMouseUp="MainCanvas_PreviewMouseUp"
+                    PreviewMouseMove="MainCanvas_PreviewMouseMove"
+                    PreviewKeyDown="MainCanvas_PreviewKeyDown"
+                    Width="15000" Height="14920" Grid.Row="1" Focusable="True">
+
+                <Canvas.RenderTransform>
+                    <MatrixTransform x:Name="matrixTransform"/>
+                </Canvas.RenderTransform>
+
+                <ItemsControl/>
+
+            </Canvas>
+
+        </Grid>
+
+    </Grid>
+
+</UserControl>

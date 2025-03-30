@@ -1,0 +1,895 @@
+﻿{
+  "GraphNodesContents": [
+    {
+      // Constant_UserConstant_Number
+      "TypeId": 111,
+      "HasInput": false,
+      "HasOutput": true,
+      "InputType": null,
+      "OutputType": "Number",
+
+      "Components": [
+        {
+          "Type": "Input",
+          "Title": "Значение",
+          "Content": "0.0",
+          "IsReadonly": false,
+          "HasInput": false,
+          "InputType": null
+        }
+      ]
+    },
+
+    {
+      // Constant_UserConstant_Vector
+      "TypeId": 112,
+      "HasInput": false,
+      "HasOutput": true,
+      "InputType": null,
+      "OutputType": "VecN",
+
+      "Components": [
+        {
+          "Type": "Vector",
+          "Title": "Определение вектора",
+          "Contents": [],
+          "IsReadonly": false,
+          "IsControlable": true
+        }
+      ]
+    },
+
+    {
+      // Constant_UserConstant_Matrix
+      "TypeId": 113,
+      "HasInput": false,
+      "HasOutput": true,
+      "InputType": null,
+      "OutputType": "MatNxM",
+
+      "Components": [
+        {
+          "Type": "Matrix",
+          "Title": "Определение матрицы",
+          "Contents": [],
+          "IsReadonly": false,
+          "IsControlable": true
+        }
+      ]
+    },
+
+    {
+      // Constant_UserConstant_LogicValue
+      "TypeId": 114,
+      "HasInput": false,
+      "HasOutput": true,
+      "InputType": null,
+      "OutputType": "Bool",
+
+      "Components": [
+        {
+          "Type": "List",
+          "Title": "Логическое значение",
+          "Contents": [ "Истина", "Ложь" ]
+        }
+      ]
+    },
+
+    {
+      // Constant_UserConstant_Color
+      "TypeId": 115,
+      "HasInput": false,
+      "HasOutput": true,
+      "InputType": null,
+      "OutputType": "Vec4",
+
+      "Components": [
+        {
+          "Type": "Color",
+          "Title": "Значение цвета",
+          "Content": null
+        }
+      ]
+    },
+
+    {
+      // Constant_SpecialConstant_PI
+      "TypeId": 121,
+      "HasInput": false,
+      "HasOutput": true,
+      "InputType": null,
+      "OutputType": "Float",
+
+      "Components": [
+        {
+          "Type": "Input",
+          "Title": "Число Пи",
+          "Content": "3.1415926535",
+          "IsReadonly": true,
+          "HasInput": false,
+          "InputType": null
+        }
+      ]
+    },
+
+    {
+      // Constant_SpecialConstant_PHI
+      "TypeId": 122,
+      "HasInput": false,
+      "HasOutput": true,
+      "InputType": null,
+      "OutputType": "Float",
+
+      "Components": [
+        {
+          "Type": "Input",
+          "Title": "Число Фи",
+          "Content": "1.6180339887",
+          "IsReadonly": true,
+          "HasInput": false,
+          "InputType": null
+        }
+      ]
+    },
+
+    {
+      // Constant_SpecialConstant_EXP
+      "TypeId": 123,
+      "HasInput": false,
+      "HasOutput": true,
+      "InputType": null,
+      "OutputType": "Float",
+
+      "Components": [
+        {
+          "Type": "Input",
+          "Title": "Экспонента",
+          "Content": "2.7182818284",
+          "IsReadonly": true,
+          "HasInput": false,
+          "InputType": null
+        }
+      ]
+    },
+
+    {
+      // Constant_SpecialConstant_RotationMatrix2D
+      "TypeId": 124,
+      "HasInput": false,
+      "HasOutput": true,
+      "InputType": null,
+      "OutputType": "Mat2",
+
+      "Components": [
+        {
+          "Type": "Input",
+          "Title": "Угол поворота (в радианах)",
+          "Content": "0.523599",
+          "IsReadonly": false,
+          "HasInput": true,
+          "InputType": "Number"
+        }
+      ]
+    },
+
+    {
+      // Constant_SpecialConstant_RotationMatrix3D
+      "TypeId": 125,
+      "HasInput": false,
+      "HasOutput": true,
+      "InputType": null,
+      "OutputType": "Mat3",
+
+      "Components": [
+        {
+          "Type": "Input",
+          "Title": "Угол поворота по оси X (в радианах)",
+          "Content": "0.523599",
+          "IsReadonly": false,
+          "HasInput": true,
+          "InputType": "Number"
+        },
+
+        {
+          "Type": "Input",
+          "Title": "Угол поворота по оси Y (в радианах)",
+          "Content": "0.0",
+          "IsReadonly": false,
+          "HasInput": true,
+          "InputType": "Number"
+        },
+
+        {
+          "Type": "Input",
+          "Title": "Угол поворота по оси Z (в радианах)",
+          "Content": "-0.523599",
+          "IsReadonly": false,
+          "HasInput": true,
+          "InputType": "Number"
+        }
+      ]
+    },
+
+    {
+      // InputData_PixelCoords
+      "TypeId": 21,
+      "HasInput": false,
+      "HasOutput": true,
+      "InputType": null,
+      "OutputType": "Vec2",
+
+      "Components": [
+        {
+          "Type": "Inscription",
+          "Title": "Координаты X, Y",
+          "Formatting": [],
+          "HasInput": false,
+          "HasOutput": false,
+          "InputType": null,
+          "OutputType": null
+        }
+      ]
+    },
+
+    {
+      // InputData_UVCoords
+      "TypeId": 22,
+      "HasInput": false,
+      "HasOutput": true,
+      "InputType": null,
+      "OutputType": "Vec2",
+
+      "Components": [
+        {
+          "Type": "List",
+          "Title": "Диапазон",
+          "Contents": [ "[0, 1]", "[-1, 1]" ]
+        }
+      ]
+    },
+
+    {
+      // InputData_MouseCoords
+      "TypeId": 23,
+      "HasInput": false,
+      "HasOutput": true,
+      "InputType": null,
+      "OutputType": "Vec2",
+
+      "Components": [
+        {
+          "Type": "Inscription",
+          "Title": "Координаты мыши X, Y",
+          "Formatting": [],
+          "HasInput": false,
+          "HasOutput": false,
+          "InputType": null,
+          "OutputType": null
+        }
+      ]
+    },
+
+    {
+      // InputData_Time
+      "TypeId": 24,
+      "HasInput": false,
+      "HasOutput": true,
+      "InputType": null,
+      "OutputType": "Float",
+
+      "Components": [
+        {
+          "Type": "Inscription",
+          "Title": "Время (в секундах)",
+          "Formatting": [],
+          "HasInput": false,
+          "HasOutput": false,
+          "InputType": null,
+          "OutputType": null
+        }
+      ]
+    },
+
+    {
+      // OutputData
+      "TypeId": 3,
+      "HasInput": false,
+      "HasOutput": false,
+      "InputType": null,
+      "OutputType": null,
+
+      "Components": [
+        {
+          "Type": "Inscription",
+          "Title": "Цвет RGBA",
+          "Formatting": [],
+          "HasInput": true,
+          "HasOutput": false,
+          "InputType": "VecN",
+          "OutputType": null
+        },
+        {
+          "Type": "Inscription",
+          "Title": "Непрозрачность",
+          "Formatting": [],
+          "HasInput": true,
+          "HasOutput": false,
+          "InputType": "Number",
+          "OutputType": null
+        }
+      ]
+    },
+
+    {
+      // MatOperations_Basic_Sum
+      "TypeId": 411,
+      "HasInput": false,
+      "HasOutput": true,
+      "InputType": null,
+      "OutputType": "Calculable",
+
+      "Components": [
+        {
+          "Type": "Inscription",
+          "Title": "A + B",
+          "Formatting": [],
+          "HasInput": false,
+          "HasOutput": false,
+          "InputType": null,
+          "OutputType": null
+        },
+
+        {
+          "Type": "Input",
+          "Title": "Значение A",
+          "Content": "0.0",
+          "IsReadonly": false,
+          "HasInput": true,
+          "InputType": "Calculable"
+        },
+
+        {
+          "Type": "Input",
+          "Title": "Значение B",
+          "Content": "0.0",
+          "IsReadonly": false,
+          "HasInput": true,
+          "InputType": "Calculable"
+        }
+      ]
+    },
+
+    {
+      // MatOperations_Basic_Sub
+      "TypeId": 412,
+      "HasInput": false,
+      "HasOutput": true,
+      "InputType": null,
+      "OutputType": "Calculable",
+
+      "Components": [
+        {
+          "Type": "Inscription",
+          "Title": "A - B",
+          "Formatting": [],
+          "HasInput": false,
+          "HasOutput": false,
+          "InputType": null,
+          "OutputType": null
+        },
+
+        {
+          "Type": "Input",
+          "Title": "Значение A",
+          "Content": "0.0",
+          "IsReadonly": false,
+          "HasInput": true,
+          "InputType": "Calculable"
+        },
+
+        {
+          "Type": "Input",
+          "Title": "Значение B",
+          "Content": "0.0",
+          "IsReadonly": false,
+          "HasInput": true,
+          "InputType": "Calculable"
+        }
+      ]
+    },
+
+    {
+      // MatOperations_Basic_Mul
+      "TypeId": 413,
+      "HasInput": false,
+      "HasOutput": true,
+      "InputType": null,
+      "OutputType": "Calculable",
+
+      "Components": [
+        {
+          "Type": "Inscription",
+          "Title": "A * B",
+          "Formatting": [],
+          "HasInput": false,
+          "HasOutput": false,
+          "InputType": null,
+          "OutputType": null
+        },
+
+        {
+          "Type": "Input",
+          "Title": "Значение A",
+          "Content": "0.0",
+          "IsReadonly": false,
+          "HasInput": true,
+          "InputType": "Calculable"
+        },
+
+        {
+          "Type": "Input",
+          "Title": "Значение B",
+          "Content": "0.0",
+          "IsReadonly": false,
+          "HasInput": true,
+          "InputType": "Calculable"
+        }
+      ]
+    },
+
+    {
+      // MatOperations_Basic_Div
+      "TypeId": 414,
+      "HasInput": false,
+      "HasOutput": true,
+      "InputType": null,
+      "OutputType": "Calculable",
+
+      "Components": [
+        {
+          "Type": "Inscription",
+          "Title": "A / B",
+          "Formatting": [],
+          "HasInput": false,
+          "HasOutput": false,
+          "InputType": null,
+          "OutputType": null
+        },
+
+        {
+          "Type": "Input",
+          "Title": "Значение A",
+          "Content": "0.0",
+          "IsReadonly": false,
+          "HasInput": true,
+          "InputType": "Calculable"
+        },
+
+        {
+          "Type": "Input",
+          "Title": "Значение B",
+          "Content": "1.0",
+          "IsReadonly": false,
+          "HasInput": true,
+          "InputType": "Calculable"
+        }
+      ]
+    },
+
+    {
+      // MatOperations_Basic_Inverse
+      "TypeId": 415,
+      "HasInput": false,
+      "HasOutput": true,
+      "InputType": null,
+      "OutputType": "Calculable",
+
+      "Components": [
+        {
+          "Type": "Inscription",
+          "Title": "1 / A",
+          "Formatting": [],
+          "HasInput": false,
+          "HasOutput": false,
+          "InputType": null,
+          "OutputType": null
+        },
+
+        {
+          "Type": "Input",
+          "Title": "Значение A",
+          "Content": "1.0",
+          "IsReadonly": false,
+          "HasInput": true,
+          "InputType": "Calculable"
+        }
+      ]
+    },
+
+    {
+      // MatOperations_Numbers_DivRem
+      "TypeId": 421,
+      "HasInput": false,
+      "HasOutput": true,
+      "InputType": null,
+      "OutputType": "Int",
+
+      "Components": [
+        {
+          "Type": "Inscription",
+          "Title": "A % B",
+          "Formatting": [],
+          "HasInput": false,
+          "HasOutput": false,
+          "InputType": null,
+          "OutputType": null
+        },
+
+        {
+          "Type": "Input",
+          "Title": "Значение A",
+          "Content": "0.0",
+          "IsReadonly": false,
+          "HasInput": true,
+          "InputType": "Number"
+        },
+
+        {
+          "Type": "Input",
+          "Title": "Значение B",
+          "Content": "1.0",
+          "IsReadonly": false,
+          "HasInput": true,
+          "InputType": "Number"
+        }
+      ]
+    },
+
+    {
+      // MatOperations_Numbers_Trunc
+      "TypeId": 422,
+      "HasInput": false,
+      "HasOutput": true,
+      "InputType": null,
+      "OutputType": "Int",
+
+      "Components": [
+        {
+          "Type": "Inscription",
+          "Title": "Целая часть числа A",
+          "Formatting": [],
+          "HasInput": false,
+          "HasOutput": false,
+          "InputType": null,
+          "OutputType": null
+        },
+
+        {
+          "Type": "Input",
+          "Title": "Значение A",
+          "Content": "0.0",
+          "IsReadonly": false,
+          "HasInput": true,
+          "InputType": "Number"
+        }
+      ]
+    },
+
+    {
+      // MatOperations_Numbers_Fract
+      "TypeId": 423,
+      "HasInput": false,
+      "HasOutput": true,
+      "InputType": null,
+      "OutputType": "Int",
+
+      "Components": [
+        {
+          "Type": "Inscription",
+          "Title": "Дробная часть числа A",
+          "Formatting": [],
+          "HasInput": false,
+          "HasOutput": false,
+          "InputType": null,
+          "OutputType": null
+        },
+
+        {
+          "Type": "Input",
+          "Title": "Значение A",
+          "Content": "0.0",
+          "IsReadonly": false,
+          "HasInput": true,
+          "InputType": "Number"
+        }
+      ]
+    },
+
+    {
+      // MatOperations_Numbers_Sign
+      "TypeId": 424,
+      "HasInput": false,
+      "HasOutput": true,
+      "InputType": null,
+      "OutputType": "Int",
+
+      "Components": [
+        {
+          "Type": "Inscription",
+          "Title": "Знак числа A",
+          "Formatting": [],
+          "HasInput": false,
+          "HasOutput": false,
+          "InputType": null,
+          "OutputType": null
+        },
+
+        {
+          "Type": "Input",
+          "Title": "Значение A",
+          "Content": "0.0",
+          "IsReadonly": false,
+          "HasInput": true,
+          "InputType": "Number"
+        }
+      ]
+    },
+
+    {
+      // MatOperations_Vectors_CrossProd
+      "TypeId": 431,
+      "HasInput": false,
+      "HasOutput": true,
+      "InputType": null,
+      "OutputType": "VecN",
+
+      "Components": [
+        {
+          "Type": "Inscription",
+          "Title": "Векторное произведение A x B",
+          "Formatting": [],
+          "HasInput": false,
+          "HasOutput": false,
+          "InputType": null,
+          "OutputType": null
+        },
+
+        {
+          "Type": "Inscription",
+          "Title": "Значение A",
+          "Formatting": [],
+          "HasInput": true,
+          "HasOutput": false,
+          "InputType": "VecN",
+          "OutputType": null
+        },
+
+        {
+          "Type": "Inscription",
+          "Title": "Значение B",
+          "Formatting": [],
+          "HasInput": true,
+          "HasOutput": false,
+          "InputType": "VecN",
+          "OutputType": null
+        }
+      ]
+    },
+
+    {
+      // MatOperations_Vectors_DotProd
+      "TypeId": 432,
+      "HasInput": false,
+      "HasOutput": true,
+      "InputType": null,
+      "OutputType": "Number",
+
+      "Components": [
+        {
+          "Type": "Inscription",
+          "Title": "Скалярное произведение A * B",
+          "Formatting": [],
+          "HasInput": false,
+          "HasOutput": false,
+          "InputType": null,
+          "OutputType": null
+        },
+
+        {
+          "Type": "Inscription",
+          "Title": "Значение A",
+          "Formatting": [],
+          "HasInput": true,
+          "HasOutput": false,
+          "InputType": "VecN",
+          "OutputType": null
+        },
+
+        {
+          "Type": "Inscription",
+          "Title": "Значение B",
+          "Formatting": [],
+          "HasInput": true,
+          "HasOutput": false,
+          "InputType": "VecN",
+          "OutputType": null
+        }
+      ]
+    },
+
+    {
+      // MatOperations_Vectors_VectLen
+      "TypeId": 433,
+      "HasInput": false,
+      "HasOutput": true,
+      "InputType": null,
+      "OutputType": "Number",
+
+      "Components": [
+        {
+          "Type": "Inscription",
+          "Title": "Длина вектора A",
+          "Formatting": [],
+          "HasInput": false,
+          "HasOutput": false,
+          "InputType": null,
+          "OutputType": null
+        },
+
+        {
+          "Type": "Inscription",
+          "Title": "Значение A",
+          "Formatting": [],
+          "HasInput": true,
+          "HasOutput": false,
+          "InputType": "VecN",
+          "OutputType": null
+        }
+      ]
+    },
+
+    {
+      // MatOperations_Vectors_VectNorm
+      "TypeId": 434,
+      "HasInput": false,
+      "HasOutput": true,
+      "InputType": null,
+      "OutputType": "VecN",
+
+      "Components": [
+        {
+          "Type": "Inscription",
+          "Title": "Нормализация вектора A",
+          "Formatting": [],
+          "HasInput": false,
+          "HasOutput": false,
+          "InputType": null,
+          "OutputType": null
+        },
+
+        {
+          "Type": "Inscription",
+          "Title": "Значение A",
+          "Formatting": [],
+          "HasInput": true,
+          "HasOutput": false,
+          "InputType": "VecN",
+          "OutputType": null
+        }
+      ]
+    },
+
+    {
+      // MatOperations_Vectors_VectMatMul
+      "TypeId": 435,
+      "HasInput": false,
+      "HasOutput": true,
+      "InputType": null,
+      "OutputType": "VecN",
+
+      "Components": [
+        {
+          "Type": "Inscription",
+          "Title": "Произведение вектора A на матрицу B",
+          "Formatting": [],
+          "HasInput": false,
+          "HasOutput": false,
+          "InputType": null,
+          "OutputType": null
+        },
+
+        {
+          "Type": "Inscription",
+          "Title": "Значение A",
+          "Formatting": [],
+          "HasInput": true,
+          "HasOutput": false,
+          "InputType": "VecN",
+          "OutputType": null
+        },
+
+        {
+          "Type": "Inscription",
+          "Title": "Значение B",
+          "Formatting": [],
+          "HasInput": true,
+          "HasOutput": false,
+          "InputType": "MatNxM",
+          "OutputType": null
+        }
+      ]
+    },
+
+    {
+      // MatOperations_Matrices_MatVectMul
+      "TypeId": 441,
+      "HasInput": false,
+      "HasOutput": true,
+      "InputType": null,
+      "OutputType": "VecN",
+
+      "Components": [
+        {
+          "Type": "Inscription",
+          "Title": "Произведение матрицы A на вектор B",
+          "Formatting": [],
+          "HasInput": false,
+          "HasOutput": false,
+          "InputType": null,
+          "OutputType": null
+        },
+
+        {
+          "Type": "Inscription",
+          "Title": "Значение A",
+          "Formatting": [],
+          "HasInput": true,
+          "HasOutput": false,
+          "InputType": "MatNxM",
+          "OutputType": null
+        },
+
+        {
+          "Type": "Inscription",
+          "Title": "Значение B",
+          "Formatting": [],
+          "HasInput": true,
+          "HasOutput": false,
+          "InputType": "VecN",
+          "OutputType": null
+        }
+      ]
+    },
+
+    {
+      // MatOperations_Matrices_MatDet
+      "TypeId": 442,
+      "HasInput": false,
+      "HasOutput": true,
+      "InputType": null,
+      "OutputType": "Number",
+
+      "Components": [
+        {
+          "Type": "Inscription",
+          "Title": "Определитель матрицы A",
+          "Formatting": [],
+          "HasInput": false,
+          "HasOutput": false,
+          "InputType": null,
+          "OutputType": null
+        },
+
+        {
+          "Type": "Inscription",
+          "Title": "Значение A",
+          "Formatting": [],
+          "HasInput": true,
+          "HasOutput": false,
+          "InputType": "MatN",
+          "OutputType": null
+        }
+      ]
+    }
+  ]
+}

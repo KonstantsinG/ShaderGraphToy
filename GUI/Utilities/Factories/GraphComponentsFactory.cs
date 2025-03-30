@@ -1,0 +1,32 @@
+﻿using GUI.Representation.GraphNodes.GraphNodeComponents;
+using ShaderGraph.GraphNodesImplementation.Components;
+using System.Windows.Controls;
+
+namespace GUI.Utilities
+{
+    public static class GraphComponentsFactory
+    {
+        public static UserControl ConstructComponent(INodeComponent data)
+        {
+            return data switch
+            {
+                InscriptionComponent inscData => new InscriptionComponentView() { Model = inscData },
+                InputComponent inpData => new InputComponentView() { Model = inpData },
+                VectorComponent vecData => new VectorComponentView() { Model = vecData },
+                MatrixComponent matData => new MatrixComponentView() { Model = matData },
+                ListComponent lstData => new ListComponentView() { Model = lstData },
+                ColorComponent colorData => new ColorComponentView() { Model = colorData },
+                _ => throw new ArgumentException("Unsupported component type")
+            };
+        }
+
+        public static List<UserControl> ConstructComponents(List<INodeComponent> components)
+        {
+            List<UserControl> controls = [];
+            foreach (INodeComponent comp in components)
+                controls.Add(ConstructComponent(comp));
+
+            return controls;
+        }
+    }
+}

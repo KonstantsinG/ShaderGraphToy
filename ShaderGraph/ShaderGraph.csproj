@@ -7,17 +7,12 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <None Remove="JsonData\graphNodesTypes.json" />
-    <None Remove="JsonData\graphNodesTypesContent.json" />
-  </ItemGroup>
-
-  <ItemGroup>
-    <Content Include="JsonData\graphNodesTypes.json">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
-    <Content Include="JsonData\graphNodesTypesContent.json">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
+    <EmbeddedResource Include="Resources\GraphNodes_TypesInfo\gnTypes_ru-RU.json">
+      <CopyToOutputDirectory>Never</CopyToOutputDirectory>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Resources\GraphNodes_Contents\gnContents_ru-RU.json">
+      <CopyToOutputDirectory>Never</CopyToOutputDirectory>
+    </EmbeddedResource>
   </ItemGroup>
 
   <ItemGroup>

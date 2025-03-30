@@ -1,7 +1,6 @@
-﻿using System.Configuration;
-using System.Data;
+﻿using GUI.Resources;
+using GUI.Utilities.Common;
 using System.Globalization;
-using System.Runtime.InteropServices;
 using System.Windows;
 
 namespace GUI
@@ -11,43 +10,49 @@ namespace GUI
     /// </summary>
     public partial class App : Application
     {
-        private nint _nvapiIdx = nint.Zero;
+        private static readonly List<CultureInfo> _languages = [ new("en-US"), new("ru-RU") ];
+        public static List<CultureInfo> Languages
+        {
+            get => _languages;
+        }
 
-        public bool IsNvapiActive { get; set; } = false;
+        public static event EventHandler LanguageChanged = delegate { };
+        public static CultureInfo Language
+        {
+            get => Thread.CurrentThread.CurrentUICulture;
+            set
+            {
+                if (value == null) ArgumentNullException.ThrowIfNull("value");
+                if (value == Thread.CurrentThread.CurrentUICulture) return;
+
+                Thread.CurrentThread.CurrentUICulture = value!;
+                ResourceDictionary dict = ResourceManager.GetLocalizationDictionaryFromResources(value!.Name);
+                ResourceManager.SwitchLocalizationDictionaries(dict);
+
+                LanguageChanged(Application.Current, new());
+                Settings.Default.DefaultLanguage = Language;
+                Settings.Default.Save();
+            }
+        }
+
+
+        public App()
+        {
+            InitializeComponent();
+            Language = Settings.Default.DefaultLanguage;
+        }
 
         protected override void OnStartup(StartupEventArgs e)
         {
             base.OnStartup(e);
 
-            Thread.CurrentThread.CurrentCulture = CultureInfo.InvariantCulture;
-            Thread.CurrentThread.CurrentUICulture = CultureInfo.InvariantCulture;
-
-            EnableGPUHighPerformance();
+            RenderingDeviceManager.EnableNvapi();
             Exit += AppExit;
         }
 
         private void AppExit(object sender, ExitEventArgs e)
         {
-            if (_nvapiIdx != nint.Zero)
-                NativeLibrary.Free(_nvapiIdx);
-        }
-
-
-        private void EnableGPUHighPerformance()
-        {
-            try
-            {
-                if (Environment.Is64BitProcess)
-                    _nvapiIdx = NativeLibrary.Load("nvapi64.dll");
-                else
-                    _nvapiIdx = NativeLibrary.Load("nvapi32.dll");
-
-                IsNvapiActive = true;
-            }
-            catch (Exception)
-            {
-                IsNvapiActive = false;
-            }
+            RenderingDeviceManager.DisableNvapi();
         }
     }
 }

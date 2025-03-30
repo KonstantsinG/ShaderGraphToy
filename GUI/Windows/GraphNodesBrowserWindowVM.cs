@@ -1,19 +1,66 @@
-﻿using GUI.Utilities;
-using ShaderGraph.ComponentModel.Info.Wrappers;
-using System.Collections.ObjectModel;
-using System.ComponentModel;
+﻿using System.Collections.ObjectModel;
 using System.Windows.Controls;
 using System.Windows;
 using System.Windows.Input;
+using GUI.Representation.GraphNodes.Wrappers;
+using GUI.Utilities.DataBindings;
+using ShaderGraph.Serializers;
+using ShaderGraph.GraphNodesImplementation.Types;
 
 namespace GUI.Windows
 {
-    public class GraphNodesBrowserWindowVM : INotifyPropertyChanged
+    public class GraphNodesBrowserWindowVM : VmBase
     {
-        private readonly List<TreeViewerItem>? _sourceItems;
+        #region PROPS
+        private readonly List<TreeViewerNodeInfo>? _sourceItems;
 
-        private ObservableCollection<TreeViewerItem> _treeItems = [];
-        public ObservableCollection<TreeViewerItem> TreeItems
+        private RelayCommand? _crossRectClickCommand = null;
+        public RelayCommand CrossRectClickCommand
+        {
+            get
+            {
+                _crossRectClickCommand ??= new RelayCommand(CrossRect_MouseDown);
+                return _crossRectClickCommand;
+            }
+            set
+            {
+                _crossRectClickCommand = value;
+                OnPropertyChanged(nameof(CrossRectClickCommand));
+            }
+        }
+
+        private RelayCommand? _addClickCommand = null;
+        public RelayCommand AddClickCommand
+        {
+            get
+            {
+                _addClickCommand ??= new RelayCommand(AddButton_Click);
+                return _addClickCommand;
+            }
+            set
+            {
+                _addClickCommand = value;
+                OnPropertyChanged(nameof(AddClickCommand));
+            }
+        }
+
+        private RelayCommand? _cancelClickCommand = null;
+        public RelayCommand CancelClickCommand
+        {
+            get
+            {
+                _cancelClickCommand ??= new RelayCommand(CancelButton_Click);
+                return _cancelClickCommand;
+            }
+            set
+            {
+                _cancelClickCommand = value;
+                OnPropertyChanged(nameof(CancelClickCommand));
+            }
+        }
+
+        private ObservableCollection<TreeViewerNodeInfo> _treeItems = [];
+        public ObservableCollection<TreeViewerNodeInfo> TreeItems
         {
             get => _treeItems;
             set
@@ -45,24 +92,25 @@ namespace GUI.Windows
             }
         }
 
-        private TreeViewerItem? _selectedItem;
+        private TreeViewerNodeInfo? _selectedItem;
 
-        public delegate void TreeViewerCallback(int? nodeId);
+        public delegate void TreeViewerCallback(uint? nodeId);
         public event TreeViewerCallback ItemCreated = delegate { };
+        #endregion
 
 
         public GraphNodesBrowserWindowVM()
         {
-            _sourceItems = GraphComponentsFactory.GetNodeTypesInfo().ToList();
-            TreeItems = DeepCopyTreeViewerItems(_sourceItems!);
+            _sourceItems = WrapTreeViewerItems(GraphNodesTypesSerializer.DeserializeAll("ru-RU"));
+            TreeItems = DeepCopyTreeViewerNodeInfos(_sourceItems!);
         }
 
         public void TreeView_SelectedItemChanged(object sender, RoutedPropertyChangedEventArgs<object> e)
         {
-            if (((TreeView)sender).SelectedItem is TreeViewerItem item)
+            if (((TreeView)sender).SelectedItem is TreeViewerNodeInfo item)
             {
                 _selectedItem = item;
-                SelectedDescription = item.Model!.Description;
+                SelectedDescription = item.Description;
             }
             else
             {
@@ -71,18 +119,18 @@ namespace GUI.Windows
             }
         }
 
-        public void CrossRect_MouseDown(object sender, MouseButtonEventArgs e)
+        public void CrossRect_MouseDown()
         {
-            TreeItems = DeepCopyTreeViewerItems(_sourceItems!);
+            TreeItems = DeepCopyTreeViewerNodeInfos(_sourceItems!);
             SearchText = string.Empty;
         }
 
         public void SearchBox_TextChanged(object sender, TextChangedEventArgs e)
         {
-            TreeViewerItem? item;
-            TreeViewerItem? subItem;
-            TreeViewerItem? subSubItem;
-            TreeItems = DeepCopyTreeViewerItems(_sourceItems!);
+            TreeViewerNodeInfo? item;
+            TreeViewerNodeInfo? subItem;
+            TreeViewerNodeInfo? subSubItem;
+            TreeItems = DeepCopyTreeViewerNodeInfos(_sourceItems!);
             if (SearchText == string.Empty) return;
 
             for (int i = 0; i < TreeItems.Count; i++)
@@ -100,14 +148,14 @@ namespace GUI.Windows
                         subSubItem = subItem.Children[k];
                         subSubItem.IsExpanded = true;
 
-                        if (!subSubItem.Model!.Synonyms.Any(s => s.Contains(SearchText, StringComparison.CurrentCultureIgnoreCase)))
+                        if (!subSubItem.Synonyms.Any(s => s.Contains(SearchText, StringComparison.CurrentCultureIgnoreCase)))
                         {
                             subItem.Children.RemoveAt(k);
                             k--;
                         }
                     }
 
-                    if (!subItem.Model!.Synonyms.Any(s => s.Contains(SearchText, StringComparison.CurrentCultureIgnoreCase)))
+                    if (!subItem.Synonyms.Any(s => s.Contains(SearchText, StringComparison.CurrentCultureIgnoreCase)))
                     {
                         if (subItem.Children.Count > 0)
                         {
@@ -120,7 +168,7 @@ namespace GUI.Windows
                     }
                 }
 
-                if (!item.Model!.Synonyms.Any(s => s.Contains(SearchText, StringComparison.CurrentCultureIgnoreCase)))
+                if (!item.Synonyms.Any(s => s.Contains(SearchText, StringComparison.CurrentCultureIgnoreCase)))
                 {
                     if (item.Children.Count > 0)
                     {
@@ -141,7 +189,7 @@ namespace GUI.Windows
             if (e.Key == Key.Enter)
             {
                 _selectedItem ??= TreeItems.FirstOrDefault();
-                ItemCreated.Invoke(_selectedItem?.Model!.TypeId);
+                ItemCreated.Invoke(_selectedItem?.Id);
             }
         }
 
@@ -151,49 +199,77 @@ namespace GUI.Windows
             if (((TreeViewItem)sender).Header != _selectedItem) return;
 
             if (e.Key == Key.Enter)
-                ItemCreated.Invoke(_selectedItem?.Model!.TypeId);
+                ItemCreated.Invoke(_selectedItem?.Id);
         }
 
-        public void AddButton_Click(object sender, RoutedEventArgs e)
+        public void AddButton_Click()
         {
-            ItemCreated.Invoke(_selectedItem?.Model!.TypeId);
+            ItemCreated.Invoke(_selectedItem?.Id);
         }
 
-        public void CancelButton_Click(object sender, RoutedEventArgs e)
+        public void CancelButton_Click()
         {
             ItemCreated.Invoke(null);
         }
 
-        public static ObservableCollection<TreeViewerItem> DeepCopyTreeViewerItems(List<TreeViewerItem> source)
+        private static List<TreeViewerNodeInfo> WrapTreeViewerItems(List<GraphNodeType> items)
         {
-            ObservableCollection<TreeViewerItem> copy = [];
+            List<TreeViewerNodeInfo> wrappedOnes = [];
+            TreeViewerNodeInfo? infoOne;
+            TreeViewerNodeInfo? infoTwo;
+            TreeViewerNodeInfo? infoThree;
 
-            foreach (var item in source)
-                copy.Add(DeepCopyTreeViewerItem(item));
-
-            return copy;
-        }
-
-        private static TreeViewerItem DeepCopyTreeViewerItem(TreeViewerItem original)
-        {
-            TreeViewerItem copy = new ()
+            foreach (var type in items)
             {
-                Model = original.Model,
-                IsExpanded = original.IsExpanded
-            };
+                infoOne = new(type);
 
-            foreach (var child in original.Children)
-                copy.Children.Add(DeepCopyTreeViewerItem(child));
+                foreach (var op in type.OperationsTypes)
+                {
+                    infoTwo = new(op);
 
-            return copy;
+                    foreach (var subop in op.OperationsSubTypes)
+                    {
+                        infoThree = new(subop);
+                        infoTwo.Children.Add(infoThree!);
+                    }
+
+                    infoOne.Children.Add(infoTwo!);
+                }
+
+                wrappedOnes.Add(infoOne);
+            }
+
+            return wrappedOnes;
         }
 
-
-        public event PropertyChangedEventHandler? PropertyChanged;
-
-        protected virtual void OnPropertyChanged(string propertyName)
+        private static ObservableCollection<TreeViewerNodeInfo> DeepCopyTreeViewerNodeInfos(List<TreeViewerNodeInfo> nodes)
         {
-            PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
+            ObservableCollection<TreeViewerNodeInfo> copy = [];
+            TreeViewerNodeInfo? infoOne;
+            TreeViewerNodeInfo? infoTwo;
+            TreeViewerNodeInfo? infoThree;
+
+            foreach (var type in nodes)
+            {
+                infoOne = new(type);
+
+                foreach (var op in type.Children)
+                {
+                    infoTwo = new(op);
+
+                    foreach (var subop in op.Children)
+                    {
+                        infoThree = new(subop);
+                        infoTwo.Children.Add(infoThree!);
+                    }
+
+                    infoOne.Children.Add(infoTwo!);
+                }
+
+                copy.Add(infoOne);
+            }
+
+            return copy;
         }
     }
 }

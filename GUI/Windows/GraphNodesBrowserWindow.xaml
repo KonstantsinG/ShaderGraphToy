@@ -4,16 +4,16 @@
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:GUI.Windows"
-        xmlns:wrp="clr-namespace:ShaderGraph.ComponentModel.Info.Wrappers;assembly=ShaderGraph"
+        xmlns:wrp="clr-namespace:GUI.Representation.GraphNodes.Wrappers"
         mc:Ignorable="d" ResizeMode="NoResize"
-        Title="Обозреватель графовых узлов" Height="500" Width="400"
+        Title="Обозреватель графовых узлов" Height="530" Width="400"
         WindowStartupLocation="CenterScreen"
         Background="{StaticResource Gray_005}">
 
     <Window.Resources>
         <BooleanToVisibilityConverter x:Key="boolToVis"/>
 
-        <HierarchicalDataTemplate DataType="{x:Type wrp:TreeViewerItem}" 
+        <HierarchicalDataTemplate DataType="{x:Type wrp:TreeViewerNodeInfo}" 
                                 ItemsSource="{Binding Children}">
             <Grid Margin="2">
                 <Grid.ColumnDefinitions>
@@ -22,7 +22,7 @@
                 </Grid.ColumnDefinitions>
 
                 <StackPanel Grid.Column="0" Orientation="Horizontal" Margin="2">
-                    <TextBlock Text="{Binding Model.Name}" FontSize="14" FontWeight="Light"
+                    <TextBlock Text="{Binding Name}" FontSize="14" FontWeight="Light"
                                Foreground="{StaticResource Gray_05}"/>
                 </StackPanel>
             </Grid>
@@ -31,9 +31,9 @@
 
     <Grid>
         <Grid.RowDefinitions>
-            <RowDefinition Height="10*"/>
-            <RowDefinition Height="70*"/>
-            <RowDefinition Height="20*"/>
+            <RowDefinition Height="9*"/>
+            <RowDefinition Height="66*"/>
+            <RowDefinition Height="25*"/>
         </Grid.RowDefinitions>
 
         <Grid Grid.Row="0" Background="{StaticResource Gray_01}">
@@ -71,9 +71,14 @@
                         </Style>
                     </Rectangle.Style>
 
+                    <Rectangle.InputBindings>
+                        <MouseBinding MouseAction="LeftClick" Command="{Binding CrossRectClickCommand}"/>
+                    </Rectangle.InputBindings>
+
                 </Rectangle>
-                
-                <Image Source="/Images/cross_icon.png" Height="30" Width="30" IsHitTestVisible="False"/>
+
+                <Image Source="pack://application:,,,/GUI;component/Resources/Icons/cross_icon.png"
+                       Height="30" Width="30" IsHitTestVisible="False"/>
 
             </Grid>
 
@@ -88,7 +93,7 @@
                 <TreeView.Template>
                     <ControlTemplate>
                         <ScrollViewer VerticalScrollBarVisibility="Hidden"
-                          HorizontalScrollBarVisibility="Hidden">
+                                      HorizontalScrollBarVisibility="Hidden">
                             <ItemsPresenter/>
                         </ScrollViewer>
                     </ControlTemplate>
@@ -108,25 +113,27 @@
         <Grid Grid.Row="2" Background="{StaticResource Gray_005}">
 
             <Grid.RowDefinitions>
-                <RowDefinition Height="60*"/>
-                <RowDefinition Height="40*"/>
+                <RowDefinition Height="65*"/>
+                <RowDefinition Height="35*"/>
             </Grid.RowDefinitions>
 
             <ScrollViewer HorizontalScrollBarVisibility="Disabled" VerticalScrollBarVisibility="Hidden"
-                          BorderThickness="1" BorderBrush="{StaticResource Gray_00}">
+                          BorderThickness="1" BorderBrush="{StaticResource Gray_00}" Margin="0,10,0,5">
 
                 <TextBlock Text="{Binding SelectedDescription, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
-                           Foreground="{StaticResource Gray_05}" FontSize="13" Margin="10" TextWrapping="Wrap"/>
+                           Foreground="{StaticResource Gray_05}" FontSize="12" Margin="10,0" TextWrapping="Wrap"/>
 
             </ScrollViewer>
 
             <StackPanel Orientation="Horizontal" Grid.Row="1">
 
                 <Button Content="Добавить" Style="{StaticResource GrayButton}"
-                        Height="25" Width="100" Margin="10,0" x:Name="addButton"/>
+                        Height="25" Width="100" Margin="10,0" x:Name="addButton"
+                        Command="{Binding AddClickCommand}"/>
 
                 <Button Content="Отмена" Style="{StaticResource GrayButton}"
-                        Height="25" Width="100" x:Name="cancelButton"/>
+                        Height="25" Width="100" x:Name="cancelButton"
+                        Command="{Binding CancelClickCommand}"/>
 
             </StackPanel>
 
