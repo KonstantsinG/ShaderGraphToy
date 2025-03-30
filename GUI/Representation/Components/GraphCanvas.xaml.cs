@@ -1,14 +1,12 @@
 ﻿using GUI.Representation.Controls;
 using GUI.Representation.GraphNodes;
 using GUI.Resources;
-using System.IO;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
-using System.Xml.Linq;
 
 namespace GUI.Representation.Components
 {
@@ -242,17 +240,22 @@ namespace GUI.Representation.Components
 
         private void MainCanvas_PreviewMouseDown(object sender, MouseButtonEventArgs e)
         {
-            _mouseOffset = e.GetPosition(this);
-            _holdingMouse = true;
-
             if (e.MiddleButton == MouseButtonState.Pressed)
             {
+                _mouseOffset = e.GetPosition(this);
+                _holdingMouse = true;
+
                 _mouseInputMode = MouseInputModes.Movement;
                 Cursor = Cursors.SizeAll;
                 mainCanvas.CaptureMouse();
             }
             else if (e.LeftButton == MouseButtonState.Pressed)
             {
+                if (e.RightButton == MouseButtonState.Pressed) return;
+
+                _mouseOffset = e.GetPosition(this);
+                _holdingMouse = true;
+
                 MainCanvas_PreviewLeftMouseDown(sender, e);
             }
         }
@@ -359,6 +362,8 @@ namespace GUI.Representation.Components
 
         public void GraphNode_ConnectorPressed(object sender, MouseEventArgs e)
         {
+            if (e.LeftButton != MouseButtonState.Pressed) return;
+
             NodesConnector conn = (NodesConnector)sender;
 
             // if current connector is input and it already busy - disconnect them from node

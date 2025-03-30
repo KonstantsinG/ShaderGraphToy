@@ -1,17 +1,18 @@
 ﻿using GUI.Utilities;
 using System.Collections.ObjectModel;
-using System.ComponentModel;
 using System.Windows.Controls;
 using GUI.Representation.GraphNodes.GraphNodeComponents;
 using System.Windows.Input;
 using ShaderGraph.GraphNodesImplementation.Contents;
 using ShaderGraph.GraphNodesImplementation.Types;
 using ShaderGraph.Serializers;
+using GUI.Utilities.DataBindings;
 
 namespace GUI.Representation.GraphNodes
 {
-    public class GraphNodeBaseVM : INotifyPropertyChanged
+    public class GraphNodeBaseVM : VmBase
     {
+        #region PROPS
         private static int _nodesCounter = 0;
         private static int _inputsCounter = 0;
         private static int _outputsCounter = 0;
@@ -78,9 +79,10 @@ namespace GUI.Representation.GraphNodes
         public ObservableCollection<OperationSubType> NodeSubOperations { get; set; } = [];
         public ObservableCollection<UserControl> NodeComponents { get; set; } = [];
 
-        public Func<List<NodesConnector>>? GetOwnConnectors { get; set; }
+        public Func<List<NodesConnector>>? GetOwnConnectors;
         public Action<object, MouseEventArgs>? RaiseConnectorPressedEvent;
         public Action? HideOperationsCBoxes;
+        #endregion
 
 
         public GraphNodeBaseVM()
@@ -124,7 +126,10 @@ namespace GUI.Representation.GraphNodes
             foreach (UserControl comp in NodeComponents)
             {
                 if (comp is InputComponentView inputComp)
-                    Connectors.AddRange(inputComp.GetConnectors());
+                {
+                    NodesConnector? conn = inputComp.GetConnector();
+                    if (conn != null) Connectors.Add(conn);
+                }
                 else if (comp is InscriptionComponentView inscComp)
                     Connectors.AddRange(inscComp.GetConnectors());
             }
@@ -159,7 +164,7 @@ namespace GUI.Representation.GraphNodes
             string strId = nodeId.ToString();
             uint idFirstPart = uint.Parse(strId[0].ToString());
 
-            GraphNodeType info = GraphNodesTypesSerializer.Deserialize("ru-RU", idFirstPart);
+            GraphNodeType info = GraphNodesTypesSerializer.Deserialize("ru-RU", idFirstPart)!;
             NodeModel = info;
 
             if (!info.UsingOperations)
@@ -190,14 +195,6 @@ namespace GUI.Representation.GraphNodes
         public void NodesConnector_MouseDown(object sender, MouseEventArgs e)
         {
             RaiseConnectorPressedEvent?.Invoke(sender, e);
-        }
-
-
-        public event PropertyChangedEventHandler? PropertyChanged;
-
-        protected virtual void OnPropertyChanged(string propertyName)
-        {
-            PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
         }
     }
 }

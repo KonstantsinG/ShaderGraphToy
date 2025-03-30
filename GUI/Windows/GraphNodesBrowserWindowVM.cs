@@ -1,6 +1,4 @@
-﻿using GUI.Utilities;
-using System.Collections.ObjectModel;
-using System.ComponentModel;
+﻿using System.Collections.ObjectModel;
 using System.Windows.Controls;
 using System.Windows;
 using System.Windows.Input;
@@ -8,13 +6,58 @@ using GUI.Representation.GraphNodes.Wrappers;
 using GUI.Utilities.DataBindings;
 using ShaderGraph.Serializers;
 using ShaderGraph.GraphNodesImplementation.Types;
-using Xceed.Wpf.Toolkit.PropertyGrid.Attributes;
 
 namespace GUI.Windows
 {
     public class GraphNodesBrowserWindowVM : VmBase
     {
+        #region PROPS
         private readonly List<TreeViewerNodeInfo>? _sourceItems;
+
+        private RelayCommand? _crossRectClickCommand = null;
+        public RelayCommand CrossRectClickCommand
+        {
+            get
+            {
+                _crossRectClickCommand ??= new RelayCommand(CrossRect_MouseDown);
+                return _crossRectClickCommand;
+            }
+            set
+            {
+                _crossRectClickCommand = value;
+                OnPropertyChanged(nameof(CrossRectClickCommand));
+            }
+        }
+
+        private RelayCommand? _addClickCommand = null;
+        public RelayCommand AddClickCommand
+        {
+            get
+            {
+                _addClickCommand ??= new RelayCommand(AddButton_Click);
+                return _addClickCommand;
+            }
+            set
+            {
+                _addClickCommand = value;
+                OnPropertyChanged(nameof(AddClickCommand));
+            }
+        }
+
+        private RelayCommand? _cancelClickCommand = null;
+        public RelayCommand CancelClickCommand
+        {
+            get
+            {
+                _cancelClickCommand ??= new RelayCommand(CancelButton_Click);
+                return _cancelClickCommand;
+            }
+            set
+            {
+                _cancelClickCommand = value;
+                OnPropertyChanged(nameof(CancelClickCommand));
+            }
+        }
 
         private ObservableCollection<TreeViewerNodeInfo> _treeItems = [];
         public ObservableCollection<TreeViewerNodeInfo> TreeItems
@@ -53,6 +96,7 @@ namespace GUI.Windows
 
         public delegate void TreeViewerCallback(uint? nodeId);
         public event TreeViewerCallback ItemCreated = delegate { };
+        #endregion
 
 
         public GraphNodesBrowserWindowVM()
@@ -75,7 +119,7 @@ namespace GUI.Windows
             }
         }
 
-        public void CrossRect_MouseDown(object sender, MouseButtonEventArgs e)
+        public void CrossRect_MouseDown()
         {
             TreeItems = DeepCopyTreeViewerNodeInfos(_sourceItems!);
             SearchText = string.Empty;
@@ -158,12 +202,12 @@ namespace GUI.Windows
                 ItemCreated.Invoke(_selectedItem?.Id);
         }
 
-        public void AddButton_Click(object sender, RoutedEventArgs e)
+        public void AddButton_Click()
         {
             ItemCreated.Invoke(_selectedItem?.Id);
         }
 
-        public void CancelButton_Click(object sender, RoutedEventArgs e)
+        public void CancelButton_Click()
         {
             ItemCreated.Invoke(null);
         }

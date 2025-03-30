@@ -1,10 +1,8 @@
 ﻿using System.Diagnostics;
-using System.Windows.Media.Imaging;
 using OpenTK.Graphics.OpenGL;
 using GUI.Graphics;
 using GUI.Utilities.DataBindings;
 using GUI.Utilities.Common;
-using GUI.Resources;
 
 namespace GUI.Representation.Components
 {

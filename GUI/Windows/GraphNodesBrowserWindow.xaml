@@ -71,6 +71,10 @@
                         </Style>
                     </Rectangle.Style>
 
+                    <Rectangle.InputBindings>
+                        <MouseBinding MouseAction="LeftClick" Command="{Binding CrossRectClickCommand}"/>
+                    </Rectangle.InputBindings>
+
                 </Rectangle>
 
                 <Image Source="pack://application:,,,/GUI;component/Resources/Icons/cross_icon.png"
@@ -124,10 +128,12 @@
             <StackPanel Orientation="Horizontal" Grid.Row="1">
 
                 <Button Content="Добавить" Style="{StaticResource GrayButton}"
-                        Height="25" Width="100" Margin="10,0" x:Name="addButton"/>
+                        Height="25" Width="100" Margin="10,0" x:Name="addButton"
+                        Command="{Binding AddClickCommand}"/>
 
                 <Button Content="Отмена" Style="{StaticResource GrayButton}"
-                        Height="25" Width="100" x:Name="cancelButton"/>
+                        Height="25" Width="100" x:Name="cancelButton"
+                        Command="{Binding CancelClickCommand}"/>
 
             </StackPanel>
 

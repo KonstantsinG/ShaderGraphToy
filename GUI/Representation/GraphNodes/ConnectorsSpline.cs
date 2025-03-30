@@ -1,12 +1,6 @@
-﻿using System;
-using System.Windows;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using System.Windows;
 using System.Windows.Media;
 using System.Windows.Shapes;
-using System.Net;
 using System.Windows.Controls;
 
 namespace GUI.Representation.GraphNodes

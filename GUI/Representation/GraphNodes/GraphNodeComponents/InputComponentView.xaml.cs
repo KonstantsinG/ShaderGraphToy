@@ -25,10 +25,10 @@ namespace GUI.Representation.GraphNodes.GraphNodeComponents
             inputConnector.IsInput = true;
         }
 
-        public List<NodesConnector> GetConnectors()
+        public NodesConnector? GetConnector()
         {
-            if (Model.HasInput) return [inputConnector];
-            else return [];
+            if (Model.HasInput) return inputConnector;
+            else return null;
         }
     }
 }
