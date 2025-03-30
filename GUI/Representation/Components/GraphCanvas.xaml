@@ -94,8 +94,11 @@
 
             <Grid Grid.Column="5">
 
-                <Rectangle Height="30" Width="30" x:Name="addRect" Stroke="{StaticResource Gray_02}"
-                           MouseDown="AddRect_MouseDown"/>
+                <Rectangle Height="30" Width="30" x:Name="addRect" Stroke="{StaticResource Gray_02}">
+                    <Rectangle.InputBindings>
+                        <MouseBinding MouseAction="LeftClick" Command="{Binding AddNodeClickCommand}"/>
+                    </Rectangle.InputBindings>
+                </Rectangle>
                 <Image Source="pack://application:,,,/GUI;component/Resources/Icons/plus_icon.png" Height="20" Width="20" IsHitTestVisible="False"/>
 
             </Grid>

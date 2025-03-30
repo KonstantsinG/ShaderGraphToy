@@ -8,6 +8,7 @@ using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
+using System.Xml.Linq;
 
 namespace GUI.Representation.Components
 {
@@ -41,16 +42,10 @@ namespace GUI.Representation.Components
         private ConnectorsSpline? _tempSpline;
         private readonly SelectionRect _selectionArea = new();
 
+        private readonly List<GraphNodeBase> _nodes = [];
         private readonly List<GraphNodeBase> _selectedNodes = [];
         private readonly List<ConnectorsSpline> _splines = [];
 
-
-        public delegate void NodeSelectionHandler(GraphNodeBase? node, bool shiftPressed = false);
-        public delegate void NodesActionsHandler(List<GraphNodeBase> nodes);
-
-        public event EventHandler NodesBrowserOpened = delegate { };
-        public event NodeSelectionHandler NodeSelectionToggled = delegate { };
-        public event NodesActionsHandler NodesRemoved = delegate { };
         
         private static readonly Cursor _zoomCursor = ResourceManager.GetCursorFromResources("zoom_cursor.cur");
 
@@ -86,9 +81,6 @@ namespace GUI.Representation.Components
             cursorLine.Background = (SolidColorBrush)FindResource("Gray_03");
 
             GraphCanvasVM vm = new() { placeNodeOnCanvas = PlaceNodeOnCanvas };
-            NodesBrowserOpened += vm.OpenNodesBrowser;
-            NodeSelectionToggled += vm.SelectNode;
-            NodesRemoved += vm.RemoveNodes;
             DataContext = vm;
         }
 
@@ -206,15 +198,8 @@ namespace GUI.Representation.Components
         #endregion
 
 
-        #region INPUT HANDLERS
-        private void MainCanvas_PreviewMouseWheel(object sender, MouseWheelEventArgs e)
-        {
-            double scale = e.Delta > 0 ? ZOOM_RATE : 1 / ZOOM_RATE;
-            Point mousePosition = e.GetPosition(mainCanvas);
 
-            ZoomCanvas(mousePosition, scale);
-        }
-
+        #region KEYBOARD INPUT
         // Hotkeys only for Canvas focus state
         private void MainCanvas_PreviewKeyDown(object sender, KeyEventArgs e)
         {
@@ -233,7 +218,7 @@ namespace GUI.Representation.Components
             _shiftPressed = e.KeyboardDevice.IsKeyDown(Key.LeftShift) || e.KeyboardDevice.IsKeyDown(Key.RightShift);
             _ctrlPressed = e.KeyboardDevice.IsKeyDown(Key.LeftCtrl) || e.KeyboardDevice.IsKeyDown(Key.RightCtrl);
 
-            if (_ctrlPressed && e.Key == Key.N) NodesBrowserOpened.Invoke(sender, e);
+            if (_ctrlPressed && e.Key == Key.N) ((GraphCanvasVM)DataContext)?.AddNodeClickCommand.Execute(null);
             else if (e.Key == Key.Delete) RemoveSelectedNodes();
         }
 
@@ -243,6 +228,16 @@ namespace GUI.Representation.Components
 
             _shiftPressed = e.KeyboardDevice.IsKeyDown(Key.LeftShift) || e.KeyboardDevice.IsKeyDown(Key.RightShift);
             _ctrlPressed = e.KeyboardDevice.IsKeyDown(Key.LeftCtrl) || e.KeyboardDevice.IsKeyDown(Key.RightCtrl);
+        }
+        #endregion
+
+        #region CANVAS MOUSE INPUT
+        private void MainCanvas_PreviewMouseWheel(object sender, MouseWheelEventArgs e)
+        {
+            double scale = e.Delta > 0 ? ZOOM_RATE : 1 / ZOOM_RATE;
+            Point mousePosition = e.GetPosition(mainCanvas);
+
+            ZoomCanvas(mousePosition, scale);
         }
 
         private void MainCanvas_PreviewMouseDown(object sender, MouseButtonEventArgs e)
@@ -268,24 +263,7 @@ namespace GUI.Representation.Components
             {
                 if (e.Source is GraphNodeBase node)
                 {
-                    _selectionOffset = e.GetPosition(mainCanvas);
-                    if (_selectedNodes.Count >= 2 && node.Selected) _cursorMode = CursorModes.NodesMovement; // you can move multiple nodes by grabbing them in any region
-
-                    if (_shiftPressed)
-                    {
-                        if (node.Selected) _selectedNodes.Remove(node);
-                        else if (!_selectedNodes.Contains(node)) _selectedNodes.Add(node);
-                    }
-                    else
-                    {
-                        if (_selectedNodes.Count > 1 && node.Selected) return;
-
-                        _selectedNodes.Clear();
-                        _selectedNodes.Add(node);
-                    }
-
-                    // vm controls logical selection
-                    NodeSelectionToggled.Invoke(node, _shiftPressed);
+                    GraphNode_PreviewLeftMouseDown(node, e);
                 }
                 else if (e.Source is Canvas)
                 {
@@ -301,53 +279,9 @@ namespace GUI.Representation.Components
                     _selectionArea.Translate(_selectionArea.Offset);
 
                     mainCanvas.Focus();
-                    if (!_shiftPressed)
-                    {
-                        _selectedNodes.Clear();
-                        NodeSelectionToggled.Invoke(null);
-                    }
+                    if (!_shiftPressed) SelectNode(null);
                 }
             }
-        }
-
-        public void GraphNode_HeaderPanelPressed(object sender, MouseEventArgs e)
-        {
-            // you can move single node only by grabbing it on header
-            _cursorMode = CursorModes.NodesMovement;
-        }
-
-        public void GraphNode_ConnectorPressed(object sender, MouseEventArgs e)
-        {
-            NodesConnector conn = (NodesConnector)sender;
-
-            // if current connector is input and it already busy - disconnect them from node
-            if (conn.IsInput && conn.IsBusy)
-            {
-                UnbindSpline(conn, e);
-                return;
-            }    
-
-            conn.IsBusy = true;
-
-            // get global node connector center
-            _mouseOffset = conn.GetGlobalCenter(mainCanvas);
-
-            _tempSpline = new();
-            Color color1 = ((SolidColorBrush)FindResource("Gray_05")).Color;
-            Color color2 = ((SolidColorBrush)FindResource(conn.NodeColor)).Color;
-
-            if (conn.IsInput) _tempSpline.InputConnector = (NodesConnector)sender;
-            else _tempSpline.OutputConnector = (NodesConnector)sender;
-            
-            _tempSpline.Define(_mouseOffset, color1, color2, conn.IsInput);
-
-            mainCanvas.Children.Add(_tempSpline.Path!);
-            _cursorMode = CursorModes.SplineDrawing;
-        }
-
-        public void GraphNode_NodeStateChanged(GraphNodeBase sender)
-        {
-            RemoveSplines([sender]);
         }
 
         private void MainCanvas_PreviewMouseUp(object sender, MouseButtonEventArgs e)
@@ -401,6 +335,62 @@ namespace GUI.Representation.Components
         }
         #endregion
 
+        #region GRAPH_NODE MOUSE INPUT
+        private void GraphNode_PreviewLeftMouseDown(object sender, MouseButtonEventArgs e)
+        {
+            GraphNodeBase node = (GraphNodeBase)sender;
+            _selectionOffset = e.GetPosition(mainCanvas);
+
+            // you can move multiple nodes by grabbing them in any region
+            if (_selectedNodes.Count >= 2 && node.Selected)
+            {
+                _cursorMode = CursorModes.NodesMovement;
+                if (!_shiftPressed) return;
+            }
+
+            SelectNode(node);
+        }
+
+        public void GraphNode_HeaderPanelPressed(object sender, MouseEventArgs e)
+        {
+            // you can move single node only by grabbing it on header
+            _cursorMode = CursorModes.NodesMovement;
+        }
+
+        public void GraphNode_ConnectorPressed(object sender, MouseEventArgs e)
+        {
+            NodesConnector conn = (NodesConnector)sender;
+
+            // if current connector is input and it already busy - disconnect them from node
+            if (conn.IsInput && conn.IsBusy)
+            {
+                UnbindSpline(conn, e);
+                return;
+            }    
+
+            conn.IsBusy = true;
+
+            // get global node connector center
+            _mouseOffset = conn.GetGlobalCenter(mainCanvas);
+
+            _tempSpline = new();
+            Color color1 = ((SolidColorBrush)FindResource("Gray_05")).Color;
+            Color color2 = ((SolidColorBrush)FindResource(conn.NodeColor)).Color;
+
+            if (conn.IsInput) _tempSpline.InputConnector = (NodesConnector)sender;
+            else _tempSpline.OutputConnector = (NodesConnector)sender;
+            
+            _tempSpline.Define(_mouseOffset, color1, color2, conn.IsInput);
+
+            mainCanvas.Children.Add(_tempSpline.Path!);
+            _cursorMode = CursorModes.SplineDrawing;
+        }
+
+        public void GraphNode_NodeStateChanged(GraphNodeBase sender)
+        {
+            RemoveSplines([sender]);
+        }
+        #endregion
 
         #region TOOLBAR HANDLERS
         private void CursorRect_MouseDown(object sender, MouseButtonEventArgs? e)
@@ -436,11 +426,6 @@ namespace GUI.Representation.Components
             zoomLine.Background = (SolidColorBrush)FindResource("Gray_03");
         }
 
-        private void AddRect_MouseDown(object sender, MouseButtonEventArgs e)
-        {
-            NodesBrowserOpened.Invoke(sender, e);
-        }
-
         private void RemoveRect_MouseDown(object sender, MouseButtonEventArgs e)
         {
             RemoveSelectedNodes();
@@ -448,7 +433,8 @@ namespace GUI.Representation.Components
         #endregion
 
 
-        #region EXTRA METHODS
+
+        #region CANVAS TRANSFORMS
         private void ZoomCanvas(Point mousePosition, double scale)
         {
             Matrix matrix = matrixTransform.Matrix;
@@ -537,30 +523,6 @@ namespace GUI.Representation.Components
             _prevViewportHeight = newViewportHeight;
         }
 
-        public void PlaceNodeOnCanvas(GraphNodeBase node)
-        {
-            node.HeaderPressed += GraphNode_HeaderPanelPressed;
-            node.ConnectorPressed += GraphNode_ConnectorPressed;
-            node.NodeStateChanged += GraphNode_NodeStateChanged;
-            node.NodeSizeChanged += MoveSplines;
-            mainCanvas.Children.Add(node);
-
-            double px = ((((Grid)mainCanvas.Parent).ActualWidth / matrixTransform.Matrix.M11) / 2) + (-matrixTransform.Matrix.OffsetX / matrixTransform.Matrix.M11);
-            double py = (((Grid)mainCanvas.Parent).ActualHeight / matrixTransform.Matrix.M22 / 2) + (-matrixTransform.Matrix.OffsetY / matrixTransform.Matrix.M22);
-            node.RenderTransform = new TranslateTransform(px, py);
-        }
-
-        private void RemoveSelectedNodes()
-        {
-            RemoveSplines(_selectedNodes);
-
-            foreach (GraphNodeBase node in _selectedNodes)
-                mainCanvas.Children.Remove(node);
-
-            NodesRemoved.Invoke(_selectedNodes);
-            _selectedNodes.Clear();
-        }
-
         private void MoveCanvas(MouseEventArgs e)
         {
             Point mousePos = e.GetPosition(this);
@@ -590,32 +552,71 @@ namespace GUI.Representation.Components
                 _mouseOffset = e.GetPosition(this);
             }
         }
+        #endregion
 
-        private void DrawSelectionArea(MouseEventArgs e)
+        #region GRAPH_NODES CONTROOLS
+        private void AddNode(GraphNodeBase node)
         {
-            Point currentPosition = e.GetPosition(mainCanvas);
-
-            double x = Math.Min(currentPosition.X, _selectionArea.Offset.X);
-            double y = Math.Min(currentPosition.Y, _selectionArea.Offset.Y);
-
-            double width = Math.Abs(currentPosition.X - _selectionArea.Offset.X);
-            double height = Math.Abs(currentPosition.Y - _selectionArea.Offset.Y);
-
-            _selectionArea.Update(x, y, width, height);
+            _nodes.Add(node);
+            mainCanvas.Children.Add(node);
         }
 
-        private void CheckAreaSelection()
+        private void RemoveNode(GraphNodeBase node)
         {
-            mainCanvas.Children.Remove(_selectionArea);
-            
-            foreach (UIElement element in mainCanvas.Children)
+            _nodes.Remove(node);
+            mainCanvas.Children.Remove(node);
+        }
+
+        public void PlaceNodeOnCanvas(GraphNodeBase node)
+        {
+            node.HeaderPressed += GraphNode_HeaderPanelPressed;
+            node.ConnectorPressed += GraphNode_ConnectorPressed;
+            node.NodeStateChanged += GraphNode_NodeStateChanged;
+            node.NodeSizeChanged += MoveSplines;
+            AddNode(node);
+
+            double px = ((((Grid)mainCanvas.Parent).ActualWidth / matrixTransform.Matrix.M11) / 2) + (-matrixTransform.Matrix.OffsetX / matrixTransform.Matrix.M11);
+            double py = (((Grid)mainCanvas.Parent).ActualHeight / matrixTransform.Matrix.M22 / 2) + (-matrixTransform.Matrix.OffsetY / matrixTransform.Matrix.M22);
+            node.RenderTransform = new TranslateTransform(px, py);
+        }
+
+        private void RemoveSelectedNodes()
+        {
+            RemoveSplines(_selectedNodes);
+
+            foreach (GraphNodeBase node in _selectedNodes)
+                RemoveNode(node);
+
+            ((GraphCanvasVM)DataContext)?.RemoveNodesClickCommand.Execute(null);
+            _selectedNodes.Clear();
+        }
+
+        public void SelectNode(GraphNodeBase? node)
+        {
+            if (node != null)
             {
-                if (element is GraphNodeBase node && !node.Selected)
+                if (node.Selected && _shiftPressed)
                 {
-                    if (_selectionArea.GetAreaRect().Contains(node.GetBoundsRect()))
+                    node.ToggleSelection(false);
+                    _selectedNodes.Remove(node);
+                }
+                else
+                {
+                    node.ToggleSelection(true);
+                    if (!_selectedNodes.Contains(node)) _selectedNodes.Add(node);
+                }
+            }
+
+            if (!_shiftPressed)
+            {
+                foreach (GraphNodeBase n in _nodes)
+                {
+                    if (node != null && node == n) continue;
+
+                    if (n.Selected)
                     {
-                        node.ToggleSelection(true);
-                        _selectedNodes.Add(node);
+                        n.ToggleSelection(false);
+                        _selectedNodes.Remove(n);
                     }
                 }
             }
@@ -638,7 +639,41 @@ namespace GUI.Representation.Components
 
             _selectionOffset = currentPosition;
         }
+        #endregion
 
+        #region SELECTION_AREA CONTROLS
+        private void DrawSelectionArea(MouseEventArgs e)
+        {
+            Point currentPosition = e.GetPosition(mainCanvas);
+
+            double x = Math.Min(currentPosition.X, _selectionArea.Offset.X);
+            double y = Math.Min(currentPosition.Y, _selectionArea.Offset.Y);
+
+            double width = Math.Abs(currentPosition.X - _selectionArea.Offset.X);
+            double height = Math.Abs(currentPosition.Y - _selectionArea.Offset.Y);
+
+            _selectionArea.Update(x, y, width, height);
+        }
+
+        private void CheckAreaSelection()
+        {
+            mainCanvas.Children.Remove(_selectionArea);
+            
+            foreach (var node in _nodes)
+            {
+                if (!node.Selected)
+                {
+                    if (_selectionArea.GetAreaRect().Contains(node.GetBoundsRect()))
+                    {
+                        node.ToggleSelection(true);
+                        _selectedNodes.Add(node);
+                    }
+                }
+            }
+        }
+        #endregion
+
+        #region SPLINES CONTROLS
         private void MoveSplines(GraphNodeBase node)
         {
             foreach (ConnectorsSpline sp in _splines)

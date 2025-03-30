@@ -1,78 +1,49 @@
 ﻿using GUI.Representation.GraphNodes;
 using GUI.Utilities.DataBindings;
 using GUI.Windows;
-using System.ComponentModel;
-using System.Runtime.CompilerServices;
 
 namespace GUI.Representation.Components
 {
     public class GraphCanvasVM : VmBase
     {
-        private RelayCommand? _cursorModeClickCommand = null;
-        public RelayCommand CursorModeClickCommand
+        #region PROPS
+        private RelayCommand? _addNodeClickCommand = null;
+        public RelayCommand AddNodeClickCommand
         {
             get
             {
-                _cursorModeClickCommand ??= new RelayCommand(EnableCursorMode);
-                return _cursorModeClickCommand;
+                _addNodeClickCommand ??= new RelayCommand(OnAddNodeClicked);
+                return _addNodeClickCommand;
             }
             set
             {
-                _cursorModeClickCommand = value;
-                OnPropertyChanged(nameof(CursorModeClickCommand));
+                _addNodeClickCommand = value;
+                OnPropertyChanged(nameof(AddNodeClickCommand));
             }
         }
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-        private void EnableCursorMode()
+        private RelayCommand? _removeNodesClickCommand = null;
+        public RelayCommand RemoveNodesClickCommand
         {
-
+            get
+            {
+                _removeNodesClickCommand ??= new RelayCommand(OnRemoveNodesClicked);
+                return _removeNodesClickCommand;
+            }
+            set
+            {
+                _removeNodesClickCommand = value;
+                OnPropertyChanged(nameof(RemoveNodesClickCommand));
+            }
         }
-
-        private void EnableMovementMode()
-        {
-
-        }
-
-        private void EnableZoomMode()
-        {
-
-        }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+        #endregion
 
         private GraphNodesBrowserWindow? _nodesBrowser = null;
-
         private readonly List<GraphNodeBase> _nodes = [];
-
         public Action<GraphNodeBase>? placeNodeOnCanvas;
 
 
-        public void OpenNodesBrowser(object? sender, EventArgs? e)
+        private void OnAddNodeClicked()
         {
             _nodesBrowser?.Close();
 
@@ -80,6 +51,21 @@ namespace GUI.Representation.Components
             ((GraphNodesBrowserWindowVM)_nodesBrowser.DataContext!).ItemCreated += CreateGraphNode;
             _nodesBrowser.Show();
         }
+
+        private void OnRemoveNodesClicked()
+        {
+            List<GraphNodeBase> corpses = [];
+
+            foreach (var node in _nodes)
+            {
+                if (node.Selected)
+                    corpses.Add(node);
+            }
+
+            foreach (var corp in corpses)
+                _nodes.Remove(corp);
+        }
+
 
         public void CreateGraphNode(uint? nodeId)
         {
@@ -94,33 +80,6 @@ namespace GUI.Representation.Components
                 _nodes.Add(node);
                 placeNodeOnCanvas?.Invoke(node);
             }
-        }
-
-        public void SelectNode(GraphNodeBase? node, bool shiftPressed)
-        {
-            if (node != null)
-            {
-                if (node.Selected && shiftPressed)
-                    node.ToggleSelection(false);
-                else
-                    node.ToggleSelection(true);
-            }
-
-            if (!shiftPressed)
-            {
-                foreach (GraphNodeBase n in _nodes)
-                {
-                    if (node != null && node == n) continue;
-
-                    if (n.Selected) n.ToggleSelection(false);
-                }
-            }
-        }
-
-        public void RemoveNodes(List<GraphNodeBase> nodes)
-        {
-            foreach (GraphNodeBase node in nodes)
-                _nodes.Remove(node);
         }
     }
 }
