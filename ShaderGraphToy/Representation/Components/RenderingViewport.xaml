@@ -1,0 +1,110 @@
+﻿<UserControl x:Class="ShaderGraphToy.Representation.Components.RenderingViewport"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:glWpfControl="clr-namespace:OpenTK.Wpf;assembly=GLWpfControl"
+             xmlns:local="clr-namespace:ShaderGraphToy.Representation.Components"
+             xmlns:conv="clr-namespace:ShaderGraphToy.Utilities.XamlConverters"
+             mc:Ignorable="d"
+             d:DesignHeight="800" d:DesignWidth="400">
+
+    <UserControl.Resources>
+        <conv:LocalizationResourceConverter x:Key="locConv"/>
+    </UserControl.Resources>
+    
+    <Grid Background="{StaticResource Gray_02}">
+
+        <Grid.RowDefinitions>
+            <RowDefinition Height="30*" x:Name="viewportRow"/>
+            <RowDefinition Height="70*" x:Name="infoRow"/>
+        </Grid.RowDefinitions>
+
+        <glWpfControl:GLWpfControl x:Name="openTkControl" Margin="10,10,10,0"/>
+
+        <Grid Grid.Row="1" Margin="10,-10" Panel.ZIndex="-1">
+
+            <Grid.RowDefinitions>
+                <RowDefinition Height="40"/>
+                <RowDefinition/>
+            </Grid.RowDefinitions>
+
+            <Grid Grid.Row="0">
+
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="30"/>
+                    <ColumnDefinition Width="30"/>
+                    <ColumnDefinition Width="60"/>
+                    <ColumnDefinition Width="80"/>
+                    <ColumnDefinition Width="70"/>
+                    <ColumnDefinition/>
+                    <ColumnDefinition Width="30"/>
+                </Grid.ColumnDefinitions>
+
+                <Rectangle Height="35" VerticalAlignment="Top" Fill="{StaticResource Gray_06}"
+                       RadiusX="7" RadiusY="7" Grid.ColumnSpan="7"/>
+
+                <Image Source="pack://application:,,,/ShaderGraphToy;component/Resources/Icons/toStart_icon.png" Height="30"
+                       Grid.Column="0" Margin="0,5,0,0">
+                    <Image.InputBindings>
+                        <MouseBinding MouseAction="LeftClick" Command="{Binding BreakClickCommand}"/>
+                    </Image.InputBindings>
+                </Image>
+
+                <Image Source="pack://application:,,,/ShaderGraphToy;component/Resources/Icons/pause_icon.png"
+                       Height="18" x:Name="pauseButton" Grid.Column="1" Margin="0,5,0,0">
+                    <Image.InputBindings>
+                        <MouseBinding MouseAction="LeftClick" Command="{Binding PauseClickCommand}"/>
+                    </Image.InputBindings>
+                </Image>
+
+                <TextBlock Text="{Binding TimeDisplay, NotifyOnSourceUpdated=True, NotifyOnTargetUpdated=True, Mode=TwoWay}"
+                           FontSize="13" FontWeight="Bold" HorizontalAlignment="Right"
+                           Margin="0,14,0,0" Name="timeCounter" Grid.Column="2"/>
+
+                <TextBlock Text="{Binding FpsDisplay, NotifyOnSourceUpdated=True, NotifyOnTargetUpdated=True, Mode=TwoWay}" FontSize="13" FontWeight="Bold" HorizontalAlignment="Center"
+                           Margin="0,14,0,0" Name="fpsCounter" Grid.Column="3"/>
+
+                <TextBlock Text="{Binding ResolutionDisplay, NotifyOnSourceUpdated=True, NotifyOnTargetUpdated=True, Mode=TwoWay}" FontSize="13" FontWeight="Bold" HorizontalAlignment="Center"
+                           Margin="0,14,0,0" Name="resolutionDisplay" Grid.Column="4"/>
+
+                <Image Source="pack://application:,,,/ShaderGraphToy;component/Resources/Icons/fullscreen_icon.png" Height="15" Width="15" Grid.Column="6"
+                       HorizontalAlignment="Center" VerticalAlignment="Top" Margin="0,16,0,0"/>
+
+                <Rectangle Grid.ColumnSpan="7" Width="Auto" Height="10" Margin="0,0,0,-34"
+                           Panel.ZIndex="1" RadiusX="3" RadiusY="3" Cursor="SizeNS" Fill="Transparent"
+                           MouseLeftButtonDown="ResizeRectangle_MouseLeftButtonDown"
+                           MouseLeftButtonUp="ResizeRectangle_MouseLeftButtonUp"
+                           MouseMove="ResizeRectangle_MouseMove" x:Name="resizeRect"/>
+
+            </Grid>
+
+        </Grid>
+
+        <Grid Grid.Row="1" Margin="0,45,0,0">
+
+            <StackPanel Margin="20,0,0,0">
+
+                <TextBlock Text="Информация о рендеринге:"
+                           Foreground="{StaticResource Gray_06}" FontWeight="Bold"
+                           FontSize="15" Margin="0,0,0,10"/>
+
+                <WrapPanel>
+
+                    <TextBlock Text="Статус NVIDIA Optimus: "
+                               Foreground="{StaticResource Gray_05}" FontWeight="Light"
+                               FontSize="12"/>
+
+                    <TextBlock Text="{Binding NvidiaOptimusStatus, Converter={StaticResource locConv}, NotifyOnSourceUpdated=True, Mode=OneWay}"
+                               Foreground="{StaticResource ConsoleGreen}" FontWeight="Normal"
+                               FontSize="12"/>
+
+                </WrapPanel>
+
+            </StackPanel>
+            
+        </Grid>
+
+    </Grid>
+
+</UserControl>
