@@ -1,0 +1,20 @@
+﻿<UserControl x:Class="ShaderGraphToy.Representation.GraphNodes.GraphNodeComponents.ColorComponentView"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:local="clr-namespace:ShaderGraphToy.Representation.GraphNodes.GraphNodeComponents"
+             xmlns:xctk="http://schemas.xceed.com/wpf/xaml/toolkit"
+             mc:Ignorable="d" 
+             d:DesignHeight="50" d:DesignWidth="150">
+
+    <StackPanel>
+
+        <TextBlock Style="{StaticResource GrayTextBlock}"
+                   Text="{Binding Path=Model.Title, RelativeSource={RelativeSource AncestorType=UserControl}, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
+
+        <xctk:ColorPicker/>
+
+    </StackPanel>
+
+</UserControl>
