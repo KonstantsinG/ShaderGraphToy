@@ -5,39 +5,47 @@ using System.Windows.Media;
 
 namespace ShaderGraphToy.Utilities.XamlConverters
 {
-    [ValueConversion(typeof(string), typeof(SolidColorBrush))]
-    public class ColorResourceConverter : IValueConverter
+    [ValueConversion(typeof(Color), typeof(Color))]
+    public class StrToColorConverter : IValueConverter
     {
+        private Color _defaultColor = Colors.White;
+
         public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
         {
             if (value is not string colorKey)
-                return Brushes.Transparent;
+                return _defaultColor;
+
+            if (colorKey == string.Empty)
+                return _defaultColor;
 
             if (Application.Current.Resources.Contains(colorKey))
             {
                 var resource = Application.Current.Resources[colorKey];
                 return resource switch
                 {
-                    SolidColorBrush brush => brush,
-                    Color color => new SolidColorBrush(color),
-                    _ => Brushes.Transparent
+                    SolidColorBrush brush => brush.Color,
+                    Color color => color,
+                    _ => _defaultColor
                 };
             }
 
             try
             {
                 var color = (Color)ColorConverter.ConvertFromString(colorKey);
-                return new SolidColorBrush(color);
+                return color;
             }
             catch
             {
-                return Brushes.Transparent;
+                return _defaultColor;
             }
         }
 
         public object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture)
         {
-            return Binding.DoNothing;
+            if (value is not Color color)
+                return _defaultColor.ToString();
+
+            return color.ToString();
         }
     }
 }

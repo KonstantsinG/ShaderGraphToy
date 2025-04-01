@@ -15,7 +15,7 @@
 
     <UserControl.Resources>
         <BooleanToVisibilityConverter x:Key="boolToVis"/>
-        <conv:ColorResourceConverter x:Key="strToColor"/>
+        <conv:StrToBrushConverter x:Key="strToBrush"/>
     </UserControl.Resources>
     
     <Grid>
@@ -39,7 +39,7 @@
                 <ColumnDefinition Width="20"/>
             </Grid.ColumnDefinitions>
 
-            <Rectangle Fill="{Binding Path=NodeModel.Color, Converter={StaticResource strToColor}, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
+            <Rectangle Fill="{Binding Path=NodeModel.Color, Converter={StaticResource strToBrush}, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
                        RadiusX="4" RadiusY="4" x:Name="headerPanel" MouseLeftButtonDown="HeaderPanel_MouseLeftButtonDown"
                        Cursor="Hand" Grid.ColumnSpan="4"/>
 

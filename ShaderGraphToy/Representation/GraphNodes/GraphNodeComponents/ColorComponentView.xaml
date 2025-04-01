@@ -4,16 +4,37 @@
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:local="clr-namespace:ShaderGraphToy.Representation.GraphNodes.GraphNodeComponents"
-             xmlns:xctk="http://schemas.xceed.com/wpf/xaml/toolkit"
+             xmlns:conv="clr-namespace:ShaderGraphToy.Utilities.XamlConverters"
+             xmlns:pixi="clr-namespace:ColorPicker;assembly=ColorPicker"
              mc:Ignorable="d" 
-             d:DesignHeight="50" d:DesignWidth="150">
+             d:DesignHeight="90" d:DesignWidth="150">
+
+    <UserControl.Resources>
+        <ResourceDictionary>
+
+            <ResourceDictionary.MergedDictionaries>
+                <ResourceDictionary Source="pack://application:,,,/ColorPicker;component/Styles/DefaultColorPickerStyle.xaml" />
+            </ResourceDictionary.MergedDictionaries>
+
+            <conv:StrToColorConverter x:Key="strToColor"/>
+            <conv:ColorToBrushConverter x:Key="colorToBrush"/>
+            <BooleanToVisibilityConverter x:Key="boolToVis"/>
+
+        </ResourceDictionary>
+    </UserControl.Resources>
 
     <StackPanel>
 
         <TextBlock Style="{StaticResource GrayTextBlock}"
                    Text="{Binding Path=Model.Title, RelativeSource={RelativeSource AncestorType=UserControl}, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
 
-        <xctk:ColorPicker/>
+        <Rectangle Width="90" Height="25" HorizontalAlignment="Left"
+                   Fill="{Binding ElementName=sliders, Path=SelectedColor, Converter={StaticResource colorToBrush}}"
+                   MouseLeftButtonDown="Rectangle_MouseLeftButtonDown"/>
+
+        <pixi:ColorSliders Style="{StaticResource DefaultColorPickerStyle}" x:Name="sliders"
+                           Visibility="{Binding Path=SlidersVisible, Converter={StaticResource boolToVis}, RelativeSource={RelativeSource AncestorType=UserControl}, UpdateSourceTrigger=PropertyChanged}"
+                           SelectedColor="{Binding Path=Model.Content, Converter={StaticResource strToColor}, RelativeSource={RelativeSource AncestorType=UserControl}, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
 
     </StackPanel>
 
