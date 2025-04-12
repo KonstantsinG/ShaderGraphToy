@@ -3,8 +3,9 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
-             xmlns:glWpfControl="clr-namespace:OpenTK.Wpf;assembly=GLWpfControl"
              xmlns:local="clr-namespace:ShaderGraphToy.Representation.Components"
+             xmlns:glWpfControl="clr-namespace:OpenTK.Wpf;assembly=GLWpfControl"
+             xmlns:graph="clr-namespace:ShaderGraphToy.Graphics"
              xmlns:conv="clr-namespace:ShaderGraphToy.Utilities.XamlConverters"
              mc:Ignorable="d"
              d:DesignHeight="800" d:DesignWidth="400">
@@ -20,7 +21,7 @@
             <RowDefinition Height="70*" x:Name="infoRow"/>
         </Grid.RowDefinitions>
 
-        <glWpfControl:GLWpfControl x:Name="openTkControl" Margin="10,10,10,0"/>
+        <graph:RenderSurface Margin="10,1"/>
 
         <Grid Grid.Row="1" Margin="10,-10" Panel.ZIndex="-1">
 

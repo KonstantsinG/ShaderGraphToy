@@ -1,5 +1,4 @@
 #include "WinPlatform.h"
-#include "../entities/GLwindow.h"
 #include "../utilities/ConstplacesVector.h"
 
 
