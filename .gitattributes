@@ -61,3 +61,7 @@
 #*.PDF   diff=astextplain
 #*.rtf   diff=astextplain
 #*.RTF   diff=astextplain
+
+ToyRenderer/linking/** linguist-vendored
+ToyRenderer/glad.c linguist-vendored
+ToyRenderer/glad_wgl.c linguist-vendored
