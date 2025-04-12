@@ -7,13 +7,13 @@
     <ImplicitUsings>enable</ImplicitUsings>
     <UseWPF>true</UseWPF>
     <NeutralLanguage>en-US</NeutralLanguage>
+    <AppendTargetFrameworkToOutputPath>false</AppendTargetFrameworkToOutputPath>
   </PropertyGroup>
 
   <PropertyGroup>
-    <SatelliteResourceLanguages>en</SatelliteResourceLanguages>
-    <SatelliteResourceLanguages>ru</SatelliteResourceLanguages>
     <AssemblyName>ShaderGraphToy</AssemblyName>
     <RootNamespace>ShaderGraphToy</RootNamespace>
+    <BaseOutputPath>..\x64</BaseOutputPath>
   </PropertyGroup>
 
   <ItemGroup>
