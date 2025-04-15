@@ -149,7 +149,7 @@
       <LanguageStandard>stdcpp20</LanguageStandard>
       <PrecompiledHeaderOutputFile />
       <CallingConvention>FastCall</CallingConvention>
-      <AdditionalIncludeDirectories>$(ProjectDir)\linking\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(ProjectDir)\linking\include;common;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
       <SubSystem>
@@ -159,7 +159,7 @@
       <GenerateDebugInformation>true</GenerateDebugInformation>
     </Link>
     <Lib>
-      <AdditionalDependencies>opengl32.lib;GLFW\glfw3.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalDependencies>opengl32.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Lib>
     <Lib>
       <AdditionalLibraryDirectories>$(ProjectDir)\linking\lib;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
@@ -169,14 +169,19 @@
     <ClCompile Include="glad.c" />
     <ClCompile Include="glad_wgl.c" />
     <ClCompile Include="entities\GLwindow.cpp" />
-    <ClCompile Include="ToyRenderer.cpp" />
+    <ClCompile Include="entities\GLsurface.cpp" />
+    <ClCompile Include="engine\ToyRenderer.cpp" />
+    <ClCompile Include="platforms\GlPlatform.cpp" />
     <ClCompile Include="platforms\WinPlatform.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="common\CommonHeaders.h" />
     <ClInclude Include="common\PrimitiveTypes.h" />
     <ClInclude Include="common\Utilities.h" />
+    <ClInclude Include="engine\ToyRenderer.h" />
     <ClInclude Include="entities\GLwindow.h" />
+    <ClInclude Include="entities\GLsurface.h" />
+    <ClInclude Include="platforms\GlPlatform.h" />
     <ClInclude Include="linking\include\glad\glad.h" />
     <ClInclude Include="linking\include\GLFW\glfw3.h" />
     <ClInclude Include="linking\include\GLFW\glfw3native.h" />

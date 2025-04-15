@@ -14,6 +14,11 @@
     <AssemblyName>ShaderGraphToy</AssemblyName>
     <RootNamespace>ShaderGraphToy</RootNamespace>
     <BaseOutputPath>..\x64</BaseOutputPath>
+    <SignAssembly>True</SignAssembly>
+    <DelaySign>False</DelaySign>
+    <Copyright>MIT License , Copyright (c) 2025 Konstantsin Galajchuk</Copyright>
+    <Title>ShaderGraphToy</Title>
+    <Authors>Konstantsin Galajchuk</Authors>
   </PropertyGroup>
 
   <ItemGroup>

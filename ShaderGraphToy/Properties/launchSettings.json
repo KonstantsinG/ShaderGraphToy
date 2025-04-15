@@ -1,0 +1,8 @@
+{
+  "profiles": {
+    "ShaderGraphToy": {
+      "commandName": "Project",
+      "nativeDebugging": false
+    }
+  }
+}
