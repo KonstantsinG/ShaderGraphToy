@@ -890,6 +890,681 @@
           "OutputType": null
         }
       ]
+    },
+
+    {
+      // MatFunctions_Basic_Pow
+      "TypeId": 511,
+      "HasInput": false,
+      "HasOutput": true,
+      "InputType": null,
+      "OutputType": "Calculable",
+
+      "Components": [
+        {
+          "Type": "Inscription",
+          "Title": "Возведение A в степень B",
+          "Formatting": [],
+          "HasInput": false,
+          "HasOutput": false,
+          "InputType": null,
+          "OutputType": null
+        },
+
+        {
+          "Type": "Input",
+          "Title": "Значение A",
+          "Content": "1.0",
+          "IsReadonly": false,
+          "HasInput": true,
+          "InputType": "Calculable"
+        },
+
+        {
+          "Type": "Input",
+          "Title": "Значение B",
+          "Content": "1.0",
+          "IsReadonly": false,
+          "HasInput": true,
+          "InputType": "Calculable"
+        }
+      ]
+    },
+
+    {
+      // MatFunctions_Basic_Exp
+      "TypeId": 512,
+      "HasInput": false,
+      "HasOutput": true,
+      "InputType": null,
+      "OutputType": "Calculable",
+
+      "Components": [
+        {
+          "Type": "Inscription",
+          "Title": "Возведение экспоненты в степень А",
+          "Formatting": [],
+          "HasInput": false,
+          "HasOutput": false,
+          "InputType": null,
+          "OutputType": null
+        },
+
+        {
+          "Type": "Input",
+          "Title": "Значение A",
+          "Content": "1.0",
+          "IsReadonly": false,
+          "HasInput": true,
+          "InputType": "Calculable"
+        }
+      ]
+    },
+
+    {
+      // MatFunctions_Basic_Log
+      "TypeId": 513,
+      "HasInput": false,
+      "HasOutput": true,
+      "InputType": null,
+      "OutputType": "Calculable",
+
+      "Components": [
+        {
+          "Type": "Inscription",
+          "Title": "Логарифм А по основанию В",
+          "Formatting": [],
+          "HasInput": false,
+          "HasOutput": false,
+          "InputType": null,
+          "OutputType": null
+        },
+
+        {
+          "Type": "Input",
+          "Title": "Значение A",
+          "Content": "1.0",
+          "IsReadonly": false,
+          "HasInput": true,
+          "InputType": "Calculable"
+        },
+
+        {
+          "Type": "List",
+          "Title": "Значение В",
+          "Contents": [ "2", "exp" ]
+        }
+      ]
+    },
+
+    {
+      // MatFunctions_Basic_Sqrt
+      "TypeId": 514,
+      "HasInput": false,
+      "HasOutput": true,
+      "InputType": null,
+      "OutputType": "Calculable",
+
+      "Components": [
+        {
+          "Type": "Inscription",
+          "Title": "Квадратный корень А",
+          "Formatting": [],
+          "HasInput": false,
+          "HasOutput": false,
+          "InputType": null,
+          "OutputType": null
+        },
+
+        {
+          "Type": "Input",
+          "Title": "Значение A",
+          "Content": "1.0",
+          "IsReadonly": false,
+          "HasInput": true,
+          "InputType": "Calculable"
+        }
+      ]
+    },
+
+    {
+      // MatFunctions_Basic_Abs
+      "TypeId": 515,
+      "HasInput": false,
+      "HasOutput": true,
+      "InputType": null,
+      "OutputType": "Calculable",
+
+      "Components": [
+        {
+          "Type": "Inscription",
+          "Title": "Модуль А",
+          "Formatting": [],
+          "HasInput": false,
+          "HasOutput": false,
+          "InputType": null,
+          "OutputType": null
+        },
+
+        {
+          "Type": "Input",
+          "Title": "Значение A",
+          "Content": "1.0",
+          "IsReadonly": false,
+          "HasInput": true,
+          "InputType": "Calculable"
+        }
+      ]
+    },
+
+    {
+      // MatFunctions_Basic_Round
+      "TypeId": 516,
+      "HasInput": false,
+      "HasOutput": true,
+      "InputType": null,
+      "OutputType": "Calculable",
+
+      "Components": [
+        {
+          "Type": "Inscription",
+          "Title": "Округление А по правилу В",
+          "Formatting": [],
+          "HasInput": false,
+          "HasOutput": false,
+          "InputType": null,
+          "OutputType": null
+        },
+
+        {
+          "Type": "Input",
+          "Title": "Значение A",
+          "Content": "1.0",
+          "IsReadonly": false,
+          "HasInput": true,
+          "InputType": "Calculable"
+        },
+
+        {
+          "Type": "List",
+          "Title": "Значение В",
+          "Contents": [ "В меньшую стоорону", "В большую сторону", "По математическим правилам" ]
+        }
+      ]
+    },
+
+    {
+      // MatFunctions_Extended_MinMax
+      "TypeId": 521,
+      "HasInput": false,
+      "HasOutput": true,
+      "InputType": null,
+      "OutputType": "Calculable",
+
+      "Components": [
+        {
+          "Type": "Inscription",
+          "Title": "Минимум/максимум из А и В",
+          "Formatting": [],
+          "HasInput": false,
+          "HasOutput": false,
+          "InputType": null,
+          "OutputType": null
+        },
+
+        {
+          "Type": "Input",
+          "Title": "Значение A",
+          "Content": "1.0",
+          "IsReadonly": false,
+          "HasInput": true,
+          "InputType": "Calculable"
+        },
+
+        {
+          "Type": "Input",
+          "Title": "Значение В",
+          "Content": "1.0",
+          "IsReadonly": false,
+          "HasInput": true,
+          "InputType": "Calculable"
+        },
+
+        {
+          "Type": "List",
+          "Title": "Операция",
+          "Contents": [ "Минимум", "Максимум" ]
+        }
+      ]
+    },
+
+    {
+      // MatFunctions_Extended_Step
+      "TypeId": 522,
+      "HasInput": false,
+      "HasOutput": true,
+      "InputType": null,
+      "OutputType": "Calculable",
+
+      "Components": [
+        {
+          "Type": "Inscription",
+          "Title": "Пороговая функция со значением А и порогом В",
+          "Formatting": [],
+          "HasInput": false,
+          "HasOutput": false,
+          "InputType": null,
+          "OutputType": null
+        },
+
+        {
+          "Type": "Input",
+          "Title": "Значение A",
+          "Content": "1.0",
+          "IsReadonly": false,
+          "HasInput": true,
+          "InputType": "Calculable"
+        },
+
+        {
+          "Type": "Input",
+          "Title": "Значение В",
+          "Content": "0.5",
+          "IsReadonly": false,
+          "HasInput": true,
+          "InputType": "Calculable"
+        }
+      ]
+    },
+
+    {
+      // MatFunctions_Extended_Smoothstep
+      "TypeId": 523,
+      "HasInput": false,
+      "HasOutput": true,
+      "InputType": null,
+      "OutputType": "Calculable",
+
+      "Components": [
+        {
+          "Type": "Inscription",
+          "Title": "Интерполяция Эрмита значения А между границами В и С",
+          "Formatting": [],
+          "HasInput": false,
+          "HasOutput": false,
+          "InputType": null,
+          "OutputType": null
+        },
+
+        {
+          "Type": "Input",
+          "Title": "Значение A",
+          "Content": "1.0",
+          "IsReadonly": false,
+          "HasInput": true,
+          "InputType": "Calculable"
+        },
+
+        {
+          "Type": "Input",
+          "Title": "Значение В",
+          "Content": "1.0",
+          "IsReadonly": false,
+          "HasInput": true,
+          "InputType": "Calculable"
+        },
+
+        {
+          "Type": "Input",
+          "Title": "Значение С",
+          "Content": "10.0",
+          "IsReadonly": false,
+          "HasInput": true,
+          "InputType": "Calculable"
+        }
+      ]
+    },
+
+    {
+      // MatFunctions_Extended_Mix
+      "TypeId": 524,
+      "HasInput": false,
+      "HasOutput": true,
+      "InputType": null,
+      "OutputType": "Calculable",
+
+      "Components": [
+        {
+          "Type": "Inscription",
+          "Title": "Линейная интерполяция значения А между границами В и С",
+          "Formatting": [],
+          "HasInput": false,
+          "HasOutput": false,
+          "InputType": null,
+          "OutputType": null
+        },
+
+        {
+          "Type": "Input",
+          "Title": "Значение A",
+          "Content": "1.0",
+          "IsReadonly": false,
+          "HasInput": true,
+          "InputType": "Calculable"
+        },
+
+        {
+          "Type": "Input",
+          "Title": "Значение В",
+          "Content": "1.0",
+          "IsReadonly": false,
+          "HasInput": true,
+          "InputType": "Calculable"
+        },
+
+        {
+          "Type": "Input",
+          "Title": "Значение С",
+          "Content": "10.0",
+          "IsReadonly": false,
+          "HasInput": true,
+          "InputType": "Calculable"
+        }
+      ]
+    },
+
+    {
+      // MatFunctions_Extended_Clamp
+      "TypeId": 525,
+      "HasInput": false,
+      "HasOutput": true,
+      "InputType": null,
+      "OutputType": "Calculable",
+
+      "Components": [
+        {
+          "Type": "Inscription",
+          "Title": "Ограничение значения А в границах между В и С",
+          "Formatting": [],
+          "HasInput": false,
+          "HasOutput": false,
+          "InputType": null,
+          "OutputType": null
+        },
+
+        {
+          "Type": "Input",
+          "Title": "Значение A",
+          "Content": "1.0",
+          "IsReadonly": false,
+          "HasInput": true,
+          "InputType": "Calculable"
+        },
+
+        {
+          "Type": "Input",
+          "Title": "Значение В",
+          "Content": "1.0",
+          "IsReadonly": false,
+          "HasInput": true,
+          "InputType": "Calculable"
+        },
+
+        {
+          "Type": "Input",
+          "Title": "Значение С",
+          "Content": "10.0",
+          "IsReadonly": false,
+          "HasInput": true,
+          "InputType": "Calculable"
+        }
+      ]
+    },
+
+    {
+      // MatFunctions_Extended_Remap
+      "TypeId": 526,
+      "HasInput": false,
+      "HasOutput": true,
+      "InputType": null,
+      "OutputType": "Calculable",
+
+      "Components": [
+        {
+          "Type": "Inscription",
+          "Title": "Приведение значения А из диапазона от В до С к диапазону от D до E",
+          "Formatting": [],
+          "HasInput": false,
+          "HasOutput": false,
+          "InputType": null,
+          "OutputType": null
+        },
+
+        {
+          "Type": "Input",
+          "Title": "Значение A",
+          "Content": "1.0",
+          "IsReadonly": false,
+          "HasInput": true,
+          "InputType": "Calculable"
+        },
+
+        {
+          "Type": "Input",
+          "Title": "Значение В",
+          "Content": "1.0",
+          "IsReadonly": false,
+          "HasInput": true,
+          "InputType": "Calculable"
+        },
+
+        {
+          "Type": "Input",
+          "Title": "Значение С",
+          "Content": "10.0",
+          "IsReadonly": false,
+          "HasInput": true,
+          "InputType": "Calculable"
+        },
+
+        {
+          "Type": "Input",
+          "Title": "Значение D",
+          "Content": "10.0",
+          "IsReadonly": false,
+          "HasInput": true,
+          "InputType": "Calculable"
+        },
+
+        {
+          "Type": "Input",
+          "Title": "Значение E",
+          "Content": "10.0",
+          "IsReadonly": false,
+          "HasInput": true,
+          "InputType": "Calculable"
+        }
+      ]
+    },
+
+    {
+      // MatFunctions_Trigonometry_Basic
+      "TypeId": 531,
+      "HasInput": false,
+      "HasOutput": true,
+      "InputType": null,
+      "OutputType": "Calculable",
+
+      "Components": [
+        {
+          "Type": "Inscription",
+          "Title": "Значение тригонометрической функции А по параметру В",
+          "Formatting": [],
+          "HasInput": false,
+          "HasOutput": false,
+          "InputType": null,
+          "OutputType": null
+        },
+
+        {
+          "Type": "List",
+          "Title": "Функция А",
+          "Contents": [ "Sin", "Cos", "Tan" ]
+        },
+
+        {
+          "Type": "Input",
+          "Title": "Значение В",
+          "Content": "1.0",
+          "IsReadonly": false,
+          "HasInput": true,
+          "InputType": "Calculable"
+        }
+      ]
+    },
+
+    {
+      // MatFunctions_Trigonometry_Arc
+      "TypeId": 532,
+      "HasInput": false,
+      "HasOutput": true,
+      "InputType": null,
+      "OutputType": "Calculable",
+
+      "Components": [
+        {
+          "Type": "Inscription",
+          "Title": "Значение оборатной тригонометрической функции А по параметру В",
+          "Formatting": [],
+          "HasInput": false,
+          "HasOutput": false,
+          "InputType": null,
+          "OutputType": null
+        },
+
+        {
+          "Type": "List",
+          "Title": "Функция А",
+          "Contents": [ "Asin", "Acos", "Atan" ]
+        },
+
+        {
+          "Type": "Input",
+          "Title": "Значение В",
+          "Content": "1.0",
+          "IsReadonly": false,
+          "HasInput": true,
+          "InputType": "Calculable"
+        }
+      ]
+    },
+
+    {
+      // MatFunctions_Trigonometry_Hyper
+      "TypeId": 533,
+      "HasInput": false,
+      "HasOutput": true,
+      "InputType": null,
+      "OutputType": "Calculable",
+
+      "Components": [
+        {
+          "Type": "Inscription",
+          "Title": "Значение гиперболической функции А по параметру В",
+          "Formatting": [],
+          "HasInput": false,
+          "HasOutput": false,
+          "InputType": null,
+          "OutputType": null
+        },
+
+        {
+          "Type": "List",
+          "Title": "Функция А",
+          "Contents": [ "Sinh", "Cosh", "Tanh" ]
+        },
+
+        {
+          "Type": "Input",
+          "Title": "Значение В",
+          "Content": "1.0",
+          "IsReadonly": false,
+          "HasInput": true,
+          "InputType": "Calculable"
+        }
+      ]
+    },
+
+    {
+      // MatFunctions_Trigonometry_ArcHyper
+      "TypeId": 534,
+      "HasInput": false,
+      "HasOutput": true,
+      "InputType": null,
+      "OutputType": "Calculable",
+
+      "Components": [
+        {
+          "Type": "Inscription",
+          "Title": "Значение обратной гиперболической функции А по параметру В",
+          "Formatting": [],
+          "HasInput": false,
+          "HasOutput": false,
+          "InputType": null,
+          "OutputType": null
+        },
+
+        {
+          "Type": "List",
+          "Title": "Функция А",
+          "Contents": [ "Asinh", "Acosh", "Atanh" ]
+        },
+
+        {
+          "Type": "Input",
+          "Title": "Значение В",
+          "Content": "1.0",
+          "IsReadonly": false,
+          "HasInput": true,
+          "InputType": "Calculable"
+        }
+      ]
+    },
+
+    {
+      // MatFunctions_Trigonometry_DegRad
+      "TypeId": 535,
+      "HasInput": false,
+      "HasOutput": true,
+      "InputType": null,
+      "OutputType": "Calculable",
+
+      "Components": [
+        {
+          "Type": "Inscription",
+          "Title": "Преобразование меры угла А по правилу В",
+          "Formatting": [],
+          "HasInput": false,
+          "HasOutput": false,
+          "InputType": null,
+          "OutputType": null
+        },
+
+        {
+          "Type": "Input",
+          "Title": "Значение A",
+          "Content": "1.0",
+          "IsReadonly": false,
+          "HasInput": true,
+          "InputType": "Calculable"
+        },
+
+        {
+          "Type": "List",
+          "Title": "Правило преобразования В",
+          "Contents": [ "Радианы в градусы", "Градусы в радианы" ]
+        }
+      ]
     }
   ]
 }

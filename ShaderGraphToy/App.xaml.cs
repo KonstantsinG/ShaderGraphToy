@@ -10,6 +10,7 @@ namespace ShaderGraphToy
     /// </summary>
     public partial class App : Application
     {
+        #region LOCALIZATION
         private static readonly List<CultureInfo> _languages = [ new("en-US"), new("ru-RU") ];
         public static List<CultureInfo> Languages
         {
@@ -34,6 +35,7 @@ namespace ShaderGraphToy
                 Settings.Default.Save();
             }
         }
+        #endregion
 
 
         public App()
@@ -57,13 +59,7 @@ namespace ShaderGraphToy
         }
 
 
-
-
-
-
-
-
-
+        #region EXCEPTIONS HANDLING
         private void SetupExceptionsHandling()
         {
             AppDomain.CurrentDomain.UnhandledException += (s, e) =>
@@ -99,5 +95,6 @@ namespace ShaderGraphToy
                 ExceptionsLogger.LogError(exception, message);
             }
         }
+        #endregion
     }
 }
