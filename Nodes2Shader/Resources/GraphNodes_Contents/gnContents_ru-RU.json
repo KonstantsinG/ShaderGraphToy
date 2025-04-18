@@ -147,7 +147,7 @@
         {
           "Type": "Inscription",
           "Title": "Поворотная матрица 2D",
-          "Formatting": [],
+          "Formatting": [ "Centred", "Bold", "Margin" ],
           "HasInput": false,
           "HasOutput": false,
           "InputType": null,
@@ -177,7 +177,7 @@
         {
           "Type": "Inscription",
           "Title": "Поворотная матрица 3D",
-          "Formatting": [],
+          "Formatting": [ "Centred", "Bold", "Margin" ],
           "HasInput": false,
           "HasOutput": false,
           "InputType": null,
@@ -226,18 +226,8 @@
       "Components": [
         {
           "Type": "Inscription",
-          "Title": "Координаты текущего пикселя",
-          "Formatting": [],
-          "HasInput": false,
-          "HasOutput": false,
-          "InputType": null,
-          "OutputType": null
-        },
-
-        {
-          "Type": "Inscription",
-          "Title": "Вектор X, Y",
-          "Formatting": [],
+          "Title": "Координаты пикселя X, Y",
+          "Formatting": [ "Centred", "Bold", "Margin" ],
           "HasInput": false,
           "HasOutput": false,
           "InputType": null,
@@ -257,8 +247,8 @@
       "Components": [
         {
           "Type": "Inscription",
-          "Title": "UV-координаты текущего пикселя",
-          "Formatting": [],
+          "Title": "UV-координаты пикселя",
+          "Formatting": [ "Centred", "Bold", "Margin" ],
           "HasInput": false,
           "HasOutput": false,
           "InputType": null,
@@ -284,8 +274,8 @@
       "Components": [
         {
           "Type": "Inscription",
-          "Title": "Координаты мыши X, Y",
-          "Formatting": [],
+          "Title": "Координаты курсора X, Y",
+          "Formatting": [ "Centred", "Bold", "Margin" ],
           "HasInput": false,
           "HasOutput": false,
           "InputType": null,
@@ -306,7 +296,7 @@
         {
           "Type": "Inscription",
           "Title": "Время (в секундах)",
-          "Formatting": [],
+          "Formatting": [ "Centred", "Bold", "Margin" ],
           "HasInput": false,
           "HasOutput": false,
           "InputType": null,
@@ -361,7 +351,7 @@
         {
           "Type": "Inscription",
           "Title": "A + B",
-          "Formatting": [],
+          "Formatting": [ "Centred", "Bold", "Margin" ],
           "HasInput": false,
           "HasOutput": false,
           "InputType": null,
@@ -400,7 +390,7 @@
         {
           "Type": "Inscription",
           "Title": "A - B",
-          "Formatting": [],
+          "Formatting": [ "Centred", "Bold", "Margin" ],
           "HasInput": false,
           "HasOutput": false,
           "InputType": null,
@@ -439,7 +429,7 @@
         {
           "Type": "Inscription",
           "Title": "A * B",
-          "Formatting": [],
+          "Formatting": [ "Centred", "Bold", "Margin" ],
           "HasInput": false,
           "HasOutput": false,
           "InputType": null,
@@ -478,7 +468,7 @@
         {
           "Type": "Inscription",
           "Title": "A / B",
-          "Formatting": [],
+          "Formatting": [ "Centred", "Bold", "Margin" ],
           "HasInput": false,
           "HasOutput": false,
           "InputType": null,
@@ -517,7 +507,7 @@
         {
           "Type": "Inscription",
           "Title": "A % B",
-          "Formatting": [],
+          "Formatting": [ "Centred", "Bold", "Margin" ],
           "HasInput": false,
           "HasOutput": false,
           "InputType": null,
@@ -597,7 +587,7 @@
         {
           "Type": "Inscription",
           "Title": "Скалярное произведение A 🞄 B",
-          "Formatting": ["Wrapping"],
+          "Formatting": [ "Centred", "Bold", "Margin" ],
           "HasInput": false,
           "HasOutput": false,
           "InputType": null,
@@ -637,8 +627,8 @@
       "Components": [
         {
           "Type": "Inscription",
-          "Title": "Длина вектора A",
-          "Formatting": [],
+          "Title": "Длина вектора",
+          "Formatting": [ "Centred", "Bold", "Margin" ],
           "HasInput": false,
           "HasOutput": false,
           "InputType": null,
@@ -647,7 +637,7 @@
 
         {
           "Type": "Inscription",
-          "Title": "Значение A",
+          "Title": "Значение вектора",
           "Formatting": [],
           "HasInput": true,
           "HasOutput": false,
@@ -668,8 +658,8 @@
       "Components": [
         {
           "Type": "Inscription",
-          "Title": "Нормализация вектора A",
-          "Formatting": [],
+          "Title": "Нормализация вектора",
+          "Formatting": [ "Centred", "Bold", "Margin" ],
           "HasInput": false,
           "HasOutput": false,
           "InputType": null,
@@ -678,7 +668,7 @@
 
         {
           "Type": "Inscription",
-          "Title": "Значение A",
+          "Title": "Значение вектора",
           "Formatting": [],
           "HasInput": true,
           "HasOutput": false,
@@ -700,7 +690,7 @@
         {
           "Type": "Inscription",
           "Title": "Произведение вектора A на матрицу B",
-          "Formatting": ["Wrapping"],
+          "Formatting": [ "Centred", "Bold", "Margin" ],
           "HasInput": false,
           "HasOutput": false,
           "InputType": null,
@@ -709,7 +699,7 @@
 
         {
           "Type": "Inscription",
-          "Title": "Значение A",
+          "Title": "Вектор A",
           "Formatting": [],
           "HasInput": true,
           "HasOutput": false,
@@ -719,7 +709,7 @@
 
         {
           "Type": "Inscription",
-          "Title": "Значение B",
+          "Title": "Матрица B",
           "Formatting": [],
           "HasInput": true,
           "HasOutput": false,
@@ -741,7 +731,7 @@
         {
           "Type": "Inscription",
           "Title": "Композиция вектора",
-          "Formatting": [],
+          "Formatting": [ "Centred", "Bold", "Margin" ],
           "HasInput": false,
           "HasOutput": false,
           "InputType": null,
@@ -802,7 +792,7 @@
         {
           "Type": "Inscription",
           "Title": "Декомпозиция вектора",
-          "Formatting": [],
+          "Formatting": [ "Centred", "Bold", "Margin" ],
           "HasInput": false,
           "HasOutput": false,
           "InputType": null,
@@ -863,7 +853,7 @@
         {
           "Type": "Inscription",
           "Title": "Произведение матриц A и B",
-          "Formatting": [],
+          "Formatting": [ "Centred", "Bold", "Margin" ],
           "HasInput": false,
           "HasOutput": false,
           "InputType": null,
@@ -872,7 +862,7 @@
 
         {
           "Type": "Inscription",
-          "Title": "Значение A",
+          "Title": "Матрица A",
           "Formatting": [],
           "HasInput": true,
           "HasOutput": false,
@@ -882,7 +872,7 @@
 
         {
           "Type": "Inscription",
-          "Title": "Значение B",
+          "Title": "Матрица B",
           "Formatting": [],
           "HasInput": true,
           "HasOutput": false,
@@ -903,8 +893,8 @@
       "Components": [
         {
           "Type": "Inscription",
-          "Title": "Определитель матрицы A",
-          "Formatting": [],
+          "Title": "Определитель матрицы",
+          "Formatting": [ "Centred", "Bold", "Margin" ],
           "HasInput": false,
           "HasOutput": false,
           "InputType": null,
@@ -913,7 +903,7 @@
 
         {
           "Type": "Inscription",
-          "Title": "Значение A",
+          "Title": "Значение матрицы",
           "Formatting": [],
           "HasInput": true,
           "HasOutput": false,
@@ -934,8 +924,8 @@
       "Components": [
         {
           "Type": "Inscription",
-          "Title": "Транспонирование матрицы A",
-          "Formatting": ["Wrapping"],
+          "Title": "Транспонирование матрицы",
+          "Formatting": [ "Centred", "Bold", "Margin" ],
           "HasInput": false,
           "HasOutput": false,
           "InputType": null,
@@ -944,7 +934,7 @@
 
         {
           "Type": "Inscription",
-          "Title": "Значение A",
+          "Title": "Значение матрицы",
           "Formatting": [],
           "HasInput": true,
           "HasOutput": false,
@@ -966,7 +956,7 @@
         {
           "Type": "Inscription",
           "Title": "Композиция матрицы",
-          "Formatting": [],
+          "Formatting": [ "Centred", "Bold", "Margin" ],
           "HasInput": false,
           "HasOutput": false,
           "InputType": null,
@@ -1027,7 +1017,7 @@
         {
           "Type": "Inscription",
           "Title": "Декомпозиция матрицы",
-          "Formatting": [],
+          "Formatting": [ "Centred", "Bold", "Margin" ],
           "HasInput": false,
           "HasOutput": false,
           "InputType": null,
@@ -1088,7 +1078,7 @@
         {
           "Type": "Inscription",
           "Title": "Элемент матрицы",
-          "Formatting": [],
+          "Formatting": [ "Centred", "Bold", "Margin" ],
           "HasInput": false,
           "HasOutput": false,
           "InputType": null,
@@ -1129,7 +1119,7 @@
         {
           "Type": "Inscription",
           "Title": "Возведение A в степень B",
-          "Formatting": [],
+          "Formatting": [ "Centred", "Bold", "Margin" ],
           "HasInput": false,
           "HasOutput": false,
           "InputType": null,
@@ -1147,7 +1137,7 @@
 
         {
           "Type": "Input",
-          "Title": "Значение B",
+          "Title": "Степень B",
           "Content": "1.0",
           "IsReadonly": false,
           "HasInput": true,
@@ -1167,8 +1157,8 @@
       "Components": [
         {
           "Type": "Inscription",
-          "Title": "Возведение экспоненты в степень А",
-          "Formatting": ["Wrapping"],
+          "Title": "Возведение экспоненты в степень",
+          "Formatting": [ "Centred", "Bold", "Margin" ],
           "HasInput": false,
           "HasOutput": false,
           "InputType": null,
@@ -1177,7 +1167,7 @@
 
         {
           "Type": "Input",
-          "Title": "Значение A",
+          "Title": "Значение степени",
           "Content": "1.0",
           "IsReadonly": false,
           "HasInput": true,
@@ -1198,7 +1188,7 @@
         {
           "Type": "Inscription",
           "Title": "Логарифм А по основанию В",
-          "Formatting": [],
+          "Formatting": [ "Centred", "Bold", "Margin" ],
           "HasInput": false,
           "HasOutput": false,
           "InputType": null,
@@ -1216,7 +1206,7 @@
 
         {
           "Type": "List",
-          "Title": "Значение В",
+          "Title": "Основание В",
           "Contents": [ "2", "экспонента" ]
         }
       ]
@@ -1233,8 +1223,8 @@
       "Components": [
         {
           "Type": "Inscription",
-          "Title": "Квадратный корень А",
-          "Formatting": [],
+          "Title": "Квадратный корень",
+          "Formatting": [ "Centred", "Bold", "Margin" ],
           "HasInput": false,
           "HasOutput": false,
           "InputType": null,
@@ -1243,7 +1233,7 @@
 
         {
           "Type": "Input",
-          "Title": "Значение A",
+          "Title": "Значение",
           "Content": "1.0",
           "IsReadonly": false,
           "HasInput": true,
@@ -1263,8 +1253,8 @@
       "Components": [
         {
           "Type": "Inscription",
-          "Title": "Модуль А",
-          "Formatting": [],
+          "Title": "Модуль",
+          "Formatting": [ "Centred", "Bold", "Margin" ],
           "HasInput": false,
           "HasOutput": false,
           "InputType": null,
@@ -1273,7 +1263,7 @@
 
         {
           "Type": "Input",
-          "Title": "Значение A",
+          "Title": "Значение",
           "Content": "1.0",
           "IsReadonly": false,
           "HasInput": true,
@@ -1293,8 +1283,8 @@
       "Components": [
         {
           "Type": "Inscription",
-          "Title": "Округление А по правилу В",
-          "Formatting": [],
+          "Title": "Округление",
+          "Formatting": [ "Centred", "Bold", "Margin" ],
           "HasInput": false,
           "HasOutput": false,
           "InputType": null,
@@ -1303,7 +1293,7 @@
 
         {
           "Type": "Input",
-          "Title": "Значение A",
+          "Title": "Значение",
           "Content": "1.0",
           "IsReadonly": false,
           "HasInput": true,
@@ -1312,7 +1302,7 @@
 
         {
           "Type": "List",
-          "Title": "Значение В",
+          "Title": "Правило окугления",
           "Contents": [ "В меньшую стоорону", "В большую сторону", "По математическим правилам" ]
         }
       ]
@@ -1329,8 +1319,8 @@
       "Components": [
         {
           "Type": "Inscription",
-          "Title": "Разделение значения А",
-          "Formatting": [],
+          "Title": "Разделение значения",
+          "Formatting": [ "Centred", "Bold", "Margin" ],
           "HasInput": false,
           "HasOutput": false,
           "InputType": null,
@@ -1370,8 +1360,8 @@
       "Components": [
         {
           "Type": "Inscription",
-          "Title": "Знак А",
-          "Formatting": [],
+          "Title": "Знак значения",
+          "Formatting": [ "Centred", "Bold", "Margin" ],
           "HasInput": false,
           "HasOutput": false,
           "InputType": null,
@@ -1380,7 +1370,7 @@
 
         {
           "Type": "Input",
-          "Title": "Значение A",
+          "Title": "Значение",
           "Content": "1.0",
           "IsReadonly": false,
           "HasInput": true,
@@ -1400,8 +1390,8 @@
       "Components": [
         {
           "Type": "Inscription",
-          "Title": "Инвертировать А",
-          "Formatting": [],
+          "Title": "Инвертировать значение",
+          "Formatting": [ "Centred", "Bold", "Margin" ],
           "HasInput": false,
           "HasOutput": false,
           "InputType": null,
@@ -1410,7 +1400,7 @@
 
         {
           "Type": "Input",
-          "Title": "Значение A",
+          "Title": "Значение",
           "Content": "1.0",
           "IsReadonly": false,
           "HasInput": true,
@@ -1431,7 +1421,7 @@
         {
           "Type": "Inscription",
           "Title": "Сравнение А и В",
-          "Formatting": [],
+          "Formatting": [ "Centred", "Bold", "Margin" ],
           "HasInput": false,
           "HasOutput": false,
           "InputType": null,
@@ -1458,7 +1448,7 @@
 
         {
           "Type": "List",
-          "Title": "Операция",
+          "Title": "Операция сравнения",
           "Contents": [ "Минимум", "Максимум" ]
         }
       ]
@@ -1475,8 +1465,8 @@
       "Components": [
         {
           "Type": "Inscription",
-          "Title": "Пороговая функция со значением А и порогом В",
-          "Formatting": ["Wrapping"],
+          "Title": "Пороговая функция",
+          "Formatting": [ "Centred", "Bold", "Margin" ],
           "HasInput": false,
           "HasOutput": false,
           "InputType": null,
@@ -1485,7 +1475,7 @@
 
         {
           "Type": "Input",
-          "Title": "Значение A",
+          "Title": "Значение",
           "Content": "1.0",
           "IsReadonly": false,
           "HasInput": true,
@@ -1494,7 +1484,7 @@
 
         {
           "Type": "Input",
-          "Title": "Значение В",
+          "Title": "Порог",
           "Content": "0.5",
           "IsReadonly": false,
           "HasInput": true,
@@ -1514,8 +1504,8 @@
       "Components": [
         {
           "Type": "Inscription",
-          "Title": "Интерполяция Эрмита значения А между границами В и С",
-          "Formatting": ["Wrapping"],
+          "Title": "Интерполяция Эрмита",
+          "Formatting": [ "Centred", "Bold", "Margin" ],
           "HasInput": false,
           "HasOutput": false,
           "InputType": null,
@@ -1524,7 +1514,7 @@
 
         {
           "Type": "Input",
-          "Title": "Значение A",
+          "Title": "Значение",
           "Content": "1.0",
           "IsReadonly": false,
           "HasInput": true,
@@ -1533,7 +1523,7 @@
 
         {
           "Type": "Input",
-          "Title": "Значение В",
+          "Title": "Левая граница",
           "Content": "1.0",
           "IsReadonly": false,
           "HasInput": true,
@@ -1542,7 +1532,7 @@
 
         {
           "Type": "Input",
-          "Title": "Значение С",
+          "Title": "Правая граница",
           "Content": "10.0",
           "IsReadonly": false,
           "HasInput": true,
@@ -1562,8 +1552,8 @@
       "Components": [
         {
           "Type": "Inscription",
-          "Title": "Линейная интерполяция значения А между границами В и С",
-          "Formatting": ["Wrapping"],
+          "Title": "Линейная интерполяция",
+          "Formatting": [ "Centred", "Bold", "Margin" ],
           "HasInput": false,
           "HasOutput": false,
           "InputType": null,
@@ -1572,7 +1562,7 @@
 
         {
           "Type": "Input",
-          "Title": "Значение A",
+          "Title": "Значение",
           "Content": "1.0",
           "IsReadonly": false,
           "HasInput": true,
@@ -1581,7 +1571,7 @@
 
         {
           "Type": "Input",
-          "Title": "Значение В",
+          "Title": "Левая граница",
           "Content": "1.0",
           "IsReadonly": false,
           "HasInput": true,
@@ -1590,7 +1580,7 @@
 
         {
           "Type": "Input",
-          "Title": "Значение С",
+          "Title": "Правая граница",
           "Content": "10.0",
           "IsReadonly": false,
           "HasInput": true,
@@ -1610,8 +1600,8 @@
       "Components": [
         {
           "Type": "Inscription",
-          "Title": "Ограничение значения А в границах между В и С",
-          "Formatting": ["Wrapping"],
+          "Title": "Ограничение значения в диапазоне",
+          "Formatting": [ "Centred", "Bold", "Margin" ],
           "HasInput": false,
           "HasOutput": false,
           "InputType": null,
@@ -1620,7 +1610,7 @@
 
         {
           "Type": "Input",
-          "Title": "Значение A",
+          "Title": "Значение",
           "Content": "1.0",
           "IsReadonly": false,
           "HasInput": true,
@@ -1629,7 +1619,7 @@
 
         {
           "Type": "Input",
-          "Title": "Значение В",
+          "Title": "Левая граница",
           "Content": "1.0",
           "IsReadonly": false,
           "HasInput": true,
@@ -1638,7 +1628,7 @@
 
         {
           "Type": "Input",
-          "Title": "Значение С",
+          "Title": "Правая граница",
           "Content": "10.0",
           "IsReadonly": false,
           "HasInput": true,
@@ -1658,8 +1648,8 @@
       "Components": [
         {
           "Type": "Inscription",
-          "Title": "Приведение значения А из диапазона от В до С к диапазону от D до E",
-          "Formatting": ["Wrapping"],
+          "Title": "Приведение значения из старого диапазона в новый",
+          "Formatting": [ "Centred", "Bold", "Margin" ],
           "HasInput": false,
           "HasOutput": false,
           "InputType": null,
@@ -1668,7 +1658,7 @@
 
         {
           "Type": "Input",
-          "Title": "Значение A",
+          "Title": "Значение",
           "Content": "1.0",
           "IsReadonly": false,
           "HasInput": true,
@@ -1677,7 +1667,7 @@
 
         {
           "Type": "Input",
-          "Title": "Значение В",
+          "Title": "Старая левая граница",
           "Content": "1.0",
           "IsReadonly": false,
           "HasInput": true,
@@ -1686,7 +1676,7 @@
 
         {
           "Type": "Input",
-          "Title": "Значение С",
+          "Title": "Старая правая граница",
           "Content": "10.0",
           "IsReadonly": false,
           "HasInput": true,
@@ -1695,7 +1685,7 @@
 
         {
           "Type": "Input",
-          "Title": "Значение D",
+          "Title": "Новая левая граница",
           "Content": "0.0",
           "IsReadonly": false,
           "HasInput": true,
@@ -1704,7 +1694,7 @@
 
         {
           "Type": "Input",
-          "Title": "Значение E",
+          "Title": "Новая правая граница",
           "Content": "1.0",
           "IsReadonly": false,
           "HasInput": true,
@@ -1724,8 +1714,8 @@
       "Components": [
         {
           "Type": "Inscription",
-          "Title": "Значение тригонометрической функции А по параметру В",
-          "Formatting": ["Wrapping"],
+          "Title": "Тригонометрическая функция",
+          "Formatting": [ "Centred", "Bold", "Margin" ],
           "HasInput": false,
           "HasOutput": false,
           "InputType": null,
@@ -1734,13 +1724,13 @@
 
         {
           "Type": "List",
-          "Title": "Функция А",
+          "Title": "Функция",
           "Contents": [ "Sin", "Cos", "Tan" ]
         },
 
         {
           "Type": "Input",
-          "Title": "Значение В",
+          "Title": "Значение",
           "Content": "1.0",
           "IsReadonly": false,
           "HasInput": true,
@@ -1760,8 +1750,8 @@
       "Components": [
         {
           "Type": "Inscription",
-          "Title": "Значение оборатной тригонометрической функции А по параметру В",
-          "Formatting": [],
+          "Title": "Оборатная тригонометрическая функция",
+          "Formatting": [ "Centred", "Bold", "Margin" ],
           "HasInput": false,
           "HasOutput": false,
           "InputType": null,
@@ -1770,13 +1760,13 @@
 
         {
           "Type": "List",
-          "Title": "Функция А",
+          "Title": "Функция",
           "Contents": [ "Asin", "Acos", "Atan" ]
         },
 
         {
           "Type": "Input",
-          "Title": "Значение В",
+          "Title": "Значение",
           "Content": "1.0",
           "IsReadonly": false,
           "HasInput": true,
@@ -1796,8 +1786,8 @@
       "Components": [
         {
           "Type": "Inscription",
-          "Title": "Значение гиперболической функции А по параметру В",
-          "Formatting": [],
+          "Title": "Гиперболическая функция",
+          "Formatting": [ "Centred", "Bold", "Margin" ],
           "HasInput": false,
           "HasOutput": false,
           "InputType": null,
@@ -1806,13 +1796,13 @@
 
         {
           "Type": "List",
-          "Title": "Функция А",
+          "Title": "Функция",
           "Contents": [ "Sinh", "Cosh", "Tanh" ]
         },
 
         {
           "Type": "Input",
-          "Title": "Значение В",
+          "Title": "Значение",
           "Content": "1.0",
           "IsReadonly": false,
           "HasInput": true,
@@ -1832,8 +1822,8 @@
       "Components": [
         {
           "Type": "Inscription",
-          "Title": "Значение обратной гиперболической функции А по параметру В",
-          "Formatting": [],
+          "Title": "Обратная гиперболическая функция",
+          "Formatting": [ "Centred", "Bold", "Margin" ],
           "HasInput": false,
           "HasOutput": false,
           "InputType": null,
@@ -1842,13 +1832,13 @@
 
         {
           "Type": "List",
-          "Title": "Функция А",
+          "Title": "Функция",
           "Contents": [ "Asinh", "Acosh", "Atanh" ]
         },
 
         {
           "Type": "Input",
-          "Title": "Значение В",
+          "Title": "Значение",
           "Content": "1.0",
           "IsReadonly": false,
           "HasInput": true,
@@ -1868,8 +1858,8 @@
       "Components": [
         {
           "Type": "Inscription",
-          "Title": "Преобразование меры угла А по правилу В",
-          "Formatting": [],
+          "Title": "Преобразование меры угла",
+          "Formatting": [ "Centred", "Bold", "Margin" ],
           "HasInput": false,
           "HasOutput": false,
           "InputType": null,
@@ -1878,7 +1868,7 @@
 
         {
           "Type": "Input",
-          "Title": "Значение A",
+          "Title": "Значение",
           "Content": "1.0",
           "IsReadonly": false,
           "HasInput": true,
@@ -1887,7 +1877,7 @@
 
         {
           "Type": "List",
-          "Title": "Правило преобразования В",
+          "Title": "Правило преобразования",
           "Contents": [ "Радианы в градусы", "Градусы в радианы" ]
         }
       ]

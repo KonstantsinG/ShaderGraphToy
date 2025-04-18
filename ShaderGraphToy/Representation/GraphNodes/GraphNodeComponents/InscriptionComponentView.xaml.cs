@@ -50,6 +50,7 @@ namespace ShaderGraphToy.Representation.GraphNodes.GraphNodeComponents
                 {
                     case "Centred":
                         tb.TextAlignment = TextAlignment.Center;
+                        panel.HorizontalAlignment = HorizontalAlignment.Center;
                         break;
 
                     case "Bold":
@@ -65,7 +66,7 @@ namespace ShaderGraphToy.Representation.GraphNodes.GraphNodeComponents
                         break;
 
                     case "Margin":
-                        tb.Margin = new Thickness(5,0,5,5);
+                        tb.Margin = new Thickness(10,-20,10,10);
                         break;
                 }
             }

@@ -63,7 +63,9 @@ namespace ShaderGraphToy
 
 
         #region EXCEPTIONS HANDLING
+#pragma warning disable IDE0051 // Удалите неиспользуемые закрытые члены
         private void SetupExceptionsHandling()
+#pragma warning restore IDE0051 // Удалите неиспользуемые закрытые члены
         {
             AppDomain.CurrentDomain.UnhandledException += (s, e) =>
                 LogUnhandledException((Exception)e.ExceptionObject, "AppDomain.CurrentDomain.UnhandledException");
@@ -81,7 +83,7 @@ namespace ShaderGraphToy
             };
         }
 
-        private void LogUnhandledException(Exception exception, string source)
+        private static void LogUnhandledException(Exception exception, string source)
         {
             string message = $"Unhandled exception ({source})";
             try
