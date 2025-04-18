@@ -11,14 +11,14 @@
         <BooleanToVisibilityConverter x:Key="BoolToVis"/>
     </UserControl.Resources>
 
-    <WrapPanel>
+    <WrapPanel x:Name="panel">
 
         <local:NodesConnector Margin="0,0,5,0" x:Name="inputConnector"
                               Visibility="{Binding Path=Model.HasInput, Converter={StaticResource BoolToVis}, RelativeSource={RelativeSource AncestorType=UserControl}, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
         
-        <TextBlock Style="{StaticResource GrayTextBlock}"
+        <TextBlock Style="{StaticResource GrayTextBlock}" x:Name="tb" TextWrapping="Wrap"
                    Text="{Binding Path=Model.Title, RelativeSource={RelativeSource AncestorType=UserControl}, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
-        
+
         <local:NodesConnector Margin="5,0,0,0" x:Name="outputConnector"
                               Visibility="{Binding Path=Model.HasOutput, Converter={StaticResource BoolToVis}, RelativeSource={RelativeSource AncestorType=UserControl}, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
 

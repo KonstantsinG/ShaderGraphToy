@@ -15,7 +15,11 @@ namespace ShaderGraphToy.Representation.GraphNodes.GraphNodeComponents
         public InscriptionComponent Model
         {
             get => (InscriptionComponent)GetValue(ModelProperty);
-            set => SetValue(ModelProperty, value);
+            set
+            {
+                SetValue(ModelProperty, value);
+                SetFormatting(Model?.Formatting!);
+            }
         } 
 
         public InscriptionComponentView()
@@ -34,6 +38,37 @@ namespace ShaderGraphToy.Representation.GraphNodes.GraphNodeComponents
             if (Model.HasOutput) conns.Add(outputConnector);
 
             return conns;
+        }
+
+        public void SetFormatting(List<string> props)
+        {
+            if (props == null) return;
+
+            foreach (string prop in props)
+            {
+                switch (prop)
+                {
+                    case "Centred":
+                        tb.TextAlignment = TextAlignment.Center;
+                        break;
+
+                    case "Bold":
+                        tb.FontWeight = FontWeights.Bold;
+                        break;
+
+                    case "Left":
+                        panel.HorizontalAlignment = HorizontalAlignment.Left;
+                        break;
+
+                    case "Right":
+                        panel.HorizontalAlignment = HorizontalAlignment.Right;
+                        break;
+
+                    case "Margin":
+                        tb.Margin = new Thickness(5,0,5,5);
+                        break;
+                }
+            }
         }
     }
 }

@@ -145,8 +145,18 @@
 
       "Components": [
         {
+          "Type": "Inscription",
+          "Title": "Поворотная матрица 2D",
+          "Formatting": [],
+          "HasInput": false,
+          "HasOutput": false,
+          "InputType": null,
+          "OutputType": null
+        },
+
+        {
           "Type": "Input",
-          "Title": "Угол поворота (в радианах)",
+          "Title": "Угол поворота",
           "Content": "0.523599",
           "IsReadonly": false,
           "HasInput": true,
@@ -165,8 +175,18 @@
 
       "Components": [
         {
+          "Type": "Inscription",
+          "Title": "Поворотная матрица 3D",
+          "Formatting": [],
+          "HasInput": false,
+          "HasOutput": false,
+          "InputType": null,
+          "OutputType": null
+        },
+
+        {
           "Type": "Input",
-          "Title": "Угол поворота по оси X (в радианах)",
+          "Title": "Угол поворота по оси X",
           "Content": "0.523599",
           "IsReadonly": false,
           "HasInput": true,
@@ -175,7 +195,7 @@
 
         {
           "Type": "Input",
-          "Title": "Угол поворота по оси Y (в радианах)",
+          "Title": "Угол поворота по оси Y",
           "Content": "0.0",
           "IsReadonly": false,
           "HasInput": true,
@@ -184,7 +204,7 @@
 
         {
           "Type": "Input",
-          "Title": "Угол поворота по оси Z (в радианах)",
+          "Title": "Угол поворота по оси Z",
           "Content": "-0.523599",
           "IsReadonly": false,
           "HasInput": true,
@@ -206,7 +226,17 @@
       "Components": [
         {
           "Type": "Inscription",
-          "Title": "Координаты X, Y",
+          "Title": "Координаты текущего пикселя",
+          "Formatting": [],
+          "HasInput": false,
+          "HasOutput": false,
+          "InputType": null,
+          "OutputType": null
+        },
+
+        {
+          "Type": "Inscription",
+          "Title": "Вектор X, Y",
           "Formatting": [],
           "HasInput": false,
           "HasOutput": false,
@@ -225,6 +255,16 @@
       "OutputType": "Vec2",
 
       "Components": [
+        {
+          "Type": "Inscription",
+          "Title": "UV-координаты текущего пикселя",
+          "Formatting": [],
+          "HasInput": false,
+          "HasOutput": false,
+          "InputType": null,
+          "OutputType": null
+        },
+
         {
           "Type": "List",
           "Title": "Диапазон",
@@ -516,7 +556,7 @@
         {
           "Type": "Inscription",
           "Title": "Векторное произведение A x B",
-          "Formatting": [],
+          "Formatting": ["Centred", "Wrapping", "Bold"],
           "HasInput": false,
           "HasOutput": false,
           "InputType": null,
@@ -557,7 +597,7 @@
         {
           "Type": "Inscription",
           "Title": "Скалярное произведение A 🞄 B",
-          "Formatting": [],
+          "Formatting": ["Wrapping"],
           "HasInput": false,
           "HasOutput": false,
           "InputType": null,
@@ -660,7 +700,7 @@
         {
           "Type": "Inscription",
           "Title": "Произведение вектора A на матрицу B",
-          "Formatting": [],
+          "Formatting": ["Wrapping"],
           "HasInput": false,
           "HasOutput": false,
           "InputType": null,
@@ -772,7 +812,7 @@
         {
           "Type": "Inscription",
           "Title": "x",
-          "Formatting": [],
+          "Formatting": ["Right"],
           "HasInput": false,
           "HasOutput": true,
           "InputType": null,
@@ -782,7 +822,7 @@
         {
           "Type": "Inscription",
           "Title": "y",
-          "Formatting": [],
+          "Formatting": ["Right"],
           "HasInput": false,
           "HasOutput": true,
           "InputType": null,
@@ -792,7 +832,7 @@
         {
           "Type": "Inscription",
           "Title": "z",
-          "Formatting": [],
+          "Formatting": ["Right"],
           "HasInput": false,
           "HasOutput": true,
           "InputType": null,
@@ -802,7 +842,7 @@
         {
           "Type": "Inscription",
           "Title": "w",
-          "Formatting": [],
+          "Formatting": ["Right"],
           "HasInput": false,
           "HasOutput": true,
           "InputType": null,
@@ -895,7 +935,7 @@
         {
           "Type": "Inscription",
           "Title": "Транспонирование матрицы A",
-          "Formatting": [],
+          "Formatting": ["Wrapping"],
           "HasInput": false,
           "HasOutput": false,
           "InputType": null,
@@ -935,7 +975,7 @@
 
         {
           "Type": "Inscription",
-          "Title": "row 1",
+          "Title": "Строка 1",
           "Formatting": [],
           "HasInput": true,
           "HasOutput": false,
@@ -945,7 +985,7 @@
 
         {
           "Type": "Inscription",
-          "Title": "row 2",
+          "Title": "Строка 2",
           "Formatting": [],
           "HasInput": true,
           "HasOutput": false,
@@ -955,7 +995,7 @@
 
         {
           "Type": "Inscription",
-          "Title": "row 3",
+          "Title": "Строка 3",
           "Formatting": [],
           "HasInput": true,
           "HasOutput": false,
@@ -965,7 +1005,7 @@
 
         {
           "Type": "Inscription",
-          "Title": "row 4",
+          "Title": "Строка 4",
           "Formatting": [],
           "HasInput": true,
           "HasOutput": false,
@@ -996,8 +1036,8 @@
 
         {
           "Type": "Inscription",
-          "Title": "row 1",
-          "Formatting": [],
+          "Title": "Строка 1",
+          "Formatting": ["Right"],
           "HasInput": false,
           "HasOutput": true,
           "InputType": null,
@@ -1006,8 +1046,8 @@
 
         {
           "Type": "Inscription",
-          "Title": "row 2",
-          "Formatting": [],
+          "Title": "Строка 2",
+          "Formatting": ["Right"],
           "HasInput": false,
           "HasOutput": true,
           "InputType": null,
@@ -1016,8 +1056,8 @@
 
         {
           "Type": "Inscription",
-          "Title": "row 3",
-          "Formatting": [],
+          "Title": "Строка 3",
+          "Formatting": ["Right"],
           "HasInput": false,
           "HasOutput": true,
           "InputType": null,
@@ -1026,8 +1066,8 @@
 
         {
           "Type": "Inscription",
-          "Title": "row 4",
-          "Formatting": [],
+          "Title": "Строка 4",
+          "Formatting": ["Right"],
           "HasInput": false,
           "HasOutput": true,
           "InputType": null,
@@ -1042,7 +1082,7 @@
       "HasInput": false,
       "HasOutput": true,
       "InputType": null,
-      "OutputType": "Тгьиук",
+      "OutputType": "Number",
 
       "Components": [
         {
@@ -1128,7 +1168,7 @@
         {
           "Type": "Inscription",
           "Title": "Возведение экспоненты в степень А",
-          "Formatting": [],
+          "Formatting": ["Wrapping"],
           "HasInput": false,
           "HasOutput": false,
           "InputType": null,
@@ -1177,7 +1217,7 @@
         {
           "Type": "List",
           "Title": "Значение В",
-          "Contents": [ "2", "exp" ]
+          "Contents": [ "2", "экспонента" ]
         }
       ]
     },
@@ -1300,7 +1340,7 @@
         {
           "Type": "Inscription",
           "Title": "Целая часть",
-          "Formatting": [],
+          "Formatting": ["Right"],
           "HasInput": false,
           "HasOutput": true,
           "InputType": null,
@@ -1310,7 +1350,7 @@
         {
           "Type": "Inscription",
           "Title": "Дробная часть",
-          "Formatting": [],
+          "Formatting": ["Right"],
           "HasInput": false,
           "HasOutput": true,
           "InputType": null,
@@ -1390,7 +1430,7 @@
       "Components": [
         {
           "Type": "Inscription",
-          "Title": "Минимум/максимум из А и В",
+          "Title": "Сравнение А и В",
           "Formatting": [],
           "HasInput": false,
           "HasOutput": false,
@@ -1436,7 +1476,7 @@
         {
           "Type": "Inscription",
           "Title": "Пороговая функция со значением А и порогом В",
-          "Formatting": [],
+          "Formatting": ["Wrapping"],
           "HasInput": false,
           "HasOutput": false,
           "InputType": null,
@@ -1475,7 +1515,7 @@
         {
           "Type": "Inscription",
           "Title": "Интерполяция Эрмита значения А между границами В и С",
-          "Formatting": [],
+          "Formatting": ["Wrapping"],
           "HasInput": false,
           "HasOutput": false,
           "InputType": null,
@@ -1523,7 +1563,7 @@
         {
           "Type": "Inscription",
           "Title": "Линейная интерполяция значения А между границами В и С",
-          "Formatting": [],
+          "Formatting": ["Wrapping"],
           "HasInput": false,
           "HasOutput": false,
           "InputType": null,
@@ -1571,7 +1611,7 @@
         {
           "Type": "Inscription",
           "Title": "Ограничение значения А в границах между В и С",
-          "Formatting": [],
+          "Formatting": ["Wrapping"],
           "HasInput": false,
           "HasOutput": false,
           "InputType": null,
@@ -1619,7 +1659,7 @@
         {
           "Type": "Inscription",
           "Title": "Приведение значения А из диапазона от В до С к диапазону от D до E",
-          "Formatting": [],
+          "Formatting": ["Wrapping"],
           "HasInput": false,
           "HasOutput": false,
           "InputType": null,
@@ -1656,7 +1696,7 @@
         {
           "Type": "Input",
           "Title": "Значение D",
-          "Content": "10.0",
+          "Content": "0.0",
           "IsReadonly": false,
           "HasInput": true,
           "InputType": "Calculable"
@@ -1665,7 +1705,7 @@
         {
           "Type": "Input",
           "Title": "Значение E",
-          "Content": "10.0",
+          "Content": "1.0",
           "IsReadonly": false,
           "HasInput": true,
           "InputType": "Calculable"
@@ -1685,7 +1725,7 @@
         {
           "Type": "Inscription",
           "Title": "Значение тригонометрической функции А по параметру В",
-          "Formatting": [],
+          "Formatting": ["Wrapping"],
           "HasInput": false,
           "HasOutput": false,
           "InputType": null,

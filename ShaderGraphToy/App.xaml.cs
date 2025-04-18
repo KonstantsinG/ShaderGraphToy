@@ -48,7 +48,10 @@ namespace ShaderGraphToy
         {
             base.OnStartup(e);
 
-            SetupExceptionsHandling();
+#if DEBUG
+#else
+            SetupExceptionsHandling(); // Exceptions logger is only for the Release build
+#endif
             RenderingDeviceManager.EnableNvapi();
             Exit += AppExit;
         }

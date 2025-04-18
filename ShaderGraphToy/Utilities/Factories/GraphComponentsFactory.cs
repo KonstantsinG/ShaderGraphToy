@@ -23,6 +23,7 @@ namespace ShaderGraphToy.Utilities
         public static List<UserControl> ConstructComponents(List<INodeComponent> components)
         {
             List<UserControl> controls = [];
+
             foreach (INodeComponent comp in components)
                 controls.Add(ConstructComponent(comp));
 

@@ -8,7 +8,7 @@
              xmlns:comps="clr-namespace:ShaderGraphToy.Representation.GraphNodes.GraphNodeComponents"
              xmlns:conv="clr-namespace:ShaderGraphToy.Utilities.XamlConverters"
              mc:Ignorable="d"
-             MinHeight="50" MinWidth="180"
+             MinHeight="50" MinWidth="180" MaxWidth="230"
              MouseLeftButtonDown="UserControl_MouseLeftButtonDown"
              MouseLeftButtonUp="UserControl_MouseLeftButtonUp"
              MouseEnter="UserControl_MouseEnter" MouseLeave="UserControl_MouseLeave">
