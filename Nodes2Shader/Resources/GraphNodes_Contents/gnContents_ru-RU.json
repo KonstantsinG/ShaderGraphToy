@@ -59,25 +59,8 @@
     },
 
     {
-      // Constant_UserConstant_LogicValue
-      "TypeId": 114,
-      "HasInput": false,
-      "HasOutput": true,
-      "InputType": null,
-      "OutputType": "Bool",
-
-      "Components": [
-        {
-          "Type": "List",
-          "Title": "Логическое значение",
-          "Contents": [ "Истина", "Ложь" ]
-        }
-      ]
-    },
-
-    {
       // Constant_UserConstant_Color
-      "TypeId": 115,
+      "TypeId": 114,
       "HasInput": false,
       "HasOutput": true,
       "InputType": null,
@@ -210,6 +193,8 @@
       ]
     },
 
+    ///////////////////////////////////////////////////////////////////// 2
+
     {
       // InputData_PixelCoords
       "TypeId": 21,
@@ -290,6 +275,8 @@
       ]
     },
 
+    ///////////////////////////////////////////////////////////////////// 3
+
     {
       // OutputData
       "TypeId": 3,
@@ -319,6 +306,8 @@
         }
       ]
     },
+
+    ///////////////////////////////////////////////////////////////////// 4
 
     {
       // MatOperations_Basic_Sum
@@ -477,42 +466,12 @@
     },
 
     {
-      // MatOperations_Basic_Inverse
+      // MatOperations_Basic_DivRem
       "TypeId": 415,
       "HasInput": false,
       "HasOutput": true,
       "InputType": null,
       "OutputType": "Calculable",
-
-      "Components": [
-        {
-          "Type": "Inscription",
-          "Title": "1 / A",
-          "Formatting": [],
-          "HasInput": false,
-          "HasOutput": false,
-          "InputType": null,
-          "OutputType": null
-        },
-
-        {
-          "Type": "Input",
-          "Title": "Значение A",
-          "Content": "1.0",
-          "IsReadonly": false,
-          "HasInput": true,
-          "InputType": "Calculable"
-        }
-      ]
-    },
-
-    {
-      // MatOperations_Numbers_DivRem
-      "TypeId": 421,
-      "HasInput": false,
-      "HasOutput": true,
-      "InputType": null,
-      "OutputType": "Int",
 
       "Components": [
         {
@@ -546,102 +505,12 @@
     },
 
     {
-      // MatOperations_Numbers_Trunc
-      "TypeId": 422,
+      // MatOperations_Vectors_Cross
+      "TypeId": 421,
       "HasInput": false,
       "HasOutput": true,
       "InputType": null,
-      "OutputType": "Int",
-
-      "Components": [
-        {
-          "Type": "Inscription",
-          "Title": "Целая часть числа A",
-          "Formatting": [],
-          "HasInput": false,
-          "HasOutput": false,
-          "InputType": null,
-          "OutputType": null
-        },
-
-        {
-          "Type": "Input",
-          "Title": "Значение A",
-          "Content": "0.0",
-          "IsReadonly": false,
-          "HasInput": true,
-          "InputType": "Number"
-        }
-      ]
-    },
-
-    {
-      // MatOperations_Numbers_Fract
-      "TypeId": 423,
-      "HasInput": false,
-      "HasOutput": true,
-      "InputType": null,
-      "OutputType": "Int",
-
-      "Components": [
-        {
-          "Type": "Inscription",
-          "Title": "Дробная часть числа A",
-          "Formatting": [],
-          "HasInput": false,
-          "HasOutput": false,
-          "InputType": null,
-          "OutputType": null
-        },
-
-        {
-          "Type": "Input",
-          "Title": "Значение A",
-          "Content": "0.0",
-          "IsReadonly": false,
-          "HasInput": true,
-          "InputType": "Number"
-        }
-      ]
-    },
-
-    {
-      // MatOperations_Numbers_Sign
-      "TypeId": 424,
-      "HasInput": false,
-      "HasOutput": true,
-      "InputType": null,
-      "OutputType": "Int",
-
-      "Components": [
-        {
-          "Type": "Inscription",
-          "Title": "Знак числа A",
-          "Formatting": [],
-          "HasInput": false,
-          "HasOutput": false,
-          "InputType": null,
-          "OutputType": null
-        },
-
-        {
-          "Type": "Input",
-          "Title": "Значение A",
-          "Content": "0.0",
-          "IsReadonly": false,
-          "HasInput": true,
-          "InputType": "Number"
-        }
-      ]
-    },
-
-    {
-      // MatOperations_Vectors_CrossProd
-      "TypeId": 431,
-      "HasInput": false,
-      "HasOutput": true,
-      "InputType": null,
-      "OutputType": "VecN",
+      "OutputType": "Vec3",
 
       "Components": [
         {
@@ -660,7 +529,7 @@
           "Formatting": [],
           "HasInput": true,
           "HasOutput": false,
-          "InputType": "VecN",
+          "InputType": "Vec3",
           "OutputType": null
         },
 
@@ -670,15 +539,15 @@
           "Formatting": [],
           "HasInput": true,
           "HasOutput": false,
-          "InputType": "VecN",
+          "InputType": "Vec3",
           "OutputType": null
         }
       ]
     },
 
     {
-      // MatOperations_Vectors_DotProd
-      "TypeId": 432,
+      // MatOperations_Vectors_Dot
+      "TypeId": 422,
       "HasInput": false,
       "HasOutput": true,
       "InputType": null,
@@ -687,7 +556,7 @@
       "Components": [
         {
           "Type": "Inscription",
-          "Title": "Скалярное произведение A * B",
+          "Title": "Скалярное произведение A 🞄 B",
           "Formatting": [],
           "HasInput": false,
           "HasOutput": false,
@@ -718,8 +587,8 @@
     },
 
     {
-      // MatOperations_Vectors_VectLen
-      "TypeId": 433,
+      // MatOperations_Vectors_VecLen
+      "TypeId": 423,
       "HasInput": false,
       "HasOutput": true,
       "InputType": null,
@@ -749,8 +618,8 @@
     },
 
     {
-      // MatOperations_Vectors_VectNorm
-      "TypeId": 434,
+      // MatOperations_Vectors_VecNorm
+      "TypeId": 424,
       "HasInput": false,
       "HasOutput": true,
       "InputType": null,
@@ -780,8 +649,8 @@
     },
 
     {
-      // MatOperations_Vectors_VectMatMul
-      "TypeId": 435,
+      // MatOperations_Vectors_VecMatMul
+      "TypeId": 425,
       "HasInput": false,
       "HasOutput": true,
       "InputType": null,
@@ -821,8 +690,8 @@
     },
 
     {
-      // MatOperations_Matrices_MatVectMul
-      "TypeId": 441,
+      // MatOperations_Vectors_VecComp
+      "TypeId": 426,
       "HasInput": false,
       "HasOutput": true,
       "InputType": null,
@@ -831,7 +700,129 @@
       "Components": [
         {
           "Type": "Inscription",
-          "Title": "Произведение матрицы A на вектор B",
+          "Title": "Композиция вектора",
+          "Formatting": [],
+          "HasInput": false,
+          "HasOutput": false,
+          "InputType": null,
+          "OutputType": null
+        },
+
+        {
+          "Type": "Inscription",
+          "Title": "x",
+          "Formatting": [],
+          "HasInput": true,
+          "HasOutput": false,
+          "InputType": "Number",
+          "OutputType": null
+        },
+
+        {
+          "Type": "Inscription",
+          "Title": "y",
+          "Formatting": [],
+          "HasInput": true,
+          "HasOutput": false,
+          "InputType": "Number",
+          "OutputType": null
+        },
+
+        {
+          "Type": "Inscription",
+          "Title": "z",
+          "Formatting": [],
+          "HasInput": true,
+          "HasOutput": false,
+          "InputType": "Number",
+          "OutputType": null
+        },
+
+        {
+          "Type": "Inscription",
+          "Title": "w",
+          "Formatting": [],
+          "HasInput": true,
+          "HasOutput": false,
+          "InputType": "Number",
+          "OutputType": null
+        }
+      ]
+    },
+
+    {
+      // MatOperations_Vectors_VecDecomp
+      "TypeId": 427,
+      "HasInput": true,
+      "HasOutput": false,
+      "InputType": "VecN",
+      "OutputType": null,
+
+      "Components": [
+        {
+          "Type": "Inscription",
+          "Title": "Декомпозиция вектора",
+          "Formatting": [],
+          "HasInput": false,
+          "HasOutput": false,
+          "InputType": null,
+          "OutputType": null
+        },
+
+        {
+          "Type": "Inscription",
+          "Title": "x",
+          "Formatting": [],
+          "HasInput": false,
+          "HasOutput": true,
+          "InputType": null,
+          "OutputType": "Number"
+        },
+
+        {
+          "Type": "Inscription",
+          "Title": "y",
+          "Formatting": [],
+          "HasInput": false,
+          "HasOutput": true,
+          "InputType": null,
+          "OutputType": "Number"
+        },
+
+        {
+          "Type": "Inscription",
+          "Title": "z",
+          "Formatting": [],
+          "HasInput": false,
+          "HasOutput": true,
+          "InputType": null,
+          "OutputType": "Number"
+        },
+
+        {
+          "Type": "Inscription",
+          "Title": "w",
+          "Formatting": [],
+          "HasInput": false,
+          "HasOutput": true,
+          "InputType": null,
+          "OutputType": "Number"
+        }
+      ]
+    },
+
+    {
+      // MatOperations_Matrices_MatMatMul
+      "TypeId": 431,
+      "HasInput": false,
+      "HasOutput": true,
+      "InputType": null,
+      "OutputType": "MatNxM",
+
+      "Components": [
+        {
+          "Type": "Inscription",
+          "Title": "Произведение матриц A и B",
           "Formatting": [],
           "HasInput": false,
           "HasOutput": false,
@@ -855,7 +846,7 @@
           "Formatting": [],
           "HasInput": true,
           "HasOutput": false,
-          "InputType": "VecN",
+          "InputType": "MatNxM",
           "OutputType": null
         }
       ]
@@ -863,7 +854,7 @@
 
     {
       // MatOperations_Matrices_MatDet
-      "TypeId": 442,
+      "TypeId": 432,
       "HasInput": false,
       "HasOutput": true,
       "InputType": null,
@@ -891,6 +882,200 @@
         }
       ]
     },
+
+    {
+      // MatOperations_Matrices_MatTransp
+      "TypeId": 433,
+      "HasInput": false,
+      "HasOutput": true,
+      "InputType": null,
+      "OutputType": "MatNxM",
+
+      "Components": [
+        {
+          "Type": "Inscription",
+          "Title": "Транспонирование матрицы A",
+          "Formatting": [],
+          "HasInput": false,
+          "HasOutput": false,
+          "InputType": null,
+          "OutputType": null
+        },
+
+        {
+          "Type": "Inscription",
+          "Title": "Значение A",
+          "Formatting": [],
+          "HasInput": true,
+          "HasOutput": false,
+          "InputType": "MatNxM",
+          "OutputType": null
+        }
+      ]
+    },
+
+    {
+      // MatOperations_Matrices_MatComp
+      "TypeId": 434,
+      "HasInput": false,
+      "HasOutput": true,
+      "InputType": null,
+      "OutputType": "MatNxM",
+
+      "Components": [
+        {
+          "Type": "Inscription",
+          "Title": "Композиция матрицы",
+          "Formatting": [],
+          "HasInput": false,
+          "HasOutput": false,
+          "InputType": null,
+          "OutputType": null
+        },
+
+        {
+          "Type": "Inscription",
+          "Title": "row 1",
+          "Formatting": [],
+          "HasInput": true,
+          "HasOutput": false,
+          "InputType": "VecN",
+          "OutputType": null
+        },
+
+        {
+          "Type": "Inscription",
+          "Title": "row 2",
+          "Formatting": [],
+          "HasInput": true,
+          "HasOutput": false,
+          "InputType": "VecN",
+          "OutputType": null
+        },
+
+        {
+          "Type": "Inscription",
+          "Title": "row 3",
+          "Formatting": [],
+          "HasInput": true,
+          "HasOutput": false,
+          "InputType": "VecN",
+          "OutputType": null
+        },
+
+        {
+          "Type": "Inscription",
+          "Title": "row 4",
+          "Formatting": [],
+          "HasInput": true,
+          "HasOutput": false,
+          "InputType": "VecN",
+          "OutputType": null
+        }
+      ]
+    },
+
+    {
+      // MatOperations_Matrices_MatDecomp
+      "TypeId": 435,
+      "HasInput": true,
+      "HasOutput": false,
+      "InputType": "MatNxM",
+      "OutputType": null,
+
+      "Components": [
+        {
+          "Type": "Inscription",
+          "Title": "Декомпозиция матрицы",
+          "Formatting": [],
+          "HasInput": false,
+          "HasOutput": false,
+          "InputType": null,
+          "OutputType": null
+        },
+
+        {
+          "Type": "Inscription",
+          "Title": "row 1",
+          "Formatting": [],
+          "HasInput": false,
+          "HasOutput": true,
+          "InputType": null,
+          "OutputType": "VecN"
+        },
+
+        {
+          "Type": "Inscription",
+          "Title": "row 2",
+          "Formatting": [],
+          "HasInput": false,
+          "HasOutput": true,
+          "InputType": null,
+          "OutputType": "VecN"
+        },
+
+        {
+          "Type": "Inscription",
+          "Title": "row 3",
+          "Formatting": [],
+          "HasInput": false,
+          "HasOutput": true,
+          "InputType": null,
+          "OutputType": "VecN"
+        },
+
+        {
+          "Type": "Inscription",
+          "Title": "row 4",
+          "Formatting": [],
+          "HasInput": false,
+          "HasOutput": true,
+          "InputType": null,
+          "OutputType": "VecN"
+        }
+      ]
+    },
+
+    {
+      // MatOperations_Matrices_MatEl
+      "TypeId": 436,
+      "HasInput": false,
+      "HasOutput": true,
+      "InputType": null,
+      "OutputType": "Тгьиук",
+
+      "Components": [
+        {
+          "Type": "Inscription",
+          "Title": "Элемент матрицы",
+          "Formatting": [],
+          "HasInput": false,
+          "HasOutput": false,
+          "InputType": null,
+          "OutputType": null
+        },
+
+        {
+          "Type": "Input",
+          "Title": "Строка",
+          "Content": "0",
+          "IsReadonly": false,
+          "HasInput": true,
+          "InputType": "Number"
+        },
+
+        {
+          "Type": "Input",
+          "Title": "Столбец",
+          "Content": "0",
+          "IsReadonly": false,
+          "HasInput": true,
+          "InputType": "Number"
+        }
+      ]
+    },
+
+    ///////////////////////////////////////////////////////////////////// 5
 
     {
       // MatFunctions_Basic_Pow
@@ -1089,6 +1274,107 @@
           "Type": "List",
           "Title": "Значение В",
           "Contents": [ "В меньшую стоорону", "В большую сторону", "По математическим правилам" ]
+        }
+      ]
+    },
+
+    {
+      // MatFunctions_Basic_TruncFract
+      "TypeId": 517,
+      "HasInput": true,
+      "HasOutput": false,
+      "InputType": "Calculable",
+      "OutputType": null,
+
+      "Components": [
+        {
+          "Type": "Inscription",
+          "Title": "Разделение значения А",
+          "Formatting": [],
+          "HasInput": false,
+          "HasOutput": false,
+          "InputType": null,
+          "OutputType": null
+        },
+
+        {
+          "Type": "Inscription",
+          "Title": "Целая часть",
+          "Formatting": [],
+          "HasInput": false,
+          "HasOutput": true,
+          "InputType": null,
+          "OutputType": "Calculable"
+        },
+
+        {
+          "Type": "Inscription",
+          "Title": "Дробная часть",
+          "Formatting": [],
+          "HasInput": false,
+          "HasOutput": true,
+          "InputType": null,
+          "OutputType": "Calculable"
+        }
+      ]
+    },
+
+    {
+      // MatFunctions_Basic_Sign
+      "TypeId": 518,
+      "HasInput": false,
+      "HasOutput": true,
+      "InputType": null,
+      "OutputType": "Calculable",
+
+      "Components": [
+        {
+          "Type": "Inscription",
+          "Title": "Знак А",
+          "Formatting": [],
+          "HasInput": false,
+          "HasOutput": false,
+          "InputType": null,
+          "OutputType": null
+        },
+
+        {
+          "Type": "Input",
+          "Title": "Значение A",
+          "Content": "1.0",
+          "IsReadonly": false,
+          "HasInput": true,
+          "InputType": "Calculable"
+        }
+      ]
+    },
+
+    {
+      // MatFunctions_Basic_Invert
+      "TypeId": 519,
+      "HasInput": false,
+      "HasOutput": true,
+      "InputType": null,
+      "OutputType": "Calculable",
+
+      "Components": [
+        {
+          "Type": "Inscription",
+          "Title": "Инвертировать А",
+          "Formatting": [],
+          "HasInput": false,
+          "HasOutput": false,
+          "InputType": null,
+          "OutputType": null
+        },
+
+        {
+          "Type": "Input",
+          "Title": "Значение A",
+          "Content": "1.0",
+          "IsReadonly": false,
+          "HasInput": true,
+          "InputType": "Calculable"
         }
       ]
     },

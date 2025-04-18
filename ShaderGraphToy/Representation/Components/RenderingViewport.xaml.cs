@@ -42,8 +42,8 @@ namespace ShaderGraphToy.Representation.Components
 
             var settings = new GLWpfControlSettings
             {
-                MajorVersion = 3,
-                MinorVersion = 3
+                MajorVersion = 4,
+                MinorVersion = 6
             };
             openTkControl.Start(settings);
         }
