@@ -81,6 +81,7 @@ namespace ShaderGraphToy.Representation.GraphNodes
 
         public Func<List<NodesConnector>>? GetOwnConnectors;
         public Action<object, MouseEventArgs>? RaiseConnectorPressedEvent;
+        public Action? RaiseNodeSizeChangedEvent;
         public Action? HideOperationsCBoxes;
         #endregion
 
@@ -152,7 +153,13 @@ namespace ShaderGraphToy.Representation.GraphNodes
 
             var comps = GraphComponentsFactory.ConstructComponents(compsData!.Components);
             NodeComponents.Clear();
-            foreach (var comp in comps) NodeComponents.Add(comp);
+            foreach (var comp in comps)
+            {
+                if (comp is ColorComponentView colorComp)
+                    colorComp.ComponentSizeChanged += OnComponentSizeChaged;
+
+                NodeComponents.Add(comp);
+            }
 
             // setup all connectors data and id's
             DefineConnectors();
@@ -195,6 +202,11 @@ namespace ShaderGraphToy.Representation.GraphNodes
         public void NodesConnector_MouseDown(object sender, MouseEventArgs e)
         {
             RaiseConnectorPressedEvent?.Invoke(sender, e);
+        }
+
+        private void OnComponentSizeChaged()
+        {
+            RaiseNodeSizeChangedEvent?.Invoke();
         }
     }
 }

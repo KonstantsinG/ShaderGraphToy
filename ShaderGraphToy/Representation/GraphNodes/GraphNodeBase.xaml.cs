@@ -37,13 +37,13 @@ namespace ShaderGraphToy.Representation.GraphNodes
             DataContext = vm;
             vm.GetOwnConnectors = GetConnectors;
             vm.RaiseConnectorPressedEvent = RaiseConnectorPressedEvent;
+            vm.RaiseNodeSizeChangedEvent = RaiseNodeSizeChangedEvent;
             vm.HideOperationsCBoxes = HideOperationsCBoxes;
             operationsCBox.SelectionChanged += vm.OperationsComboBox_SelectionChanged;
             subOperationsCBox.SelectionChanged += vm.SubOperationsComboBox_SelectionChanged;
 
             operationsCBox.SelectionChanged += RaiseNodeStateChangedEvent;
             subOperationsCBox.SelectionChanged += RaiseNodeStateChangedEvent;
-
         }
 
 
@@ -101,6 +101,12 @@ namespace ShaderGraphToy.Representation.GraphNodes
         private void RaiseNodeStateChangedEvent(object sender, SelectionChangedEventArgs e)
         {
             NodeStateChanged.Invoke(this);
+        }
+
+        private void RaiseNodeSizeChangedEvent()
+        {
+            UpdateLayout();
+            NodeSizeChanged.Invoke(this);
         }
 
         private void MinimizeImg_MouseLeftButtonDown(object sender, MouseButtonEventArgs e)

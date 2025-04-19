@@ -3,6 +3,7 @@ using System.ComponentModel;
 using System.Runtime.CompilerServices;
 using System.Windows;
 using System.Windows.Controls;
+using System.Windows.Input;
 
 namespace ShaderGraphToy.Representation.GraphNodes.GraphNodeComponents
 {
@@ -13,6 +14,11 @@ namespace ShaderGraphToy.Representation.GraphNodes.GraphNodeComponents
     {
         public static readonly DependencyProperty ModelProperty = DependencyProperty.Register(
             nameof(Model), typeof(ColorComponent), typeof(ColorComponentView), new PropertyMetadata(null));
+
+
+        public delegate void ComponentStateHandler();
+        public event ComponentStateHandler ComponentSizeChanged = delegate { };
+
 
         public ColorComponent Model
         {
@@ -47,6 +53,9 @@ namespace ShaderGraphToy.Representation.GraphNodes.GraphNodeComponents
         private void Rectangle_MouseLeftButtonDown(object sender, System.Windows.Input.MouseButtonEventArgs e)
         {
             SlidersVisible = !SlidersVisible;
+
+            UpdateLayout();
+            ComponentSizeChanged.Invoke();
         }
     }
 }
