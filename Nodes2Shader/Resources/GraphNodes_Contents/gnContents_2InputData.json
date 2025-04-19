@@ -1,0 +1,95 @@
+﻿{
+  "GraphNodesContents": [
+
+    {
+      // InputData_PixelCoords
+      "TypeId": 21,
+      "HasInput": false,
+      "HasOutput": true,
+      "InputType": null,
+      "OutputType": "Vec2",
+
+      "Components": [
+        {
+          "Type": "Inscription",
+          "Title": "Координаты пикселя X, Y",
+          "Formatting": [ "Centred", "Bold", "Margin" ],
+          "HasInput": false,
+          "HasOutput": false,
+          "InputType": null,
+          "OutputType": null
+        }
+      ]
+    },
+
+    {
+      // InputData_UVCoords
+      "TypeId": 22,
+      "HasInput": false,
+      "HasOutput": true,
+      "InputType": null,
+      "OutputType": "Vec2",
+
+      "Components": [
+        {
+          "Type": "Inscription",
+          "Title": "UV-координаты пикселя",
+          "Formatting": [ "Centred", "Bold", "Margin" ],
+          "HasInput": false,
+          "HasOutput": false,
+          "InputType": null,
+          "OutputType": null
+        },
+
+        {
+          "Type": "List",
+          "Title": "Диапазон",
+          "Contents": [ "[0, 1]", "[-1, 1]" ]
+        }
+      ]
+    },
+
+    {
+      // InputData_MouseCoords
+      "TypeId": 23,
+      "HasInput": false,
+      "HasOutput": true,
+      "InputType": null,
+      "OutputType": "Vec2",
+
+      "Components": [
+        {
+          "Type": "Inscription",
+          "Title": "Координаты курсора X, Y",
+          "Formatting": [ "Centred", "Bold", "Margin" ],
+          "HasInput": false,
+          "HasOutput": false,
+          "InputType": null,
+          "OutputType": null
+        }
+      ]
+    },
+
+    {
+      // InputData_Time
+      "TypeId": 24,
+      "HasInput": false,
+      "HasOutput": true,
+      "InputType": null,
+      "OutputType": "Float",
+
+      "Components": [
+        {
+          "Type": "Inscription",
+          "Title": "Время (в секундах)",
+          "Formatting": [ "Centred", "Bold", "Margin" ],
+          "HasInput": false,
+          "HasOutput": false,
+          "InputType": null,
+          "OutputType": null
+        }
+      ]
+    }
+
+  ]
+}

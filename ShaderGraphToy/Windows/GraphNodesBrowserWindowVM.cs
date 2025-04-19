@@ -101,7 +101,7 @@ namespace ShaderGraphToy.Windows
 
         public GraphNodesBrowserWindowVM()
         {
-            _sourceItems = WrapTreeViewerItems(GraphNodesTypesSerializer.DeserializeAll("ru-RU"));
+            _sourceItems = WrapTreeViewerItems(GraphNodesTypesSerializer.DeserializeAll());
             TreeItems = DeepCopyTreeViewerNodeInfos(_sourceItems!);
         }
 

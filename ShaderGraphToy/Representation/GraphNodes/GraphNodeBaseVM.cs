@@ -147,7 +147,7 @@ namespace ShaderGraphToy.Representation.GraphNodes
 
         public void LoadNodeContent(uint id)
         {
-            var compsData = GraphNodesContentsSerializer.Deserialize("ru-RU", id);
+            var compsData = GraphNodesContentsSerializer.Deserialize(id);
             ContentModel = compsData!;
 
             var comps = GraphComponentsFactory.ConstructComponents(compsData!.Components);
@@ -164,7 +164,7 @@ namespace ShaderGraphToy.Representation.GraphNodes
             string strId = nodeId.ToString();
             uint idFirstPart = uint.Parse(strId[0].ToString());
 
-            GraphNodeType info = GraphNodesTypesSerializer.Deserialize("ru-RU", idFirstPart)!;
+            GraphNodeType info = GraphNodesTypesSerializer.Deserialize(idFirstPart)!;
             NodeModel = info;
 
             if (!info.UsingOperations)

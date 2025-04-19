@@ -1,0 +1,775 @@
+﻿{
+  "GraphNodesContents": [
+
+    {
+      // MatOperations_Basic_Sum
+      "TypeId": 411,
+      "HasInput": false,
+      "HasOutput": true,
+      "InputType": null,
+      "OutputType": "Calculable",
+
+      "Components": [
+        {
+          "Type": "Inscription",
+          "Title": "A + B",
+          "Formatting": [ "Centred", "Bold", "Margin" ],
+          "HasInput": false,
+          "HasOutput": false,
+          "InputType": null,
+          "OutputType": null
+        },
+
+        {
+          "Type": "Input",
+          "Title": "Значение A",
+          "Content": "0.0",
+          "IsReadonly": false,
+          "HasInput": true,
+          "InputType": "Calculable"
+        },
+
+        {
+          "Type": "Input",
+          "Title": "Значение B",
+          "Content": "0.0",
+          "IsReadonly": false,
+          "HasInput": true,
+          "InputType": "Calculable"
+        }
+      ]
+    },
+
+    {
+      // MatOperations_Basic_Sub
+      "TypeId": 412,
+      "HasInput": false,
+      "HasOutput": true,
+      "InputType": null,
+      "OutputType": "Calculable",
+
+      "Components": [
+        {
+          "Type": "Inscription",
+          "Title": "A - B",
+          "Formatting": [ "Centred", "Bold", "Margin" ],
+          "HasInput": false,
+          "HasOutput": false,
+          "InputType": null,
+          "OutputType": null
+        },
+
+        {
+          "Type": "Input",
+          "Title": "Значение A",
+          "Content": "0.0",
+          "IsReadonly": false,
+          "HasInput": true,
+          "InputType": "Calculable"
+        },
+
+        {
+          "Type": "Input",
+          "Title": "Значение B",
+          "Content": "0.0",
+          "IsReadonly": false,
+          "HasInput": true,
+          "InputType": "Calculable"
+        }
+      ]
+    },
+
+    {
+      // MatOperations_Basic_Mul
+      "TypeId": 413,
+      "HasInput": false,
+      "HasOutput": true,
+      "InputType": null,
+      "OutputType": "Calculable",
+
+      "Components": [
+        {
+          "Type": "Inscription",
+          "Title": "A * B",
+          "Formatting": [ "Centred", "Bold", "Margin" ],
+          "HasInput": false,
+          "HasOutput": false,
+          "InputType": null,
+          "OutputType": null
+        },
+
+        {
+          "Type": "Input",
+          "Title": "Значение A",
+          "Content": "0.0",
+          "IsReadonly": false,
+          "HasInput": true,
+          "InputType": "Calculable"
+        },
+
+        {
+          "Type": "Input",
+          "Title": "Значение B",
+          "Content": "0.0",
+          "IsReadonly": false,
+          "HasInput": true,
+          "InputType": "Calculable"
+        }
+      ]
+    },
+
+    {
+      // MatOperations_Basic_Div
+      "TypeId": 414,
+      "HasInput": false,
+      "HasOutput": true,
+      "InputType": null,
+      "OutputType": "Calculable",
+
+      "Components": [
+        {
+          "Type": "Inscription",
+          "Title": "A / B",
+          "Formatting": [ "Centred", "Bold", "Margin" ],
+          "HasInput": false,
+          "HasOutput": false,
+          "InputType": null,
+          "OutputType": null
+        },
+
+        {
+          "Type": "Input",
+          "Title": "Значение A",
+          "Content": "0.0",
+          "IsReadonly": false,
+          "HasInput": true,
+          "InputType": "Calculable"
+        },
+
+        {
+          "Type": "Input",
+          "Title": "Значение B",
+          "Content": "1.0",
+          "IsReadonly": false,
+          "HasInput": true,
+          "InputType": "Calculable"
+        }
+      ]
+    },
+
+    {
+      // MatOperations_Basic_DivRem
+      "TypeId": 415,
+      "HasInput": false,
+      "HasOutput": true,
+      "InputType": null,
+      "OutputType": "Calculable",
+
+      "Components": [
+        {
+          "Type": "Inscription",
+          "Title": "A % B",
+          "Formatting": [ "Centred", "Bold", "Margin" ],
+          "HasInput": false,
+          "HasOutput": false,
+          "InputType": null,
+          "OutputType": null
+        },
+
+        {
+          "Type": "Input",
+          "Title": "Значение A",
+          "Content": "0.0",
+          "IsReadonly": false,
+          "HasInput": true,
+          "InputType": "Number"
+        },
+
+        {
+          "Type": "Input",
+          "Title": "Значение B",
+          "Content": "1.0",
+          "IsReadonly": false,
+          "HasInput": true,
+          "InputType": "Number"
+        }
+      ]
+    },
+
+    ///////////////////////////////////////////////////////////////////// 42
+
+    {
+      // MatOperations_Vectors_Cross
+      "TypeId": 421,
+      "HasInput": false,
+      "HasOutput": true,
+      "InputType": null,
+      "OutputType": "Vec3",
+
+      "Components": [
+        {
+          "Type": "Inscription",
+          "Title": "Векторное произведение A x B",
+          "Formatting": [ "Centred", "Wrapping", "Bold" ],
+          "HasInput": false,
+          "HasOutput": false,
+          "InputType": null,
+          "OutputType": null
+        },
+
+        {
+          "Type": "Inscription",
+          "Title": "Значение A",
+          "Formatting": [],
+          "HasInput": true,
+          "HasOutput": false,
+          "InputType": "Vec3",
+          "OutputType": null
+        },
+
+        {
+          "Type": "Inscription",
+          "Title": "Значение B",
+          "Formatting": [],
+          "HasInput": true,
+          "HasOutput": false,
+          "InputType": "Vec3",
+          "OutputType": null
+        }
+      ]
+    },
+
+    {
+      // MatOperations_Vectors_Dot
+      "TypeId": 422,
+      "HasInput": false,
+      "HasOutput": true,
+      "InputType": null,
+      "OutputType": "Number",
+
+      "Components": [
+        {
+          "Type": "Inscription",
+          "Title": "Скалярное произведение A 🞄 B",
+          "Formatting": [ "Centred", "Bold", "Margin" ],
+          "HasInput": false,
+          "HasOutput": false,
+          "InputType": null,
+          "OutputType": null
+        },
+
+        {
+          "Type": "Inscription",
+          "Title": "Значение A",
+          "Formatting": [],
+          "HasInput": true,
+          "HasOutput": false,
+          "InputType": "VecN",
+          "OutputType": null
+        },
+
+        {
+          "Type": "Inscription",
+          "Title": "Значение B",
+          "Formatting": [],
+          "HasInput": true,
+          "HasOutput": false,
+          "InputType": "VecN",
+          "OutputType": null
+        }
+      ]
+    },
+
+    {
+      // MatOperations_Vectors_VecLen
+      "TypeId": 423,
+      "HasInput": false,
+      "HasOutput": true,
+      "InputType": null,
+      "OutputType": "Number",
+
+      "Components": [
+        {
+          "Type": "Inscription",
+          "Title": "Длина вектора",
+          "Formatting": [ "Centred", "Bold", "Margin" ],
+          "HasInput": false,
+          "HasOutput": false,
+          "InputType": null,
+          "OutputType": null
+        },
+
+        {
+          "Type": "Inscription",
+          "Title": "Значение вектора",
+          "Formatting": [],
+          "HasInput": true,
+          "HasOutput": false,
+          "InputType": "VecN",
+          "OutputType": null
+        }
+      ]
+    },
+
+    {
+      // MatOperations_Vectors_VecNorm
+      "TypeId": 424,
+      "HasInput": false,
+      "HasOutput": true,
+      "InputType": null,
+      "OutputType": "VecN",
+
+      "Components": [
+        {
+          "Type": "Inscription",
+          "Title": "Нормализация вектора",
+          "Formatting": [ "Centred", "Bold", "Margin" ],
+          "HasInput": false,
+          "HasOutput": false,
+          "InputType": null,
+          "OutputType": null
+        },
+
+        {
+          "Type": "Inscription",
+          "Title": "Значение вектора",
+          "Formatting": [],
+          "HasInput": true,
+          "HasOutput": false,
+          "InputType": "VecN",
+          "OutputType": null
+        }
+      ]
+    },
+
+    {
+      // MatOperations_Vectors_VecMatMul
+      "TypeId": 425,
+      "HasInput": false,
+      "HasOutput": true,
+      "InputType": null,
+      "OutputType": "VecN",
+
+      "Components": [
+        {
+          "Type": "Inscription",
+          "Title": "Произведение вектора A на матрицу B",
+          "Formatting": [ "Centred", "Bold", "Margin" ],
+          "HasInput": false,
+          "HasOutput": false,
+          "InputType": null,
+          "OutputType": null
+        },
+
+        {
+          "Type": "Inscription",
+          "Title": "Вектор A",
+          "Formatting": [],
+          "HasInput": true,
+          "HasOutput": false,
+          "InputType": "VecN",
+          "OutputType": null
+        },
+
+        {
+          "Type": "Inscription",
+          "Title": "Матрица B",
+          "Formatting": [],
+          "HasInput": true,
+          "HasOutput": false,
+          "InputType": "MatNxM",
+          "OutputType": null
+        }
+      ]
+    },
+
+    {
+      // MatOperations_Vectors_VecComp
+      "TypeId": 426,
+      "HasInput": false,
+      "HasOutput": true,
+      "InputType": null,
+      "OutputType": "VecN",
+
+      "Components": [
+        {
+          "Type": "Inscription",
+          "Title": "Композиция вектора",
+          "Formatting": [ "Centred", "Bold", "Margin" ],
+          "HasInput": false,
+          "HasOutput": false,
+          "InputType": null,
+          "OutputType": null
+        },
+
+        {
+          "Type": "Inscription",
+          "Title": "x",
+          "Formatting": [],
+          "HasInput": true,
+          "HasOutput": false,
+          "InputType": "Number",
+          "OutputType": null
+        },
+
+        {
+          "Type": "Inscription",
+          "Title": "y",
+          "Formatting": [],
+          "HasInput": true,
+          "HasOutput": false,
+          "InputType": "Number",
+          "OutputType": null
+        },
+
+        {
+          "Type": "Inscription",
+          "Title": "z",
+          "Formatting": [],
+          "HasInput": true,
+          "HasOutput": false,
+          "InputType": "Number",
+          "OutputType": null
+        },
+
+        {
+          "Type": "Inscription",
+          "Title": "w",
+          "Formatting": [],
+          "HasInput": true,
+          "HasOutput": false,
+          "InputType": "Number",
+          "OutputType": null
+        }
+      ]
+    },
+
+    {
+      // MatOperations_Vectors_VecDecomp
+      "TypeId": 427,
+      "HasInput": true,
+      "HasOutput": false,
+      "InputType": "VecN",
+      "OutputType": null,
+
+      "Components": [
+        {
+          "Type": "Inscription",
+          "Title": "Декомпозиция вектора",
+          "Formatting": [ "Centred", "Bold", "Margin" ],
+          "HasInput": false,
+          "HasOutput": false,
+          "InputType": null,
+          "OutputType": null
+        },
+
+        {
+          "Type": "Inscription",
+          "Title": "x",
+          "Formatting": [ "Right" ],
+          "HasInput": false,
+          "HasOutput": true,
+          "InputType": null,
+          "OutputType": "Number"
+        },
+
+        {
+          "Type": "Inscription",
+          "Title": "y",
+          "Formatting": [ "Right" ],
+          "HasInput": false,
+          "HasOutput": true,
+          "InputType": null,
+          "OutputType": "Number"
+        },
+
+        {
+          "Type": "Inscription",
+          "Title": "z",
+          "Formatting": [ "Right" ],
+          "HasInput": false,
+          "HasOutput": true,
+          "InputType": null,
+          "OutputType": "Number"
+        },
+
+        {
+          "Type": "Inscription",
+          "Title": "w",
+          "Formatting": [ "Right" ],
+          "HasInput": false,
+          "HasOutput": true,
+          "InputType": null,
+          "OutputType": "Number"
+        }
+      ]
+    },
+
+    ///////////////////////////////////////////////////////////////////// 43
+
+    {
+      // MatOperations_Matrices_MatMatMul
+      "TypeId": 431,
+      "HasInput": false,
+      "HasOutput": true,
+      "InputType": null,
+      "OutputType": "MatNxM",
+
+      "Components": [
+        {
+          "Type": "Inscription",
+          "Title": "Произведение матриц A и B",
+          "Formatting": [ "Centred", "Bold", "Margin" ],
+          "HasInput": false,
+          "HasOutput": false,
+          "InputType": null,
+          "OutputType": null
+        },
+
+        {
+          "Type": "Inscription",
+          "Title": "Матрица A",
+          "Formatting": [],
+          "HasInput": true,
+          "HasOutput": false,
+          "InputType": "MatNxM",
+          "OutputType": null
+        },
+
+        {
+          "Type": "Inscription",
+          "Title": "Матрица B",
+          "Formatting": [],
+          "HasInput": true,
+          "HasOutput": false,
+          "InputType": "MatNxM",
+          "OutputType": null
+        }
+      ]
+    },
+
+    {
+      // MatOperations_Matrices_MatDet
+      "TypeId": 432,
+      "HasInput": false,
+      "HasOutput": true,
+      "InputType": null,
+      "OutputType": "Number",
+
+      "Components": [
+        {
+          "Type": "Inscription",
+          "Title": "Определитель матрицы",
+          "Formatting": [ "Centred", "Bold", "Margin" ],
+          "HasInput": false,
+          "HasOutput": false,
+          "InputType": null,
+          "OutputType": null
+        },
+
+        {
+          "Type": "Inscription",
+          "Title": "Значение матрицы",
+          "Formatting": [],
+          "HasInput": true,
+          "HasOutput": false,
+          "InputType": "MatN",
+          "OutputType": null
+        }
+      ]
+    },
+
+    {
+      // MatOperations_Matrices_MatTransp
+      "TypeId": 433,
+      "HasInput": false,
+      "HasOutput": true,
+      "InputType": null,
+      "OutputType": "MatNxM",
+
+      "Components": [
+        {
+          "Type": "Inscription",
+          "Title": "Транспонирование матрицы",
+          "Formatting": [ "Centred", "Bold", "Margin" ],
+          "HasInput": false,
+          "HasOutput": false,
+          "InputType": null,
+          "OutputType": null
+        },
+
+        {
+          "Type": "Inscription",
+          "Title": "Значение матрицы",
+          "Formatting": [],
+          "HasInput": true,
+          "HasOutput": false,
+          "InputType": "MatNxM",
+          "OutputType": null
+        }
+      ]
+    },
+
+    {
+      // MatOperations_Matrices_MatComp
+      "TypeId": 434,
+      "HasInput": false,
+      "HasOutput": true,
+      "InputType": null,
+      "OutputType": "MatNxM",
+
+      "Components": [
+        {
+          "Type": "Inscription",
+          "Title": "Композиция матрицы",
+          "Formatting": [ "Centred", "Bold", "Margin" ],
+          "HasInput": false,
+          "HasOutput": false,
+          "InputType": null,
+          "OutputType": null
+        },
+
+        {
+          "Type": "Inscription",
+          "Title": "Строка 1",
+          "Formatting": [],
+          "HasInput": true,
+          "HasOutput": false,
+          "InputType": "VecN",
+          "OutputType": null
+        },
+
+        {
+          "Type": "Inscription",
+          "Title": "Строка 2",
+          "Formatting": [],
+          "HasInput": true,
+          "HasOutput": false,
+          "InputType": "VecN",
+          "OutputType": null
+        },
+
+        {
+          "Type": "Inscription",
+          "Title": "Строка 3",
+          "Formatting": [],
+          "HasInput": true,
+          "HasOutput": false,
+          "InputType": "VecN",
+          "OutputType": null
+        },
+
+        {
+          "Type": "Inscription",
+          "Title": "Строка 4",
+          "Formatting": [],
+          "HasInput": true,
+          "HasOutput": false,
+          "InputType": "VecN",
+          "OutputType": null
+        }
+      ]
+    },
+
+    {
+      // MatOperations_Matrices_MatDecomp
+      "TypeId": 435,
+      "HasInput": true,
+      "HasOutput": false,
+      "InputType": "MatNxM",
+      "OutputType": null,
+
+      "Components": [
+        {
+          "Type": "Inscription",
+          "Title": "Декомпозиция матрицы",
+          "Formatting": [ "Centred", "Bold", "Margin" ],
+          "HasInput": false,
+          "HasOutput": false,
+          "InputType": null,
+          "OutputType": null
+        },
+
+        {
+          "Type": "Inscription",
+          "Title": "Строка 1",
+          "Formatting": [ "Right" ],
+          "HasInput": false,
+          "HasOutput": true,
+          "InputType": null,
+          "OutputType": "VecN"
+        },
+
+        {
+          "Type": "Inscription",
+          "Title": "Строка 2",
+          "Formatting": [ "Right" ],
+          "HasInput": false,
+          "HasOutput": true,
+          "InputType": null,
+          "OutputType": "VecN"
+        },
+
+        {
+          "Type": "Inscription",
+          "Title": "Строка 3",
+          "Formatting": [ "Right" ],
+          "HasInput": false,
+          "HasOutput": true,
+          "InputType": null,
+          "OutputType": "VecN"
+        },
+
+        {
+          "Type": "Inscription",
+          "Title": "Строка 4",
+          "Formatting": [ "Right" ],
+          "HasInput": false,
+          "HasOutput": true,
+          "InputType": null,
+          "OutputType": "VecN"
+        }
+      ]
+    },
+
+    {
+      // MatOperations_Matrices_MatEl
+      "TypeId": 436,
+      "HasInput": false,
+      "HasOutput": true,
+      "InputType": null,
+      "OutputType": "Number",
+
+      "Components": [
+        {
+          "Type": "Inscription",
+          "Title": "Элемент матрицы",
+          "Formatting": [ "Centred", "Bold", "Margin" ],
+          "HasInput": false,
+          "HasOutput": false,
+          "InputType": null,
+          "OutputType": null
+        },
+
+        {
+          "Type": "Input",
+          "Title": "Строка",
+          "Content": "0",
+          "IsReadonly": false,
+          "HasInput": true,
+          "InputType": "Number"
+        },
+
+        {
+          "Type": "Input",
+          "Title": "Столбец",
+          "Content": "0",
+          "IsReadonly": false,
+          "HasInput": true,
+          "InputType": "Number"
+        }
+      ]
+    }
+
+  ]
+}

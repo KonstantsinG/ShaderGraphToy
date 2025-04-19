@@ -8,15 +8,21 @@ namespace ShaderGraphToy.Resources
 {
     internal static class ResourceManager
     {
+        public static string AppName { get; private set; } = "ShaderGraphToy";
+        public static string DataPath { get; private set; } = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData), AppName);
+        public static string BitmapsPath { get; private set; } = Path.Combine(DataPath, "bitmaps");
+        public static string LogsPath { get; private set; } = Path.Combine(DataPath, "logs");
+
+
         internal static bool IsCacheExists(string path)
         {
-            string folder = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData), "ShaderGraphToy");
+            string folder = DataPath;
             return File.Exists(Path.Combine(folder, path));
         }
 
         internal static void SaveBitmapToCache(WriteableBitmap bitmap, string file)
         {
-            string folder = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData), "ShaderGraphToy", "bitmaps");
+            string folder = BitmapsPath;
             if (!Directory.Exists(folder)) Directory.CreateDirectory(folder);
 
             BitmapEncoder encoder = new PngBitmapEncoder();
@@ -30,7 +36,7 @@ namespace ShaderGraphToy.Resources
         {
             BitmapImage bitmap = new();
             bitmap.BeginInit();
-            bitmap.UriSource = new Uri(Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData), "ShaderGraphToy", "bitmaps", name), UriKind.Absolute);
+            bitmap.UriSource = new Uri(Path.Combine(BitmapsPath, name), UriKind.Absolute);
             bitmap.CacheOption = BitmapCacheOption.OnLoad;
             bitmap.CreateOptions = BitmapCreateOptions.IgnoreColorProfile;
             bitmap.EndInit();

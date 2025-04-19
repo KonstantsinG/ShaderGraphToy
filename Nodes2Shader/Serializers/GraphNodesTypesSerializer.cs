@@ -7,7 +7,7 @@ namespace Nodes2Shader.Serializers
 {
     public static class GraphNodesTypesSerializer
     {
-        public static List<GraphNodeType> DeserializeAll(string lang)
+        public static List<GraphNodeType> DeserializeAll()
         {
             if (CacheManager.GraphNodeTypesAvailable)
                 return CacheManager.GraphNodeTypes;
@@ -18,7 +18,7 @@ namespace Nodes2Shader.Serializers
                 NullValueHandling = NullValueHandling.Ignore
             };
 
-            var json = ResourceManager.GetGrahNodesTypesInfoResource(lang);
+            var json = ResourceManager.GetGrahNodesTypesInfoResource();
             var intermediateData = JsonConvert.DeserializeObject<GraphNodesTypesContainer>(json, settings);
 
             var types = ConvertToDomainModel(intermediateData!);
@@ -27,12 +27,12 @@ namespace Nodes2Shader.Serializers
             return types;
         }
 
-        public static GraphNodeType? Deserialize(string lang, uint typeId)
+        public static GraphNodeType? Deserialize(uint typeId)
         {
             if (CacheManager.GraphNodeTypesAvailable)
                 return CacheManager.GraphNodeTypes.FirstOrDefault(t => t.Id == typeId);
 
-            var json = ResourceManager.GetGrahNodesTypesInfoResource(lang);
+            var json = ResourceManager.GetGrahNodesTypesInfoResource();
 
             using var stringReader = new StringReader(json);
             using var jsonReader = new JsonTextReader(stringReader);

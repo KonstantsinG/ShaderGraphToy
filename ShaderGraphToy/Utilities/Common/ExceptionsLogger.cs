@@ -1,4 +1,5 @@
-﻿using System.IO;
+﻿using ShaderGraphToy.Resources;
+using System.IO;
 using System.Text;
 
 namespace ShaderGraphToy.Utilities.Common
@@ -11,7 +12,8 @@ namespace ShaderGraphToy.Utilities.Common
         static ExceptionsLogger()
         {
             _logName = $"logs_{DateTime.Now:yyyy-MM-dd}.log";
-            _logPath = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData), "ShaderGraphToy", "logs");
+            _logPath = ResourceManager.LogsPath;
+
             if (!Directory.Exists(_logPath)) Directory.CreateDirectory(_logPath);
             _logPath = Path.Combine(_logPath, _logName);
         }

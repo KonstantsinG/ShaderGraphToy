@@ -1,0 +1,36 @@
+﻿{
+  "GraphNodesContents": [
+
+    {
+      // OutputData
+      "TypeId": 3,
+      "HasInput": false,
+      "HasOutput": false,
+      "InputType": null,
+      "OutputType": null,
+
+      "Components": [
+        {
+          "Type": "Inscription",
+          "Title": "Цвет RGBA",
+          "Formatting": [],
+          "HasInput": true,
+          "HasOutput": false,
+          "InputType": "VecN",
+          "OutputType": null
+        },
+
+        {
+          "Type": "Inscription",
+          "Title": "Непрозрачность",
+          "Formatting": [],
+          "HasInput": true,
+          "HasOutput": false,
+          "InputType": "Number",
+          "OutputType": null
+        }
+      ]
+    }
+
+  ]
+}

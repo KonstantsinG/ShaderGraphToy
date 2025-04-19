@@ -1,0 +1,220 @@
+﻿{
+  "GraphNodesContents": [
+
+    {
+      // Constant_UserConstant_Number
+      "TypeId": 111,
+      "HasInput": false,
+      "HasOutput": true,
+      "InputType": null,
+      "OutputType": "Number",
+
+      "Components": [
+        {
+          "Type": "Input",
+          "Title": "Значение",
+          "Content": "0.0",
+          "IsReadonly": false,
+          "HasInput": false,
+          "InputType": null
+        }
+      ]
+    },
+
+    {
+      // Constant_UserConstant_Vector
+      "TypeId": 112,
+      "HasInput": false,
+      "HasOutput": true,
+      "InputType": null,
+      "OutputType": "VecN",
+
+      "Components": [
+        {
+          "Type": "Vector",
+          "Title": "Определение вектора",
+          "Contents": [],
+          "IsReadonly": false,
+          "IsControlable": true
+        }
+      ]
+    },
+
+    {
+      // Constant_UserConstant_Matrix
+      "TypeId": 113,
+      "HasInput": false,
+      "HasOutput": true,
+      "InputType": null,
+      "OutputType": "MatNxM",
+
+      "Components": [
+        {
+          "Type": "Matrix",
+          "Title": "Определение матрицы",
+          "Contents": [],
+          "IsReadonly": false,
+          "IsControlable": true
+        }
+      ]
+    },
+
+    {
+      // Constant_UserConstant_Color
+      "TypeId": 114,
+      "HasInput": false,
+      "HasOutput": true,
+      "InputType": null,
+      "OutputType": "Vec4",
+
+      "Components": [
+        {
+          "Type": "Color",
+          "Title": "Значение цвета",
+          "Content": null
+        }
+      ]
+    },
+
+    ///////////////////////////////////////////////////////////////////// 12
+
+    {
+      // Constant_SpecialConstant_PI
+      "TypeId": 121,
+      "HasInput": false,
+      "HasOutput": true,
+      "InputType": null,
+      "OutputType": "Float",
+
+      "Components": [
+        {
+          "Type": "Input",
+          "Title": "Число Пи",
+          "Content": "3.1415926535",
+          "IsReadonly": true,
+          "HasInput": false,
+          "InputType": null
+        }
+      ]
+    },
+
+    {
+      // Constant_SpecialConstant_PHI
+      "TypeId": 122,
+      "HasInput": false,
+      "HasOutput": true,
+      "InputType": null,
+      "OutputType": "Float",
+
+      "Components": [
+        {
+          "Type": "Input",
+          "Title": "Число Фи",
+          "Content": "1.6180339887",
+          "IsReadonly": true,
+          "HasInput": false,
+          "InputType": null
+        }
+      ]
+    },
+
+    {
+      // Constant_SpecialConstant_EXP
+      "TypeId": 123,
+      "HasInput": false,
+      "HasOutput": true,
+      "InputType": null,
+      "OutputType": "Float",
+
+      "Components": [
+        {
+          "Type": "Input",
+          "Title": "Экспонента",
+          "Content": "2.7182818284",
+          "IsReadonly": true,
+          "HasInput": false,
+          "InputType": null
+        }
+      ]
+    },
+
+    {
+      // Constant_SpecialConstant_RotationMatrix2D
+      "TypeId": 124,
+      "HasInput": false,
+      "HasOutput": true,
+      "InputType": null,
+      "OutputType": "Mat2",
+
+      "Components": [
+        {
+          "Type": "Inscription",
+          "Title": "Поворотная матрица 2D",
+          "Formatting": [ "Centred", "Bold", "Margin" ],
+          "HasInput": false,
+          "HasOutput": false,
+          "InputType": null,
+          "OutputType": null
+        },
+
+        {
+          "Type": "Input",
+          "Title": "Угол поворота",
+          "Content": "0.523599",
+          "IsReadonly": false,
+          "HasInput": true,
+          "InputType": "Number"
+        }
+      ]
+    },
+
+    {
+      // Constant_SpecialConstant_RotationMatrix3D
+      "TypeId": 125,
+      "HasInput": false,
+      "HasOutput": true,
+      "InputType": null,
+      "OutputType": "Mat3",
+
+      "Components": [
+        {
+          "Type": "Inscription",
+          "Title": "Поворотная матрица 3D",
+          "Formatting": [ "Centred", "Bold", "Margin" ],
+          "HasInput": false,
+          "HasOutput": false,
+          "InputType": null,
+          "OutputType": null
+        },
+
+        {
+          "Type": "Input",
+          "Title": "Угол поворота по оси X",
+          "Content": "0.523599",
+          "IsReadonly": false,
+          "HasInput": true,
+          "InputType": "Number"
+        },
+
+        {
+          "Type": "Input",
+          "Title": "Угол поворота по оси Y",
+          "Content": "0.0",
+          "IsReadonly": false,
+          "HasInput": true,
+          "InputType": "Number"
+        },
+
+        {
+          "Type": "Input",
+          "Title": "Угол поворота по оси Z",
+          "Content": "-0.523599",
+          "IsReadonly": false,
+          "HasInput": true,
+          "InputType": "Number"
+        }
+      ]
+    }
+
+  ]
+}

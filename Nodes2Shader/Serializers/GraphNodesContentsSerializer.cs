@@ -10,7 +10,7 @@ namespace Nodes2Shader.Serializers
 {
     public static class GraphNodesContentsSerializer
     {
-        public static List<GraphNodeContent> DeserializeAll(string lang)
+        public static List<GraphNodeContent> DeserializeAll()
         {
             var settings = new JsonSerializerSettings
             {
@@ -19,15 +19,23 @@ namespace Nodes2Shader.Serializers
                 Converters = [ new NodeComponentConverter() ]
             };
 
-            var json = ResourceManager.GetGrahNodesContentsResource(lang);
-            var container = JsonConvert.DeserializeObject<GraphNodesContentsContainer>(json, settings);
+            List<GraphNodeContent> data = [];
+            GraphNodesContentsContainer? container = null;
+            String? json= null;
 
-            return ConvertToDomainModel(container!);
+            foreach (string id in ResourceManager.GraphNodesContentsIds)
+            {
+                json = ResourceManager.GetGrahNodesContentsResource(id);
+                container = JsonConvert.DeserializeObject<GraphNodesContentsContainer>(json, settings)!;
+                data.AddRange(ConvertToDomainModel(container!));
+            }
+
+            return data;
         }
 
-        public static GraphNodeContent? Deserialize(string lang, uint typeId)
+        public static GraphNodeContent? Deserialize(uint typeId)
         {
-            var json = ResourceManager.GetGrahNodesContentsResource(lang);
+            var json = ResourceManager.GetGrahNodesContentsResource(typeId.ToString()[0].ToString());
 
             using (var stringReader = new StringReader(json))
             using (var jsonReader = new JsonTextReader(stringReader))

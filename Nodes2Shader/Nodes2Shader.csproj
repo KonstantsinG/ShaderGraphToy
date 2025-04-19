@@ -9,10 +9,20 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <EmbeddedResource Include="Resources\GraphNodes_TypesInfo\gnTypes_ru-RU.json">
-      <CopyToOutputDirectory>Never</CopyToOutputDirectory>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Resources\GraphNodes_Contents\gnContents_ru-RU.json">
+    <None Remove="Resources\GraphNodes_Contents\gnContents_1Constant.json" />
+    <None Remove="Resources\GraphNodes_Contents\gnContents_2InputData.json" />
+    <None Remove="Resources\GraphNodes_Contents\gnContents_3OutputData.json" />
+    <None Remove="Resources\GraphNodes_Contents\gnContents_4MathOperations.json" />
+    <None Remove="Resources\GraphNodes_Contents\gnContents_5MathFunctions.json" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <EmbeddedResource Include="Resources\GraphNodes_Contents\gnContents_1Constant.json" />
+    <EmbeddedResource Include="Resources\GraphNodes_Contents\gnContents_2InputData.json" />
+    <EmbeddedResource Include="Resources\GraphNodes_Contents\gnContents_3OutputData.json" />
+    <EmbeddedResource Include="Resources\GraphNodes_Contents\gnContents_4MathOperations.json" />
+    <EmbeddedResource Include="Resources\GraphNodes_Contents\gnContents_5MathFunctions.json" />
+    <EmbeddedResource Include="Resources\GraphNodes_TypesInfo\gnTypes.json">
       <CopyToOutputDirectory>Never</CopyToOutputDirectory>
     </EmbeddedResource>
   </ItemGroup>
