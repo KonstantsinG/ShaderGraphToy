@@ -8,7 +8,7 @@ namespace Nodes2Shader.GraphNodesImplementation.Components
         public List<string> Formatting { get; set; } = [];
         public required bool HasInput { get; set; }
         public required bool HasOutput { get; set; }
-        public required DataType? InputType { get; set; }
-        public required DataType? OutputType { get; set; }
+        public required string InputType { get; set; }
+        public required string OutputType { get; set; }
     }
 }

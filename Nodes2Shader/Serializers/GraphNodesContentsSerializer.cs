@@ -80,8 +80,8 @@ namespace Nodes2Shader.Serializers
                 Id = intermediateContent!.TypeId,
                 HasInput = intermediateContent.HasInput,
                 HasOutput = intermediateContent.HasOutput,
-                InputType = intermediateContent.InputType != null ? CreateDataTypeInstance(intermediateContent.InputType) : null,
-                OutputType = intermediateContent.OutputType != null ? CreateDataTypeInstance(intermediateContent.OutputType) : null,
+                InputType = intermediateContent.InputType,
+                OutputType = intermediateContent.OutputType,
                 Components = intermediateContent.Components
             };
         }
@@ -97,8 +97,8 @@ namespace Nodes2Shader.Serializers
                     Id = content.TypeId,
                     HasInput = content.HasInput,
                     HasOutput = content.HasOutput,
-                    InputType = content.InputType != null ? CreateDataTypeInstance(content.InputType) : null,
-                    OutputType = content.OutputType != null ? CreateDataTypeInstance(content.OutputType) : null,
+                    InputType = content.InputType,
+                    OutputType = content.OutputType,
                     Components = content.Components
                 };
 
@@ -106,15 +106,6 @@ namespace Nodes2Shader.Serializers
             }
 
             return result;
-        }
-
-        private static DataType CreateDataTypeInstance(string typeName)
-        {
-            var type = Assembly.GetAssembly(typeof(DataType))?
-                .GetTypes()
-                .FirstOrDefault(t => t.Name == typeName && t.IsSubclassOf(typeof(DataType)));
-
-            return (DataType)Activator.CreateInstance(type!)! ?? throw new JsonSerializationException($"Unknown data type: {typeName}"); ;
         }
 
         private class NodeComponentConverter : JsonConverter<INodeComponent>
@@ -131,8 +122,7 @@ namespace Nodes2Shader.Serializers
                         Title = jo["Title"]!.Value<string>()!,
                         IsReadonly = jo["IsReadonly"]!.Value<bool>(),
                         HasInput = jo["HasInput"]!.Value<bool>(),
-                        InputType = jo["InputType"]?.Value<string>() != null ?
-                            CreateDataTypeInstance(jo["InputType"]!.Value<string>()!) : null
+                        InputType = (jo["InputType"]?.Value<string>()) ?? string.Empty
                     },
                     "Vector" => new VectorComponent
                     {
@@ -163,10 +153,8 @@ namespace Nodes2Shader.Serializers
                         Title = jo["Title"]!.Value<string>()!,
                         HasInput = jo["HasInput"]!.Value<bool>(),
                         HasOutput = jo["HasOutput"]!.Value<bool>(),
-                        InputType = jo["InputType"]?.Value<string>() != null ?
-                            CreateDataTypeInstance(jo["InputType"]!.Value<string>()!) : null,
-                        OutputType = jo["OutputType"]?.Value<string>() != null ?
-                            CreateDataTypeInstance(jo["OutputType"]!.Value<string>()!) : null
+                        InputType = (jo["InputType"]?.Value<string>()) ?? string.Empty,
+                        OutputType = (jo["OutputType"]?.Value<string>()) ?? string.Empty
                     },
                     _ => throw new JsonSerializationException($"Unknown component type: {type}")
                 };
@@ -198,8 +186,8 @@ namespace Nodes2Shader.Serializers
             public required uint TypeId { get; set; }
             public required bool HasInput { get; set; }
             public required bool HasOutput { get; set; }
-            public required string? InputType { get; set; }
-            public required string? OutputType { get; set; }
+            public required string InputType { get; set; }
+            public required string OutputType { get; set; }
             public required List<INodeComponent> Components { get; set; }
         }
     }

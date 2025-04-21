@@ -81,7 +81,7 @@
       "Components": [
         {
           "Type": "Inscription",
-          "Title": "Время (в секундах)",
+          "Title": "Время (в миллисекундах)",
           "Formatting": [ "Centred", "Bold", "Margin" ],
           "HasInput": false,
           "HasOutput": false,

@@ -7,7 +7,7 @@
       "HasInput": false,
       "HasOutput": true,
       "InputType": null,
-      "OutputType": "Number",
+      "OutputType": "Float",
 
       "Components": [
         {
@@ -27,7 +27,7 @@
       "HasInput": false,
       "HasOutput": true,
       "InputType": null,
-      "OutputType": "VecN",
+      "OutputType": "Vec",
 
       "Components": [
         {
@@ -46,7 +46,7 @@
       "HasInput": false,
       "HasOutput": true,
       "InputType": null,
-      "OutputType": "MatNxM",
+      "OutputType": "Mat",
 
       "Components": [
         {
@@ -163,7 +163,7 @@
           "Content": "0.523599",
           "IsReadonly": false,
           "HasInput": true,
-          "InputType": "Number"
+          "InputType": "Float"
         }
       ]
     },
@@ -193,7 +193,7 @@
           "Content": "0.523599",
           "IsReadonly": false,
           "HasInput": true,
-          "InputType": "Number"
+          "InputType": "Float"
         },
 
         {
@@ -202,7 +202,7 @@
           "Content": "0.0",
           "IsReadonly": false,
           "HasInput": true,
-          "InputType": "Number"
+          "InputType": "Float"
         },
 
         {
@@ -211,7 +211,7 @@
           "Content": "-0.523599",
           "IsReadonly": false,
           "HasInput": true,
-          "InputType": "Number"
+          "InputType": "Float"
         }
       ]
     }

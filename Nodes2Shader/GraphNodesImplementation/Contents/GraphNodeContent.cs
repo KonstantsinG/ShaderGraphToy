@@ -8,8 +8,8 @@ namespace Nodes2Shader.GraphNodesImplementation.Contents
         public required uint Id { get; set; }
         public required bool HasInput { get; set; }
         public required bool HasOutput { get; set; }
-        public required DataType? InputType { get; set; }
-        public required DataType? OutputType { get; set; }
+        public required string InputType { get; set; }
+        public required string OutputType { get; set; }
         public required List<INodeComponent> Components { get; set; }
     }
 }
