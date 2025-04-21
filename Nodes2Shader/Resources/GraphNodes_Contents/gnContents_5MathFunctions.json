@@ -4,6 +4,7 @@
     {
       // MatFunctions_Basic_Pow
       "TypeId": 511,
+      "Name": "matfPow",
       "HasInput": false,
       "HasOutput": true,
       "InputType": null,
@@ -43,6 +44,7 @@
     {
       // MatFunctions_Basic_Exp
       "TypeId": 512,
+      "Name": "matfExp",
       "HasInput": false,
       "HasOutput": true,
       "InputType": null,
@@ -73,6 +75,7 @@
     {
       // MatFunctions_Basic_Log
       "TypeId": 513,
+      "Name": "matfLog",
       "HasInput": false,
       "HasOutput": true,
       "InputType": null,
@@ -109,6 +112,7 @@
     {
       // MatFunctions_Basic_Sqrt
       "TypeId": 514,
+      "Name": "matfSqrt",
       "HasInput": false,
       "HasOutput": true,
       "InputType": null,
@@ -139,6 +143,7 @@
     {
       // MatFunctions_Basic_Abs
       "TypeId": 515,
+      "Name": "matfAbs",
       "HasInput": false,
       "HasOutput": true,
       "InputType": null,
@@ -169,6 +174,7 @@
     {
       // MatFunctions_Basic_Round
       "TypeId": 516,
+      "Name": "matfRound",
       "HasInput": false,
       "HasOutput": true,
       "InputType": null,
@@ -205,6 +211,7 @@
     {
       // MatFunctions_Basic_TruncFract
       "TypeId": 517,
+      "Name": "matfTruncFract",
       "HasInput": true,
       "HasOutput": false,
       "InputType": "Any",
@@ -246,6 +253,7 @@
     {
       // MatFunctions_Basic_Sign
       "TypeId": 518,
+      "Name": "matfSign",
       "HasInput": false,
       "HasOutput": true,
       "InputType": null,
@@ -276,6 +284,7 @@
     {
       // MatFunctions_Basic_Invert
       "TypeId": 519,
+      "Name": "matfInvert",
       "HasInput": false,
       "HasOutput": true,
       "InputType": null,
@@ -308,6 +317,7 @@
     {
       // MatFunctions_Extended_MinMax
       "TypeId": 521,
+      "Name": "matfMinMax",
       "HasInput": false,
       "HasOutput": true,
       "InputType": null,
@@ -353,6 +363,7 @@
     {
       // MatFunctions_Extended_Step
       "TypeId": 522,
+      "Name": "matfStep",
       "HasInput": false,
       "HasOutput": true,
       "InputType": null,
@@ -392,6 +403,7 @@
     {
       // MatFunctions_Extended_Smoothstep
       "TypeId": 523,
+      "Name": "matfSmoothstep",
       "HasInput": false,
       "HasOutput": true,
       "InputType": null,
@@ -440,6 +452,7 @@
     {
       // MatFunctions_Extended_Mix
       "TypeId": 524,
+      "Name": "matfMix",
       "HasInput": false,
       "HasOutput": true,
       "InputType": null,
@@ -488,6 +501,7 @@
     {
       // MatFunctions_Extended_Clamp
       "TypeId": 525,
+      "Name": "matfClamp",
       "HasInput": false,
       "HasOutput": true,
       "InputType": null,
@@ -536,6 +550,7 @@
     {
       // MatFunctions_Extended_Remap
       "TypeId": 526,
+      "Name": "matfRemap",
       "HasInput": false,
       "HasOutput": true,
       "InputType": null,
@@ -604,6 +619,7 @@
     {
       // MatFunctions_Trigonometry_Basic
       "TypeId": 531,
+      "Name": "matfTrigBasic",
       "HasInput": false,
       "HasOutput": true,
       "InputType": null,
@@ -640,6 +656,7 @@
     {
       // MatFunctions_Trigonometry_Arc
       "TypeId": 532,
+      "Name": "matfTrigArc",
       "HasInput": false,
       "HasOutput": true,
       "InputType": null,
@@ -676,6 +693,7 @@
     {
       // MatFunctions_Trigonometry_Hyper
       "TypeId": 533,
+      "Name": "matfTrigHyp",
       "HasInput": false,
       "HasOutput": true,
       "InputType": null,
@@ -712,6 +730,7 @@
     {
       // MatFunctions_Trigonometry_ArcHyper
       "TypeId": 534,
+      "Name": "matfTrigArcHyp",
       "HasInput": false,
       "HasOutput": true,
       "InputType": null,
@@ -748,6 +767,7 @@
     {
       // MatFunctions_Trigonometry_DegRad
       "TypeId": 535,
+      "Name": "matfDegRad",
       "HasInput": false,
       "HasOutput": true,
       "InputType": null,

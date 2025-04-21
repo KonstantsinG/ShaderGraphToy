@@ -6,6 +6,8 @@ namespace Nodes2Shader.GraphNodesImplementation.Contents
     public class GraphNodeContent
     {
         public required uint Id { get; set; }
+
+        public required string Name { get; set; }
         public required bool HasInput { get; set; }
         public required bool HasOutput { get; set; }
         public required string InputType { get; set; }

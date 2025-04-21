@@ -20,13 +20,13 @@ namespace Nodes2Shader.DataTypes
         Sampler2D,
 
         //GENERIC
+        Vec, // all vector types
+        Mat, // all matrix types
+
         GenType, // Float, Vec2, Vec3, Vec4,
         GenIType, // Int, IVec2, IVec3, IVec4
         GenBType, // Bool, BVec2, BVec3, BVec4
-        Any, // GenType, GenIType, GenBType, Mat
-
-        Vec, // all vector types
-        Mat // all matrix types
+        Any // GenType, GenIType, GenBType, Mat
     }
 
     public enum ConversionResult

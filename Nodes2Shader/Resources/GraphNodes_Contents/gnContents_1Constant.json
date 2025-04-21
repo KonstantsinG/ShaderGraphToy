@@ -4,6 +4,7 @@
     {
       // Constant_UserConstant_Number
       "TypeId": 111,
+      "Name": "numConst",
       "HasInput": false,
       "HasOutput": true,
       "InputType": null,
@@ -24,6 +25,7 @@
     {
       // Constant_UserConstant_Vector
       "TypeId": 112,
+      "Name": "vecConst",
       "HasInput": false,
       "HasOutput": true,
       "InputType": null,
@@ -43,6 +45,7 @@
     {
       // Constant_UserConstant_Matrix
       "TypeId": 113,
+      "Name": "matConst",
       "HasInput": false,
       "HasOutput": true,
       "InputType": null,
@@ -62,6 +65,7 @@
     {
       // Constant_UserConstant_Color
       "TypeId": 114,
+      "Name": "colConst",
       "HasInput": false,
       "HasOutput": true,
       "InputType": null,
@@ -81,6 +85,7 @@
     {
       // Constant_SpecialConstant_PI
       "TypeId": 121,
+      "Name": "piConst",
       "HasInput": false,
       "HasOutput": true,
       "InputType": null,
@@ -101,6 +106,7 @@
     {
       // Constant_SpecialConstant_PHI
       "TypeId": 122,
+      "Name": "phiConst",
       "HasInput": false,
       "HasOutput": true,
       "InputType": null,
@@ -121,6 +127,7 @@
     {
       // Constant_SpecialConstant_EXP
       "TypeId": 123,
+      "Name": "expConst",
       "HasInput": false,
       "HasOutput": true,
       "InputType": null,
@@ -141,6 +148,7 @@
     {
       // Constant_SpecialConstant_RotationMatrix2D
       "TypeId": 124,
+      "Name": "rot2Const",
       "HasInput": false,
       "HasOutput": true,
       "InputType": null,
@@ -171,6 +179,7 @@
     {
       // Constant_SpecialConstant_RotationMatrix3D
       "TypeId": 125,
+      "Name": "rot3Const",
       "HasInput": false,
       "HasOutput": true,
       "InputType": null,

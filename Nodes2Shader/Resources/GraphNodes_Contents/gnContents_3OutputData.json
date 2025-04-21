@@ -4,6 +4,7 @@
     {
       // OutputData
       "TypeId": 3,
+      "Name": "outData",
       "HasInput": false,
       "HasOutput": false,
       "InputType": null,

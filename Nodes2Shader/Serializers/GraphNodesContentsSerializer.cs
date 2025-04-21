@@ -78,6 +78,7 @@ namespace Nodes2Shader.Serializers
             return new GraphNodeContent
             {
                 Id = intermediateContent!.TypeId,
+                Name = intermediateContent!.Name,
                 HasInput = intermediateContent.HasInput,
                 HasOutput = intermediateContent.HasOutput,
                 InputType = intermediateContent.InputType,
@@ -95,6 +96,7 @@ namespace Nodes2Shader.Serializers
                 var nodeContent = new GraphNodeContent
                 {
                     Id = content.TypeId,
+                    Name = content.Name,
                     HasInput = content.HasInput,
                     HasOutput = content.HasOutput,
                     InputType = content.InputType,
@@ -184,6 +186,7 @@ namespace Nodes2Shader.Serializers
         private class IntermediateGraphNodeContent
         {
             public required uint TypeId { get; set; }
+            public required string Name { get; set; }
             public required bool HasInput { get; set; }
             public required bool HasOutput { get; set; }
             public required string InputType { get; set; }
