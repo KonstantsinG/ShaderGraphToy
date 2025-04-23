@@ -1,0 +1,218 @@
+﻿{
+  "GraphNodesExpressions": [
+
+    {
+      // Constant_UserConstant_Number
+      "TypeId": 111,
+      "Name": "numConst<idx>",
+      "ExpressionVariants": [
+        {
+          "Variant": 0,
+          "InputTypes": [],
+          "Expression": "const float <name> = <val1>;",
+          "ExternalFunctions": []
+        }
+      ]
+    },
+
+    {
+      // Constant_UserConstant_Vector
+      "TypeId": 112,
+      "Name": "vecConst<idx>",
+      "ExpressionVariants": [
+        {
+          "Variant": 1,
+          "InputTypes": [],
+          "Expression": "const vec2 <name> = vec2(<val1>, <val2>);",
+          "ExternalFunctions": []
+        },
+        {
+          "Variant": 2,
+          "InputTypes": [],
+          "Expression": "const vec3 <name> = vec3(<val1>, <val2>, <val3>);",
+          "ExternalFunctions": []
+        },
+        {
+          "Variant": 3,
+          "InputTypes": [],
+          "Expression": "const vec4 <name> = vec4(<val1>, <val2>, <val3>, <val4>);",
+          "ExternalFunctions": []
+        }
+      ]
+    },
+
+    {
+      // Constant_UserConstant_Matrix
+      "TypeId": 113,
+      "Name": "matConst<idx>",
+      "ExpressionVariants": [
+        {
+          "Variant": 1,
+          "InputTypes": [], // DONT FORGET ABOUT COLUMN-MAJOR MATRIX INITIALIZATION
+          "Expression": "const mat2 <name> = mat2(<val1>, <val2>, <val3>, <val4>)",
+          "ExternalFunctions": []
+        },
+        {
+          "Variant": 2,
+          "InputTypes": [],
+          "Expression": "const mat3x2 <name> = mat3x2(<val1>, <val2>, <val3>, <val4>, <val5>, <val6>)",
+          "ExternalFunctions": []
+        },
+        {
+          "Variant": 3,
+          "InputTypes": [],
+          "Expression": "const mat4x2 <name> = mat4x2(<val1>, <val2>, <val2>, <val4>, <val5>, <val6>, <val7>, <val8>)",
+          "ExternalFunctions": []
+        },
+        {
+          "Variant": 4,
+          "InputTypes": [],
+          "Expression": "const mat2x3 <name> = mat2x3(<val1>, <val2>, <val3>, <val4>, <val5>, <val6>)",
+          "ExternalFunctions": []
+        },
+        {
+          "Variant": 5,
+          "InputTypes": [],
+          "Expression": "const mat3 <name> = mat3(<val1>, <val2>, <val3>, <val4>, <val5>, <val6>, <val7>, <val8>, <val9>)",
+          "ExternalFunctions": []
+        },
+        {
+          "Variant": 6,
+          "InputTypes": [],
+          "Expression": "const mat4x3 <name> = mat4x3(<val1>, <val2>, <val3>, <val4>, <val5>, <val6>, <val7>, <val8>, <val9>, <val10>, <val11>, <val12>)",
+          "ExternalFunctions": []
+        },
+        {
+          "Variant": 7,
+          "InputTypes": [],
+          "Expression": "const mat2x4 <name> = mat2x4<val1>, <val2>, <val3>, <val4>, <val5>, <val6>, <val7>, <val8>)",
+          "ExternalFunctions": []
+        },
+        {
+          "Variant": 8,
+          "InputTypes": [],
+          "Expression": "const mat3x4 <name> = mat3x4(<val1>, <val2>, <val3>, <val4>, <val5>, <val6>, <val7>, <val8>, <val9>, <val10>, <val11>, <val12>)",
+          "ExternalFunctions": []
+        },
+        {
+          "Variant": 9,
+          "InputTypes": [],
+          "Expression": "const mat4 <name> = mat4(<val1>, <val2>, <val3>, <val4>, <val5>, <val6>, <val7>, <val8>, <val9>, <val10>, <val11>, <val12>, <val13>, <val14>, <val15>, <val16>)",
+          "ExternalFunctions": []
+        }
+      ]
+    },
+
+    {
+      // Constant_UserConstant_Color
+      "TypeId": 114,
+      "Name": "colorConst<idx>",
+      "ExpressionVariants": [
+        {
+          "Variant": 0,
+          "InputTypes": [],
+          "Expression": "const vec4 <name> = vec4(<val1>, <val2>, <val3>, <val4>);",
+          "ExternalFunctions": []
+        }
+      ]
+    },
+
+    ///////////////////////////////////////////////////////////////////// 12
+
+    {
+      // Constant_SpecialConstant_PI
+      "TypeId": 121,
+      "Name": "PI",
+      "ExpressionVariants": [
+        {
+          "Variant": 0,
+          "InputTypes": [],
+          "Expression": "",
+          "ExternalFunctions": [
+            {
+              "Type": "define",
+              "Path": "PI"
+            }
+          ]
+        }
+      ]
+    },
+
+    {
+      // Constant_SpecialConstant_PHI
+      "TypeId": 122,
+      "Name": "PHI",
+      "ExpressionVariants": [
+        {
+          "Variant": 0,
+          "InputTypes": [],
+          "Expression": "",
+          "ExternalFunctions": [
+            {
+              "Type": "define",
+              "Path": "PHI"
+            }
+          ]
+        }
+      ]
+    },
+
+    {
+      // Constant_SpecialConstant_EXP
+      "TypeId": 123,
+      "Name": "EXP",
+      "ExpressionVariants": [
+        {
+          "Variant": 0,
+          "InputTypes": [],
+          "Expression": "",
+          "ExternalFunctions": [
+            {
+              "Type": "define",
+              "Path": "EXP"
+            }
+          ]
+        }
+      ]
+    },
+
+    {
+      // Constant_SpecialConstant_RotationMatrix2D
+      "TypeId": 124,
+      "Name": "rotMat2D<idx>",
+      "ExpressionVariants": [
+        {
+          "Variant": 0,
+          "InputTypes": [],
+          "Expression": "const mat2 <name> = rot2d(<val1>);",
+          "ExternalFunctions": [
+            {
+              "Type": "function",
+              "Path": "rot2d<float>"
+            }
+          ]
+        }
+      ]
+    },
+
+    {
+      // Constant_SpecialConstant_RotationMatrix3D
+      "TypeId": 125,
+      "Name": "rotMat3D<idx>",
+      "ExpressionVariants": [
+        {
+          "Variant": 0,
+          "InputTypes": [],
+          "Expression": "const mat3 <name> = rot3d(<val1>, <val2>, <val3>);",
+          "ExternalFunctions": [
+            {
+              "Type": "function",
+              "Path": "rot3d<float, float, float>"
+            }
+          ]
+        }
+      ]
+    }
+
+  ]
+}

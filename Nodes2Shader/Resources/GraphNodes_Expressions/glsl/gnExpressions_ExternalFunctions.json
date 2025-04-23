@@ -1,0 +1,26 @@
+﻿{
+  "ExternalFunctions": [
+
+    {
+      "Path": "PI",
+      "Body": "#define PI 3.1415926535"
+    },
+    {
+      "Path": "PHI",
+      "Body": "#define PHI 1.6180339887"
+    },
+    {
+      "Path": "EXP",
+      "Body": "#define EXP 2.7182818284"
+    },
+    {
+      "Path": "rot2d<float>",
+      "Body": "mat2 rot2d(float a){\nreturn mat2(cos(a), sin(a), -sin(a), cos(a));\n}"
+    },
+    {
+      "Path": "rot3d<float, float, float>",
+      "Body": "mat3 rot3d(float a, float b, float c){\nreturn mat3(cos(a)*cos(b), sin(a)*sin(b), -sin(b), cos(a)*sin(b)*sin(c)-sin(a)*cos(c), sin(a)*sin(b)*sin(c)+cos(a)*cos(c), cos(b)*sin(c), cos(a)*sin(b)*cos(c)+sin(a)*sin(c), sin(a)*sin(b)*cos(c)-cos(a)*sin(c), cos(b)*cos(c));\n}"
+    }
+
+  ]
+}
