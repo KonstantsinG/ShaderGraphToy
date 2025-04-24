@@ -8,7 +8,7 @@
       "ExpressionVariants": [
         {
           "Variant": 0,
-          "InputTypes": [],
+          "Output": 0,
           "Expression": "gl_FragColor = vec4(<val1>, <val2>);",
           "ExternalFunctions": []
         }

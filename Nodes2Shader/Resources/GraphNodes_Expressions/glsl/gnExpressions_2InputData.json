@@ -8,7 +8,7 @@
       "ExpressionVariants": [
         {
           "Variant": 0,
-          "InputTypes": [],
+          "Output": 0,
           "Expression": "",
           "ExternalFunctions": []
         }
@@ -21,26 +21,16 @@
       "Name": "uv<idx>",
       "ExpressionVariants": [
         {
-          "Variant": 1,
-          "InputTypes": [],
+          "Variant": 0,
+          "Output": 0,
           "Expression": "vec2 <name> = gl_FragCoord / u_Resolution;",
-          "ExternalFunctions": [
-            {
-              "Type": "uniform",
-              "Path": "u_Resolution"
-            }
-          ]
+          "ExternalFunctions": [ "u_Resolution" ]
         },
         {
-          "Variant": 2,
-          "InputTypes": [],
+          "Variant": 1,
+          "Output": 0,
           "Expression": "vec2 <name> = gl_FragCoord / u_Resolution;\n<name> = <name> * 2.0 - 1.0",
-          "ExternalFunctions": [
-            {
-              "Type": "uniform",
-              "Path": "u_Resolution"
-            }
-          ]
+          "ExternalFunctions": [ "u_Resolution" ]
         }
       ]
     },
@@ -52,14 +42,9 @@
       "ExpressionVariants": [
         {
           "Variant": 0,
-          "InputTypes": [],
+          "Output": 0,
           "Expression": "",
-          "ExternalFunctions": [
-            {
-              "Type": "uniform",
-              "Path": "u_Mouse"
-            }
-          ]
+          "ExternalFunctions": [ "u_Mouse" ]
         }
       ]
     },
@@ -71,14 +56,9 @@
       "ExpressionVariants": [
         {
           "Variant": 0,
-          "InputTypes": [],
+          "Output": 0,
           "Expression": "",
-          "ExternalFunctions": [
-            {
-              "Type": "uniform",
-              "Path": "u_Time"
-            }
-          ]
+          "ExternalFunctions": [ "u_Time" ]
         }
       ]
     },
@@ -90,14 +70,9 @@
       "ExpressionVariants": [
         {
           "Variant": 0,
-          "InputTypes": [],
+          "Output": 0,
           "Expression": "",
-          "ExternalFunctions": [
-            {
-              "Type": "uniform",
-              "Path": "u_Resolution"
-            }
-          ]
+          "ExternalFunctions": [ "u_Resolution" ]
         }
       ]
     }

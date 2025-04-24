@@ -1,42 +1,87 @@
 ﻿{
   "ExternalFunctions": [
 
-    // Defines
+    // Defined constants
     {
+      "Type": "defconst",
       "Path": "PI",
-      "Body": "#define PI 3.1415926535"
+      "Body": [
+        "#define PI 3.1415926535"
+      ]
     },
     {
+      "Type": "defconst",
       "Path": "PHI",
-      "Body": "#define PHI 1.6180339887"
+      "Body": [
+        "#define PHI 1.6180339887"
+      ]
     },
     {
+      "Type": "defconst",
       "Path": "EXP",
-      "Body": "#define EXP 2.7182818284"
+      "Body": [
+        "#define EXP 2.7182818284"
+      ]
     },
 
     // Uniforms
     {
+      "Type": "uniform",
       "Path": "u_Resolution",
-      "Body": "uniform vec2 u_Resolution;"
+      "Body": [
+        "uniform vec2 u_Resolution;"
+      ]
     },
     {
+      "Type": "uniform",
       "Path": "u_Mouse",
-      "Body": "uniform vec2 u_Mouse;"
+      "Body": [
+        "uniform vec2 u_Mouse;"
+      ]
     },
     {
+      "Type": "uniform",
       "Path": "u_Time",
-      "Body": "uniform vec2 u_Time;"
+      "Body": [
+        "uniform vec2 u_Time;"
+      ]
+    },
+
+    // Preprocessors
+    {
+      "Type": "prerocessor",
+      "Path": "matrixAdd<Mat>",
+      "Body": [
+        "matrixAdd(<mat1Type> m1, <mat1Type> m2){",
+        "   <inType1> result;",
+        "   for (int i = 0; i < <mat1SizeN>; i++){",
+        "       result[i] = a[i] + b[i];",
+        "   }",
+        "   return result;",
+        "}"
+      ]
     },
 
     // Functions
     {
+      "Type": "function",
       "Path": "rot2d<float>",
-      "Body": "mat2 rot2d(float a){\nreturn mat2(cos(a), sin(a), -sin(a), cos(a));\n}"
+      "Body": [
+        "mat2 rot2d(float a){",
+        "return mat2(cos(a), sin(a), -sin(a), cos(a));",
+        "}"
+      ]
     },
     {
+      "Type": "function",
       "Path": "rot3d<float, float, float>",
-      "Body": "mat3 rot3d(float a, float b, float c){\nreturn mat3(cos(a)*cos(b), sin(a)*sin(b), -sin(b), cos(a)*sin(b)*sin(c)-sin(a)*cos(c), sin(a)*sin(b)*sin(c)+cos(a)*cos(c), cos(b)*sin(c), cos(a)*sin(b)*cos(c)+sin(a)*sin(c), sin(a)*sin(b)*cos(c)-cos(a)*sin(c), cos(b)*cos(c));\n}"
+      "Body": [
+        "mat3 rot3d(float a, float b, float c){",
+        "   return mat3(cos(a)*cos(b),                      sin(a)*sin(b),                      -sin(b), ",
+        "               cos(a)*sin(b)*sin(c)-sin(a)*cos(c), sin(a)*sin(b)*sin(c)+cos(a)*cos(c), cos(b)*sin(c), ",
+        "               cos(a)*sin(b)*cos(c)+sin(a)*sin(c), sin(a)*sin(b)*cos(c)-cos(a)*sin(c), cos(b)*cos(c));",
+        "}"
+      ]
     }
 
   ]

@@ -4,7 +4,6 @@
     {
       // MatOperations_Basic_Sum
       "TypeId": 411,
-      "Name": "matopSum",
       "HasInput": false,
       "HasOutput": true,
       "InputType": null,
@@ -44,7 +43,6 @@
     {
       // MatOperations_Basic_Sub
       "TypeId": 412,
-      "Name": "matopSub",
       "HasInput": false,
       "HasOutput": true,
       "InputType": null,
@@ -84,7 +82,6 @@
     {
       // MatOperations_Basic_Mul
       "TypeId": 413,
-      "Name": "matopMul",
       "HasInput": false,
       "HasOutput": true,
       "InputType": null,
@@ -124,7 +121,6 @@
     {
       // MatOperations_Basic_Div
       "TypeId": 414,
-      "Name": "matopDiv",
       "HasInput": false,
       "HasOutput": true,
       "InputType": null,
@@ -164,7 +160,6 @@
     {
       // MatOperations_Basic_DivRem
       "TypeId": 415,
-      "Name": "matopDivRem",
       "HasInput": false,
       "HasOutput": true,
       "InputType": null,
@@ -206,7 +201,6 @@
     {
       // MatOperations_Vectors_Cross
       "TypeId": 421,
-      "Name": "matopCross",
       "HasInput": false,
       "HasOutput": true,
       "InputType": null,
@@ -248,7 +242,6 @@
     {
       // MatOperations_Vectors_Dot
       "TypeId": 422,
-      "Name": "matopDot",
       "HasInput": false,
       "HasOutput": true,
       "InputType": null,
@@ -290,7 +283,6 @@
     {
       // MatOperations_Vectors_VecLen
       "TypeId": 423,
-      "Name": "matopVecLen",
       "HasInput": false,
       "HasOutput": true,
       "InputType": null,
@@ -322,7 +314,6 @@
     {
       // MatOperations_Vectors_VecNorm
       "TypeId": 424,
-      "Name": "matopVecNorm",
       "HasInput": false,
       "HasOutput": true,
       "InputType": null,
@@ -354,7 +345,6 @@
     {
       // MatOperations_Vectors_VecMatMul
       "TypeId": 425,
-      "Name": "matopVecMatMul",
       "HasInput": false,
       "HasOutput": true,
       "InputType": null,
@@ -396,7 +386,6 @@
     {
       // MatOperations_Vectors_VecComp
       "TypeId": 426,
-      "Name": "matopVecComp",
       "HasInput": false,
       "HasOutput": true,
       "InputType": null,
@@ -416,6 +405,7 @@
         {
           "Type": "Inscription",
           "Title": "x",
+          "DefaultInput": "0.0",
           "Formatting": [],
           "HasInput": true,
           "HasOutput": false,
@@ -426,6 +416,7 @@
         {
           "Type": "Inscription",
           "Title": "y",
+          "DefaultInput": "0.0",
           "Formatting": [],
           "HasInput": true,
           "HasOutput": false,
@@ -436,6 +427,7 @@
         {
           "Type": "Inscription",
           "Title": "z",
+          "DefaultInput": "Ignore",
           "Formatting": [],
           "HasInput": true,
           "HasOutput": false,
@@ -446,6 +438,7 @@
         {
           "Type": "Inscription",
           "Title": "w",
+          "DefaultInput": "Ignore",
           "Formatting": [],
           "HasInput": true,
           "HasOutput": false,
@@ -458,7 +451,6 @@
     {
       // MatOperations_Vectors_VecDecomp
       "TypeId": 427,
-      "Name": "matopVecDecomp",
       "HasInput": true,
       "HasOutput": false,
       "InputType": "Vec",
@@ -522,7 +514,6 @@
     {
       // MatOperations_Matrices_MatMatMul
       "TypeId": 431,
-      "Name": "matopMatMul",
       "HasInput": false,
       "HasOutput": true,
       "InputType": null,
@@ -564,7 +555,6 @@
     {
       // MatOperations_Matrices_MatDet
       "TypeId": 432,
-      "Name": "matopMatDet",
       "HasInput": false,
       "HasOutput": true,
       "InputType": null,
@@ -596,7 +586,6 @@
     {
       // MatOperations_Matrices_MatTransp
       "TypeId": 433,
-      "Name": "matopMatTransp",
       "HasInput": false,
       "HasOutput": true,
       "InputType": null,
@@ -628,7 +617,6 @@
     {
       // MatOperations_Matrices_MatComp
       "TypeId": 434,
-      "Name": "matopMatComp",
       "HasInput": false,
       "HasOutput": true,
       "InputType": null,
@@ -690,7 +678,6 @@
     {
       // MatOperations_Matrices_MatDecomp
       "TypeId": 435,
-      "Name": "matopMatDecomp",
       "HasInput": true,
       "HasOutput": false,
       "InputType": "Mat",
@@ -752,7 +739,6 @@
     {
       // MatOperations_Matrices_MatEl
       "TypeId": 436,
-      "Name": "matopMatEl",
       "HasInput": false,
       "HasOutput": true,
       "InputType": null,

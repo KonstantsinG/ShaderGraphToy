@@ -1,0 +1,19 @@
+﻿{
+  "GraphNodesExpressions": [
+
+    {
+      // MatOperations_Basic_Sum
+      "TypeId": 411,
+      "Name": "sum<idx>",
+      "ExpressionVariants": [
+        {
+          "Variant": 0,
+          "Output": 0,
+          "Expression": "",
+          "ExternalFunctions": [ "matrixAdd<Mat>" ]
+        }
+      ]
+    }
+
+  ]
+}
