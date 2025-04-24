@@ -1,0 +1,106 @@
+﻿{
+  "GraphNodesExpressions": [
+
+    {
+      // InputData_PixCoords
+      "TypeId": 21,
+      "Name": "gl_FragCoord",
+      "ExpressionVariants": [
+        {
+          "Variant": 0,
+          "InputTypes": [],
+          "Expression": "",
+          "ExternalFunctions": []
+        }
+      ]
+    },
+
+    {
+      // InputData_UVCoords
+      "TypeId": 22,
+      "Name": "uv<idx>",
+      "ExpressionVariants": [
+        {
+          "Variant": 1,
+          "InputTypes": [],
+          "Expression": "vec2 <name> = gl_FragCoord / u_Resolution;",
+          "ExternalFunctions": [
+            {
+              "Type": "uniform",
+              "Path": "u_Resolution"
+            }
+          ]
+        },
+        {
+          "Variant": 2,
+          "InputTypes": [],
+          "Expression": "vec2 <name> = gl_FragCoord / u_Resolution;\n<name> = <name> * 2.0 - 1.0",
+          "ExternalFunctions": [
+            {
+              "Type": "uniform",
+              "Path": "u_Resolution"
+            }
+          ]
+        }
+      ]
+    },
+
+    {
+      // InputData_MouseCoords
+      "TypeId": 23,
+      "Name": "u_Mouse",
+      "ExpressionVariants": [
+        {
+          "Variant": 0,
+          "InputTypes": [],
+          "Expression": "",
+          "ExternalFunctions": [
+            {
+              "Type": "uniform",
+              "Path": "u_Mouse"
+            }
+          ]
+        }
+      ]
+    },
+
+    {
+      // InputData_Time
+      "TypeId": 24,
+      "Name": "u_Time",
+      "ExpressionVariants": [
+        {
+          "Variant": 0,
+          "InputTypes": [],
+          "Expression": "",
+          "ExternalFunctions": [
+            {
+              "Type": "uniform",
+              "Path": "u_Time"
+            }
+          ]
+        }
+      ]
+    },
+
+    {
+      // InputData_Resolution
+      "TypeId": 25,
+      "Name": "u_Resolution",
+      "ExpressionVariants": [
+        {
+          "Variant": 0,
+          "InputTypes": [],
+          "Expression": "",
+          "ExternalFunctions": [
+            {
+              "Type": "uniform",
+              "Path": "u_Resolution"
+            }
+          ]
+        }
+      ]
+    }
+
+  ]
+}

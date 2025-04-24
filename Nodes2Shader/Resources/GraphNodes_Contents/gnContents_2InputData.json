@@ -4,7 +4,6 @@
     {
       // InputData_PixelCoords
       "TypeId": 21,
-      "Name": "inPixCoords",
       "HasInput": false,
       "HasOutput": true,
       "InputType": null,
@@ -26,7 +25,6 @@
     {
       // InputData_UVCoords
       "TypeId": 22,
-      "Name": "inUV",
       "HasInput": false,
       "HasOutput": true,
       "InputType": null,
@@ -54,7 +52,6 @@
     {
       // InputData_MouseCoords
       "TypeId": 23,
-      "Name": "inMouse",
       "HasInput": false,
       "HasOutput": true,
       "InputType": null,
@@ -76,7 +73,6 @@
     {
       // InputData_Time
       "TypeId": 24,
-      "Name": "inTime",
       "HasInput": false,
       "HasOutput": true,
       "InputType": null,
@@ -86,6 +82,27 @@
         {
           "Type": "Inscription",
           "Title": "Время (в миллисекундах)",
+          "Formatting": [ "Centred", "Bold", "Margin" ],
+          "HasInput": false,
+          "HasOutput": false,
+          "InputType": null,
+          "OutputType": null
+        }
+      ]
+    },
+
+    {
+      // InputData_Resolution
+      "TypeId": 25,
+      "HasInput": false,
+      "HasOutput": true,
+      "InputType": null,
+      "OutputType": "Vec2",
+
+      "Components": [
+        {
+          "Type": "Inscription",
+          "Title": "Разрешение экрана",
           "Formatting": [ "Centred", "Bold", "Margin" ],
           "HasInput": false,
           "HasOutput": false,

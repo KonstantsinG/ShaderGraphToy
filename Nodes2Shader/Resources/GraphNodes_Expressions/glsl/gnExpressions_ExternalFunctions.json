@@ -1,6 +1,7 @@
 ﻿{
   "ExternalFunctions": [
 
+    // Defines
     {
       "Path": "PI",
       "Body": "#define PI 3.1415926535"
@@ -13,6 +14,22 @@
       "Path": "EXP",
       "Body": "#define EXP 2.7182818284"
     },
+
+    // Uniforms
+    {
+      "Path": "u_Resolution",
+      "Body": "uniform vec2 u_Resolution;"
+    },
+    {
+      "Path": "u_Mouse",
+      "Body": "uniform vec2 u_Mouse;"
+    },
+    {
+      "Path": "u_Time",
+      "Body": "uniform vec2 u_Time;"
+    },
+
+    // Functions
     {
       "Path": "rot2d<float>",
       "Body": "mat2 rot2d(float a){\nreturn mat2(cos(a), sin(a), -sin(a), cos(a));\n}"
