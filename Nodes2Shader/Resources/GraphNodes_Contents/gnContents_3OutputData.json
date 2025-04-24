@@ -4,7 +4,6 @@
     {
       // OutputData
       "TypeId": 3,
-      "Name": "outData",
       "HasInput": false,
       "HasOutput": false,
       "InputType": null,
@@ -14,6 +13,7 @@
         {
           "Type": "Inscription",
           "Title": "Цвет RGBA",
+          "DefaultInput": "vec4(0.0, 0.0, 0.0, 0.0)",
           "Formatting": [],
           "HasInput": true,
           "HasOutput": false,
@@ -24,6 +24,7 @@
         {
           "Type": "Inscription",
           "Title": "Непрозрачность",
+          "DefaultInput": "1.0",
           "Formatting": [],
           "HasInput": true,
           "HasOutput": false,

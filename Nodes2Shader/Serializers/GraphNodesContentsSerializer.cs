@@ -162,8 +162,13 @@ namespace Nodes2Shader.Serializers
                 if (component is InputComponent input && jo["Content"] != null)
                     input.Content = jo["Content"]!.Value<string>()!;
 
-                if (component is InscriptionComponent inscription && jo["Formatting"] != null)
-                    inscription.Formatting = jo["Formatting"]!.ToObject<List<string>>()!;
+                if (component is InscriptionComponent inscription)
+                {
+                    if (jo["Formatting"] != null)
+                        inscription.Formatting = jo["Formatting"]!.ToObject<List<string>>()!;
+                    if (jo["DefaultInput"] != null)
+                        inscription.DefaultInput = jo["DefaultInput"]!.ToObject<string>()!;
+                }
 
                 return component;
             }

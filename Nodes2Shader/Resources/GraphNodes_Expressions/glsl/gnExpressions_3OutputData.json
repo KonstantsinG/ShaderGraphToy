@@ -1,0 +1,19 @@
+﻿{
+  "GraphNodesExpressions": [
+
+    {
+      // OutputData
+      "TypeId": 3,
+      "Name": "gl_FragColor",
+      "ExpressionVariants": [
+        {
+          "Variant": 0,
+          "InputTypes": [],
+          "Expression": "gl_FragColor = vec4(<val1>, <val2>);",
+          "ExternalFunctions": []
+        }
+      ]
+    }
+
+  ]
+}
