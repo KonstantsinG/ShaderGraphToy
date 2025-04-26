@@ -453,7 +453,7 @@
       "TypeId": 427,
       "HasInput": true,
       "HasOutput": false,
-      "InputType": "Vec",
+      "InputType": "Vec4",
       "OutputType": null,
 
       "Components": [

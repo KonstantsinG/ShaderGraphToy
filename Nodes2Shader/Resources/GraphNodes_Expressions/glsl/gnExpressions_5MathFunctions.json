@@ -1,0 +1,20 @@
+﻿{
+  "GraphNodesExpressions": [
+
+    {
+      // MatFunctions_Extended_Mix
+      "TypeId": 524,
+      "Name": "mix<idx>",
+      "ExpressionVariants": [
+        {
+          "Variant": 0,
+          "Output": 0,
+          "InputTypes": [],
+          "Expression": "<inType1> <name> = mix(<val1>, <val2>, <val3>);",
+          "ExternalFunctions": []
+        }
+      ]
+    }
+
+  ]
+}

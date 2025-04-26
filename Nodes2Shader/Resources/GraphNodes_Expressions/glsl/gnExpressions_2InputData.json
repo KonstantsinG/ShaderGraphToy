@@ -9,6 +9,7 @@
         {
           "Variant": 0,
           "Output": 0,
+          "InputTypes": [],
           "Expression": "",
           "ExternalFunctions": []
         }
@@ -23,6 +24,7 @@
         {
           "Variant": 0,
           "Output": 0,
+          "InputTypes": [],
           "Expression": "vec2 <name> = gl_FragCoord / u_Resolution;",
           "ExternalFunctions": [ "u_Resolution" ]
         },
@@ -43,6 +45,7 @@
         {
           "Variant": 0,
           "Output": 0,
+          "InputTypes": [],
           "Expression": "",
           "ExternalFunctions": [ "u_Mouse" ]
         }
@@ -57,6 +60,7 @@
         {
           "Variant": 0,
           "Output": 0,
+          "InputTypes": [],
           "Expression": "",
           "ExternalFunctions": [ "u_Time" ]
         }
@@ -71,6 +75,7 @@
         {
           "Variant": 0,
           "Output": 0,
+          "InputTypes": [],
           "Expression": "",
           "ExternalFunctions": [ "u_Resolution" ]
         }

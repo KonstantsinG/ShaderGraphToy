@@ -42,9 +42,8 @@ namespace Nodes2Shader.DataTypes
     {
         public static bool IsInterchangeable(string type1, string type2)
         {
-            DataType t1, t2;
-            if (!DataType.TryParse(type1, true, out t1)) return false;
-            if (!DataType.TryParse(type2, true, out t2)) return false;
+            if (!DataType.TryParse(type1, true, out DataType t1)) return false;
+            if (!DataType.TryParse(type2, true, out DataType t2)) return false;
 
             // conversion resolved if -> equal, floating point, generic types, components amount
             

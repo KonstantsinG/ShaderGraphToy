@@ -2,15 +2,37 @@
   "GraphNodesExpressions": [
 
     {
-      // MatOperations_Basic_Sum
-      "TypeId": 411,
-      "Name": "sum<idx>",
+      // MatOperations_Vectors_VecDecomp
+      "TypeId": 427,
+      "Name": "vecDecomp<idx>_out<outIdx>",
       "ExpressionVariants": [
         {
           "Variant": 0,
           "Output": 0,
-          "Expression": "",
-          "ExternalFunctions": [ "matrixAdd<Mat>" ]
+          "InputTypes": [],
+          "Expression": "float <name> = <val1>.x;",
+          "ExternalFunctions": []
+        },
+        {
+          "Variant": 0,
+          "Output": 1,
+          "InputTypes": [],
+          "Expression": "float <name> = <val1>.y;",
+          "ExternalFunctions": []
+        },
+        {
+          "Variant": 0,
+          "Output": 2,
+          "InputTypes": [],
+          "Expression": "float <name> = <val1>.z;",
+          "ExternalFunctions": []
+        },
+        {
+          "Variant": 0,
+          "Output": 3,
+          "InputTypes": [],
+          "Expression": "float <name> = <val1>.w;",
+          "ExternalFunctions": []
         }
       ]
     }

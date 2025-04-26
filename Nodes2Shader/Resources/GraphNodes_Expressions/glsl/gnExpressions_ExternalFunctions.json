@@ -50,7 +50,7 @@
     // Preprocessors
     {
       "Type": "prerocessor",
-      "Path": "matrixAdd<Mat>",
+      "Path": "matrixAdd<Mat, Mat>",
       "Body": [
         "matrixAdd(<mat1Type> m1, <mat1Type> m2){",
         "   <inType1> result;",
