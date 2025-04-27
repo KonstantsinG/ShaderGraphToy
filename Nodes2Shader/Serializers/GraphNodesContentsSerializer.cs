@@ -3,8 +3,6 @@ using Newtonsoft.Json;
 using Nodes2Shader.GraphNodesImplementation.Components;
 using Nodes2Shader.GraphNodesImplementation.Contents;
 using Nodes2Shader.Resources;
-using Nodes2Shader.DataTypes;
-using System.Reflection;
 
 namespace Nodes2Shader.Serializers
 {
@@ -20,12 +18,12 @@ namespace Nodes2Shader.Serializers
             };
 
             List<GraphNodeContent> data = [];
-            GraphNodesContentsContainer? container = null;
-            String? json= null;
+            GraphNodesContentsContainer? container;
+            String? json;
 
-            foreach (string id in ResourceManager.GraphNodesContentsIds)
+            foreach (string id in ResourceManager.GraphNodesTypesIds)
             {
-                json = ResourceManager.GetGrahNodesContentsResource(id);
+                json = ResourceManager.GetGraphNodesContentsResource(id);
                 container = JsonConvert.DeserializeObject<GraphNodesContentsContainer>(json, settings)!;
                 data.AddRange(ConvertToDomainModel(container!));
             }
@@ -35,24 +33,22 @@ namespace Nodes2Shader.Serializers
 
         public static GraphNodeContent? Deserialize(uint typeId)
         {
-            var json = ResourceManager.GetGrahNodesContentsResource(typeId.ToString()[0].ToString());
+            var json = ResourceManager.GetGraphNodesContentsResource(typeId.ToString()[0].ToString());
 
-            using (var stringReader = new StringReader(json))
-            using (var jsonReader = new JsonTextReader(stringReader))
+            using var stringReader = new StringReader(json);
+            using var jsonReader = new JsonTextReader(stringReader);
+            while (jsonReader.Read())
             {
-                while (jsonReader.Read())
+                if (jsonReader.TokenType == JsonToken.StartArray && jsonReader.Path == "GraphNodesContents")
                 {
-                    if (jsonReader.TokenType == JsonToken.StartArray && jsonReader.Path == "GraphNodesContents")
+                    while (jsonReader.Read() && jsonReader.TokenType != JsonToken.EndArray)
                     {
-                        while (jsonReader.Read() && jsonReader.TokenType != JsonToken.EndArray)
+                        if (jsonReader.TokenType == JsonToken.StartObject)
                         {
-                            if (jsonReader.TokenType == JsonToken.StartObject)
+                            var obj = JObject.Load(jsonReader);
+                            if (obj["TypeId"]?.Value<uint>() == typeId)
                             {
-                                var obj = JObject.Load(jsonReader);
-                                if (obj["TypeId"]?.Value<uint>() == typeId)
-                                {
-                                    return ParseSingleContent(obj);
-                                }
+                                return ParseSingleContent(obj);
                             }
                         }
                     }

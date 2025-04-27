@@ -206,6 +206,8 @@ namespace ShaderGraphToy.Representation.Components
             if (e.Key == Key.D1) CursorRect_MouseDown(sender, null);
             else if (e.Key == Key.D2) MoveRect_MouseDown(sender, null);
             else if (e.Key == Key.D3) ZoomRect_MouseDown(sender, null);
+
+            else if (e.Key == Key.F5) ((GraphCanvasVM)DataContext).CompileGraph();
         }
 
         // global Hotkeys
@@ -559,7 +561,7 @@ namespace ShaderGraphToy.Representation.Components
         }
         #endregion
 
-        #region GRAPH_NODES CONTROOLS
+        #region GRAPH_NODES CONTROLS
         private void AddNode(GraphNodeBase node)
         {
             _nodes.Add(node);
@@ -714,6 +716,7 @@ namespace ShaderGraphToy.Representation.Components
                 _tempSpline!.InputConnector!.ConnectionsCount++;
                 _tempSpline!.OutputConnector!.ConnectionsCount++;
                 _splines.Add(_tempSpline);
+                ((GraphCanvasVM)DataContext).OnNodesConnectionAdded(_tempSpline!.InputConnector.NodeId, _tempSpline!.OutputConnector.NodeId);
             }
             else
             {
@@ -746,6 +749,7 @@ namespace ShaderGraphToy.Representation.Components
             {
                 _splines.Remove(currSpline);
                 mainCanvas.Children.Remove(currSpline.Path!);
+                ((GraphCanvasVM)DataContext).OnNodesConnectionRemoved(currSpline.InputConnector!.NodeId, currSpline.OutputConnector!.NodeId);
                 currSpline.Break();
                 currSpline.OutputConnector!.IsBusy = true;
                 currSpline.InputConnector = null;

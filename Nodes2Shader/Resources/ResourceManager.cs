@@ -1,5 +1,4 @@
-﻿using System.Net.Http.Headers;
-using System.Reflection;
+﻿using System.Reflection;
 
 namespace Nodes2Shader.Resources
 {
@@ -8,24 +7,32 @@ namespace Nodes2Shader.Resources
         // Resource paths
         private static readonly string _gnTypesInfoPath = "Nodes2Shader.Resources.GraphNodes_TypesInfo.gnTypes";
         private static readonly string _gnContentsPath = "Nodes2Shader.Resources.GraphNodes_Contents.gnContents_";
+        private static readonly string _gnExpressionsPath = "Nodes2Shader.Resources.GraphNodes_Expressions.glsl.gnExpressions_";
+        private static readonly string _externalFunctionsPath = "Nodes2Shader.Resources.GraphNodes_Expressions.glsl.gnExpressions_ExternalFunctions";
 
 
-        public static List<string> GraphNodesContentsIds
+        public static List<string> GraphNodesTypesIds
         {
             get => [ "1", "2", "3", "4", "5" ];
         }
 
 
         // Resource getters
-        internal static string GetGrahNodesTypesInfoResource() => ReadFileFromResources($"{_gnTypesInfoPath}.json");
-        internal static string GetGrahNodesContentsResource(string id)
+        internal static string GetExterrnalFunctionsResource() => ReadFileFromResources($"{_externalFunctionsPath}.json");
+        internal static string GetGraphNodesTypesInfoResource() => ReadFileFromResources($"{_gnTypesInfoPath}.json");
+        internal static string GetGraphNodesContentsResource(string id)
         {
-            string name = GetContentName(id);
+            string name = GetTypeName(id);
             return ReadFileFromResources($"{_gnContentsPath}{name}.json");
+        }
+        internal static string GetGraphNodesExpressionsResource(string id)
+        {
+            string name = GetTypeName(id);
+            return ReadFileFromResources($"{_gnExpressionsPath}{name}.json");
         }
 
 
-        private static string GetContentName(string id)
+        private static string GetTypeName(string id)
         {
             return id switch
             {

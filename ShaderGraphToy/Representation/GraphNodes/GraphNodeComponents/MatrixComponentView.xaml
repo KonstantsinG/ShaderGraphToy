@@ -19,7 +19,7 @@
                    Text="{Binding Path=Model.Title, RelativeSource={RelativeSource AncestorType=UserControl}, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
 
         <ComboBox Width="130" Margin="0,0,0,5" HorizontalAlignment="Left" SelectedIndex="4"
-                  SelectionChanged="ComboBox_SelectionChanged"
+                  SelectionChanged="ComboBox_SelectionChanged" x:Name="cBox"
                   Visibility="{Binding Path=Model.IsControlable, RelativeSource={RelativeSource AncestorType=UserControl}, Converter={StaticResource BoolToVis}, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}">
             <ComboBox.Items>
 
@@ -40,17 +40,17 @@
 
         <WrapPanel>
 
-            <TextBox Style="{StaticResource GrayTextBoxSmall}"
+            <TextBox Style="{StaticResource GrayTextBoxSmall}" x:Name="tb00"
                      IsReadOnly="{Binding Path=Model.IsReadonly, RelativeSource={RelativeSource AncestorType=UserControl}, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
                      Text="{Binding Path=Model.Contents, RelativeSource={RelativeSource AncestorType=UserControl}, Converter={StaticResource MatrIdxConverter}, ConverterParameter='0,0', Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
-            <TextBox Style="{StaticResource GrayTextBoxSmall}"
+            <TextBox Style="{StaticResource GrayTextBoxSmall}" x:Name="tb01"
                      IsReadOnly="{Binding Path=Model.IsReadonly, RelativeSource={RelativeSource AncestorType=UserControl}, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
                      Text="{Binding Path=Model.Contents, RelativeSource={RelativeSource AncestorType=UserControl}, Converter={StaticResource MatrIdxConverter}, ConverterParameter='0,1', Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
-            <TextBox Style="{StaticResource GrayTextBoxSmall}"
+            <TextBox Style="{StaticResource GrayTextBoxSmall}" x:Name="tb02"
                      Visibility="{Binding IsThirdColumnVisible, RelativeSource={RelativeSource AncestorType=UserControl}, Converter={StaticResource BoolToVis}, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
                      IsReadOnly="{Binding Path=Model.IsReadonly, RelativeSource={RelativeSource AncestorType=UserControl}, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
                      Text="{Binding Path=Model.Contents, RelativeSource={RelativeSource AncestorType=UserControl}, Converter={StaticResource MatrIdxConverter}, ConverterParameter='0,2', Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
-            <TextBox Style="{StaticResource GrayTextBoxSmall}"
+            <TextBox Style="{StaticResource GrayTextBoxSmall}" x:Name="tb03"
                      Visibility="{Binding IsForthColumnVisible, RelativeSource={RelativeSource AncestorType=UserControl}, Converter={StaticResource BoolToVis}, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
                      IsReadOnly="{Binding Path=Model.IsReadonly, RelativeSource={RelativeSource AncestorType=UserControl}, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
                      Text="{Binding Path=Model.Contents, RelativeSource={RelativeSource AncestorType=UserControl}, Converter={StaticResource MatrIdxConverter}, ConverterParameter='0,3', Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
@@ -59,17 +59,17 @@
 
         <WrapPanel>
 
-            <TextBox Style="{StaticResource GrayTextBoxSmall}"
+            <TextBox Style="{StaticResource GrayTextBoxSmall}" x:Name="tb10"
                      IsReadOnly="{Binding Path=Model.IsReadonly, RelativeSource={RelativeSource AncestorType=UserControl}, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
                      Text="{Binding Path=Model.Contents, RelativeSource={RelativeSource AncestorType=UserControl}, Converter={StaticResource MatrIdxConverter}, ConverterParameter='1,0', Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
-            <TextBox Style="{StaticResource GrayTextBoxSmall}"
+            <TextBox Style="{StaticResource GrayTextBoxSmall}" x:Name="tb11"
                      IsReadOnly="{Binding Path=Model.IsReadonly, RelativeSource={RelativeSource AncestorType=UserControl}, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
                      Text="{Binding Path=Model.Contents, RelativeSource={RelativeSource AncestorType=UserControl}, Converter={StaticResource MatrIdxConverter}, ConverterParameter='1,1', Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
-            <TextBox Style="{StaticResource GrayTextBoxSmall}"
+            <TextBox Style="{StaticResource GrayTextBoxSmall}" x:Name="tb12"
                      Visibility="{Binding IsThirdColumnVisible, RelativeSource={RelativeSource AncestorType=UserControl}, Converter={StaticResource BoolToVis}, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
                      IsReadOnly="{Binding Path=Model.IsReadonly, RelativeSource={RelativeSource AncestorType=UserControl}, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
                      Text="{Binding Path=Model.Contents, RelativeSource={RelativeSource AncestorType=UserControl}, Converter={StaticResource MatrIdxConverter}, ConverterParameter='1,2', Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
-            <TextBox Style="{StaticResource GrayTextBoxSmall}"
+            <TextBox Style="{StaticResource GrayTextBoxSmall}" x:Name="tb13"
                      Visibility="{Binding IsForthColumnVisible, RelativeSource={RelativeSource AncestorType=UserControl}, Converter={StaticResource BoolToVis}, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
                      IsReadOnly="{Binding Path=Model.IsReadonly, RelativeSource={RelativeSource AncestorType=UserControl}, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
                      Text="{Binding Path=Model.Contents, RelativeSource={RelativeSource AncestorType=UserControl}, Converter={StaticResource MatrIdxConverter}, ConverterParameter='1,3', Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
@@ -78,17 +78,17 @@
 
         <WrapPanel Visibility="{Binding IsThirdRowVisible, RelativeSource={RelativeSource AncestorType=UserControl}, Converter={StaticResource BoolToVis}, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}">
 
-            <TextBox Style="{StaticResource GrayTextBoxSmall}"
+            <TextBox Style="{StaticResource GrayTextBoxSmall}" x:Name="tb20"
                      IsReadOnly="{Binding Path=Model.IsReadonly, RelativeSource={RelativeSource AncestorType=UserControl}, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
                      Text="{Binding Path=Model.Contents, RelativeSource={RelativeSource AncestorType=UserControl}, Converter={StaticResource MatrIdxConverter}, ConverterParameter='2,0', Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
-            <TextBox Style="{StaticResource GrayTextBoxSmall}"
+            <TextBox Style="{StaticResource GrayTextBoxSmall}" x:Name="tb21"
                      IsReadOnly="{Binding Path=Model.IsReadonly, RelativeSource={RelativeSource AncestorType=UserControl}, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
                      Text="{Binding Path=Model.Contents, RelativeSource={RelativeSource AncestorType=UserControl}, Converter={StaticResource MatrIdxConverter}, ConverterParameter='2,1', Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
-            <TextBox Style="{StaticResource GrayTextBoxSmall}"
+            <TextBox Style="{StaticResource GrayTextBoxSmall}" x:Name="tb22"
                      Visibility="{Binding IsThirdColumnVisible, RelativeSource={RelativeSource AncestorType=UserControl}, Converter={StaticResource BoolToVis}, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
                      IsReadOnly="{Binding Path=Model.IsReadonly, RelativeSource={RelativeSource AncestorType=UserControl}, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
                      Text="{Binding Path=Model.Contents, RelativeSource={RelativeSource AncestorType=UserControl}, Converter={StaticResource MatrIdxConverter}, ConverterParameter='2,2', Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
-            <TextBox Style="{StaticResource GrayTextBoxSmall}"
+            <TextBox Style="{StaticResource GrayTextBoxSmall}" x:Name="tb23"
                      Visibility="{Binding IsForthColumnVisible, RelativeSource={RelativeSource AncestorType=UserControl}, Converter={StaticResource BoolToVis}, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
                      IsReadOnly="{Binding Path=Model.IsReadonly, RelativeSource={RelativeSource AncestorType=UserControl}, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
                      Text="{Binding Path=Model.Contents, RelativeSource={RelativeSource AncestorType=UserControl}, Converter={StaticResource MatrIdxConverter}, ConverterParameter='2,3', Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
@@ -97,17 +97,17 @@
 
         <WrapPanel Visibility="{Binding IsForthRowVisible, RelativeSource={RelativeSource AncestorType=UserControl}, Converter={StaticResource BoolToVis}, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}">
 
-            <TextBox Style="{StaticResource GrayTextBoxSmall}"
+            <TextBox Style="{StaticResource GrayTextBoxSmall}" x:Name="tb30"
                      IsReadOnly="{Binding Path=Model.IsReadonly, RelativeSource={RelativeSource AncestorType=UserControl}, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
                      Text="{Binding Path=Model.Contents, RelativeSource={RelativeSource AncestorType=UserControl}, Converter={StaticResource MatrIdxConverter}, ConverterParameter='3,0', Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
-            <TextBox Style="{StaticResource GrayTextBoxSmall}"
+            <TextBox Style="{StaticResource GrayTextBoxSmall}" x:Name="tb31"
                      IsReadOnly="{Binding Path=Model.IsReadonly, RelativeSource={RelativeSource AncestorType=UserControl}, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
                      Text="{Binding Path=Model.Contents, RelativeSource={RelativeSource AncestorType=UserControl}, Converter={StaticResource MatrIdxConverter}, ConverterParameter='3,1', Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
-            <TextBox Style="{StaticResource GrayTextBoxSmall}"
+            <TextBox Style="{StaticResource GrayTextBoxSmall}" x:Name="tb32"
                      Visibility="{Binding IsThirdColumnVisible, RelativeSource={RelativeSource AncestorType=UserControl}, Converter={StaticResource BoolToVis}, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
                      IsReadOnly="{Binding Path=Model.IsReadonly, RelativeSource={RelativeSource AncestorType=UserControl}, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
                      Text="{Binding Path=Model.Contents, RelativeSource={RelativeSource AncestorType=UserControl}, Converter={StaticResource MatrIdxConverter}, ConverterParameter='3,2', Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
-            <TextBox Style="{StaticResource GrayTextBoxSmall}"
+            <TextBox Style="{StaticResource GrayTextBoxSmall}" x:Name="tb33"
                      Visibility="{Binding IsForthColumnVisible, RelativeSource={RelativeSource AncestorType=UserControl}, Converter={StaticResource BoolToVis}, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
                      IsReadOnly="{Binding Path=Model.IsReadonly, RelativeSource={RelativeSource AncestorType=UserControl}, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
                      Text="{Binding Path=Model.Contents, RelativeSource={RelativeSource AncestorType=UserControl}, Converter={StaticResource MatrIdxConverter}, ConverterParameter='3,3', Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>

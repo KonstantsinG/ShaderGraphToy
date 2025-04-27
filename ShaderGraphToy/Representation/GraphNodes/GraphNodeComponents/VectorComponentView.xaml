@@ -20,7 +20,7 @@
 
         <ComboBox Width="130" Margin="0,0,0,5" HorizontalAlignment="Left" SelectedIndex="1"
                   Visibility="{Binding Path=Model.IsControlable, RelativeSource={RelativeSource AncestorType=UserControl}, Converter={StaticResource BoolToVis}, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
-                  SelectionChanged="ComboBox_SelectionChanged">
+                  SelectionChanged="ComboBox_SelectionChanged" x:Name="cBox">
             <ComboBox.Items>
 
                 <ComboBoxItem Content="Вектор 2"/>
@@ -34,7 +34,7 @@
 
             <TextBlock Style="{StaticResource GrayTextBlock}" Text="x/r:" Width="30"/>
 
-            <TextBox Style="{StaticResource GrayTextBox}"
+            <TextBox Style="{StaticResource GrayTextBox}" x:Name="tb0"
                      Text="{Binding Path=Model.Contents, Converter={StaticResource ListIdx}, ConverterParameter=0, RelativeSource={RelativeSource AncestorType=UserControl}, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
                      IsReadOnly="{Binding Path=Model.IsReadonly, RelativeSource={RelativeSource AncestorType=UserControl}, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
 
@@ -44,7 +44,7 @@
 
             <TextBlock Style="{StaticResource GrayTextBlock}" Text="y/g:"  Width="30"/>
 
-            <TextBox Style="{StaticResource GrayTextBox}"
+            <TextBox Style="{StaticResource GrayTextBox}" x:Name="tb1"
                      Text="{Binding Path=Model.Contents, Converter={StaticResource ListIdx}, ConverterParameter=1, RelativeSource={RelativeSource AncestorType=UserControl}, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
                      IsReadOnly="{Binding Path=Model.IsReadonly, RelativeSource={RelativeSource AncestorType=UserControl}, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
 
@@ -54,7 +54,7 @@
 
             <TextBlock Text="z/b:"  Width="30" Foreground="{StaticResource Gray_04}"/>
 
-            <TextBox Style="{StaticResource GrayTextBox}"
+            <TextBox Style="{StaticResource GrayTextBox}" x:Name="tb2"
                      Text="{Binding Path=Model.Contents, Converter={StaticResource ListIdx}, ConverterParameter=2, RelativeSource={RelativeSource AncestorType=UserControl}, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
                      IsReadOnly="{Binding Path=Model.IsReadonly, RelativeSource={RelativeSource AncestorType=UserControl}, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
 
@@ -64,7 +64,7 @@
 
             <TextBlock Text="w/a:"  Width="30" Foreground="{StaticResource Gray_04}"/>
 
-            <TextBox Style="{StaticResource GrayTextBox}"
+            <TextBox Style="{StaticResource GrayTextBox}" x:Name="tb3"
                      Text="{Binding Path=Model.Contents, Converter={StaticResource ListIdx}, ConverterParameter=3, RelativeSource={RelativeSource AncestorType=UserControl}, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
                      IsReadOnly="{Binding Path=Model.IsReadonly, RelativeSource={RelativeSource AncestorType=UserControl}, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
 

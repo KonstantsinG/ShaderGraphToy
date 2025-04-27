@@ -1,4 +1,5 @@
-﻿using Nodes2Shader.GraphNodesImplementation.Components;
+﻿using Nodes2Shader.Compilation.MathGraph;
+using Nodes2Shader.GraphNodesImplementation.Components;
 using System.ComponentModel;
 using System.Windows;
 using System.Windows.Controls;
@@ -8,7 +9,7 @@ namespace ShaderGraphToy.Representation.GraphNodes.GraphNodeComponents
     /// <summary>
     /// Логика взаимодействия для MatrixComponent.xaml
     /// </summary>
-    public partial class MatrixComponentView : UserControl, INotifyPropertyChanged
+    public partial class MatrixComponentView : UserControl, INotifyPropertyChanged, INodeComponentView
     {
         public static readonly DependencyProperty ModelProperty = DependencyProperty.Register(
             nameof(Model), typeof(MatrixComponent), typeof(MatrixComponentView), new PropertyMetadata(null));
@@ -68,6 +69,28 @@ namespace ShaderGraphToy.Representation.GraphNodes.GraphNodeComponents
         {
             InitializeComponent();
         }
+
+
+        public NodeEntry GetData()
+        {
+            (string type, string value) = cBox.SelectedIndex switch
+            {
+                0 => ("Mat2x2", $"({tb00.Text}, {tb10.Text}, {tb01.Text}, {tb11.Text})"),
+                1 => ("Mat3x2", $"({tb00.Text}, {tb10.Text}, {tb01.Text}, {tb11.Text}, {tb02.Text}, {tb12})"),
+                2 => ("Mat4x2", $"({tb00.Text}, {tb10.Text}, {tb01.Text}, {tb11.Text}, {tb02.Text}, {tb12.Text}, {tb03.Text}, {tb13.Text})"),
+                3 => ("Mat2x3", $"({tb00.Text}, {tb10.Text}, {tb20.Text}, {tb01.Text}, {tb11.Text}, {tb21.Text})"),
+                4 => ("Mat3x3", $"({tb00.Text}, {tb10.Text}, {tb20.Text}, {tb01.Text}, {tb11.Text}, {tb21.Text}, {tb02.Text}, {tb12.Text}, {tb22.Text})"),
+                5 => ("Mat4x3", $"({tb00.Text}, {tb10.Text}, {tb20.Text}, {tb30.Text}, {tb01.Text}, {tb11.Text}, {tb21.Text}, {tb31.Text}, {tb02.Text}, {tb12.Text}, {tb22.Text}, {tb32.Text})"),
+                6 => ("Mat2x4", $"({tb00.Text}, {tb10.Text}, {tb01.Text}, {tb11.Text}, {tb02.Text}, {tb12.Text}, {tb03.Text}, {tb13.Text})"),
+                7 => ("Mat3x4", $"({tb00.Text}, {tb10.Text}, {tb20.Text}, {tb01.Text}, {tb11.Text}, {tb21.Text}, {tb02.Text}, {tb12.Text}, {tb22.Text}, {tb03.Text}, {tb13.Text}, {tb23.Text})"),
+                8 => ("Mat4x4", $"({tb00.Text}, {tb10.Text}, {tb20.Text}, {tb30.Text}, {tb01.Text}, {tb11.Text}, {tb21.Text}, {tb31.Text}, {tb02.Text}, {tb12.Text}, {tb22.Text}, {tb32.Text}, " +
+                     $"{tb03.Text}, {tb13.Text}, {tb23.Text}, {tb33.Text})"),
+                _ => (string.Empty, string.Empty)
+            };
+
+            return new(type, value);
+        }
+
 
         private void ComboBox_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {

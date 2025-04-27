@@ -1,6 +1,7 @@
 ﻿using ShaderGraphToy.Representation.GraphNodes;
 using ShaderGraphToy.Utilities.DataBindings;
 using ShaderGraphToy.Windows;
+using System.Diagnostics;
 
 namespace ShaderGraphToy.Representation.Components
 {
@@ -40,6 +41,8 @@ namespace ShaderGraphToy.Representation.Components
 
         private GraphNodesBrowserWindow? _nodesBrowser = null;
         private readonly List<GraphNodeBase> _nodes = [];
+        private readonly List<(int, int)> _nodesConnections = [];
+
         public Action<GraphNodeBase>? placeNodeOnCanvas;
 
 
@@ -56,14 +59,43 @@ namespace ShaderGraphToy.Representation.Components
         {
             List<GraphNodeBase> corpses = [];
 
-            foreach (var node in _nodes)
+            foreach (GraphNodeBase node in _nodes)
             {
                 if (node.Selected)
                     corpses.Add(node);
             }
 
-            foreach (var corp in corpses)
+            foreach (GraphNodeBase corp in corpses)
+            {
                 _nodes.Remove(corp);
+                RemoveAllNodeConnections(corp.NodeId);
+            }
+        }
+
+
+        public void OnNodesConnectionAdded(int id1, int id2)
+        {
+            _nodesConnections.Add((id1, id2));
+        }
+
+        public void OnNodesConnectionRemoved(int id1, int id2)
+        {
+            _nodesConnections.Remove((id1, id2));
+            _nodesConnections.Remove((id2, id1));
+        }
+
+        private void RemoveAllNodeConnections(int id)
+        {
+            List<(int, int)> corpses = [];
+
+            foreach ((int, int) conn in _nodesConnections)
+            {
+                if (conn.Item1 == id || conn.Item2 == id)
+                    corpses.Add(conn);
+            }
+
+            foreach ((int, int) corp in corpses)
+                _nodesConnections.Remove(corp);
         }
 
 
@@ -80,6 +112,13 @@ namespace ShaderGraphToy.Representation.Components
                 _nodes.Add(node);
                 placeNodeOnCanvas?.Invoke(node);
             }
+        }
+
+        public void CompileGraph()
+        {
+            Debug.WriteLine("Shader code compilation started...");
+
+
         }
     }
 }

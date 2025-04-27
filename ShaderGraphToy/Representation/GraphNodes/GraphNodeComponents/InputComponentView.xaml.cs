@@ -1,4 +1,5 @@
-﻿using Nodes2Shader.GraphNodesImplementation.Components;
+﻿using Nodes2Shader.Compilation.MathGraph;
+using Nodes2Shader.GraphNodesImplementation.Components;
 using System.Windows;
 using System.Windows.Controls;
 
@@ -7,7 +8,7 @@ namespace ShaderGraphToy.Representation.GraphNodes.GraphNodeComponents
     /// <summary>
     /// Логика взаимодействия для InputComponent.xaml
     /// </summary>
-    public partial class InputComponentView : UserControl
+    public partial class InputComponentView : UserControl, INodeComponentView
     {
         public static readonly DependencyProperty ModelProperty = DependencyProperty.Register(
             nameof(Model), typeof(InputComponent), typeof(InputComponentView), new PropertyMetadata(null));
@@ -29,6 +30,11 @@ namespace ShaderGraphToy.Representation.GraphNodes.GraphNodeComponents
         {
             if (Model.HasInput) return inputConnector;
             else return null;
+        }
+
+        public NodeEntry GetData()
+        {
+            return new("Float", Model.Content);
         }
     }
 }

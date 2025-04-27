@@ -6,7 +6,7 @@ namespace ShaderGraphToy.Utilities
 {
     public static class GraphComponentsFactory
     {
-        public static UserControl ConstructComponent(INodeComponent data)
+        public static INodeComponentView ConstructComponent(INodeComponent data)
         {
             return data switch
             {
@@ -20,9 +20,9 @@ namespace ShaderGraphToy.Utilities
             };
         }
 
-        public static List<UserControl> ConstructComponents(List<INodeComponent> components)
+        public static List<INodeComponentView> ConstructComponents(List<INodeComponent> components)
         {
-            List<UserControl> controls = [];
+            List<INodeComponentView> controls = [];
 
             foreach (INodeComponent comp in components)
                 controls.Add(ConstructComponent(comp));

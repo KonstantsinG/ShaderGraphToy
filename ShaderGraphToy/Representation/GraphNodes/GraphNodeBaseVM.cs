@@ -77,7 +77,7 @@ namespace ShaderGraphToy.Representation.GraphNodes
 
         public ObservableCollection<OperationType> NodeOperations { get; set; } = [];
         public ObservableCollection<OperationSubType> NodeSubOperations { get; set; } = [];
-        public ObservableCollection<UserControl> NodeComponents { get; set; } = [];
+        public ObservableCollection<INodeComponentView> NodeComponents { get; set; } = [];
 
         public Func<List<NodesConnector>>? GetOwnConnectors;
         public Action<object, MouseEventArgs>? RaiseConnectorPressedEvent;

@@ -1,4 +1,5 @@
-﻿using ShaderGraphToy.Resources;
+﻿using Nodes2Shader.Compilation.MathGraph;
+using ShaderGraphToy.Resources;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Input;
@@ -17,6 +18,7 @@ namespace ShaderGraphToy.Representation.GraphNodes
 
         public bool Selected { get; private set; }
         public bool IsMinimized { get; private set; } = false;
+        public int NodeId { get => ((GraphNodeBaseVM)DataContext).NodeId; }
 
         public delegate void NodeStateHandler(GraphNodeBase sender);
 
@@ -83,6 +85,8 @@ namespace ShaderGraphToy.Representation.GraphNodes
             HeaderPressed.Invoke(this, e);
         }
 
+
+
         public List<NodesConnector> GetConnectors()
         {
             List<NodesConnector> conns = [];
@@ -92,6 +96,17 @@ namespace ShaderGraphToy.Representation.GraphNodes
 
             return conns;
         }
+
+        public NodeData GetNodeData()
+        {
+            NodeData data = new(NodeId);
+
+
+
+            return data;
+        }
+
+
 
         public void RaiseConnectorPressedEvent(object sender, MouseEventArgs e)
         {

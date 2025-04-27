@@ -1,13 +1,16 @@
 ﻿using Newtonsoft.Json.Linq;
 using Newtonsoft.Json;
 using Nodes2Shader.GraphNodesImplementation.Expressions;
+using Nodes2Shader.Resources;
 
 namespace Nodes2Shader.Serializers
 {
     public static class GraphNodeExpressionsSerializer
     {
-        public static GraphNodeExpression DeserializeSingle(string json, int typeId)
+        public static GraphNodeExpression Deserialize(int typeId)
         {
+            string json = ResourceManager.GetGraphNodesExpressionsResource(typeId.ToString()[0].ToString());
+
             using (var stringReader = new StringReader(json))
             using (var jsonReader = new JsonTextReader(stringReader))
             {
@@ -66,8 +69,10 @@ namespace Nodes2Shader.Serializers
 
 
 
-        public static ExternalFunction DeserializeSingle(string json, string path)
+        public static ExternalFunction Deserialize(string path)
         {
+            string json = ResourceManager.GetExterrnalFunctionsResource();
+
             using (var stringReader = new StringReader(json))
             using (var jsonReader = new JsonTextReader(stringReader))
             {
@@ -107,8 +112,10 @@ namespace Nodes2Shader.Serializers
             };
         }
 
-        public static List<ExternalFunction> DeserializeAll(string json)
+        public static List<ExternalFunction> DeserializeAll()
         {
+            string json = ResourceManager.GetExterrnalFunctionsResource();
+
             var settings = new JsonSerializerSettings
             {
                 Converters = [ new ExternalFunctionConverter() ]

@@ -1,4 +1,5 @@
-﻿using Nodes2Shader.GraphNodesImplementation.Components;
+﻿using Nodes2Shader.Compilation.MathGraph;
+using Nodes2Shader.GraphNodesImplementation.Components;
 using System.Windows;
 using System.Windows.Controls;
 
@@ -7,7 +8,7 @@ namespace ShaderGraphToy.Representation.GraphNodes.GraphNodeComponents
     /// <summary>
     /// Логика взаимодействия для InscriptionComponent.xaml
     /// </summary>
-    public partial class InscriptionComponentView : UserControl
+    public partial class InscriptionComponentView : UserControl, INodeComponentView
     {
         public static readonly DependencyProperty ModelProperty = DependencyProperty.Register(
             nameof(Model), typeof(InscriptionComponent), typeof(InscriptionComponentView), new PropertyMetadata(null));
@@ -38,6 +39,11 @@ namespace ShaderGraphToy.Representation.GraphNodes.GraphNodeComponents
             if (Model.HasOutput) conns.Add(outputConnector);
 
             return conns;
+        }
+
+        public NodeEntry GetData()
+        {
+            return new() { Type = Model.InputType };
         }
 
         public void SetFormatting(List<string> props)

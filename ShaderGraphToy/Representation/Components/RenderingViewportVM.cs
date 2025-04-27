@@ -3,6 +3,7 @@ using OpenTK.Graphics.OpenGL;
 using ShaderGraphToy.Graphics;
 using ShaderGraphToy.Utilities.DataBindings;
 using ShaderGraphToy.Utilities.Common;
+using Microsoft.Xaml.Behaviors.Media;
 
 namespace ShaderGraphToy.Representation.Components
 {
@@ -142,6 +143,8 @@ namespace ShaderGraphToy.Representation.Components
 
             _timer = new Stopwatch();
             _timer.Start();
+
+            OpenTkRendererAPI.RegisterRenderer(this);
         }
 
         public void OpenTkControl_OnRender(TimeSpan delta)
@@ -200,6 +203,15 @@ namespace ShaderGraphToy.Representation.Components
         private void TogglePauseButtonImage()
         {
             _renderingPaused = !_renderingPaused;
+        }
+
+
+        public void ChangeFragmentShader(string code)
+        {
+            string vertPath = System.IO.Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "Shaders/plane.vert");
+            string fragPath = System.IO.Path.Combine(AppDomain.CurrentDomain.BaseDirectory, code);
+            _shaderProgram = new Shader(vertPath, fragPath, false, true);
+            _shaderProgram.Use();
         }
     }
 }

@@ -1,4 +1,5 @@
-﻿using Nodes2Shader.GraphNodesImplementation.Components;
+﻿using Nodes2Shader.Compilation.MathGraph;
+using Nodes2Shader.GraphNodesImplementation.Components;
 using System.ComponentModel;
 using System.Windows;
 using System.Windows.Controls;
@@ -8,7 +9,7 @@ namespace ShaderGraphToy.Representation.GraphNodes.GraphNodeComponents
     /// <summary>
     /// Логика взаимодействия для VectorComponent.xaml
     /// </summary>
-    public partial class VectorComponentView : UserControl, INotifyPropertyChanged
+    public partial class VectorComponentView : UserControl, INotifyPropertyChanged, INodeComponentView
     {
         public static readonly DependencyProperty ModelProperty = DependencyProperty.Register(
             nameof(Model), typeof(VectorComponent), typeof(VectorComponentView), new PropertyMetadata(null));
@@ -46,6 +47,21 @@ namespace ShaderGraphToy.Representation.GraphNodes.GraphNodeComponents
         {
             InitializeComponent();
         }
+
+
+        public NodeEntry GetData()
+        {
+            (string type, string value) = cBox.SelectedIndex switch
+            {
+                0 => ("Vec2", $"({tb0.Text}, {tb1.Text})"),
+                1 => ("Vec3", $"({tb0.Text}, {tb1.Text}, {tb2.Text})"),
+                2 => ("Vec4", $"({tb0.Text}, {tb1.Text}, {tb2.Text}, {tb3.Text})"),
+                _ => (string.Empty, string.Empty)
+            };
+
+            return new NodeEntry(type, value);
+        }
+
 
         private void ComboBox_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {

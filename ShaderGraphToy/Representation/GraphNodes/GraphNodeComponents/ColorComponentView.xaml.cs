@@ -1,4 +1,5 @@
-﻿using Nodes2Shader.GraphNodesImplementation.Components;
+﻿using Nodes2Shader.Compilation.MathGraph;
+using Nodes2Shader.GraphNodesImplementation.Components;
 using System.ComponentModel;
 using System.Runtime.CompilerServices;
 using System.Windows;
@@ -10,7 +11,7 @@ namespace ShaderGraphToy.Representation.GraphNodes.GraphNodeComponents
     /// <summary>
     /// Логика взаимодействия для ColorComponent.xaml
     /// </summary>
-    public partial class ColorComponentView : UserControl, INotifyPropertyChanged
+    public partial class ColorComponentView : UserControl, INotifyPropertyChanged, INodeComponentView
     {
         public static readonly DependencyProperty ModelProperty = DependencyProperty.Register(
             nameof(Model), typeof(ColorComponent), typeof(ColorComponentView), new PropertyMetadata(null));
@@ -44,18 +45,24 @@ namespace ShaderGraphToy.Representation.GraphNodes.GraphNodeComponents
         }
 
 
-        public event PropertyChangedEventHandler? PropertyChanged;
-        public void OnPropertyChanged([CallerMemberName] string prop = "")
+        public NodeEntry GetData()
         {
-            PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(prop));
+            return new("Vec4", Model.Content);
         }
 
-        private void Rectangle_MouseLeftButtonDown(object sender, System.Windows.Input.MouseButtonEventArgs e)
+        private void Rectangle_MouseLeftButtonDown(object sender, MouseButtonEventArgs e)
         {
             SlidersVisible = !SlidersVisible;
 
             UpdateLayout();
             ComponentSizeChanged.Invoke();
+        }
+
+
+        public event PropertyChangedEventHandler? PropertyChanged;
+        public void OnPropertyChanged([CallerMemberName] string prop = "")
+        {
+            PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(prop));
         }
     }
 }

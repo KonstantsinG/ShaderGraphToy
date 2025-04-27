@@ -15,19 +15,19 @@ namespace ShaderGraphToy.Graphics
         public int Handle { get; private set; }
 
 
-        public Shader(string vertexPath, string fragmentPath)
+        public Shader(string vertexPath, string fragmentPath, bool vertAsCode = false, bool fragAsCode = false)
         {
-            (int vert, int frag) = CompileShader(vertexPath, fragmentPath);
+            string vertSource = vertAsCode ? vertexPath : File.ReadAllText(vertexPath);
+            string fragSource = fragAsCode ? fragmentPath : File.ReadAllText(fragmentPath);
+
+            (int vert, int frag) = CompileShader(vertSource, fragSource);
             LinkShader(vert, frag);
             FreeUpResources(vert, frag);
         }
 
 
-        private (int, int) CompileShader(string vertexPath, string fragmentPath)
+        private static (int, int) CompileShader(string vertexSource, string fragmentSource)
         {
-            string vertexSource = File.ReadAllText(vertexPath);
-            string fragmentSource = File.ReadAllText(fragmentPath);
-
             int vertexShader = GL.CreateShader(ShaderType.VertexShader);
             GL.ShaderSource(vertexShader, vertexSource);
             int fragmentShader = GL.CreateShader(ShaderType.FragmentShader);

@@ -12,7 +12,7 @@
         <TextBlock Style="{StaticResource GrayTextBlock}"
                    Text="{Binding Path=Model.Title, RelativeSource={RelativeSource AncestorType=UserControl}, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
 
-        <ComboBox Width="130" Margin="0,0,0,5" HorizontalAlignment="Left"
+        <ComboBox Width="130" Margin="0,0,0,5" HorizontalAlignment="Left" x:Name="cBox"
                   ItemsSource="{Binding Path=Model.Contents, RelativeSource={RelativeSource AncestorType=UserControl}, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
 
     </StackPanel>
