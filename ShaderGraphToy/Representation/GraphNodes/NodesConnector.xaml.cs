@@ -38,6 +38,8 @@ namespace ShaderGraphToy.Representation.GraphNodes
         public bool IsInput { get; set; }
         public int NodeId { get; set; }
         public int ConnectorId { get; set; }
+        public int ConnectedNodeId { get; set; }
+        public int ConnectedConnectorId { get; set; }
         public string NodeColor { get; set; } = string.Empty;
 
 

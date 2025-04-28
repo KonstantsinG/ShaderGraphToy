@@ -88,7 +88,7 @@ namespace ShaderGraphToy.Representation.GraphNodes.GraphNodeComponents
                 _ => (string.Empty, string.Empty)
             };
 
-            return new(type, value);
+            return new(type, value, NodeEntry.EntryType.Value);
         }
 
 

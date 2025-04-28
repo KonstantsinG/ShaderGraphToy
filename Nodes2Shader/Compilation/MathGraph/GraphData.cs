@@ -11,11 +11,6 @@ namespace Nodes2Shader.Compilation.MathGraph
             private set => _nodes = value;
         }
 
-        private List<int> _layers = [];
-        public List<int> Layers
-        {
-            get => _layers;
-            private set => _layers = value;
-        }
+        
     }
 }

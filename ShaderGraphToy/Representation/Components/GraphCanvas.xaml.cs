@@ -44,6 +44,8 @@ namespace ShaderGraphToy.Representation.Components
         private readonly List<GraphNodeBase> _selectedNodes = [];
         private readonly List<ConnectorsSpline> _splines = [];
 
+        private GraphNodeBase? _outputNode = null;
+
         
         private static readonly Cursor _zoomCursor = ResourceManager.GetCursorFromResources("zoom_cursor.cur");
 
@@ -564,6 +566,12 @@ namespace ShaderGraphToy.Representation.Components
         #region GRAPH_NODES CONTROLS
         private void AddNode(GraphNodeBase node)
         {
+            if (node.NodeTypeId == 3)
+            {
+                if (_outputNode != null) RemoveNode(_outputNode);
+                _outputNode = node;
+            }
+
             _nodes.Add(node);
             mainCanvas.Children.Add(node);
         }
@@ -713,10 +721,8 @@ namespace ShaderGraphToy.Representation.Components
                 conn2.IsBusy = true;
                 _tempSpline!.Bezier!.Point3 = conn2.GetGlobalCenter(mainCanvas);
 
-                _tempSpline!.InputConnector!.ConnectionsCount++;
-                _tempSpline!.OutputConnector!.ConnectionsCount++;
+                _tempSpline!.SetConnectionIds();
                 _splines.Add(_tempSpline);
-                ((GraphCanvasVM)DataContext).OnNodesConnectionAdded(_tempSpline!.InputConnector.NodeId, _tempSpline!.OutputConnector.NodeId);
             }
             else
             {
@@ -749,7 +755,7 @@ namespace ShaderGraphToy.Representation.Components
             {
                 _splines.Remove(currSpline);
                 mainCanvas.Children.Remove(currSpline.Path!);
-                ((GraphCanvasVM)DataContext).OnNodesConnectionRemoved(currSpline.InputConnector!.NodeId, currSpline.OutputConnector!.NodeId);
+
                 currSpline.Break();
                 currSpline.OutputConnector!.IsBusy = true;
                 currSpline.InputConnector = null;

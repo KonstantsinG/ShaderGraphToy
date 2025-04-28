@@ -28,7 +28,7 @@ namespace ShaderGraphToy.Representation.GraphNodes.GraphNodeComponents
 
         public NodeEntry GetData()
         {
-            return new("Int", cBox.SelectedIndex.ToString());
+            return new("Int", cBox.SelectedIndex.ToString(), NodeEntry.EntryType.Value);
         }
     }
 }

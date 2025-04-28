@@ -47,7 +47,7 @@ namespace ShaderGraphToy.Representation.GraphNodes.GraphNodeComponents
 
         public NodeEntry GetData()
         {
-            return new("Vec4", Model.Content);
+            return new("Vec4", Model.Content, NodeEntry.EntryType.Value);
         }
 
         private void Rectangle_MouseLeftButtonDown(object sender, MouseButtonEventArgs e)

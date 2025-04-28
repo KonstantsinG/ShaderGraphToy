@@ -7,6 +7,7 @@ using Nodes2Shader.GraphNodesImplementation.Contents;
 using Nodes2Shader.GraphNodesImplementation.Types;
 using Nodes2Shader.Serializers;
 using ShaderGraphToy.Utilities.DataBindings;
+using Nodes2Shader.Compilation.MathGraph;
 
 namespace ShaderGraphToy.Representation.GraphNodes
 {
@@ -14,11 +15,20 @@ namespace ShaderGraphToy.Representation.GraphNodes
     {
         #region PROPS
         private static int _nodesCounter = 0;
-        private static int _inputsCounter = 0;
-        private static int _outputsCounter = 0;
+        private int _inputsCounter = 0;
+        private int _outputsCounter = 0;
 
         public int NodeId { get; private set; }
         public List<NodesConnector> Connectors { get; private set; } = [];
+
+        public List<NodesConnector> Inputs
+        {
+            get => Connectors.Where(c => c.IsInput).ToList();
+        }
+        public List<NodesConnector> Outputs
+        {
+            get => Connectors.Where(c => !c.IsInput).ToList();
+        }
 
         private GraphNodeContent? _contentModel;
         public GraphNodeContent? ContentModel
@@ -91,6 +101,29 @@ namespace ShaderGraphToy.Representation.GraphNodes
             NodeId = _nodesCounter++;
         }
 
+        public List<NodeEntry> GetComponentsEntries()
+        {
+            List<NodeEntry> entries = [];
+
+            foreach (INodeComponentView compView in NodeComponents)
+                entries.Add(compView.GetData());
+
+            return entries;
+        }
+
+        public List<NodesConnection> GetConnections()
+        {
+            List<NodesConnection> cons = [];
+
+            foreach (NodesConnector nc in Connectors)
+            {
+                if (!nc.IsBusy) continue;
+                cons.Add(new(nc.NodeId, nc.ConnectedNodeId, nc.ConnectorId, nc.ConnectedConnectorId));
+            }
+
+            return cons;
+        }
+
         public void OperationsComboBox_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
             if (!NodeModel!.UsingSubOperations)
@@ -124,7 +157,7 @@ namespace ShaderGraphToy.Representation.GraphNodes
         {
             Connectors.AddRange(GetOwnConnectors!.Invoke());
 
-            foreach (UserControl comp in NodeComponents)
+            foreach (INodeComponentView comp in NodeComponents)
             {
                 if (comp is InputComponentView inputComp)
                 {

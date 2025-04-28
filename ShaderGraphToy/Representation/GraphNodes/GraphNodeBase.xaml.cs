@@ -19,6 +19,7 @@ namespace ShaderGraphToy.Representation.GraphNodes
         public bool Selected { get; private set; }
         public bool IsMinimized { get; private set; } = false;
         public int NodeId { get => ((GraphNodeBaseVM)DataContext).NodeId; }
+        public uint NodeTypeId { get => ((GraphNodeBaseVM)DataContext).NodeModel!.Id; }
 
         public delegate void NodeStateHandler(GraphNodeBase sender);
 
@@ -97,11 +98,20 @@ namespace ShaderGraphToy.Representation.GraphNodes
             return conns;
         }
 
+        public List<NodesConnector> GetInputs()
+        {
+            return ((GraphNodeBaseVM)DataContext).Inputs;
+        }
+
         public NodeData GetNodeData()
         {
-            NodeData data = new(NodeId);
-
-
+            NodeData data = new(NodeId)
+            {
+                InputType = ((GraphNodeBaseVM)DataContext).ContentModel!.InputType,
+                OutputType = ((GraphNodeBaseVM)DataContext).ContentModel!.OutputType,
+                Entries = ((GraphNodeBaseVM)DataContext).GetComponentsEntries(),
+                Connections = ((GraphNodeBaseVM)DataContext).GetConnections()
+            };
 
             return data;
         }

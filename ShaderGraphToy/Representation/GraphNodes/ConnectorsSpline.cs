@@ -28,6 +28,20 @@ namespace ShaderGraphToy.Representation.GraphNodes
         }
 
 
+        public void SetConnectionIds()
+        {
+            if (InputConnector == null || OutputConnector == null) return;
+
+            InputConnector!.ConnectionsCount++;
+            OutputConnector!.ConnectionsCount++;
+
+            InputConnector!.ConnectedNodeId = OutputConnector!.NodeId;
+            InputConnector.ConnectedConnectorId = OutputConnector!.ConnectorId;
+
+            OutputConnector!.ConnectedNodeId = InputConnector!.NodeId;
+            OutputConnector.ConnectedConnectorId = InputConnector!.ConnectorId;
+        }
+
         public void Define(Point startPoint, Color color1, Color color2, bool direction)
         {
             Color1 = color1;

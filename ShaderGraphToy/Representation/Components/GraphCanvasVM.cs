@@ -1,7 +1,10 @@
-﻿using ShaderGraphToy.Representation.GraphNodes;
+﻿using Nodes2Shader.Compilation;
+using Nodes2Shader.Compilation.MathGraph;
+using ShaderGraphToy.Representation.GraphNodes;
 using ShaderGraphToy.Utilities.DataBindings;
 using ShaderGraphToy.Windows;
 using System.Diagnostics;
+using System.Xml.Linq;
 
 namespace ShaderGraphToy.Representation.Components
 {
@@ -41,7 +44,7 @@ namespace ShaderGraphToy.Representation.Components
 
         private GraphNodesBrowserWindow? _nodesBrowser = null;
         private readonly List<GraphNodeBase> _nodes = [];
-        private readonly List<(int, int)> _nodesConnections = [];
+        private GraphNodeBase? _outputNode = null;
 
         public Action<GraphNodeBase>? placeNodeOnCanvas;
 
@@ -66,36 +69,7 @@ namespace ShaderGraphToy.Representation.Components
             }
 
             foreach (GraphNodeBase corp in corpses)
-            {
                 _nodes.Remove(corp);
-                RemoveAllNodeConnections(corp.NodeId);
-            }
-        }
-
-
-        public void OnNodesConnectionAdded(int id1, int id2)
-        {
-            _nodesConnections.Add((id1, id2));
-        }
-
-        public void OnNodesConnectionRemoved(int id1, int id2)
-        {
-            _nodesConnections.Remove((id1, id2));
-            _nodesConnections.Remove((id2, id1));
-        }
-
-        private void RemoveAllNodeConnections(int id)
-        {
-            List<(int, int)> corpses = [];
-
-            foreach ((int, int) conn in _nodesConnections)
-            {
-                if (conn.Item1 == id || conn.Item2 == id)
-                    corpses.Add(conn);
-            }
-
-            foreach ((int, int) corp in corpses)
-                _nodesConnections.Remove(corp);
         }
 
 
@@ -110,15 +84,42 @@ namespace ShaderGraphToy.Representation.Components
                 ((GraphNodeBaseVM)node.DataContext!).ConstructNode((int)nodeId);
 
                 _nodes.Add(node);
+                if (nodeId == 3) _outputNode = node;
                 placeNodeOnCanvas?.Invoke(node);
             }
         }
 
         public void CompileGraph()
         {
+            if (_nodes.Count < 2) throw new ArgumentException("Graph must contain at least 2 nodes!");
+            if (_outputNode == null) throw new ArgumentException("Graph must contain output nodoe!");
+
             Debug.WriteLine("Shader code compilation started...");
 
+            List<NodeData> data = [];
 
+
+            //string code = GraphCompiler.Compile(data, out CompilationResult result);
+        }
+
+        private void RevealGraphLayer(List<GraphNodeBase> startNodes, List<NodeData> revealed, int layer)
+        {
+            NodeData data;
+            List<GraphNodeBase> nextGen = [];
+
+            if (startNodes.Count == 0 || layer > 999) return;
+
+            foreach (GraphNodeBase node in startNodes)
+            {
+                data = node.GetNodeData();
+                data.Layer = layer;
+                revealed.Add(data);
+
+                foreach (NodesConnection con in data.Connections)
+                {
+                    
+                }
+            }
         }
     }
 }
