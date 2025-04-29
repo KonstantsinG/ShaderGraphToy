@@ -2,11 +2,12 @@
 {
     public class NodeData (int id)
     {
-        public string InputType { get; set; } = string.Empty;
-        public string OutputType { get; set; } = string.Empty;
         public int Id { get; set; } = id;
-        public List<NodesConnection> Connections { get; set; } = [];
+        public List<NodesConnection> InputConnections { get; set; } = [];
+        public List<NodesConnection> OutputConnections { get; set; } = [];
         public List<NodeEntry> Entries { get; set; } = [];
+        public NodeEntry? NodeInput { get; set; } = null;
+        public NodeEntry? NodeOutput { get; set; } = null;
         public int Layer { get; set; }
     }
 }

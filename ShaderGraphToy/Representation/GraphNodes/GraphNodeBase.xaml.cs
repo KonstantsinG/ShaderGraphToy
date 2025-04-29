@@ -98,23 +98,9 @@ namespace ShaderGraphToy.Representation.GraphNodes
             return conns;
         }
 
-        public List<NodesConnector> GetInputs()
-        {
-            return ((GraphNodeBaseVM)DataContext).Inputs;
-        }
+        public List<NodesConnector> GetInputs() => ((GraphNodeBaseVM)DataContext).Inputs;
 
-        public NodeData GetNodeData()
-        {
-            NodeData data = new(NodeId)
-            {
-                InputType = ((GraphNodeBaseVM)DataContext).ContentModel!.InputType,
-                OutputType = ((GraphNodeBaseVM)DataContext).ContentModel!.OutputType,
-                Entries = ((GraphNodeBaseVM)DataContext).GetComponentsEntries(),
-                Connections = ((GraphNodeBaseVM)DataContext).GetConnections()
-            };
-
-            return data;
-        }
+        public NodeData GetNodeData() => ((GraphNodeBaseVM) DataContext).GetNodeData();
 
 
 

@@ -84,7 +84,11 @@ namespace ShaderGraphToy.Representation.Components
                 ((GraphNodeBaseVM)node.DataContext!).ConstructNode((int)nodeId);
 
                 _nodes.Add(node);
-                if (nodeId == 3) _outputNode = node;
+                if (nodeId == 3)
+                {
+                    if (_outputNode != null) _nodes.Remove(_outputNode);
+                    _outputNode = node;
+                }
                 placeNodeOnCanvas?.Invoke(node);
             }
         }
@@ -96,10 +100,13 @@ namespace ShaderGraphToy.Representation.Components
 
             Debug.WriteLine("Shader code compilation started...");
 
-            List<NodeData> data = [];
+            List<NodeData> nodesData = [];
+            RevealGraphLayer([ _outputNode ], nodesData, 0);
 
+            if (nodesData.Count < 2) throw new ArgumentException("Graph must contain output nodoe!");
+            GraphData graphData = new GraphData() { Nodes = nodesData };
 
-            //string code = GraphCompiler.Compile(data, out CompilationResult result);
+            string code = GraphCompiler.Compile(graphData, out CompilationResult result);
         }
 
         private void RevealGraphLayer(List<GraphNodeBase> startNodes, List<NodeData> revealed, int layer)
@@ -115,11 +122,25 @@ namespace ShaderGraphToy.Representation.Components
                 data.Layer = layer;
                 revealed.Add(data);
 
-                foreach (NodesConnection con in data.Connections)
-                {
-                    
-                }
+                nextGen.AddRange(FindNodes(data.InputConnections, data.Id));
             }
+
+            RevealGraphLayer(nextGen, revealed, ++layer);
+        }
+
+        private List<GraphNodeBase> FindNodes(List<NodesConnection> conns, int ownId)
+        {
+            List<GraphNodeBase> nodes = [];
+
+            foreach (GraphNodeBase gn in _nodes)
+            {
+                if (gn.NodeId == ownId) continue;
+
+                if (conns.Any(c => c.FirstNodeId == gn.NodeId || c.SecondNodeId == gn.NodeId))
+                    nodes.Add(gn);
+            }
+
+            return nodes;
         }
     }
 }

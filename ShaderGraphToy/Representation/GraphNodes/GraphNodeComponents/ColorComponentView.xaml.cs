@@ -45,9 +45,24 @@ namespace ShaderGraphToy.Representation.GraphNodes.GraphNodeComponents
         }
 
 
+        public static string ConvertHexToRgba(string colorHex)
+        {
+            colorHex = colorHex.Trim().Replace("#", "").Replace(" ", "");
+
+            if (colorHex.Length == 6) colorHex = "FF" + colorHex;
+
+            byte a = Convert.ToByte(colorHex.Substring(0, 2), 16);
+            byte r = Convert.ToByte(colorHex.Substring(2, 2), 16);
+            byte g = Convert.ToByte(colorHex.Substring(4, 2), 16);
+            byte b = Convert.ToByte(colorHex.Substring(6, 2), 16);
+
+            return $"{r / 255f}, {g / 255f}, {b / 255f}, {a / 255f}";
+        }
+
+
         public NodeEntry GetData()
         {
-            return new("Vec4", Model.Content, NodeEntry.EntryType.Value);
+            return new("Vec4", ConvertHexToRgba(Model.Content), NodeEntry.EntryType.Value);
         }
 
         private void Rectangle_MouseLeftButtonDown(object sender, MouseButtonEventArgs e)

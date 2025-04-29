@@ -4,13 +4,9 @@ namespace Nodes2Shader.Compilation.MathGraph
 {
     public class GraphData
     {
-        private List<NodeData> _nodes = [];
-        public List<NodeData> Nodes
-        {
-            get => _nodes;
-            private set => _nodes = value;
-        }
+        public List<NodeData> Nodes { get; set; } = [];
 
-        
+        public List<NodeData> GetLayer(int layer) => Nodes.Where(n => n.Layer == layer).ToList();
+        public List<NodeData> GetEndpoints() => Nodes.Where(n => n.InputConnections.Count == 0).ToList();
     }
 }

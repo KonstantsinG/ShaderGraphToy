@@ -111,17 +111,70 @@ namespace ShaderGraphToy.Representation.GraphNodes
             return entries;
         }
 
-        public List<NodesConnection> GetConnections()
+        public List<NodesConnection> GetInputConnections()
         {
             List<NodesConnection> cons = [];
 
             foreach (NodesConnector nc in Connectors)
             {
-                if (!nc.IsBusy) continue;
+                if (!nc.IsBusy || !nc.IsInput) continue;
                 cons.Add(new(nc.NodeId, nc.ConnectedNodeId, nc.ConnectorId, nc.ConnectedConnectorId));
             }
 
             return cons;
+        }
+
+        public List<NodesConnection> GetOutputConnections()
+        {
+            List<NodesConnection> cons = [];
+
+            foreach (NodesConnector nc in Connectors)
+            {
+                if (!nc.IsBusy || nc.IsInput) continue;
+                cons.Add(new(nc.NodeId, nc.ConnectedNodeId, nc.ConnectorId, nc.ConnectedConnectorId));
+            }
+
+            return cons;
+        }
+
+        public NodeEntry? GetNodeInput()
+        {
+            if (!ContentModel!.HasInput) return null;
+
+            NodeEntry input = new()
+            {
+                Type = ContentModel!.InputType,
+                Behavior = NodeEntry.EntryType.Input
+            };
+
+            return input;
+        }
+
+        public NodeEntry? GetNodeOutput()
+        {
+            if (!ContentModel!.HasOutput) return null;
+
+            NodeEntry output = new()
+            {
+                Type = ContentModel!.OutputType,
+                Behavior = NodeEntry.EntryType.Output
+            };
+
+            return output;
+        }
+
+        public NodeData GetNodeData()
+        {
+            NodeData data = new(NodeId)
+            {
+                NodeInput = GetNodeInput(),
+                NodeOutput = GetNodeOutput(),
+                Entries = GetComponentsEntries(),
+                InputConnections = GetInputConnections(),
+                OutputConnections = GetOutputConnections()
+            };
+
+            return data;
         }
 
         public void OperationsComboBox_SelectionChanged(object sender, SelectionChangedEventArgs e)

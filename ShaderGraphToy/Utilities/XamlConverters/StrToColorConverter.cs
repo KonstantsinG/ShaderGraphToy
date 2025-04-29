@@ -42,9 +42,10 @@ namespace ShaderGraphToy.Utilities.XamlConverters
 
         public object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture)
         {
-            Color col = value is Color color ? color : _defaultColor;
+            if (value is not Color color)
+                return _defaultColor.ToString();
 
-            return $"({(float)col.R/255.0f}, {(float)col.G / 255.0f}, {(float)col.B / 255.0f}, {(float)col.A / 255.0f})";
+            return color.ToString();
         }
     }
 }

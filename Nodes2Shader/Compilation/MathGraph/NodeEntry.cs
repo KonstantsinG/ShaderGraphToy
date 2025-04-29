@@ -9,7 +9,6 @@
 
         public EntryType Behavior { get; set; }
         public string Type { get; set; } = string.Empty;
-        public int Id { get; set; }
         public string Value { get; set; } = string.Empty;
         public bool DataRevealed { get; set; }
 

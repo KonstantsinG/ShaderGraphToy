@@ -568,7 +568,11 @@ namespace ShaderGraphToy.Representation.Components
         {
             if (node.NodeTypeId == 3)
             {
-                if (_outputNode != null) RemoveNode(_outputNode);
+                if (_outputNode != null)
+                {
+                    RemoveNode(_outputNode);
+                    RemoveSplines([_outputNode]);
+                }
                 _outputNode = node;
             }
 
