@@ -25,21 +25,21 @@
           "Variant": 0,
           "Output": 0,
           "InputTypes": [],
-          "Expression": "const vec2 <name> = vec2(<val1>, <val2>);",
+          "Expression": "const vec2 <name> = vec2<val1>;",
           "ExternalFunctions": []
         },
         {
           "Variant": 1,
           "Output": 0,
           "InputTypes": [],
-          "Expression": "const vec3 <name> = vec3(<val1>, <val2>, <val3>);",
+          "Expression": "const vec3 <name> = vec3<val1>;",
           "ExternalFunctions": []
         },
         {
           "Variant": 2,
           "Output": 0,
           "InputTypes": [],
-          "Expression": "const vec4 <name> = vec4(<val1>, <val2>, <val3>, <val4>);",
+          "Expression": "const vec4 <name> = vec4<val1>;",
           "ExternalFunctions": []
         }
       ]
@@ -55,63 +55,63 @@
           "Variant": 0,
           "Output": 0,
           "InputTypes": [],
-          "Expression": "const mat2 <name> = mat2(<val1>, <val2>, <val3>, <val4>);",
+          "Expression": "const mat2 <name> = mat2<val1>;",
           "ExternalFunctions": []
         },
         {
           "Variant": 1,
           "Output": 0,
           "InputTypes": [],
-          "Expression": "const mat3x2 <name> = mat3x2(<val1>, <val2>, <val3>, <val4>, <val5>, <val6>);",
+          "Expression": "const mat3x2 <name> = mat3x2<val1>;",
           "ExternalFunctions": []
         },
         {
           "Variant": 2,
           "Output": 0,
           "InputTypes": [],
-          "Expression": "const mat4x2 <name> = mat4x2(<val1>, <val2>, <val2>, <val4>, <val5>, <val6>, <val7>, <val8>);",
+          "Expression": "const mat4x2 <name> = mat4x2<val1>;",
           "ExternalFunctions": []
         },
         {
           "Variant": 3,
           "Output": 0,
           "InputTypes": [],
-          "Expression": "const mat2x3 <name> = mat2x3(<val1>, <val2>, <val3>, <val4>, <val5>, <val6>);",
+          "Expression": "const mat2x3 <name> = mat2x3<val1>;",
           "ExternalFunctions": []
         },
         {
           "Variant": 4,
           "Output": 0,
           "InputTypes": [],
-          "Expression": "const mat3 <name> = mat3(<val1>, <val2>, <val3>, <val4>, <val5>, <val6>, <val7>, <val8>, <val9>);",
+          "Expression": "const mat3 <name> = mat3<val1>;",
           "ExternalFunctions": []
         },
         {
           "Variant": 5,
           "Output": 0,
           "InputTypes": [],
-          "Expression": "const mat4x3 <name> = mat4x3(<val1>, <val2>, <val3>, <val4>, <val5>, <val6>, <val7>, <val8>, <val9>, <val10>, <val11>, <val12>);",
+          "Expression": "const mat4x3 <name> = mat4x3<val1>;",
           "ExternalFunctions": []
         },
         {
           "Variant": 6,
           "Output": 0,
           "InputTypes": [],
-          "Expression": "const mat2x4 <name> = mat2x4<val1>, <val2>, <val3>, <val4>, <val5>, <val6>, <val7>, <val8>);",
+          "Expression": "const mat2x4 <name> = mat2x4<val1>;",
           "ExternalFunctions": []
         },
         {
           "Variant": 7,
           "Output": 0,
           "InputTypes": [],
-          "Expression": "const mat3x4 <name> = mat3x4(<val1>, <val2>, <val3>, <val4>, <val5>, <val6>, <val7>, <val8>, <val9>, <val10>, <val11>, <val12>);",
+          "Expression": "const mat3x4 <name> = mat3x4<val1>;",
           "ExternalFunctions": []
         },
         {
           "Variant": 8,
           "Output": 0,
           "InputTypes": [],
-          "Expression": "const mat4 <name> = mat4(<val1>, <val2>, <val3>, <val4>, <val5>, <val6>, <val7>, <val8>, <val9>, <val10>, <val11>, <val12>, <val13>, <val14>, <val15>, <val16>);",
+          "Expression": "const mat4 <name> = mat4<val1>;",
           "ExternalFunctions": []
         }
       ]
@@ -126,7 +126,7 @@
           "Variant": 0,
           "Output": 0,
           "InputTypes": [],
-          "Expression": "const vec4 <name> = vec4(<val1>, <val2>, <val3>, <val4>);",
+          "Expression": "const vec4 <name> = vec4<val1>;",
           "ExternalFunctions": []
         }
       ]
