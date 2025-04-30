@@ -34,8 +34,20 @@ namespace ShaderGraphToy.Representation.GraphNodes.GraphNodeComponents
 
         public NodeEntry GetData()
         {
-            NodeEntry.EntryType type = Model.HasInput ? NodeEntry.EntryType.Input : NodeEntry.EntryType.Value;
-            return new("Float", Model.Content, type);
+            NodeEntry.EntryType type;
+            int id = -1;
+            
+            if (Model.HasInput)
+            {
+                type = NodeEntry.EntryType.Input;
+                id = GetConnector()!.ConnectorId;
+            }
+            else
+            {
+                type = NodeEntry.EntryType.Value;
+            }
+
+            return new("Float", Model.Content, type) { Id = id };
         }
     }
 }

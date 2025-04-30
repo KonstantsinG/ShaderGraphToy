@@ -1,5 +1,7 @@
 ﻿
 
+using Nodes2Shader.Compilation.MathGraph;
+
 namespace Nodes2Shader.DataTypes
 {
     public enum DataType
@@ -26,7 +28,9 @@ namespace Nodes2Shader.DataTypes
         GenType, // Float, Vec2, Vec3, Vec4,
         GenIType, // Int, IVec2, IVec3, IVec4
         GenBType, // Bool, BVec2, BVec3, BVec4
-        Any // GenType, GenIType, GenBType, Mat
+        Any, // GenType, GenIType, GenBType, Mat
+
+        Null
     }
 
     public enum ConversionResult
@@ -40,6 +44,20 @@ namespace Nodes2Shader.DataTypes
 
     public static class DataTypesConverter
     {
+        public static void RevealTypes(NodeData nd, List<string> variants)
+        {
+
+        }
+
+
+
+
+
+
+
+
+
+
         public static bool IsInterchangeable(string type1, string type2)
         {
             if (!DataType.TryParse(type1, true, out DataType t1)) return false;

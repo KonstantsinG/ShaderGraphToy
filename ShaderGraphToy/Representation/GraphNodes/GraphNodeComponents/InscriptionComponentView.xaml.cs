@@ -49,8 +49,16 @@ namespace ShaderGraphToy.Representation.GraphNodes.GraphNodeComponents
                 Value = Model.DefaultInput
             };
 
-            if (Model.HasInput) entry.Behavior = NodeEntry.EntryType.Input;
-            else if (Model.HasOutput) entry.Behavior = NodeEntry.EntryType.Output;
+            if (Model.HasInput)
+            {
+                entry.Behavior = NodeEntry.EntryType.Input;
+                entry.Id = inputConnector.ConnectorId;
+            }
+            else if (Model.HasOutput)
+            {
+                entry.Behavior = NodeEntry.EntryType.Output;
+                entry.Id = outputConnector.ConnectorId;
+            }
             else entry.Behavior = NodeEntry.EntryType.Value;
 
             return entry;

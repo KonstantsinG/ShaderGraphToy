@@ -4,10 +4,11 @@
     {
         public enum EntryType
         {
-            Input, Output, Value
+            Input, Output, Value, Variant
         }
 
         public EntryType Behavior { get; set; }
+        public int Id { get; set; } = -1;
         public string Type { get; set; } = string.Empty;
         public string Value { get; set; } = string.Empty;
         public bool DataRevealed { get; set; }

@@ -9,7 +9,7 @@
         {
           "Variant": 0,
           "Output": 0,
-          "InputTypes": [ "Vec4,null" ],
+          "InputTypes": [ "Vec4,Null" ],
           "Expression": "gl_FragColor = <val1>;",
           "ExternalFunctions": []
         },

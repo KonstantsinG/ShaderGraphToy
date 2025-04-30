@@ -7,7 +7,7 @@ namespace Nodes2Shader.Serializers
 {
     public static class GraphNodeExpressionsSerializer
     {
-        public static GraphNodeExpression Deserialize(int typeId)
+        public static GraphNodeExpression DeserializeExpression(int typeId)
         {
             string json = ResourceManager.GetGraphNodesExpressionsResource(typeId.ToString()[0].ToString());
 
@@ -69,7 +69,7 @@ namespace Nodes2Shader.Serializers
 
 
 
-        public static ExternalFunction Deserialize(string path)
+        public static ExternalFunction DeserializeExternalFunction(string path)
         {
             string json = ResourceManager.GetExterrnalFunctionsResource();
 
@@ -112,7 +112,7 @@ namespace Nodes2Shader.Serializers
             };
         }
 
-        public static List<ExternalFunction> DeserializeAll()
+        public static List<ExternalFunction> DeserializeAllExternalFunctions()
         {
             string json = ResourceManager.GetExterrnalFunctionsResource();
 

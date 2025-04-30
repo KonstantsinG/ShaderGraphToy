@@ -104,7 +104,7 @@ namespace ShaderGraphToy.Representation.Components
             RevealGraphLayer([ _outputNode ], nodesData, 0);
 
             if (nodesData.Count < 2) throw new ArgumentException("Graph must contain output nodoe!");
-            GraphData graphData = new GraphData() { Nodes = nodesData };
+            GraphData graphData = new() { Nodes = nodesData };
 
             string code = GraphCompiler.Compile(graphData, out CompilationResult result);
         }

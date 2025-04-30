@@ -1,6 +1,23 @@
 ﻿{
   "ExternalFunctions": [
 
+    // Special
+    {
+      "Type": "special",
+      "Path": "header",
+      "Body": [
+        "#version 330 core",
+        "out vec4 FragColor;"
+      ]
+    },
+    {
+      "Type": "special",
+      "Path": "entryp",
+      "Body": [
+        "void main(){"
+      ]
+    },
+
     // Defined constants
     {
       "Type": "defconst",
