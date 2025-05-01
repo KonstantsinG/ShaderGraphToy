@@ -18,7 +18,7 @@ namespace Nodes2Shader.Resources
 
 
         // Resource getters
-        internal static string GetExterrnalFunctionsResource() => ReadFileFromResources($"{_externalFunctionsPath}.json");
+        internal static string GetExternalFunctionsResource() => ReadFileFromResources($"{_externalFunctionsPath}.json");
         internal static string GetGraphNodesTypesInfoResource() => ReadFileFromResources($"{_gnTypesInfoPath}.json");
         internal static string GetGraphNodesContentsResource(string id)
         {

@@ -1,4 +1,5 @@
 ﻿using Nodes2Shader.Compilation.MathGraph;
+using Nodes2Shader.DataTypes;
 using Nodes2Shader.GraphNodesImplementation.Components;
 using System.Windows;
 using System.Windows.Controls;
@@ -48,6 +49,12 @@ namespace ShaderGraphToy.Representation.GraphNodes.GraphNodeComponents
                 Type = Model.InputType,
                 Value = Model.DefaultInput
             };
+            if (!inputConnector.IsBusy)
+            {
+                if (Model.DefaultInput == "Ignore" || Model.DefaultInput == "Error")
+                    entry.Type = "Null";
+                else entry.Type = DataTypesConverter.DefineType(Model.DefaultInput);
+            }
 
             if (Model.HasInput)
             {

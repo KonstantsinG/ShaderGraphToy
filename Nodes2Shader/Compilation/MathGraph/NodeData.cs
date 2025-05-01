@@ -1,11 +1,12 @@
 ﻿using Nodes2Shader.GraphNodesImplementation.Expressions;
-using System.Xml;
+using System.Text;
 
 namespace Nodes2Shader.Compilation.MathGraph
 {
     public class NodeData (int id)
     {
         public int Id { get; set; } = id;
+        public int TypeId {  get; set; }
         public List<NodesConnection> InputConnections { get; set; } = [];
         public List<NodesConnection> OutputConnections { get; set; } = [];
         public List<NodeEntry> Entries { get; set; } = [];
@@ -16,9 +17,18 @@ namespace Nodes2Shader.Compilation.MathGraph
 
         public List<ExpressionVariant> Expressions { get; set; } = [];
 
-        public string VarName { get; set; }
+        public string VarName { get; set; } = string.Empty;
         public int VarId { get; set; }
 
+
+        public List<NodeEntry> GetAllEntries()
+        {
+            List<NodeEntry> ent = new(Entries);
+            if (NodeInput != null) ent.Add(NodeInput);
+            if (NodeOutput != null) ent.Add(NodeOutput);
+
+            return ent;
+        }
 
         public int GetVariant()
         {
@@ -31,8 +41,27 @@ namespace Nodes2Shader.Compilation.MathGraph
             return 0;
         }
 
-        public int GetUsaedOutputsCount()
+        public string GetInputType()
         {
+            StringBuilder sb = new();
+            bool isFirst = true;
+
+            foreach (NodeEntry e in GetInputs())
+            {
+                if (!isFirst) sb.Append(",");
+                isFirst = false;
+
+                sb.Append(e.Type);
+            }
+
+            return sb.ToString();
+        }
+
+        public int GetUsedOutputsCount()
+        {
+            // output node have virtual output
+            if (TypeId == 3) return 1;
+
             List<int> outs = [];
 
             foreach (NodesConnection con in OutputConnections)

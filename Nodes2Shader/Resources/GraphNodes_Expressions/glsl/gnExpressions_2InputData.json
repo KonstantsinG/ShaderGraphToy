@@ -31,6 +31,7 @@
         {
           "Variant": 1,
           "Output": 0,
+          "InputTypes": [],
           "Expression": "vec2 <name> = gl_FragCoord / u_Resolution;\n<name> = <name> * 2.0 - 1.0",
           "ExternalFunctions": [ "u_Resolution" ]
         }

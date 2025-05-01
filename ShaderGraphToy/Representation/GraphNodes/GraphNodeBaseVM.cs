@@ -167,6 +167,7 @@ namespace ShaderGraphToy.Representation.GraphNodes
         {
             NodeData data = new(NodeId)
             {
+                TypeId = (int)ContentModel!.Id,
                 NodeInput = GetNodeInput(),
                 NodeOutput = GetNodeOutput(),
                 Entries = GetComponentsEntries(),

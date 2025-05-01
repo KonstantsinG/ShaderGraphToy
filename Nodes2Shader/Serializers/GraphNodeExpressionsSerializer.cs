@@ -71,7 +71,7 @@ namespace Nodes2Shader.Serializers
 
         public static ExternalFunction DeserializeExternalFunction(string path)
         {
-            string json = ResourceManager.GetExterrnalFunctionsResource();
+            string json = ResourceManager.GetExternalFunctionsResource();
 
             using (var stringReader = new StringReader(json))
             using (var jsonReader = new JsonTextReader(stringReader))
@@ -114,7 +114,7 @@ namespace Nodes2Shader.Serializers
 
         public static List<ExternalFunction> DeserializeAllExternalFunctions()
         {
-            string json = ResourceManager.GetExterrnalFunctionsResource();
+            string json = ResourceManager.GetExternalFunctionsResource();
 
             var settings = new JsonSerializerSettings
             {

@@ -13,11 +13,11 @@
             {
                 if (v.Variant == variant && 
                     v.Output == output && 
-                   (v.InputTypes.Any(it => it == inputTypes) || v.InputTypes.Contains(string.Empty)))
+                   (v.InputTypes.Any(it => it == inputTypes) || v.InputTypes.Contains(string.Empty) || v.InputTypes.Count == 0))
                     return v;
             }
 
-            return null;
+            return ExpressionVariants.FirstOrDefault();
         }
 
         public List<string> GetInputVariants()
