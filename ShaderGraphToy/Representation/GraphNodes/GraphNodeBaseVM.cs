@@ -89,7 +89,7 @@ namespace ShaderGraphToy.Representation.GraphNodes
         public ObservableCollection<OperationSubType> NodeSubOperations { get; set; } = [];
         public ObservableCollection<INodeComponentView> NodeComponents { get; set; } = [];
 
-        public Func<List<NodesConnector>>? GetOwnConnectors;
+        public Func<bool, bool, List<NodesConnector>>? GetOwnConnectors;
         public Action<object, MouseEventArgs>? RaiseConnectorPressedEvent;
         public Action? RaiseNodeSizeChangedEvent;
         public Action? HideOperationsCBoxes;
@@ -104,9 +104,13 @@ namespace ShaderGraphToy.Representation.GraphNodes
         public List<NodeEntry> GetComponentsEntries()
         {
             List<NodeEntry> entries = [];
+            NodeEntry? entry;
 
             foreach (INodeComponentView compView in NodeComponents)
-                entries.Add(compView.GetData());
+            {
+                entry = compView.GetData();
+                if (entry != null) entries.Add(entry);
+            }
 
             return entries;
         }
@@ -144,7 +148,8 @@ namespace ShaderGraphToy.Representation.GraphNodes
             NodeEntry input = new()
             {
                 Type = ContentModel!.InputType,
-                Behavior = NodeEntry.EntryType.Input
+                Behavior = NodeEntry.EntryType.Input,
+                Id = 0
             };
 
             return input;
@@ -157,7 +162,8 @@ namespace ShaderGraphToy.Representation.GraphNodes
             NodeEntry output = new()
             {
                 Type = ContentModel!.OutputType,
-                Behavior = NodeEntry.EntryType.Output
+                Behavior = NodeEntry.EntryType.Output,
+                Id = 0
             };
 
             return output;
@@ -209,7 +215,7 @@ namespace ShaderGraphToy.Representation.GraphNodes
 
         private void DefineConnectors()
         {
-            Connectors.AddRange(GetOwnConnectors!.Invoke());
+            Connectors.AddRange(GetOwnConnectors!.Invoke(ContentModel!.HasInput, ContentModel.HasOutput));
 
             foreach (INodeComponentView comp in NodeComponents)
             {

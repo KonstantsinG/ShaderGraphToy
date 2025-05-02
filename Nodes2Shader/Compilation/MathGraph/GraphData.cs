@@ -13,10 +13,6 @@
             }
         }
 
-        public List<NodeData> GetLayer(int layer) => Nodes.Where(n => n.Layer == layer).ToList();
-        public List<NodeData> GetEndpoints() => Nodes.Where(n => n.InputConnections.Count == 0).ToList();
-
-        public NodeData GetOutput() => Nodes.First(n => n.TypeId == 3);
 
         public NodeEntry? GetEntry(int nodeId, int entryId)
         {
@@ -24,7 +20,7 @@
             {
                 if (node.Id == nodeId)
                 {
-                    foreach (NodeEntry entry in node.Entries)
+                    foreach (NodeEntry entry in node.GetAllEntries())
                     {
                         if (entry.Id == entryId) return entry;
                     }

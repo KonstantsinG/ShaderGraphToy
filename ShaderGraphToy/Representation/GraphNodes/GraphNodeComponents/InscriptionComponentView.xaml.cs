@@ -42,31 +42,43 @@ namespace ShaderGraphToy.Representation.GraphNodes.GraphNodeComponents
             return conns;
         }
 
-        public NodeEntry GetData()
+        public NodeEntry? GetData()
         {
-            NodeEntry entry = new()
+            NodeEntry entry = new();
+
+            if (Model.DefaultInput == "Error" && !inputConnector.IsBusy)
+                throw new ArgumentException($"Inscription component ({inputConnector.NodeId}, {inputConnector.ConnectorId}) must have a value!");
+
+            else if ((Model.DefaultInput == "Ignore") && (!inputConnector.IsBusy && !outputConnector.IsBusy))
+                return null;
+
+            else if (inputConnector.IsBusy)
             {
-                Type = Model.InputType,
-                Value = Model.DefaultInput
-            };
-            if (!inputConnector.IsBusy)
-            {
-                if (Model.DefaultInput == "Ignore" || Model.DefaultInput == "Error")
-                    entry.Type = "Null";
-                else entry.Type = DataTypesConverter.DefineType(Model.DefaultInput);
+                entry.Id = inputConnector.ConnectorId;
+                entry.Value = "ToReveal";
+                entry.Type = Model.InputType;
+                entry.Behavior = NodeEntry.EntryType.Input;
             }
 
-            if (Model.HasInput)
+            else if (outputConnector.IsBusy)
             {
-                entry.Behavior = NodeEntry.EntryType.Input;
-                entry.Id = inputConnector.ConnectorId;
-            }
-            else if (Model.HasOutput)
-            {
-                entry.Behavior = NodeEntry.EntryType.Output;
                 entry.Id = outputConnector.ConnectorId;
+                entry.Type = Model.OutputType;
+                entry.Behavior = NodeEntry.EntryType.Output;
             }
-            else entry.Behavior = NodeEntry.EntryType.Value;
+
+            else
+            {
+                if (!DataTypesConverter.IsAnyValid(Model.DefaultInput))
+                    throw new ArgumentException($"Value <{Model.DefaultInput}> in component ({inputConnector.NodeId}, {inputConnector.ConnectorId}) is invalid!");
+                else
+                {
+                    entry.Id = inputConnector.ConnectorId;
+                    entry.Value = Model.DefaultInput;
+                    entry.Type = DataTypesConverter.DefineType(Model.DefaultInput);
+                    entry.Behavior = NodeEntry.EntryType.Value;
+                }
+            }
 
             return entry;
         }

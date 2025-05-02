@@ -9,6 +9,7 @@
         {
           "Variant": 0,
           "Output": 0,
+          "OutputType": "float",
           "InputTypes": [],
           "Expression": "float <name> = <val1>.x;",
           "ExternalFunctions": []
@@ -16,6 +17,7 @@
         {
           "Variant": 0,
           "Output": 1,
+          "OutputType": "float",
           "InputTypes": [],
           "Expression": "float <name> = <val1>.y;",
           "ExternalFunctions": []
@@ -23,6 +25,7 @@
         {
           "Variant": 0,
           "Output": 2,
+          "OutputType": "float",
           "InputTypes": [],
           "Expression": "float <name> = <val1>.z;",
           "ExternalFunctions": []
@@ -30,6 +33,7 @@
         {
           "Variant": 0,
           "Output": 3,
+          "OutputType": "float",
           "InputTypes": [],
           "Expression": "float <name> = <val1>.w;",
           "ExternalFunctions": []

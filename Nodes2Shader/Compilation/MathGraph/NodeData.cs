@@ -15,20 +15,11 @@ namespace Nodes2Shader.Compilation.MathGraph
         public int Layer { get; set; }
 
 
-        public List<ExpressionVariant> Expressions { get; set; } = [];
-
+        public ExpressionVariant? Expression { get; set; } = null;
         public string VarName { get; set; } = string.Empty;
         public int VarId { get; set; }
+        public string VarInput { get; set; } = string.Empty;
 
-
-        public List<NodeEntry> GetAllEntries()
-        {
-            List<NodeEntry> ent = new(Entries);
-            if (NodeInput != null) ent.Add(NodeInput);
-            if (NodeOutput != null) ent.Add(NodeOutput);
-
-            return ent;
-        }
 
         public int GetVariant()
         {
@@ -41,15 +32,28 @@ namespace Nodes2Shader.Compilation.MathGraph
             return 0;
         }
 
-        public string GetInputType()
+        public string GetInputTypes()
         {
+            // input nodes have virtual input (because they are startpoints)
+            if (TypeId.ToString()[0] == '2')
+                return NodeOutput!.Type;
+
             StringBuilder sb = new();
             bool isFirst = true;
+            int Idcounter = 0;
 
             foreach (NodeEntry e in GetInputs())
             {
-                if (!isFirst) sb.Append(",");
+                if (!isFirst) sb.Append(',');
                 isFirst = false;
+
+                // add null for each excluded input
+                while (Idcounter < e.Id)
+                {
+                    sb.Append("null,");
+                    Idcounter++;
+                }
+                Idcounter++;
 
                 sb.Append(e.Type);
             }
@@ -57,10 +61,14 @@ namespace Nodes2Shader.Compilation.MathGraph
             return sb.ToString();
         }
 
-        public int GetUsedOutputsCount()
+        public List<int> GetOutputsIds()
         {
-            // output node have virtual output
-            if (TypeId == 3) return 1;
+            // output node have virtual outputs (because it endpoint)
+            if (TypeId == 3)
+            {
+                if (Entries.Count == 1) return [ 0 ];
+                else if (Entries.Count == 2) return [ 0, 1 ];
+            }
 
             List<int> outs = [];
 
@@ -78,10 +86,27 @@ namespace Nodes2Shader.Compilation.MathGraph
                 }
             }
 
-            return outs.Count;
+            return outs;
         }
 
         public string GetName(int outId) => VarName.Replace("<idx>", VarId.ToString()).Replace("<outIdx>", outId.ToString());
+
+        public void SetOutputValueAndData(int outId)
+        {
+            List<NodeEntry> outputs = GetOutputs();
+            if (outputs.Count == 0) return;
+
+            NodeEntry output = outputs.Where(o => o.Id == outId).First();
+            output.Value = GetName(outId);
+            output.Type = Expression!.OutputType;
+
+            if (output.Type.Contains('<')) // expression may have preprocessors like <inType1>
+            {
+                List<NodeEntry> inputs = GetInputs();
+                int id = int.Parse(output.Type[7].ToString()) - 1;
+                output.Type = inputs.Where(i => i.Id == id).First().Type;
+            }
+        }
 
         public List<NodeEntry> GetInputs()
         {
@@ -109,6 +134,15 @@ namespace Nodes2Shader.Compilation.MathGraph
             }
 
             return entrs;
+        }
+
+        public List<NodeEntry> GetAllEntries()
+        {
+            List<NodeEntry> entries = new(Entries);
+            if (NodeInput != null) entries.Add(NodeInput);
+            if (NodeOutput != null) entries.Add(NodeOutput);
+
+            return entries;
         }
     }
 }

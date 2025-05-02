@@ -9,6 +9,7 @@
         {
           "Variant": 0,
           "Output": 0,
+          "OutputType": "<inType1>",
           "InputTypes": [],
           "Expression": "<inType1> <name> = mix(<val1>, <val2>, <val3>);",
           "ExternalFunctions": []

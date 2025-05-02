@@ -9,14 +9,16 @@
         {
           "Variant": 0,
           "Output": 0,
-          "InputTypes": [ "vec4,null" ],
+          "OutputType": "null",
+          "InputTypes": [ "Vec4,Null" ],
           "Expression": "gl_FragColor = <val1>;",
           "ExternalFunctions": []
         },
         {
           "Variant": 0,
           "Output": 0,
-          "InputTypes": [ "vec4,float" ],
+          "OutputType": "null",
+          "InputTypes": [ "Vec4,Float" ],
           "Expression": "gl_FragColor = vec4(<val1>.rgb, <val2>);",
           "ExternalFunctions": []
         }

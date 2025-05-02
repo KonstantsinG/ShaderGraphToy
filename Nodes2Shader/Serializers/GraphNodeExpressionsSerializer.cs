@@ -55,6 +55,7 @@ namespace Nodes2Shader.Serializers
                         {
                             Variant = variantObj["Variant"]?.Value<int>() ?? throw new JsonException("Missing required Variant"),
                             Output = variantObj["Output"]?.Value<int>() ?? throw new JsonException("Missing required Output"),
+                            OutputType = variantObj["OutputType"]?.Value<string>() ?? throw new JsonException("Missing required OutputType"),
                             InputTypes = variantObj["InputTypes"]?.ToObject<List<string>>() ?? [],
                             Expression = variantObj["Expression"]?.Value<string>() ?? string.Empty,
                             ExternalFunctions = variantObj["ExternalFunctions"]?.ToObject<List<string>>() ?? []

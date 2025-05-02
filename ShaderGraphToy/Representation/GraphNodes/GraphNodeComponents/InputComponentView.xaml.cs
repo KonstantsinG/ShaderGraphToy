@@ -1,4 +1,5 @@
 ﻿using Nodes2Shader.Compilation.MathGraph;
+using Nodes2Shader.DataTypes;
 using Nodes2Shader.GraphNodesImplementation.Components;
 using System.Windows;
 using System.Windows.Controls;
@@ -32,7 +33,7 @@ namespace ShaderGraphToy.Representation.GraphNodes.GraphNodeComponents
             else return null;
         }
 
-        public NodeEntry GetData()
+        public NodeEntry? GetData()
         {
             NodeEntry.EntryType type;
             int id = -1;
@@ -44,10 +45,13 @@ namespace ShaderGraphToy.Representation.GraphNodes.GraphNodeComponents
             }
             else
             {
+                if (!DataTypesConverter.IsAnyValid(Model.Content))
+                    throw new ArgumentException($"Value <{Model.Content}> in component ({inputConnector.NodeId}, {inputConnector.ConnectorId}) is invalid!");
+
                 type = NodeEntry.EntryType.Value;
             }
 
-            return new("Float", Model.Content, type) { Id = id };
+            return new(DataTypesConverter.DefineType(Model.Content), Model.Content, type) { Id = id };
         }
     }
 }

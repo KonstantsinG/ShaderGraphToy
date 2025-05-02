@@ -1,5 +1,4 @@
 ﻿using Nodes2Shader.Compilation.MathGraph;
-using System.Linq;
 
 namespace Nodes2Shader.DataTypes
 {
@@ -43,120 +42,137 @@ namespace Nodes2Shader.DataTypes
 
     public static class DataTypesConverter
     {
-        public static List<DataType> ExactTypes
-        {
-            get => GetInnerTypes(DataType.Any).ToList();
-        }
-        public static List<DataType> GenericTypes
-        {
-            get => [ DataType.Vec, DataType.Mat, DataType.GenType,
-                     DataType.GenIType, DataType.GenBType, DataType.Any ];
-        }
-
-
         public static string DefineType(string value)
         {
-            if (value.StartsWith("vec4")) return "Vec4";
-            else if (value.StartsWith("vec3")) return "Vec3";
-            else if (value.StartsWith("vec2")) return "Vec2";
-            else if (!value.Contains(',')) return "Float";
+            int c = value.Count(ch => ch == ',');
 
-            return "Null";
+            if (c == 0)
+            {
+                if (value.Count(ch => ch == '.') == 0) return "Int";
+                else return "Float";
+            }
+            else if (c == 1) return "Vec2";
+            else if (c == 2) return "Vec3";
+            else if (c == 3) return "Vec4";
+
+            return "Any";
         }
 
-        public static void RevealTypes(NodeData nd, List<string> variants)
+        public static bool IsAnyValid(string val)
         {
-            List<DataType> types = [];
-            List<NodeEntry> entries = nd.GetInputs();
+            if (string.IsNullOrEmpty(val)) return false;
 
-            // 1. check for nd types matches with variants
-            if (variants.Count > 0)
+            string[] vals = val.Split(',');
+            foreach (string v in vals)
             {
-                List<bool> revealed = [];
-                bool found = false;
-
-                foreach (string v in variants)
+                if (v.Contains('.'))
                 {
-                    types = v.Split(',').Select(x => (DataType)Enum.Parse(typeof(DataType), x.Trim(), true)).ToList();
-                    for (int i = 0; i < types.Count; i++)
-                    {
-                        if (CanUnwrap((DataType)Enum.Parse(typeof(DataType), entries[i].Type, true), types[i]))
-                            revealed.Add(true);
-                        else revealed.Add(false);
-                    }
-
-                    if (revealed.All(r => r))
-                    {
-                        for (int i = 0; i < types.Count; i++)
-                        {
-                            entries[i].Type = GetGlslType(types[i]);
-                            foreach (NodeEntry e in nd.GetOutputs()) e.Type = entries[i].Type;
-                        }
-
-                        found = true;
-                        break;
-                    }
-                    revealed.Clear();
+                    if (!float.TryParse(v.Trim(), null, out _))
+                        return false;
                 }
-
-                // 2. if there is - cast them to variant, otherwise - cast them to first castable variant
-                if (found) return;
                 else
                 {
-                    List<DataType> initTypes = [];
-                    foreach (NodeEntry e in entries)
-                        initTypes.Add((DataType)Enum.Parse(typeof(DataType), e.Type, true));
-
-                    foreach (string v in variants)
-                    {
-                        types = v.Split(',').Select(x => (DataType)Enum.Parse(typeof(DataType), x.Trim(), true)).ToList();
-                        if (IsCastPossible(initTypes, types))
-                        {
-                            for (int i = 0; i < types.Count; i++)
-                            {
-                                entries[i].Type = GetGlslType(types[i]);
-                                entries[i].Value = CastType(entries[i].Value, initTypes[i], types[i]);
-                                foreach (NodeEntry e in nd.GetOutputs()) e.Type = entries[i].Type;
-                            }
-                            return;
-                        }
-                    }
+                    if (!int.TryParse(v.Trim(), null, out _))
+                        return false;
                 }
-            }
-
-            // 3. By default, output type is determined by greatest input type
-            types.Clear();
-            foreach (NodeEntry e in entries)
-                types.Add((DataType)Enum.Parse(typeof(DataType), e.Type, true));
-            DataType greatest = GetGreatestType(types);
-
-            for (int i = 0; i < types.Count; i++)
-            {
-                entries[i].Type = GetGlslType(greatest);
-                entries[i].Value = CastType(entries[i].Value, types[i], greatest);
-                foreach (NodeEntry e in nd.GetOutputs()) e.Type = entries[i].Type;
-            }
-        }
-
-        private static bool IsCastPossible(List<DataType> toCast, List<DataType> target)
-        {
-            for (int i = 0; i < toCast.Count; i++)
-            {
-                if (GenericTypes.Contains(target[i])) return false;
-
-                if (target[i] == DataType.Sampler2D && toCast[i] != target[i]) return false;
-                if (toCast[i] == DataType.Null || target[i] == DataType.Null) return false;
             }
 
             return true;
         }
 
+        public static bool IsTypesRelevant(string[] typesFrom, string[] typesTo)
+        {
+            if (typesFrom.Length != typesTo.Length) return false;
+
+            DataType[] types1 = new DataType[typesFrom.Length];
+            for (int i = 0; i < typesFrom.Length; i++)
+                types1[i] = (DataType)Enum.Parse(typeof(DataType), typesFrom[i], true);
+
+            DataType[] types2 = new DataType[typesTo.Length];
+            for (int i = 0; i < typesTo.Length; i++)
+                types2[i] = (DataType)Enum.Parse(typeof(DataType), typesTo[i], true);
+
+            for (int i = 0; i < types1.Length; i++)
+            {
+                if (!IsCastPossible(types1[i], types2[i]))
+                    return false;
+            }
+
+            return true;
+        }
+
+        public static bool IsCastPossible(DataType toCast, DataType target)
+        {
+            if (toCast == target) return true;
+            if (toCast == DataType.Null || target == DataType.Null) return false;
+
+            if (toCast == DataType.Sampler2D || target == DataType.Sampler2D) return false;
+
+            return true;
+        }
+
+
+        public static void CastInputs(NodeData nd)
+        {
+            List<NodeEntry> inputs = nd.GetInputs();
+            if (inputs.Count == 0) return; // if node does not have inputs - it is predefined constant, so there is nothing to cast
+
+            if (nd.VarInput == "Greatest") // cast all inputs to one common type
+            {
+                List<DataType> initTypes = [];
+                foreach (NodeEntry e in inputs)
+                    initTypes.Add((DataType)Enum.Parse(typeof(DataType), e.Type, true));
+
+                DataType greatest = GetGreatestType(initTypes);
+                for (int i = 0; i < inputs.Count; i++)
+                {
+                    inputs[i].Value = CastType(inputs[i].Value, initTypes[i], greatest);
+                    inputs[i].Type = greatest.ToString();
+                }
+            }
+            else
+            {
+                List<DataType> targetTypes = [];
+                foreach (string t in nd.VarInput.Split(','))
+                {
+                    if (t.Equals("null", StringComparison.CurrentCultureIgnoreCase)) continue;
+                    targetTypes.Add((DataType)Enum.Parse(typeof(DataType), t, true));
+                }
+
+                DataType typeFrom;
+                if (targetTypes.Count != inputs.Count)
+                    throw new InvalidOperationException("Target input types count must be equal to input entries count!");
+
+                for (int i = 0; i < inputs.Count; i++)
+                {
+                    typeFrom = (DataType)Enum.Parse(typeof(DataType), inputs[i].Type, true);
+                    inputs[i].Value = CastType(inputs[i].Value, typeFrom, targetTypes[i]);
+                    inputs[i].Type = targetTypes[i].ToString();
+                }
+            }
+        }
+
+        private static DataType GetGreatestType(List<DataType> types)
+        {
+            return types.OrderBy(t => GetPriority(t)).Last();
+        }
+
+        private static int GetPriority(DataType type)
+        {
+            if (type == DataType.Float || type == DataType.Int || type == DataType.Bool) return 1;
+            else if (type == DataType.Vec2 || type == DataType.IVec2 || type == DataType.BVec2) return 2;
+            else if (type == DataType.Vec3 || type == DataType.IVec3 || type == DataType.BVec3) return 3;
+            else if (type == DataType.Vec4 || type == DataType.IVec4 || type == DataType.BVec4) return 4;
+
+            return -1;
+        }
+
         private static string CastType(string val, DataType typeFrom, DataType typeTo)
         {
-            if (val == "Ignore" && typeFrom == DataType.Null) return val;
+            if (typeFrom == DataType.Null || typeTo == DataType.Null) return val;
             if (typeFrom == typeTo) return val;
 
-            if (typeFrom == DataType.Float)
+            if (typeFrom == DataType.Float || typeFrom == DataType.Int)
             {
                 if (typeTo == DataType.Vec2) val = $"({val}, 0.0)";
                 else if (typeTo == DataType.Vec3) val = $"({val}, 0.0, 0.0)";
@@ -185,55 +201,8 @@ namespace Nodes2Shader.DataTypes
                 return val;
             }
 
+            // for now method supports only GenType casts from GLSL
             throw new NotImplementedException($"Cast from {typeFrom} to {typeTo} is currently unavailable...");
-        }
-
-        private static bool CanUnwrap(DataType toUnwrap, DataType target)
-        {
-            DataType[] innerTypes = GetInnerTypes(toUnwrap);
-            return innerTypes.Contains(target);
-        }
-
-        private static DataType GetGreatestType(List<DataType> types)
-        {
-            return types.OrderBy(t => GetPriority(t)).Last();
-        }
-
-        private static int GetPriority(DataType type)
-        {
-            if (type == DataType.Float || type == DataType.Int || type == DataType.Bool) return 1;
-            else if (type == DataType.Vec2 || type == DataType.IVec2 || type == DataType.BVec2) return 2;
-            else if (type == DataType.Vec3 || type == DataType.IVec3 || type == DataType.BVec3) return 3;
-            else if (type == DataType.Vec4 || type == DataType.IVec4 || type == DataType.BVec4) return 4;
-
-            return -1;
-        }
-
-        private static string GetGlslType(DataType type)
-        {
-            if (type == DataType.Vec || type == DataType.Mat ||
-                type == DataType.GenType || type == DataType.GenIType ||
-                type == DataType.GenBType || type == DataType.Any)
-                return string.Empty;
-            else if (type == DataType.Sampler2D)
-                return "sampler2D";
-            else
-                return type.ToString().ToLower();
-        }
-
-        private static DataType[] GetInnerTypes(DataType type)
-        {
-            if (type == DataType.GenType) return [DataType.Float, DataType.Vec2, DataType.Vec3, DataType.Vec4];
-            else if (type == DataType.GenIType) return [DataType.Int, DataType.IVec2, DataType.IVec3, DataType.IVec4];
-            else if (type == DataType.GenBType) return [DataType.Bool, DataType.BVec2, DataType.BVec3, DataType.BVec4];
-            else if (type == DataType.Vec) return [DataType.Vec2, DataType.Vec3, DataType.Vec4, DataType.IVec2, DataType.IVec3, DataType.IVec4, DataType.BVec2, DataType.BVec3, DataType.BVec4];
-            else if (type == DataType.Mat) return [DataType.Mat2, DataType.Mat3, DataType.Mat4, DataType.Mat2x3, DataType.Mat2x4, DataType.Mat3x2, DataType.Mat3x4, DataType.Mat4x2, DataType.Mat4x3];
-            else if (type == DataType.Any) return [DataType.Float, DataType.Vec2, DataType.Vec3, DataType.Vec4,
-                                                   DataType.Int, DataType.IVec2, DataType.IVec3, DataType.IVec4,
-                                                   DataType.Bool, DataType.BVec2, DataType.BVec3, DataType.BVec4,
-                                                   DataType.Mat2, DataType.Mat3, DataType.Mat4, DataType.Mat2x3, DataType.Mat2x4, DataType.Mat3x2, DataType.Mat3x4, DataType.Mat4x2, DataType.Mat4x3];
-
-            return [ type ];
         }
     }
 }

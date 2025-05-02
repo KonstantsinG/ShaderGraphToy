@@ -11,19 +11,16 @@
         public int Id { get; set; } = -1;
         public string Type { get; set; } = string.Empty;
         public string Value { get; set; } = string.Empty;
-        public bool DataRevealed { get; set; }
 
         public NodeEntry(string type, string value, EntryType behavior)
         {
             Type = type;
             Value = value;
             Behavior = behavior;
-            DataRevealed = true;
         }
 
         public NodeEntry()
         {
-            DataRevealed = false;
         }
     }
 }

@@ -9,6 +9,7 @@
         {
           "Variant": 0,
           "Output": 0,
+          "OutputType": "float",
           "InputTypes": [],
           "Expression": "const float <name> = <val1>;",
           "ExternalFunctions": []
@@ -24,21 +25,24 @@
         {
           "Variant": 0,
           "Output": 0,
-          "InputTypes": ["vec2"],
+          "OutputType": "vec2",
+          "InputTypes": [ "vec2" ],
           "Expression": "const vec2 <name> = vec2<val1>;",
           "ExternalFunctions": []
         },
         {
           "Variant": 0,
           "Output": 0,
-          "InputTypes": ["vec3"],
+          "OutputType": "vec3",
+          "InputTypes": [ "vec3" ],
           "Expression": "const vec3 <name> = vec3<val1>;",
           "ExternalFunctions": []
         },
         {
           "Variant": 0,
           "Output": 0,
-          "InputTypes": ["vec4"],
+          "OutputType": "vec4",
+          "InputTypes": [ "vec4" ],
           "Expression": "const vec4 <name> = vec4<val1>;",
           "ExternalFunctions": []
         }
@@ -54,63 +58,72 @@
           // DONT FORGET ABOUT COLUMN-MAJOR MATRIX INITIALIZATION
           "Variant": 0,
           "Output": 0,
-          "InputTypes": ["mat2"],
+          "OutputType": "mat2",
+          "InputTypes": [ "mat2" ],
           "Expression": "const mat2 <name> = mat2<val1>;",
           "ExternalFunctions": []
         },
         {
           "Variant": 0,
           "Output": 0,
-          "InputTypes": ["mat3x2"],
+          "OutputType": "mat3x2",
+          "InputTypes": [ "mat3x2" ],
           "Expression": "const mat3x2 <name> = mat3x2<val1>;",
           "ExternalFunctions": []
         },
         {
           "Variant": 0,
           "Output": 0,
-          "InputTypes": ["mat4x2"],
+          "OutputType": "mat4x2",
+          "InputTypes": [ "mat4x2" ],
           "Expression": "const mat4x2 <name> = mat4x2<val1>;",
           "ExternalFunctions": []
         },
         {
           "Variant": 0,
           "Output": 0,
-          "InputTypes": ["mat2x3"],
+          "OutputType": "mat2x3",
+          "InputTypes": [ "mat2x3" ],
           "Expression": "const mat2x3 <name> = mat2x3<val1>;",
           "ExternalFunctions": []
         },
         {
           "Variant": 0,
           "Output": 0,
-          "InputTypes": ["mat3"],
+          "OutputType": "mat3",
+          "InputTypes": [ "mat3" ],
           "Expression": "const mat3 <name> = mat3<val1>;",
           "ExternalFunctions": []
         },
         {
           "Variant": 0,
           "Output": 0,
-          "InputTypes": ["mat4x3"],
+          "OutputType": "mat4x3",
+          "InputTypes": [ "mat4x3" ],
           "Expression": "const mat4x3 <name> = mat4x3<val1>;",
           "ExternalFunctions": []
         },
         {
           "Variant": 0,
           "Output": 0,
-          "InputTypes": ["mat2x4"],
+          "OutputType": "mat2x4",
+          "InputTypes": [ "mat2x4" ],
           "Expression": "const mat2x4 <name> = mat2x4<val1>;",
           "ExternalFunctions": []
         },
         {
           "Variant": 0,
           "Output": 0,
-          "InputTypes": ["mat3x4"],
+          "OutputType": "mat3x4",
+          "InputTypes": [ "mat3x4" ],
           "Expression": "const mat3x4 <name> = mat3x4<val1>;",
           "ExternalFunctions": []
         },
         {
           "Variant": 0,
           "Output": 0,
-          "InputTypes": ["mat4"],
+          "OutputType": "mat4",
+          "InputTypes": [ "mat4" ],
           "Expression": "const mat4 <name> = mat4<val1>;",
           "ExternalFunctions": []
         }
@@ -125,6 +138,7 @@
         {
           "Variant": 0,
           "Output": 0,
+          "OutputType": "vec4",
           "InputTypes": [],
           "Expression": "const vec4 <name> = vec4<val1>;",
           "ExternalFunctions": []
@@ -142,6 +156,7 @@
         {
           "Variant": 0,
           "Output": 0,
+          "OutputType": "float",
           "InputTypes": [],
           "Expression": "",
           "ExternalFunctions": [ "PI" ]
@@ -157,6 +172,7 @@
         {
           "Variant": 0,
           "Output": 0,
+          "OutputType": "float",
           "InputTypes": [],
           "Expression": "",
           "ExternalFunctions": [ "PHI" ]
@@ -172,6 +188,7 @@
         {
           "Variant": 0,
           "Output": 0,
+          "OutputType": "float",
           "InputTypes": [],
           "Expression": "",
           "ExternalFunctions": [ "EXP" ]
@@ -187,6 +204,7 @@
         {
           "Variant": 0,
           "Output": 0,
+          "OutputType": "mat2",
           "InputTypes": [],
           "Expression": "const mat2 <name> = rot2d(<val1>);",
           "ExternalFunctions": [ "rot2d<float>" ]
@@ -202,6 +220,7 @@
         {
           "Variant": 0,
           "Output": 0,
+          "OutputType": "mat3",
           "InputTypes": [],
           "Expression": "const mat3 <name> = rot3d(<val1>, <val2>, <val3>);",
           "ExternalFunctions": [ "rot3d<float, float, float>" ]

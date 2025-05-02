@@ -88,12 +88,12 @@ namespace ShaderGraphToy.Representation.GraphNodes
 
 
 
-        public List<NodesConnector> GetConnectors()
+        public List<NodesConnector> GetConnectors(bool hasInput, bool hasOutput)
         {
             List<NodesConnector> conns = [];
 
-            if (inputConnector.Visibility == Visibility.Visible) conns.Add(inputConnector);
-            if (outputConnector.Visibility == Visibility.Visible) conns.Add(outputConnector);
+            if (hasInput) conns.Add(inputConnector);
+            if (hasOutput) conns.Add(outputConnector);
 
             return conns;
         }

@@ -38,20 +38,19 @@ namespace Nodes2Shader.Compilation
             int constCtr = 0, inCtr = 0, outCtr = 0, opCtr = 0, funcCtr = 0;
             List<GraphNodeExpression> exps = [];
             GraphNodeExpression? ex;
+            string matchingInput;
 
             foreach (NodeData nd in graph.Nodes)
             {
-                if (nd.GetInputs().Any(i => !i.DataRevealed && i.Value == "Error"))
-                    throw new ArgumentException($"Node {nd.Id} have required fields with null values");
-
                 // load node expression
-                ex = exps.FirstOrDefault(x => x.TypeId == nd.Id);
+                ex = exps.FirstOrDefault(x => x.TypeId == nd.TypeId);
                 if (ex == null)
                 {
                     ex = GraphNodeExpressionsSerializer.DeserializeExpression(nd.TypeId);
                     exps.Add(ex);
                 }
 
+                // set code variable id and name
                 nd.VarId = ex.TypeId.ToString()[0] switch
                 {
                     '1' => constCtr++,
@@ -63,30 +62,32 @@ namespace Nodes2Shader.Compilation
                 };
                 nd.VarName = ex.Name;
 
-                // reveal node variant
+                // get node variant (value from list component if there is)
                 int nodeVariant = nd.GetVariant();
 
                 // generate code for each node output
-                int nodeOutputs = nd.GetUsedOutputsCount();
-                for (int i = nodeOutputs - 1; i >= 0; i--)
+                List<int> nodeOutputs = nd.GetOutputsIds();
+                foreach (int i in nodeOutputs)
                 {
-                    // cast input types to one of the available combinations
-                    DataTypesConverter.RevealTypes(nd, ex.GetInputVariants());
-
+                    // find matching exception variant
                     expSb = new();
-                    nd.Expressions.Add(ex.GetVariant(nodeVariant, i, nd.GetInputType())!);
-                    expSb.AppendLine(nd.Expressions.Last().Expression);
+                    nd.Expression = ex.FindMatchingExpressionVariant(nodeVariant, i, nd.GetInputTypes(), out matchingInput);
+                    nd.VarInput = matchingInput;
+                    expSb.Append(nd.Expression.Expression);
 
-                    // replace predefined constants
+                    // cast all node input values to correct type
+                    DataTypesConverter.CastInputs(nd);
+                    // set revealed output value and type
+                    nd.SetOutputValueAndData(i);
+
+                    // replace preprocessors
                     FillExpression(expSb, nd, i);
                     sb.AppendLine(expSb.ToString());
 
-                    // set input data for all nodes connected to this
-                    PropagateOutputsToInputs(graph, nd);
+                    // set input data for all nodes connected to it
+                    PropagateOutputToInputs(graph, nd);
                 }
             }
-
-
 
             return sb.ToString();
         }
@@ -109,11 +110,10 @@ namespace Nodes2Shader.Compilation
             for (int i = 0; i < outputs.Count; i++)
             {
                 sb.Replace($"<outType{i + 1}>", outputs[i].Type);
-                outputs[i].Value = nd.GetName(i);
             }
         }
 
-        private static void PropagateOutputsToInputs(GraphData graph, NodeData nd)
+        private static void PropagateOutputToInputs(GraphData graph, NodeData nd)
         {
             List<NodeEntry> outputs = nd.GetOutputs();
             List<NodeEntry> inputs;
@@ -121,14 +121,15 @@ namespace Nodes2Shader.Compilation
 
             for (int i = 0; i < outputs.Count; i++)
             {
-                name = nd.GetName(i);
-                inputs = FindConnectedInputs(graph, nd, i);
+                int outId = outputs[i].Id;
+                name = nd.GetName(outId);
+                inputs = FindConnectedInputs(graph, nd, outId);
+                if (inputs.Count == 0) throw new InvalidOperationException("No inputs connected to this output!");
 
                 foreach (NodeEntry inp in inputs)
                 {
                     inp.Value = name;
                     inp.Type = outputs[i].Type;
-                    inp.DataRevealed = true;
                 }
             }
         }
@@ -136,6 +137,7 @@ namespace Nodes2Shader.Compilation
         private static List<NodeEntry> FindConnectedInputs(GraphData graph, NodeData node, int outId)
         {
             List<NodeEntry> inputs = [];
+            NodeEntry? entry;
             int ownId = node.Id, secId, secOutId;
 
             foreach (NodesConnection nc in node.OutputConnections)
@@ -155,7 +157,9 @@ namespace Nodes2Shader.Compilation
                     secOutId = nc.FirstNodeConnectorId;
                 }
 
-                inputs.Add(graph.GetEntry(secId, secOutId)!);
+                entry = graph.GetEntry(secId, secOutId);
+                if (entry != null) inputs.Add(entry);
+                else throw new InvalidOperationException($"NodeEntry ({secId}, {secOutId}) is not found.");
             }
 
             return inputs;

@@ -23,11 +23,20 @@ namespace ShaderGraphToy
             get => Thread.CurrentThread.CurrentUICulture;
             set
             {
-                if (value == null) ArgumentNullException.ThrowIfNull("value");
-                if (value == Thread.CurrentThread.CurrentUICulture) return;
+                ArgumentNullException.ThrowIfNull("value");
 
-                Thread.CurrentThread.CurrentUICulture = value!;
-                ResourceDictionary dict = ResourceManager.GetLocalizationDictionaryFromResources(value!.Name);
+                // set "." as floating point numbers separator for each culture
+                CultureInfo culture = (CultureInfo)value.Clone();
+                culture.NumberFormat.NumberDecimalSeparator = ".";
+                culture.NumberFormat.CurrencyDecimalSeparator = ".";
+                Thread.CurrentThread.CurrentCulture = culture;
+                Thread.CurrentThread.CurrentUICulture = culture;
+
+                if (culture == Thread.CurrentThread.CurrentUICulture)
+                    return;
+
+                Thread.CurrentThread.CurrentUICulture = culture;
+                ResourceDictionary dict = ResourceManager.GetLocalizationDictionaryFromResources(culture.Name);
                 ResourceManager.SwitchLocalizationDictionaries(dict);
 
                 LanguageChanged(Application.Current, new());

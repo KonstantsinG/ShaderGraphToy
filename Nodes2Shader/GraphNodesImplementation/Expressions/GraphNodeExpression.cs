@@ -1,4 +1,6 @@
-﻿namespace Nodes2Shader.GraphNodesImplementation.Expressions
+﻿using Nodes2Shader.DataTypes;
+
+namespace Nodes2Shader.GraphNodesImplementation.Expressions
 {
     public class GraphNodeExpression
     {
@@ -7,31 +9,51 @@
         public required List<ExpressionVariant> ExpressionVariants { get; set; }
 
 
-        public ExpressionVariant? GetVariant(int variant, int output, string inputTypes)
+        public ExpressionVariant FindMatchingExpressionVariant(int variant, int output, string inputTypes, out string matchingInput)
         {
-            foreach (ExpressionVariant v in ExpressionVariants)
+            string[] inputs1, inputs2;
+
+            foreach (ExpressionVariant expV in ExpressionVariants)
             {
-                if (v.Variant == variant && 
-                    v.Output == output && 
-                   (v.InputTypes.Any(it => it == inputTypes) || v.InputTypes.Contains(string.Empty) || v.InputTypes.Count == 0))
-                    return v;
+                if (expV.Variant != variant || expV.Output != output) continue;
+
+                // if input types is empty - does not matter wich type you have
+                if (expV.InputTypes.Count == 0)
+                {
+                    matchingInput = "Greatest";
+                    return expV;
+                }
+
+                foreach (string v in expV.InputTypes)
+                {
+                    inputs1 = inputTypes.Split(',');
+                    inputs2 = v.Split(',');
+
+                    // if node input type is too short - push null's in back
+                    if (inputs1.Length < inputs2.Length)
+                        inputs1 = MakeSameSizes(inputs1, inputs2);
+
+                    if (DataTypesConverter.IsTypesRelevant(inputs1, inputs2))
+                    {
+                        matchingInput = v;
+                        return expV;
+                    }
+                }
             }
 
-            return ExpressionVariants.FirstOrDefault();
+            throw new InvalidOperationException("Operation does not support this combination of inputs.");
         }
 
-        public List<string> GetInputVariants()
+        private static string[] MakeSameSizes(string[] inputs1, string[] inputs2)
         {
-            List<string> vars = [];
+            string[] newInputs = new string[inputs2.Length];
 
-            foreach (ExpressionVariant v in ExpressionVariants)
-                vars.AddRange(v.InputTypes);
+            for (int i = 0; i < inputs1.Length; i++)
+                newInputs[i] = inputs1[i];
+            for (int i = inputs1.Length; i < inputs2.Length; i++)
+                newInputs[i] = "null";
 
-            vars = vars.Distinct().ToList();
-            if (vars.All(string.IsNullOrWhiteSpace))
-                return [];
-
-            return vars;
+            return newInputs;
         }
     }
 }

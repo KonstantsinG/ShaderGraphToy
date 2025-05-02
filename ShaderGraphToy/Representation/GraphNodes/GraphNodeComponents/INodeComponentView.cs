@@ -4,6 +4,6 @@ namespace ShaderGraphToy.Representation.GraphNodes.GraphNodeComponents
 {
     public interface INodeComponentView
     {
-        NodeEntry GetData();
+        NodeEntry? GetData();
     }
 }
