@@ -170,7 +170,7 @@ namespace Nodes2Shader.DataTypes
             // vecStr is actual value
             if (ValueRegex().Match(vecStr).Success)
             {
-                string[] vecNums = vecStr.Replace($"vec{comps}(", "", StringComparison.CurrentCultureIgnoreCase).Replace(")", "").Split(',');
+                string[] vecNums = vecStr[($"vec{comps}(".Length)..^1].Split(',', StringSplitOptions.TrimEntries);
 
                 switch (to)
                 {
@@ -389,13 +389,13 @@ namespace Nodes2Shader.DataTypes
         private static partial Regex VecRegex();
         [GeneratedRegex(@"^
                         (?:
-                            -?\d+(?:\.\d+)?                     # Int or Float
+                            -?\d+(?:\.\d+)?                                 # Int or Float
                         |
-                            vec[2-4]                            # Vec2-4
-                            \(                                  # (
-                                \s*-?\d+(?:\.\d+)?\s*           # first vector comp
-                                (?:,\s*-?\d+(?:\.\d+)?\s*)*     # next comps
-                            \)                                  # )
+                            vec[2-4]                                        # Vec2-4
+                            \(                                              # (
+                                \s*([a-zA-Z_]\w*|-?\d+(\.\d+)?)\s*          # vector may contain
+                                (,\s*([a-zA-Z_]\w*|-?\d+(\.\d+)?)\s*)*      # variables or numbers
+                            \)                                              # )
                         )
                     $", RegexOptions.IgnorePatternWhitespace)]
         private static partial Regex ValueRegex();

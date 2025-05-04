@@ -2,6 +2,7 @@
 using Nodes2Shader.DataTypes;
 using Nodes2Shader.GraphNodesImplementation.Expressions;
 using Nodes2Shader.Serializers;
+using System.Diagnostics;
 using System.Text;
 
 namespace Nodes2Shader.Compilation
@@ -22,10 +23,10 @@ namespace Nodes2Shader.Compilation
             // external functions
 
             sb.AppendLine(GraphNodeExpressionsSerializer.DeserializeExternalFunction("entryp").Body);
-
+            
             // main function body
             string blabla = ConstructMainFunctionBody(visualGraph);
-
+            
             sb.AppendLine("}");
             
             result = CompilationResult.Success;
@@ -157,7 +158,7 @@ namespace Nodes2Shader.Compilation
                     secOutId = nc.FirstNodeConnectorId;
                 }
 
-                entry = graph.GetEntry(secId, secOutId);
+                entry = graph.GetEntry(secId, secOutId, NodeEntry.EntryType.Input);
                 if (entry != null) inputs.Add(entry);
                 else throw new InvalidOperationException($"NodeEntry ({secId}, {secOutId}) is not found.");
             }

@@ -14,7 +14,7 @@
         }
 
 
-        public NodeEntry? GetEntry(int nodeId, int entryId)
+        public NodeEntry? GetEntry(int nodeId, int entryId, NodeEntry.EntryType entryType)
         {
             foreach (NodeData node in Nodes)
             {
@@ -22,7 +22,8 @@
                 {
                     foreach (NodeEntry entry in node.GetAllEntries())
                     {
-                        if (entry.Id == entryId) return entry;
+                        if (entry.Id == entryId && entry.Behavior == entryType)
+                            return entry;
                     }
                 }
             }
