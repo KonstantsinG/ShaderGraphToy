@@ -63,12 +63,8 @@ namespace Nodes2Shader.Compilation.MathGraph
 
         public List<int> GetOutputsIds()
         {
-            // output node have virtual outputs (because it endpoint)
-            if (TypeId == 3)
-            {
-                if (Entries.Count == 1) return [ 0 ];
-                else if (Entries.Count == 2) return [ 0, 1 ];
-            }
+            // output node have virtual output (because it endpoint)
+            if (TypeId == 3) return [0];
 
             List<int> outs = [];
 

@@ -1,4 +1,5 @@
-﻿using Nodes2Shader.Compilation.MathGraph;
+﻿using Microsoft.Xaml.Behaviors;
+using Nodes2Shader.Compilation.MathGraph;
 using Nodes2Shader.DataTypes;
 using Nodes2Shader.GraphNodesImplementation.Components;
 using System.Windows;
@@ -35,23 +36,22 @@ namespace ShaderGraphToy.Representation.GraphNodes.GraphNodeComponents
 
         public NodeEntry? GetData()
         {
-            NodeEntry.EntryType type;
-            int id = -1;
-            
-            if (Model.HasInput)
+            if (inputConnector.IsBusy)
             {
-                type = NodeEntry.EntryType.Input;
-                id = GetConnector()!.ConnectorId;
+                return new(Model.InputType, Model.Content, NodeEntry.EntryType.Input) { Id = GetConnector()!.ConnectorId };
             }
             else
             {
                 if (!DataTypesConverter.IsAnyValid(Model.Content))
-                    throw new ArgumentException($"Value <{Model.Content}> in component ({inputConnector.NodeId}, {inputConnector.ConnectorId}) is invalid!");
+                    throw new FormatException($"Value <{Model.Content}> in component ({inputConnector.NodeId}, {inputConnector.ConnectorId}) is invalid!");
 
-                type = NodeEntry.EntryType.Value;
+                string currType = DataTypesConverter.DefineType(Model.Content);
+                if (!DataTypesConverter.IsCastPossible(currType, Model.InputType))
+                    throw new ArgumentException($"Value <{Model.Content}> in component ({inputConnector.NodeId}, {inputConnector.ConnectorId}) must have value of type {Model.InputType}!");
+
+
+                return new(currType, Model.Content, NodeEntry.EntryType.Value);
             }
-
-            return new(DataTypesConverter.DefineType(Model.Content), Model.Content, type) { Id = id };
         }
     }
 }

@@ -82,7 +82,7 @@ namespace Nodes2Shader.Compilation
 
                     // replace preprocessors
                     FillExpression(expSb, nd, i);
-                    sb.AppendLine(expSb.ToString());
+                    if (expSb.Length > 0) sb.AppendLine(expSb.ToString());
 
                     // set input data for all nodes connected to it
                     PropagateOutputToInputs(graph, nd);

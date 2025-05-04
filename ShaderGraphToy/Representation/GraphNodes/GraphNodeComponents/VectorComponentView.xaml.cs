@@ -1,4 +1,5 @@
 ﻿using Nodes2Shader.Compilation.MathGraph;
+using Nodes2Shader.DataTypes;
 using Nodes2Shader.GraphNodesImplementation.Components;
 using System.ComponentModel;
 using System.Windows;
@@ -51,13 +52,49 @@ namespace ShaderGraphToy.Representation.GraphNodes.GraphNodeComponents
 
         public NodeEntry GetData()
         {
-            (string type, string value) = cBox.SelectedIndex switch
+            string type, value;
+            
+            switch (cBox.SelectedIndex)
             {
-                0 => ("Vec2", $"({tb0.Text}, {tb1.Text})"),
-                1 => ("Vec3", $"({tb0.Text}, {tb1.Text}, {tb2.Text})"),
-                2 => ("Vec4", $"({tb0.Text}, {tb1.Text}, {tb2.Text}, {tb3.Text})"),
-                _ => (string.Empty, string.Empty)
-            };
+                case 0:
+                    if (!DataTypesConverter.IsNumberValid(tb0.Text))
+                        throw new FormatException($"TextBox 1 contains invalid number!");
+                    if (!DataTypesConverter.IsNumberValid(tb1.Text))
+                        throw new FormatException($"TextBox 2 contains invalid number!");
+
+                    type = "Vec2";
+                    value = $"vec2({tb0.Text}, {tb1.Text})";
+                    break;
+
+                case 1:
+                    if (!DataTypesConverter.IsNumberValid(tb0.Text))
+                        throw new FormatException($"TextBox 1 contains invalid number!");
+                    if (!DataTypesConverter.IsNumberValid(tb1.Text))
+                        throw new FormatException($"TextBox 2 contains invalid number!");
+                    if (!DataTypesConverter.IsNumberValid(tb2.Text))
+                        throw new FormatException($"TextBox 3 contains invalid number!");
+
+                    type = "Vec3";
+                    value = $"vec3({tb0.Text}, {tb1.Text}, {tb2.Text})";
+                    break;
+
+                case 2:
+                    if (!DataTypesConverter.IsNumberValid(tb0.Text))
+                        throw new FormatException($"TextBox 1 contains invalid number!");
+                    if (!DataTypesConverter.IsNumberValid(tb1.Text))
+                        throw new FormatException($"TextBox 2 contains invalid number!");
+                    if (!DataTypesConverter.IsNumberValid(tb2.Text))
+                        throw new FormatException($"TextBox 3 contains invalid number!");
+                    if (!DataTypesConverter.IsNumberValid(tb3.Text))
+                        throw new FormatException($"TextBox 4 contains invalid number!");
+
+                    type = "Vec4";
+                    value = $"vec4({tb0.Text}, {tb1.Text}, {tb2.Text}, {tb3.Text})";
+                    break;
+
+                default:
+                    throw new NotImplementedException("A list component cannot have this value as a selected value.");
+            }
 
             return new NodeEntry(type, value, NodeEntry.EntryType.Value);
         }

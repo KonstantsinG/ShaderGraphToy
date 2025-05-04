@@ -1,4 +1,6 @@
 ﻿using Nodes2Shader.Compilation.MathGraph;
+using System;
+using System.Text.RegularExpressions;
 
 namespace Nodes2Shader.DataTypes
 {
@@ -40,78 +42,17 @@ namespace Nodes2Shader.DataTypes
         Error
     }
 
-    public static class DataTypesConverter
+    public static partial class DataTypesConverter
     {
-        public static string DefineType(string value)
+        #region FORMAT
+        public static string FormatFloat(float value)
         {
-            int c = value.Count(ch => ch == ',');
-
-            if (c == 0)
-            {
-                if (value.Count(ch => ch == '.') == 0) return "Int";
-                else return "Float";
-            }
-            else if (c == 1) return "Vec2";
-            else if (c == 2) return "Vec3";
-            else if (c == 3) return "Vec4";
-
-            return "Any";
+            string str = value.ToString();
+            return str.Contains('.') ? str : str + ".0";
         }
+        #endregion
 
-        public static bool IsAnyValid(string val)
-        {
-            if (string.IsNullOrEmpty(val)) return false;
-
-            string[] vals = val.Split(',');
-            foreach (string v in vals)
-            {
-                if (v.Contains('.'))
-                {
-                    if (!float.TryParse(v.Trim(), null, out _))
-                        return false;
-                }
-                else
-                {
-                    if (!int.TryParse(v.Trim(), null, out _))
-                        return false;
-                }
-            }
-
-            return true;
-        }
-
-        public static bool IsTypesRelevant(string[] typesFrom, string[] typesTo)
-        {
-            if (typesFrom.Length != typesTo.Length) return false;
-
-            DataType[] types1 = new DataType[typesFrom.Length];
-            for (int i = 0; i < typesFrom.Length; i++)
-                types1[i] = (DataType)Enum.Parse(typeof(DataType), typesFrom[i], true);
-
-            DataType[] types2 = new DataType[typesTo.Length];
-            for (int i = 0; i < typesTo.Length; i++)
-                types2[i] = (DataType)Enum.Parse(typeof(DataType), typesTo[i], true);
-
-            for (int i = 0; i < types1.Length; i++)
-            {
-                if (!IsCastPossible(types1[i], types2[i]))
-                    return false;
-            }
-
-            return true;
-        }
-
-        public static bool IsCastPossible(DataType toCast, DataType target)
-        {
-            if (toCast == target) return true;
-            if (toCast == DataType.Null || target == DataType.Null) return false;
-
-            if (toCast == DataType.Sampler2D || target == DataType.Sampler2D) return false;
-
-            return true;
-        }
-
-
+        #region CAST
         public static void CastInputs(NodeData nd)
         {
             List<NodeEntry> inputs = nd.GetInputs();
@@ -152,6 +93,209 @@ namespace Nodes2Shader.DataTypes
             }
         }
 
+        public static string CastType(string val, string typeFrom, string typeTo)
+        {
+            DataType t_typeFrom = (DataType)Enum.Parse(typeof(DataType), typeFrom, true);
+            DataType t_typeTo = (DataType)Enum.Parse(typeof(DataType), typeTo, true);
+
+            return CastType(val, t_typeFrom, t_typeTo);
+        }
+
+        private static string CastType(string val, DataType typeFrom, DataType typeTo)
+        {
+            if (IsGeneric(typeTo)) throw new InvalidOperationException("Cast to generic type is invalid.");
+
+            if (IsGeneric(typeFrom)) return CastGenericType(val, typeFrom, typeTo);
+            else return CastBasicType(val, typeFrom, typeTo);
+        }
+
+        private static string CastBasicType(string val, DataType typeFrom, DataType typeTo)
+        {
+            if (typeFrom == DataType.Null || typeTo == DataType.Null) return val;
+            if (typeFrom == typeTo) return val;
+
+            switch (typeFrom)
+            {
+                case DataType.Int:
+                    if (typeTo == DataType.Float) val = $"{val}.0";
+                    else if (typeTo == DataType.Vec2) val = $"vec2({val}.0, {val}.0)";
+                    else if (typeTo == DataType.Vec3) val = $"vec3({val}.0, 0.0, 0.0)";
+                    else if (typeTo == DataType.Vec4) val = $"vec4({val}.0, 0.0, 0.0, 0.0)";
+                    return val;
+
+                case DataType.Float:
+                    if (typeTo == DataType.Int) val = val.Split('.')[0];
+                    if (typeTo == DataType.Vec2) val = $"vec2({val}, 0.0)";
+                    else if (typeTo == DataType.Vec3) val = $"vec3({val}, 0.0, 0.0)";
+                    else if (typeTo == DataType.Vec4) val = $"vec4({val}, 0.0, 0.0, 0.0)";
+                    return val;
+
+                case DataType.Vec2:
+                    return FromVec(val, 2, typeTo);
+
+                case DataType.Vec3:
+                    return FromVec(val, 3, typeTo);
+
+                case DataType.Vec4:
+                    return FromVec(val, 4, typeTo);
+            }
+
+            // for now method supports only GenType casts from GLSL
+            throw new NotImplementedException($"Cast from {typeFrom} to {typeTo} is currently unavailable...");
+        }
+
+        private static string CastGenericType(string val, DataType typeFrom, DataType typeTo)
+        {
+            string typeStr = DefineType(val);
+            DataType type = (DataType)Enum.Parse(typeof(DataType), typeStr, true);
+
+            return CastBasicType(val, type, typeTo);
+        }
+
+        private static string FromVec(string vecStr, int comps, DataType to)
+        {
+            string[] vecNums = vecStr.Replace($"vec{comps}(", "", StringComparison.CurrentCultureIgnoreCase).Replace(")", "").Split(',');
+
+            switch (to)
+            {
+                case DataType.Int:
+                    return vecNums[0].Split('.')[0];
+
+                case DataType.Float:
+                    return vecNums[0].Contains('.') ? vecNums[0] : vecNums[0] + ".0";
+
+                case DataType.Vec2:
+                    if (comps == 2) return vecStr;
+                    else if (comps == 3 || comps == 4) return $"vec2({vecNums[0]}, {vecNums[1]})";
+                    break;
+
+                case DataType.Vec3:
+                    if (comps == 2) return $"vec3({vecNums[0]}, {vecNums[1]}, {vecNums[1]})";
+                    else if (comps == 3) return vecStr;
+                    else if (comps == 4) return $"vec3({vecNums[0]}, {vecNums[1]}, {vecNums[2]})";
+                    break;
+
+                case DataType.Vec4:
+                    if (comps == 2) return $"vec4({vecNums[0]}, {vecNums[1]}, {vecNums[1]}, {vecNums[1]})";
+                    else if (comps == 3) return $"vec4({vecNums[0]}, {vecNums[1]}, {vecNums[2]}, {vecNums[2]})";
+                    else if (comps == 4) return vecStr;
+                    break;
+            }
+
+            throw new NotImplementedException($"Cast from Vec{comps} to {to} is currently unavailable...");
+        }
+        #endregion
+
+        #region IS_RELEVANT
+        public static bool IsAnyValid(string val)
+        {
+            if (string.IsNullOrEmpty(val)) return false;
+
+            // is Int
+            if (IntRegex().IsMatch(val))
+                return true;
+
+            // is Float
+            if (FloatRegex().IsMatch(val))
+                return true;
+
+            // is Vec (vec2, vec3, vec4)
+            var vectorMatch = VecRegex().Match(val);
+            if (vectorMatch.Success)
+            {
+                int components = int.Parse(vectorMatch.Groups[1].Value);
+                string[] values = vectorMatch.Groups[2].Value.Split(',');
+
+                if (values.Length != components)
+                    return false;
+
+                string trm;
+                foreach (string value in values)
+                {
+                    trm = value.Trim();
+                    if (!FloatRegex().IsMatch(trm))
+                        return false;
+                }
+
+                return true;
+            }
+
+            return false;
+        }
+
+        public static bool IsNumberValid(string val)
+        {
+            if (string.IsNullOrEmpty(val)) return false;
+
+            // is Int
+            if (IntRegex().IsMatch(val))
+                return true;
+
+            // is Float
+            if (FloatRegex().IsMatch(val))
+                return true;
+
+            return false;
+        }
+
+        public static bool IsTypesRelevant(string[] typesFrom, string[] typesTo)
+        {
+            if (typesFrom.Length != typesTo.Length) return false;
+
+            DataType[] types1 = new DataType[typesFrom.Length];
+            for (int i = 0; i < typesFrom.Length; i++)
+                types1[i] = (DataType)Enum.Parse(typeof(DataType), typesFrom[i], true);
+
+            DataType[] types2 = new DataType[typesTo.Length];
+            for (int i = 0; i < typesTo.Length; i++)
+                types2[i] = (DataType)Enum.Parse(typeof(DataType), typesTo[i], true);
+
+            for (int i = 0; i < types1.Length; i++)
+            {
+                if (!IsCastPossible(types1[i], types2[i]))
+                    return false;
+            }
+
+            return true;
+        }
+
+        public static bool IsCastPossible(string toCast, string target)
+        {
+            DataType t_toCats = (DataType)Enum.Parse(typeof(DataType), toCast, true);
+            DataType t_target = (DataType)Enum.Parse(typeof(DataType), target, true);
+
+            return IsCastPossible(t_toCats, t_target);
+        }
+
+        private static bool IsCastPossible(DataType toCast, DataType target)
+        {
+            if (toCast == target) return true;
+            if (toCast == DataType.Null || target == DataType.Null) return false;
+
+            if (toCast == DataType.Sampler2D || target == DataType.Sampler2D) return false;
+
+            return true;
+        }
+        #endregion
+
+        #region UTILITIES
+        public static string DefineType(string value)
+        {
+            if (IntRegex().IsMatch(value)) return "Int";
+            else if (FloatRegex().IsMatch(value)) return "Float";
+
+            var vectorMatch = VecRegex().Match(value);
+            if (vectorMatch.Success)
+            {
+                int comps = int.Parse(vectorMatch.Groups[1].Value);
+                if (comps == 2) return "Vec2";
+                else if (comps == 3) return "Vec3";
+                else if (comps == 4) return "Vec4";
+            }
+
+            return "Any";
+        }
+
         private static DataType GetGreatestType(List<DataType> types)
         {
             return types.OrderBy(t => GetPriority(t)).Last();
@@ -167,42 +311,19 @@ namespace Nodes2Shader.DataTypes
             return -1;
         }
 
-        private static string CastType(string val, DataType typeFrom, DataType typeTo)
+        private static bool IsGeneric(DataType type)
         {
-            if (typeFrom == DataType.Null || typeTo == DataType.Null) return val;
-            if (typeFrom == typeTo) return val;
-
-            if (typeFrom == DataType.Float || typeFrom == DataType.Int)
-            {
-                if (typeTo == DataType.Vec2) val = $"({val}, 0.0)";
-                else if (typeTo == DataType.Vec3) val = $"({val}, 0.0, 0.0)";
-                else if (typeTo == DataType.Vec4) val = $"({val}, 0.0, 0.0, 0.0)";
-                return val;
-            }
-            else if (typeFrom == DataType.Vec2)
-            {
-                if (typeTo == DataType.Float) val = $"{val}.x";
-                else if (typeTo == DataType.Vec3) val = $"{val.Remove(val.Length - 2, 1)}, 0.0)";
-                else if (typeTo == DataType.Vec4) val = $"{val.Remove(val.Length - 2, 1)}, 0.0, 0.0)";
-                return val;
-            }
-            else if (typeFrom == DataType.Vec3)
-            {
-                if (typeTo == DataType.Float) val = $"{val}.x";
-                else if (typeTo == DataType.Vec2) val = $"{val}.xy";
-                else if (typeTo == DataType.Vec4) val = $"{val.Remove(val.Length - 2, 1)}, 0.0, 0.0)";
-                return val;
-            }
-            else if (typeFrom == DataType.Vec4)
-            {
-                if (typeTo == DataType.Float) val = $"{val}.x";
-                else if (typeTo == DataType.Vec2) val = $"{val}.xy";
-                else if (typeTo == DataType.Vec3) val = $"{val}.xyz";
-                return val;
-            }
-
-            // for now method supports only GenType casts from GLSL
-            throw new NotImplementedException($"Cast from {typeFrom} to {typeTo} is currently unavailable...");
+            return type == DataType.GenType || type == DataType.GenIType || type == DataType.GenBType ||
+                   type == DataType.Vec || type == DataType.Mat || type == DataType.Any;
         }
+        #endregion
+
+
+        [GeneratedRegex(@"^-?\d+$")]
+        private static partial Regex IntRegex();
+        [GeneratedRegex(@"^-?\d+\.\d+$")]
+        private static partial Regex FloatRegex();
+        [GeneratedRegex(@"^vec([2-4])\(([^)]+)\)$")]
+        private static partial Regex VecRegex();
     }
 }

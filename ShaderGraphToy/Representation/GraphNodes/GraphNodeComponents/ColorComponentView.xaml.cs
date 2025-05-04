@@ -1,4 +1,5 @@
 ﻿using Nodes2Shader.Compilation.MathGraph;
+using Nodes2Shader.DataTypes;
 using Nodes2Shader.GraphNodesImplementation.Components;
 using System.ComponentModel;
 using System.Runtime.CompilerServices;
@@ -47,7 +48,7 @@ namespace ShaderGraphToy.Representation.GraphNodes.GraphNodeComponents
 
         public static string ConvertHexToRgba(string colorHex)
         {
-            if (colorHex == string.Empty) return "(1.0, 1.0, 1.0, 1.0)";
+            if (colorHex == string.Empty) return "vec4(1.0, 1.0, 1.0, 1.0)";
 
             colorHex = colorHex.Trim().Replace("#", "").Replace(" ", "");
             if (colorHex.Length == 6) colorHex = "FF" + colorHex;
@@ -57,7 +58,12 @@ namespace ShaderGraphToy.Representation.GraphNodes.GraphNodeComponents
             byte g = Convert.ToByte(colorHex.Substring(4, 2), 16);
             byte b = Convert.ToByte(colorHex.Substring(6, 2), 16);
 
-            return $"({r / 255f}, {g / 255f}, {b / 255f}, {a / 255f})";
+            string rstr = DataTypesConverter.FormatFloat(r / 255f);
+            string gstr = DataTypesConverter.FormatFloat(g / 255f);
+            string bstr = DataTypesConverter.FormatFloat(b / 255f);
+            string astr = DataTypesConverter.FormatFloat(a / 255f);
+
+            return $"vec4({rstr}, {gstr}, {bstr}, {astr})";
         }
 
 

@@ -27,7 +27,7 @@
           "Output": 0,
           "OutputType": "vec2",
           "InputTypes": [ "vec2" ],
-          "Expression": "const vec2 <name> = vec2<val1>;",
+          "Expression": "const vec2 <name> = <val1>;",
           "ExternalFunctions": []
         },
         {
@@ -35,7 +35,7 @@
           "Output": 0,
           "OutputType": "vec3",
           "InputTypes": [ "vec3" ],
-          "Expression": "const vec3 <name> = vec3<val1>;",
+          "Expression": "const vec3 <name> = <val1>;",
           "ExternalFunctions": []
         },
         {
@@ -43,7 +43,7 @@
           "Output": 0,
           "OutputType": "vec4",
           "InputTypes": [ "vec4" ],
-          "Expression": "const vec4 <name> = vec4<val1>;",
+          "Expression": "const vec4 <name> = <val1>;",
           "ExternalFunctions": []
         }
       ]
@@ -60,7 +60,7 @@
           "Output": 0,
           "OutputType": "mat2",
           "InputTypes": [ "mat2" ],
-          "Expression": "const mat2 <name> = mat2<val1>;",
+          "Expression": "const mat2 <name> = <val1>;",
           "ExternalFunctions": []
         },
         {
@@ -68,7 +68,7 @@
           "Output": 0,
           "OutputType": "mat3x2",
           "InputTypes": [ "mat3x2" ],
-          "Expression": "const mat3x2 <name> = mat3x2<val1>;",
+          "Expression": "const mat3x2 <name> = <val1>;",
           "ExternalFunctions": []
         },
         {
@@ -76,7 +76,7 @@
           "Output": 0,
           "OutputType": "mat4x2",
           "InputTypes": [ "mat4x2" ],
-          "Expression": "const mat4x2 <name> = mat4x2<val1>;",
+          "Expression": "const mat4x2 <name> = <val1>;",
           "ExternalFunctions": []
         },
         {
@@ -84,7 +84,7 @@
           "Output": 0,
           "OutputType": "mat2x3",
           "InputTypes": [ "mat2x3" ],
-          "Expression": "const mat2x3 <name> = mat2x3<val1>;",
+          "Expression": "const mat2x3 <name> = <val1>;",
           "ExternalFunctions": []
         },
         {
@@ -92,7 +92,7 @@
           "Output": 0,
           "OutputType": "mat3",
           "InputTypes": [ "mat3" ],
-          "Expression": "const mat3 <name> = mat3<val1>;",
+          "Expression": "const mat3 <name> = <val1>;",
           "ExternalFunctions": []
         },
         {
@@ -100,7 +100,7 @@
           "Output": 0,
           "OutputType": "mat4x3",
           "InputTypes": [ "mat4x3" ],
-          "Expression": "const mat4x3 <name> = mat4x3<val1>;",
+          "Expression": "const mat4x3 <name> = <val1>;",
           "ExternalFunctions": []
         },
         {
@@ -108,7 +108,7 @@
           "Output": 0,
           "OutputType": "mat2x4",
           "InputTypes": [ "mat2x4" ],
-          "Expression": "const mat2x4 <name> = mat2x4<val1>;",
+          "Expression": "const mat2x4 <name> = <val1>;",
           "ExternalFunctions": []
         },
         {
@@ -116,7 +116,7 @@
           "Output": 0,
           "OutputType": "mat3x4",
           "InputTypes": [ "mat3x4" ],
-          "Expression": "const mat3x4 <name> = mat3x4<val1>;",
+          "Expression": "const mat3x4 <name> = <val1>;",
           "ExternalFunctions": []
         },
         {
@@ -124,7 +124,7 @@
           "Output": 0,
           "OutputType": "mat4",
           "InputTypes": [ "mat4" ],
-          "Expression": "const mat4 <name> = mat4<val1>;",
+          "Expression": "const mat4 <name> = <val1>;",
           "ExternalFunctions": []
         }
       ]
@@ -140,7 +140,7 @@
           "Output": 0,
           "OutputType": "vec4",
           "InputTypes": [],
-          "Expression": "const vec4 <name> = vec4<val1>;",
+          "Expression": "const vec4 <name> = <val1>;",
           "ExternalFunctions": []
         }
       ]

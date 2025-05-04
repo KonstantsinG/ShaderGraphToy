@@ -11,7 +11,7 @@ namespace Nodes2Shader.GraphNodesImplementation.Expressions
 
         public ExpressionVariant FindMatchingExpressionVariant(int variant, int output, string inputTypes, out string matchingInput)
         {
-            string[] inputs1, inputs2;
+            string[] inputs1 = inputTypes.Split(','), inputs2;
 
             foreach (ExpressionVariant expV in ExpressionVariants)
             {
@@ -26,7 +26,6 @@ namespace Nodes2Shader.GraphNodesImplementation.Expressions
 
                 foreach (string v in expV.InputTypes)
                 {
-                    inputs1 = inputTypes.Split(',');
                     inputs2 = v.Split(',');
 
                     // if node input type is too short - push null's in back
