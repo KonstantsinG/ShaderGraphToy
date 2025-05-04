@@ -57,36 +57,21 @@ namespace ShaderGraphToy.Representation.GraphNodes.GraphNodeComponents
             switch (cBox.SelectedIndex)
             {
                 case 0:
-                    if (!DataTypesConverter.IsNumberValid(tb0.Text))
-                        throw new FormatException($"TextBox 1 contains invalid number!");
-                    if (!DataTypesConverter.IsNumberValid(tb1.Text))
-                        throw new FormatException($"TextBox 2 contains invalid number!");
+                    ValidateTextBoxes(tb0, tb1);
 
                     type = "Vec2";
                     value = $"vec2({tb0.Text}, {tb1.Text})";
                     break;
 
                 case 1:
-                    if (!DataTypesConverter.IsNumberValid(tb0.Text))
-                        throw new FormatException($"TextBox 1 contains invalid number!");
-                    if (!DataTypesConverter.IsNumberValid(tb1.Text))
-                        throw new FormatException($"TextBox 2 contains invalid number!");
-                    if (!DataTypesConverter.IsNumberValid(tb2.Text))
-                        throw new FormatException($"TextBox 3 contains invalid number!");
+                    ValidateTextBoxes(tb0, tb1, tb2);
 
                     type = "Vec3";
                     value = $"vec3({tb0.Text}, {tb1.Text}, {tb2.Text})";
                     break;
 
                 case 2:
-                    if (!DataTypesConverter.IsNumberValid(tb0.Text))
-                        throw new FormatException($"TextBox 1 contains invalid number!");
-                    if (!DataTypesConverter.IsNumberValid(tb1.Text))
-                        throw new FormatException($"TextBox 2 contains invalid number!");
-                    if (!DataTypesConverter.IsNumberValid(tb2.Text))
-                        throw new FormatException($"TextBox 3 contains invalid number!");
-                    if (!DataTypesConverter.IsNumberValid(tb3.Text))
-                        throw new FormatException($"TextBox 4 contains invalid number!");
+                    ValidateTextBoxes(tb0, tb1, tb2, tb3);
 
                     type = "Vec4";
                     value = $"vec4({tb0.Text}, {tb1.Text}, {tb2.Text}, {tb3.Text})";
@@ -97,6 +82,18 @@ namespace ShaderGraphToy.Representation.GraphNodes.GraphNodeComponents
             }
 
             return new NodeEntry(type, value, NodeEntry.EntryType.Value);
+        }
+
+        private static void ValidateTextBoxes(params TextBox[] tbs)
+        {
+            for (int i = 0; i < tbs.Length; i++)
+            {
+                if (!DataTypesConverter.IsNumberValid(tbs[i].Text))
+                    throw new FormatException($"TextBox {i + 1} contains invalid number!");
+
+                if (!tbs[i].Text.Contains('.'))
+                    tbs[i].Text = tbs[i].Text + ".0";
+            }
         }
 
 

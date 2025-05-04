@@ -13,6 +13,7 @@ namespace Nodes2Shader.GraphNodesImplementation.Expressions
         {
             string[] inputs1 = inputTypes.Split(','), inputs2;
 
+            // first try to find matching types with strong typing
             foreach (ExpressionVariant expV in ExpressionVariants)
             {
                 if (expV.Variant != variant || expV.Output != output) continue;
@@ -40,8 +41,31 @@ namespace Nodes2Shader.GraphNodesImplementation.Expressions
                 }
             }
 
+            // if there is nothing - try weak typing
+            foreach (ExpressionVariant expV in ExpressionVariants)
+            {
+                if (expV.Variant != variant || expV.Output != output) continue;
+
+                foreach (string v in expV.InputTypes)
+                {
+                    inputs2 = v.Split(',');
+
+                    // if node input type is too short - push null's in back
+                    if (inputs1.Length < inputs2.Length)
+                        inputs1 = MakeSameSizes(inputs1, inputs2);
+
+                    if (DataTypesConverter.IsTypesRelevant(inputs1, inputs2, false))
+                    {
+                        matchingInput = v;
+                        return expV;
+                    }
+                }
+            }
+
             throw new InvalidOperationException("Operation does not support this combination of inputs.");
         }
+
+
 
         private static string[] MakeSameSizes(string[] inputs1, string[] inputs2)
         {

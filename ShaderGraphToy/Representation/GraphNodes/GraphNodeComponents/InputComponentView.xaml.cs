@@ -46,8 +46,11 @@ namespace ShaderGraphToy.Representation.GraphNodes.GraphNodeComponents
                     throw new FormatException($"Value <{Model.Content}> in component ({inputConnector.NodeId}, {inputConnector.ConnectorId}) is invalid!");
 
                 string currType = DataTypesConverter.DefineType(Model.Content);
-                if (!DataTypesConverter.IsCastPossible(currType, Model.InputType))
-                    throw new ArgumentException($"Value <{Model.Content}> in component ({inputConnector.NodeId}, {inputConnector.ConnectorId}) must have value of type {Model.InputType}!");
+                if (Model.HasInput)
+                {
+                    if (!DataTypesConverter.IsCastPossible(currType, Model.InputType))
+                        throw new ArgumentException($"Value <{Model.Content}> in component ({inputConnector.NodeId}, {inputConnector.ConnectorId}) must have value of type {Model.InputType}!");
+                }
 
 
                 return new(currType, Model.Content, NodeEntry.EntryType.Value);

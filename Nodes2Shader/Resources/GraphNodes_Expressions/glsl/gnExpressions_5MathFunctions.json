@@ -11,7 +11,7 @@
           "Output": 0,
           "OutputType": "<inType1>",
           "InputTypes": [],
-          "Expression": "<inType1> <name> = mix(<val1>, <val2>, <val3>);",
+          "Expression": "<inType1> <name> = mix(<val2>, <val3>, <val1>);",
           "ExternalFunctions": []
         }
       ]

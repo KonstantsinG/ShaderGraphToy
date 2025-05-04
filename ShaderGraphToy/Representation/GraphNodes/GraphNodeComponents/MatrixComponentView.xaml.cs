@@ -155,6 +155,9 @@ namespace ShaderGraphToy.Representation.GraphNodes.GraphNodeComponents
             {
                 if (!DataTypesConverter.IsNumberValid(tbs[i].Text))
                     throw new FormatException($"TextBox {i + 1} contains invalid number!");
+
+                if (!tbs[i].Text.Contains('.'))
+                    tbs[i].Text = tbs[i].Text + ".0";
             }
         }
 

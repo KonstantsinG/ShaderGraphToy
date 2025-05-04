@@ -68,7 +68,7 @@ namespace Nodes2Shader.DataTypes
                 for (int i = 0; i < inputs.Count; i++)
                 {
                     inputs[i].Value = CastType(inputs[i].Value, initTypes[i], greatest);
-                    inputs[i].Type = greatest.ToString();
+                    inputs[i].Type = GetGlslType(greatest);
                 }
             }
             else
@@ -88,7 +88,7 @@ namespace Nodes2Shader.DataTypes
                 {
                     typeFrom = (DataType)Enum.Parse(typeof(DataType), inputs[i].Type, true);
                     inputs[i].Value = CastType(inputs[i].Value, typeFrom, targetTypes[i]);
-                    inputs[i].Type = targetTypes[i].ToString();
+                    inputs[i].Type = GetGlslType(targetTypes[i]);
                 }
             }
         }
@@ -117,17 +117,30 @@ namespace Nodes2Shader.DataTypes
             switch (typeFrom)
             {
                 case DataType.Int:
-                    if (typeTo == DataType.Float) val = $"{val}.0";
-                    else if (typeTo == DataType.Vec2) val = $"vec2({val}.0, {val}.0)";
-                    else if (typeTo == DataType.Vec3) val = $"vec3({val}.0, 0.0, 0.0)";
-                    else if (typeTo == DataType.Vec4) val = $"vec4({val}.0, 0.0, 0.0, 0.0)";
-                    return val;
+                    // val is actual value
+                    if (ValueRegex().Match(val).Success)
+                    {
+                        if (typeTo == DataType.Float) val = $"{val}.0";
+                        else if (typeTo == DataType.Vec2) val = $"vec2({val}.0, {val}.0)";
+                        else if (typeTo == DataType.Vec3) val = $"vec3({val}.0, {val}.0, {val}.0)";
+                        else if (typeTo == DataType.Vec4) val = $"vec4({val}.0, 0.0, 0.0, 0.0)";
+                        return val;
+                    }
+                    else // val is variable name
+                    {
+                        if (typeTo == DataType.Float) val = $"float({val})";
+                        else if (typeTo == DataType.Vec2) val = $"vec2(float({val}), float({val}))";
+                        else if (typeTo == DataType.Vec3) val = $"vec3({val}), float({val}), float({val}))";
+                        else if (typeTo == DataType.Vec4) val = $"vec4(float({val}), float({val}), float({val}), float({val}))";
+                        return val;
+                    }
+                    
 
                 case DataType.Float:
-                    if (typeTo == DataType.Int) val = val.Split('.')[0];
-                    if (typeTo == DataType.Vec2) val = $"vec2({val}, 0.0)";
-                    else if (typeTo == DataType.Vec3) val = $"vec3({val}, 0.0, 0.0)";
-                    else if (typeTo == DataType.Vec4) val = $"vec4({val}, 0.0, 0.0, 0.0)";
+                    if (typeTo == DataType.Int) val = $"int({val})";
+                    if (typeTo == DataType.Vec2) val = $"vec2({val}, {val})";
+                    else if (typeTo == DataType.Vec3) val = $"vec3({val}, {val}, {val})";
+                    else if (typeTo == DataType.Vec4) val = $"vec4({val}, {val}, {val}, {val})";
                     return val;
 
                 case DataType.Vec2:
@@ -154,32 +167,64 @@ namespace Nodes2Shader.DataTypes
 
         private static string FromVec(string vecStr, int comps, DataType to)
         {
-            string[] vecNums = vecStr.Replace($"vec{comps}(", "", StringComparison.CurrentCultureIgnoreCase).Replace(")", "").Split(',');
-
-            switch (to)
+            // vecStr is actual value
+            if (ValueRegex().Match(vecStr).Success)
             {
-                case DataType.Int:
-                    return vecNums[0].Split('.')[0];
+                string[] vecNums = vecStr.Replace($"vec{comps}(", "", StringComparison.CurrentCultureIgnoreCase).Replace(")", "").Split(',');
 
-                case DataType.Float:
-                    return vecNums[0].Contains('.') ? vecNums[0] : vecNums[0] + ".0";
+                switch (to)
+                {
+                    case DataType.Int:
+                        return vecNums[0].Split('.')[0];
 
-                case DataType.Vec2:
-                    if (comps == 2) return vecStr;
-                    else if (comps == 3 || comps == 4) return $"vec2({vecNums[0]}, {vecNums[1]})";
-                    break;
+                    case DataType.Float:
+                        return vecNums[0].Contains('.') ? vecNums[0] : vecNums[0] + ".0";
 
-                case DataType.Vec3:
-                    if (comps == 2) return $"vec3({vecNums[0]}, {vecNums[1]}, {vecNums[1]})";
-                    else if (comps == 3) return vecStr;
-                    else if (comps == 4) return $"vec3({vecNums[0]}, {vecNums[1]}, {vecNums[2]})";
-                    break;
+                    case DataType.Vec2:
+                        if (comps == 2) return vecStr;
+                        else if (comps == 3 || comps == 4) return $"vec2({vecNums[0]}, {vecNums[1]})";
+                        break;
 
-                case DataType.Vec4:
-                    if (comps == 2) return $"vec4({vecNums[0]}, {vecNums[1]}, {vecNums[1]}, {vecNums[1]})";
-                    else if (comps == 3) return $"vec4({vecNums[0]}, {vecNums[1]}, {vecNums[2]}, {vecNums[2]})";
-                    else if (comps == 4) return vecStr;
-                    break;
+                    case DataType.Vec3:
+                        if (comps == 2) return $"vec3({vecNums[0]}, {vecNums[1]}, {vecNums[1]})";
+                        else if (comps == 3) return vecStr;
+                        else if (comps == 4) return $"vec3({vecNums[0]}, {vecNums[1]}, {vecNums[2]})";
+                        break;
+
+                    case DataType.Vec4:
+                        if (comps == 2) return $"vec4({vecNums[0]}, {vecNums[1]}, {vecNums[1]}, {vecNums[1]})";
+                        else if (comps == 3) return $"vec4({vecNums[0]}, {vecNums[1]}, {vecNums[2]}, {vecNums[2]})";
+                        else if (comps == 4) return vecStr;
+                        break;
+                }
+            }
+            else // vecStr is variable name
+            {
+                switch (to)
+                {
+                    case DataType.Int:
+                        return $"int({vecStr}.x)";
+
+                    case DataType.Float:
+                        return $"{vecStr}.x"; ;
+
+                    case DataType.Vec2:
+                        if (comps == 2) return vecStr;
+                        else if (comps == 3 || comps == 4) return $"vec2({vecStr}.x, {vecStr}.y)";
+                        break;
+
+                    case DataType.Vec3:
+                        if (comps == 2) return $"vec3({vecStr}.x, {vecStr}.y, {vecStr}.y)";
+                        else if (comps == 3) return vecStr;
+                        else if (comps == 4) return $"vec3({vecStr}.x, {vecStr}.y, {vecStr}.z)";
+                        break;
+
+                    case DataType.Vec4:
+                        if (comps == 2) return $"vec4({vecStr}.x, {vecStr}.y, {vecStr}.y, {vecStr}.y)";
+                        else if (comps == 3) return $"vec4({vecStr}.x, {vecStr}.y, {vecStr}.z, {vecStr}.z)";
+                        else if (comps == 4) return vecStr;
+                        break;
+                }
             }
 
             throw new NotImplementedException($"Cast from Vec{comps} to {to} is currently unavailable...");
@@ -238,7 +283,7 @@ namespace Nodes2Shader.DataTypes
             return false;
         }
 
-        public static bool IsTypesRelevant(string[] typesFrom, string[] typesTo)
+        public static bool IsTypesRelevant(string[] typesFrom, string[] typesTo, bool strongTyping = true)
         {
             if (typesFrom.Length != typesTo.Length) return false;
 
@@ -252,8 +297,16 @@ namespace Nodes2Shader.DataTypes
 
             for (int i = 0; i < types1.Length; i++)
             {
-                if (!IsCastPossible(types1[i], types2[i]))
-                    return false;
+                if (!strongTyping || IsGeneric(types1[i]) || IsGeneric(types2[i]))
+                {
+                    if (!IsCastPossible(types1[i], types2[i]))
+                        return false;
+                }
+                else
+                {
+                    if (types1[i] != types2[i])
+                        return false;
+                }
             }
 
             return true;
@@ -316,6 +369,15 @@ namespace Nodes2Shader.DataTypes
             return type == DataType.GenType || type == DataType.GenIType || type == DataType.GenBType ||
                    type == DataType.Vec || type == DataType.Mat || type == DataType.Any;
         }
+
+        private static string GetGlslType(DataType type)
+        {
+            if (IsGeneric(type) || type == DataType.Null)
+                throw new InvalidOperationException("Only actual types can be converted to GLSL types");
+
+            if (type == DataType.Sampler2D) return "sampler2D";
+            else return type.ToString().ToLower();
+        }
         #endregion
 
 
@@ -325,5 +387,17 @@ namespace Nodes2Shader.DataTypes
         private static partial Regex FloatRegex();
         [GeneratedRegex(@"^vec([2-4])\(([^)]+)\)$")]
         private static partial Regex VecRegex();
+        [GeneratedRegex(@"^
+                        (?:
+                            -?\d+(?:\.\d+)?                     # Int or Float
+                        |
+                            vec[2-4]                            # Vec2-4
+                            \(                                  # (
+                                \s*-?\d+(?:\.\d+)?\s*           # first vector comp
+                                (?:,\s*-?\d+(?:\.\d+)?\s*)*     # next comps
+                            \)                                  # )
+                        )
+                    $", RegexOptions.IgnorePatternWhitespace)]
+        private static partial Regex ValueRegex();
     }
 }

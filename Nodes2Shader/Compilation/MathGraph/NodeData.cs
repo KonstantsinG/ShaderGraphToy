@@ -100,7 +100,7 @@ namespace Nodes2Shader.Compilation.MathGraph
             {
                 List<NodeEntry> inputs = GetInputs();
                 int id = int.Parse(output.Type[7].ToString()) - 1;
-                output.Type = inputs.Where(i => i.Id == id).First().Type;
+                output.Type = inputs[id].Type;
             }
         }
 
