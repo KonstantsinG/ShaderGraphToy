@@ -9,29 +9,31 @@ namespace Nodes2Shader.Compilation
 {
     public static class GraphCompiler
     {
-        public static string Compile(GraphData visualGraph)
+        public static string Compile(GraphData visualGraph, out string[] uniforms)
         {
             StringBuilder sb = new();
 
             string main = ConstructMainFunctionBody(visualGraph); // main function body
-            string extf = ConstructExternalFunctions(visualGraph); // external functions
+            string extf = ConstructExternalFunctions(visualGraph, out string[] unifs); // external functions
 
             sb.AppendLine(GraphNodeExpressionsSerializer.DeserializeExternalFunction("header").Body);
             sb.AppendLine(); sb.Append(extf);
             sb.AppendLine(GraphNodeExpressionsSerializer.DeserializeExternalFunction("entryp").Body);
             sb.Append(main);
             sb.AppendLine("}");
-            
+
+            uniforms = unifs;
             return sb.ToString();
         }
 
-        private static string ConstructExternalFunctions(GraphData graph)
+        private static string ConstructExternalFunctions(GraphData graph, out string[] uniforms)
         {
             StringBuilder constSb = new();
             StringBuilder uniformSb = new();
             StringBuilder funcSb = new();
             List<ExternalFunction> loaded = [];
             ExternalFunction? f;
+            List<string> unifs = [];
 
             foreach (NodeData nd in graph.Nodes)
             {
@@ -46,7 +48,11 @@ namespace Nodes2Shader.Compilation
                     }
                     
                     if (f.Type == "defconst") constSb.AppendLine(f.Body);
-                    else if (f.Type == "uniform") uniformSb.AppendLine(f.Body);
+                    else if (f.Type == "uniform")
+                    {
+                        uniformSb.AppendLine(f.Body);
+                        unifs.Add(f.Path);
+                    }
                     else if (f.Type == "function") funcSb.AppendLine(f.Body);
                     // for now, preprocessors will be ignored
                 }
@@ -56,6 +62,7 @@ namespace Nodes2Shader.Compilation
             if (uniformSb.Length > 0) constSb.AppendLine(uniformSb.ToString());
             if (funcSb.Length > 0) constSb.AppendLine(funcSb.ToString());
 
+            uniforms = unifs.ToArray();
             return constSb.ToString();
         }
 

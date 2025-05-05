@@ -11,7 +11,7 @@
           "Output": 0,
           "OutputType": "null",
           "InputTypes": [ "Vec4,Null" ],
-          "Expression": "gl_FragColor = <val1>;",
+          "Expression": "FragColor = <val1>;",
           "ExternalFunctions": []
         },
         {
@@ -19,7 +19,7 @@
           "Output": 0,
           "OutputType": "null",
           "InputTypes": [ "Vec3,Float" ],
-          "Expression": "gl_FragColor = vec4(<val1>, <val2>);",
+          "Expression": "FragColor = vec4(<val1>, <val2>);",
           "ExternalFunctions": []
         }
       ]

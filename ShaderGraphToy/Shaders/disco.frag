@@ -1,8 +1,8 @@
 ﻿#version 330 core
 out vec4 FragColor;
 
-uniform float Time;
-uniform vec2 Resolution;
+uniform float u_Time;
+uniform vec2 u_Resolution;
 
 const float PI = 3.141592654;
 
@@ -22,11 +22,11 @@ vec4 disco(vec2 uv) {
 
 void main()
 {
-    vec2 R = Resolution.xy;
+    vec2 R = u_Resolution.xy;
     vec2 uv = gl_FragCoord.xy / R.xy;
     uv.x *= R.x / R.y; // aspect correct
 
-    float t = Time * .6; //t = 0.;
+    float t = u_Time * .6; //t = 0.;
     uv *= 8.;
     uv -= vec2(t*.5, -t*.3);
     
@@ -44,7 +44,7 @@ void main()
     FragColor = clamp(FragColor,.0,1.);
     vec2 N = (gl_FragCoord.xy / R.xy )- .5;
     FragColor = 1.-pow(1.-FragColor, vec4(30.));// curve
-    FragColor.rgb += hash32(gl_FragCoord.xy + Time).r*.07;//noise
+    FragColor.rgb += hash32(gl_FragCoord.xy + u_Time).r*.07;//noise
     FragColor *= 1.0-dot(N,N*1.7);// vingette
     FragColor.a = 1.;
 }

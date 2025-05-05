@@ -1,5 +1,6 @@
 ﻿using Nodes2Shader.Compilation;
 using Nodes2Shader.Compilation.MathGraph;
+using ShaderGraphToy.Graphics;
 using ShaderGraphToy.Representation.GraphNodes;
 using ShaderGraphToy.Utilities.DataBindings;
 using ShaderGraphToy.Windows;
@@ -98,15 +99,14 @@ namespace ShaderGraphToy.Representation.Components
             if (_nodes.Count < 2) throw new ArgumentException("Graph must contain at least 2 nodes!");
             if (_outputNode == null) throw new ArgumentException("Graph must contain output nodoe!");
 
-            Debug.WriteLine("Shader code compilation started...");
-
             List<NodeData> nodesData = [];
             RevealGraphLayer([ _outputNode ], nodesData, 0);
 
             if (nodesData.Count < 2) throw new ArgumentException("Graph must contain output node!");
             GraphData graphData = new() { Nodes = nodesData };
 
-            string code = GraphCompiler.Compile(graphData);
+            string code = GraphCompiler.Compile(graphData, out string[] uniforms);
+            OpenTkRendererAPI.RenderFragmentShader(code, uniforms);
         }
 
         private void RevealGraphLayer(List<GraphNodeBase> startNodes, List<NodeData> revealed, int layer)

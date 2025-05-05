@@ -21,7 +21,7 @@
             <RowDefinition Height="70*" x:Name="infoRow"/>
         </Grid.RowDefinitions>
 
-        <glWpfControl:GLWpfControl Margin="10,0" x:Name="openTkControl"/>
+        <glWpfControl:GLWpfControl Margin="10,10,10,0" x:Name="openTkControl"/>
 
         <Grid Grid.Row="1" Margin="10,-10" Panel.ZIndex="-1">
 

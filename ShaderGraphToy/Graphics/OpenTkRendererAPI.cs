@@ -9,6 +9,6 @@ namespace ShaderGraphToy.Graphics
         private static RenderingViewportVM? _renderer;
 
         internal static void RegisterRenderer(RenderingViewportVM rend) => _renderer = rend;
-        internal static void ChangeFragmentShader(string shader) => _renderer?.ChangeFragmentShader(shader);
+        internal static void RenderFragmentShader(string shader, string[] uniforms) => _renderer?.ChangeFragmentShader(shader, uniforms);
     }
 }

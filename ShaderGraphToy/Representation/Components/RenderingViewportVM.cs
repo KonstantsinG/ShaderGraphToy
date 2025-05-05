@@ -104,11 +104,15 @@ namespace ShaderGraphToy.Representation.Components
         private Stopwatch? _timer;
         private long _totalDelta = 0;
         private long _framesRendered = 0;
+        private string[] _uniforms = [ "u_Time", "u_Resolution" ];
 
 
 
         public void OpenTkControl_Ready()
         {
+            GL.Enable(EnableCap.Blend);
+            GL.BlendFunc(BlendingFactor.SrcAlpha, BlendingFactor.OneMinusSrcAlpha);
+
             float[] verts =
             [
                  1.0f,  1.0f, 0.0f,  // top right
@@ -137,7 +141,7 @@ namespace ShaderGraphToy.Representation.Components
             GL.BufferData(BufferTarget.ElementArrayBuffer, inds.Length * sizeof(float), inds, BufferUsageHint.StaticDraw);
 
             string vertPath = System.IO.Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "Shaders/plane.vert");
-            string fragPath = System.IO.Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "Shaders/rainbowSlices.frag");
+            string fragPath = System.IO.Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "Shaders/disco.frag");
             _shaderProgram = new Shader(vertPath, fragPath);
             _shaderProgram.Use();
 
@@ -149,22 +153,38 @@ namespace ShaderGraphToy.Representation.Components
 
         public void OpenTkControl_OnRender(TimeSpan delta)
         {
-            GL.ClearColor(0.25f, 0.25f, 0.25f, 1.0f);
+            GL.ClearColor(0.15f, 0.15f, 0.15f, 1.0f);
             GL.Clear(ClearBufferMask.ColorBufferBit | ClearBufferMask.DepthBufferBit);
 
             UpdateRenderingStats(delta);
 
-            _shaderProgram!.Use();
-
-            double timeVal = _timer!.Elapsed.TotalSeconds;
-            int timeLoc = GL.GetUniformLocation(_shaderProgram.Handle, "Time");
-            GL.Uniform1(timeLoc, (float)timeVal);
-            int resLoc = GL.GetUniformLocation(_shaderProgram.Handle, "Resolution");
-            GL.Uniform2(resLoc, (float)ViewportWidth, (float)ViewportHeight);
+            if (_shaderProgram != null)
+            {
+                _shaderProgram.Use();
+                SetUniforms();
+            }
 
             GL.BindVertexArray(VAO);
             GL.DrawElements(PrimitiveType.Triangles, 6, DrawElementsType.UnsignedInt, 0);
-            //GL.DrawArrays(PrimitiveType.Triangles, 0, 3);
+        }
+
+        private void SetUniforms()
+        {
+            if (_uniforms.Contains("u_Time"))
+            {
+                double timeVal = _timer!.Elapsed.TotalSeconds;
+                int timeLoc = GL.GetUniformLocation(_shaderProgram!.Handle, "u_Time");
+                GL.Uniform1(timeLoc, (float)timeVal);
+            }
+            if (_uniforms.Contains("u_Resolution"))
+            {
+                int resLoc = GL.GetUniformLocation(_shaderProgram!.Handle, "u_Resolution");
+                GL.Uniform2(resLoc, (float)ViewportWidth, (float)ViewportHeight);
+            }
+            if (_uniforms.Contains("u_Mouse"))
+            {
+
+            }
         }
 
         private void OnBreakRendering()
@@ -206,12 +226,16 @@ namespace ShaderGraphToy.Representation.Components
         }
 
 
-        public void ChangeFragmentShader(string code)
+        public void ChangeFragmentShader(string code, string[] uniforms)
         {
             string vertPath = System.IO.Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "Shaders/plane.vert");
-            string fragPath = System.IO.Path.Combine(AppDomain.CurrentDomain.BaseDirectory, code);
-            _shaderProgram = new Shader(vertPath, fragPath, false, true);
+
+            if (_shaderProgram != null) _shaderProgram!.Dispose();
+            _uniforms = uniforms;
+            _shaderProgram = new Shader(vertPath, code, false, true);
+
             _shaderProgram.Use();
+            _timer!.Restart();
         }
     }
 }

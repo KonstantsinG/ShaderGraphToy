@@ -1,8 +1,8 @@
 ﻿#version 330 core
 out vec4 FragColor;
 
-uniform float Time;
-uniform vec2 Resolution;
+uniform float u_Time;
+uniform vec2 u_Resolution;
 
 #define EPS vec2(1e-4, 0.0)
 
@@ -77,11 +77,11 @@ float ambientOcclusion(vec3 p, vec3 n)
 
 void main()
 {
-	vec2 uv = gl_FragCoord.xy / Resolution.xy;
+	vec2 uv = gl_FragCoord.xy / u_Resolution.xy;
 	vec2 t = uv * 2.0 - vec2(1.0);
-	t.x *= Resolution.x / Resolution.y;
+	t.x *= u_Resolution.x / u_Resolution.y;
 	
-	time = Time;
+	time = u_Time;
 	
 	vec3 ro = vec3(-0.4, sin(time * 2.0) * 0.05, 0.7), rd = rotateX(1.1, rotateY(0.5, normalize(vec3(t.xy, -0.8))));
 	float f = 0.0;
