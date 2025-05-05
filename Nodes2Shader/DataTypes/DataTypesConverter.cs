@@ -210,13 +210,13 @@ namespace Nodes2Shader.DataTypes
 
                     case DataType.Vec2:
                         if (comps == 2) return vecStr;
-                        else if (comps == 3 || comps == 4) return $"vec2({vecStr}.x, {vecStr}.y)";
+                        else if (comps == 3 || comps == 4) return $"{vecStr}.xy";
                         break;
 
                     case DataType.Vec3:
                         if (comps == 2) return $"vec3({vecStr}.x, {vecStr}.y, {vecStr}.y)";
                         else if (comps == 3) return vecStr;
-                        else if (comps == 4) return $"vec3({vecStr}.x, {vecStr}.y, {vecStr}.z)";
+                        else if (comps == 4) return $"{vecStr}.xyz";
                         break;
 
                     case DataType.Vec4:

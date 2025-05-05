@@ -7,30 +7,56 @@ using System.Text;
 
 namespace Nodes2Shader.Compilation
 {
-    public enum CompilationResult
-    {
-        Success,
-        SomeGlslError
-    }
-
     public static class GraphCompiler
     {
-        public static string Compile(GraphData visualGraph, out CompilationResult result)
+        public static string Compile(GraphData visualGraph)
         {
-            StringBuilder sb = new(); StringBuilder sb2 = new();
-            sb.AppendLine(GraphNodeExpressionsSerializer.DeserializeExternalFunction("header").Body);
-            
-            // external functions
+            StringBuilder sb = new();
 
+            string main = ConstructMainFunctionBody(visualGraph); // main function body
+            string extf = ConstructExternalFunctions(visualGraph); // external functions
+
+            sb.AppendLine(GraphNodeExpressionsSerializer.DeserializeExternalFunction("header").Body);
+            sb.AppendLine(); sb.Append(extf);
             sb.AppendLine(GraphNodeExpressionsSerializer.DeserializeExternalFunction("entryp").Body);
-            
-            // main function body
-            string blabla = ConstructMainFunctionBody(visualGraph);
-            
+            sb.Append(main);
             sb.AppendLine("}");
             
-            result = CompilationResult.Success;
             return sb.ToString();
+        }
+
+        private static string ConstructExternalFunctions(GraphData graph)
+        {
+            StringBuilder constSb = new();
+            StringBuilder uniformSb = new();
+            StringBuilder funcSb = new();
+            List<ExternalFunction> loaded = [];
+            ExternalFunction? f;
+
+            foreach (NodeData nd in graph.Nodes)
+            {
+                foreach (string extf in nd.Expression!.ExternalFunctions)
+                {
+                    f = loaded.FirstOrDefault(l => l.Path == extf);
+
+                    if (f == null)
+                    {
+                        f = GraphNodeExpressionsSerializer.DeserializeExternalFunction(extf);
+                        loaded.Add(f);
+                    }
+                    
+                    if (f.Type == "defconst") constSb.AppendLine(f.Body);
+                    else if (f.Type == "uniform") uniformSb.AppendLine(f.Body);
+                    else if (f.Type == "function") funcSb.AppendLine(f.Body);
+                    // for now, preprocessors will be ignored
+                }
+            }
+
+            if (constSb.Length > 0) constSb.AppendLine();
+            if (uniformSb.Length > 0) constSb.AppendLine(uniformSb.ToString());
+            if (funcSb.Length > 0) constSb.AppendLine(funcSb.ToString());
+
+            return constSb.ToString();
         }
 
         private static string ConstructMainFunctionBody(GraphData graph)
@@ -40,6 +66,7 @@ namespace Nodes2Shader.Compilation
             List<GraphNodeExpression> exps = [];
             GraphNodeExpression? ex;
             string matchingInput;
+            int lastLayer = graph.Nodes[0].Layer;
 
             foreach (NodeData nd in graph.Nodes)
             {
@@ -70,11 +97,19 @@ namespace Nodes2Shader.Compilation
                 List<int> nodeOutputs = nd.GetOutputsIds();
                 foreach (int i in nodeOutputs)
                 {
-                    // find matching exception variant
                     expSb = new();
+                    if (lastLayer != nd.Layer) expSb.AppendLine();
+                    lastLayer = nd.Layer;
+
+                    // find matching expression variant
                     nd.Expression = ex.FindMatchingExpressionVariant(nodeVariant, i, nd.GetInputTypes(), out matchingInput);
                     nd.VarInput = matchingInput;
-                    expSb.Append(nd.Expression.Expression);
+
+                    if (nd.Expression.Expression.Length > 0)
+                    {
+                        expSb.Append('\t');
+                        expSb.Append(nd.Expression.Expression);
+                    }
 
                     // cast all node input values to correct type
                     DataTypesConverter.CastInputs(nd);

@@ -8,7 +8,5 @@
         public required List<string> InputTypes { get; set; }
         public required string Expression { get; set; }
         public required List<string> ExternalFunctions { get; set; }
-
-        public List<ExternalFunction>? LoadedFunctions { get; set; } = null;
     }
 }

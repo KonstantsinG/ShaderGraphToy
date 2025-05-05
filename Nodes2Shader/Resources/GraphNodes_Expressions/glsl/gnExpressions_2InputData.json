@@ -35,7 +35,7 @@
           "Output": 0,
           "OutputType": "vec2",
           "InputTypes": [],
-          "Expression": "vec2 <name> = gl_FragCoord / u_Resolution;\n<name> = <name> * 2.0 - 1.0",
+          "Expression": "vec2 <name> = (gl_FragCoord / u_Resolution) * 2.0 - 1.0;",
           "ExternalFunctions": [ "u_Resolution" ]
         }
       ]
