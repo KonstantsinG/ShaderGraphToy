@@ -60,7 +60,7 @@
       "Type": "uniform",
       "Path": "u_Time",
       "Body": [
-        "uniform vec2 u_Time;"
+        "uniform float u_Time;"
       ]
     },
 
@@ -80,6 +80,9 @@
     },
 
     // Functions
+
+    // IMPLEMENT :: REMAP() -> low2 + (value - low1) * (high2 - low2) / (high1 - low1)
+
     {
       "Type": "function",
       "Path": "rot2d<float>",

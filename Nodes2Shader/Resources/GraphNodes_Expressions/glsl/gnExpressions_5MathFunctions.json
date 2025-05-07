@@ -2,6 +2,240 @@
   "GraphNodesExpressions": [
 
     {
+      // MatFunctions_Basic_Pow
+      "TypeId": 511,
+      "Name": "pow<idx>",
+      "ExpressionVariants": [
+        {
+          "Variant": 0,
+          "Output": 0,
+          "OutputType": "<inType1>",
+          "InputTypes": [],
+          "Expression": "<inType1> <name> = pow(<val1>, <val2>);",
+          "ExternalFunctions": []
+        }
+      ]
+    },
+
+    {
+      // MatFunctions_Basic_Exp
+      "TypeId": 512,
+      "Name": "exp<idx>",
+      "ExpressionVariants": [
+        {
+          "Variant": 0,
+          "Output": 0,
+          "OutputType": "<inType1>",
+          "InputTypes": [],
+          "Expression": "<inType1> <name> = exp(<val1>);",
+          "ExternalFunctions": []
+        }
+      ]
+    },
+
+    {
+      // MatFunctions_Basic_Log
+      "TypeId": 513,
+      "Name": "exp<idx>",
+      "ExpressionVariants": [
+        {
+          "Variant": 0,
+          "Output": 0,
+          "OutputType": "<inType1>",
+          "InputTypes": [],
+          "Expression": "<inType1> <name> = log2(<val1>);",
+          "ExternalFunctions": []
+        },
+        {
+          "Variant": 1,
+          "Output": 0,
+          "OutputType": "<inType1>",
+          "InputTypes": [],
+          "Expression": "<inType1> <name> = log(<val1>);",
+          "ExternalFunctions": []
+        }
+      ]
+    },
+
+    {
+      // MatFunctions_Basic_Sqrt
+      "TypeId": 514,
+      "Name": "sqrt<idx>",
+      "ExpressionVariants": [
+        {
+          "Variant": 0,
+          "Output": 0,
+          "OutputType": "<inType1>",
+          "InputTypes": [],
+          "Expression": "<inType1> <name> = sqrt(<val1>);",
+          "ExternalFunctions": []
+        }
+      ]
+    },
+
+    {
+      // MatFunctions_Basic_Abs
+      "TypeId": 515,
+      "Name": "abs<idx>",
+      "ExpressionVariants": [
+        {
+          "Variant": 0,
+          "Output": 0,
+          "OutputType": "<inType1>",
+          "InputTypes": [],
+          "Expression": "<inType1> <name> = abs(<val1>);",
+          "ExternalFunctions": []
+        }
+      ]
+    },
+
+    {
+      // MatFunctions_Basic_Round
+      "TypeId": 516,
+      "Name": "round<idx>",
+      "ExpressionVariants": [
+        {
+          "Variant": 0,
+          "Output": 0,
+          "OutputType": "<inType1>",
+          "InputTypes": [],
+          "Expression": "<inType1> <name> = floor(<val1>);",
+          "ExternalFunctions": []
+        },
+        {
+          "Variant": 1,
+          "Output": 0,
+          "OutputType": "<inType1>",
+          "InputTypes": [],
+          "Expression": "<inType1> <name> = ceil(<val1>);",
+          "ExternalFunctions": []
+        },
+        {
+          "Variant": 2,
+          "Output": 0,
+          "OutputType": "<inType1>",
+          "InputTypes": [],
+          "Expression": "<inType1> <name> = round(<val1>);",
+          "ExternalFunctions": []
+        }
+      ]
+    },
+
+    {
+      // MatFunctions_Basic_TruncFract
+      "TypeId": 517,
+      "Name": "trnkFrct<idx>_out<outIdx>",
+      "ExpressionVariants": [
+        {
+          "Variant": 0,
+          "Output": 0,
+          "OutputType": "<inType1>",
+          "InputTypes": [],
+          "Expression": "<inType1> <name> = trunc(<val1>);",
+          "ExternalFunctions": []
+        },
+        {
+          "Variant": 0,
+          "Output": 1,
+          "OutputType": "<inType1>",
+          "InputTypes": [],
+          "Expression": "<inType1> <name> = fract(<val1>);",
+          "ExternalFunctions": []
+        }
+      ]
+    },
+
+    {
+      // MatFunctions_Basic_Sign
+      "TypeId": 518,
+      "Name": "sign<idx>",
+      "ExpressionVariants": [
+        {
+          "Variant": 0,
+          "Output": 0,
+          "OutputType": "<inType1>",
+          "InputTypes": [],
+          "Expression": "<inType1> <name> = sign(<val1>);",
+          "ExternalFunctions": []
+        }
+      ]
+    },
+
+    {
+      // MatFunctions_Basic_Invert
+      "TypeId": 519,
+      "Name": "inv<idx>",
+      "ExpressionVariants": [
+        {
+          "Variant": 0,
+          "Output": 0,
+          "OutputType": "<inType1>",
+          "InputTypes": [],
+          "Expression": "<inType1> <name> = 1.0 / <val1>;",
+          "ExternalFunctions": []
+        }
+      ]
+    },
+
+    ///////////////////////////////////////////////////////////////////// 52
+
+    {
+      // MatFunctions_Extended_MinMax
+      "TypeId": 521,
+      "Name": "minMax<idx>",
+      "ExpressionVariants": [
+        {
+          "Variant": 0,
+          "Output": 0,
+          "OutputType": "<inType1>",
+          "InputTypes": [],
+          "Expression": "<inType1> <name> = min(<val1>, <val2>);",
+          "ExternalFunctions": []
+        },
+        {
+          "Variant": 1,
+          "Output": 0,
+          "OutputType": "<inType1>",
+          "InputTypes": [],
+          "Expression": "<inType1> <name> = max(<val1>, <val2>);",
+          "ExternalFunctions": []
+        }
+      ]
+    },
+
+    {
+      // MatFunctions_Extended_Step
+      "TypeId": 522,
+      "Name": "step<idx>",
+      "ExpressionVariants": [
+        {
+          "Variant": 0,
+          "Output": 0,
+          "OutputType": "<inType1>",
+          "InputTypes": [],
+          "Expression": "<inType1> <name> = step(<val2>, <val1>);",
+          "ExternalFunctions": []
+        }
+      ]
+    },
+
+    {
+      // MatFunctions_Extended_Smoothstep
+      "TypeId": 523,
+      "Name": "smStep<idx>",
+      "ExpressionVariants": [
+        {
+          "Variant": 0,
+          "Output": 0,
+          "OutputType": "<inType1>",
+          "InputTypes": [],
+          "Expression": "<inType1> <name> = smoothstep(<val2>, <val3>, <val1>);",
+          "ExternalFunctions": []
+        }
+      ]
+    },
+
+    {
       // MatFunctions_Extended_Mix
       "TypeId": 524,
       "Name": "mix<idx>",
@@ -12,6 +246,179 @@
           "OutputType": "<inType1>",
           "InputTypes": [],
           "Expression": "<inType1> <name> = mix(<val2>, <val3>, <val1>);",
+          "ExternalFunctions": []
+        }
+      ]
+    },
+
+    {
+      // MatFunctions_Extended_Clamp
+      "TypeId": 525,
+      "Name": "clamp<idx>",
+      "ExpressionVariants": [
+        {
+          "Variant": 0,
+          "Output": 0,
+          "OutputType": "<inType1>",
+          "InputTypes": [],
+          "Expression": "<inType1> <name> = clamp(<val1>, <val2>, <val3>);",
+          "ExternalFunctions": []
+        }
+      ]
+    },
+
+    // MatFunctions_Extended_Remap --------------------------------------------- WAITING FOR PREPROCESSOR...
+    // 526
+
+    ///////////////////////////////////////////////////////////////////// 53
+
+    {
+      // MatFunctions_Trigonometry_Basic
+      "TypeId": 531,
+      "Name": "trig<idx>",
+      "ExpressionVariants": [
+        {
+          "Variant": 0,
+          "Output": 0,
+          "OutputType": "<inType1>",
+          "InputTypes": [],
+          "Expression": "<inType1> <name> = sin(<val1>);",
+          "ExternalFunctions": []
+        },
+        {
+          "Variant": 1,
+          "Output": 0,
+          "OutputType": "<inType1>",
+          "InputTypes": [],
+          "Expression": "<inType1> <name> = cos(<val1>);",
+          "ExternalFunctions": []
+        },
+        {
+          "Variant": 2,
+          "Output": 0,
+          "OutputType": "<inType1>",
+          "InputTypes": [],
+          "Expression": "<inType1> <name> = tan(<val1>);",
+          "ExternalFunctions": []
+        }
+      ]
+    },
+
+    {
+      // MatFunctions_Trigonometry_Arc
+      "TypeId": 532,
+      "Name": "atrig<idx>",
+      "ExpressionVariants": [
+        {
+          "Variant": 0,
+          "Output": 0,
+          "OutputType": "<inType1>",
+          "InputTypes": [],
+          "Expression": "<inType1> <name> = asin(<val1>);",
+          "ExternalFunctions": []
+        },
+        {
+          "Variant": 1,
+          "Output": 0,
+          "OutputType": "<inType1>",
+          "InputTypes": [],
+          "Expression": "<inType1> <name> = acos(<val1>);",
+          "ExternalFunctions": []
+        },
+        {
+          "Variant": 2,
+          "Output": 0,
+          "OutputType": "<inType1>",
+          "InputTypes": [],
+          "Expression": "<inType1> <name> = atan(<val1>);",
+          "ExternalFunctions": []
+        }
+      ]
+    },
+
+    {
+      // MatFunctions_Trigonometry_Hyper
+      "TypeId": 533,
+      "Name": "trigh<idx>",
+      "ExpressionVariants": [
+        {
+          "Variant": 0,
+          "Output": 0,
+          "OutputType": "<inType1>",
+          "InputTypes": [],
+          "Expression": "<inType1> <name> = sinh(<val1>);",
+          "ExternalFunctions": []
+        },
+        {
+          "Variant": 1,
+          "Output": 0,
+          "OutputType": "<inType1>",
+          "InputTypes": [],
+          "Expression": "<inType1> <name> = cosh(<val1>);",
+          "ExternalFunctions": []
+        },
+        {
+          "Variant": 2,
+          "Output": 0,
+          "OutputType": "<inType1>",
+          "InputTypes": [],
+          "Expression": "<inType1> <name> = tanh(<val1>);",
+          "ExternalFunctions": []
+        }
+      ]
+    },
+
+    {
+      // MatFunctions_Trigonometry_ArcHyper
+      "TypeId": 534,
+      "Name": "atrigh<idx>",
+      "ExpressionVariants": [
+        {
+          "Variant": 0,
+          "Output": 0,
+          "OutputType": "<inType1>",
+          "InputTypes": [],
+          "Expression": "<inType1> <name> = asinh(<val1>);",
+          "ExternalFunctions": []
+        },
+        {
+          "Variant": 1,
+          "Output": 0,
+          "OutputType": "<inType1>",
+          "InputTypes": [],
+          "Expression": "<inType1> <name> = acosh(<val1>);",
+          "ExternalFunctions": []
+        },
+        {
+          "Variant": 2,
+          "Output": 0,
+          "OutputType": "<inType1>",
+          "InputTypes": [],
+          "Expression": "<inType1> <name> = atanh(<val1>);",
+          "ExternalFunctions": []
+        }
+      ]
+    },
+
+    {
+      // MatFunctions_Trigonometry_RadDeg
+      "TypeId": 535,
+      "Name": "radDeg<idx>",
+      "ExpressionVariants": [
+        {
+          "Variant": 0,
+          "Output": 0,
+          "OutputType": "<inType1>",
+          "InputTypes": [],
+          "Expression": "<inType1> <name> = degrees(<val1>);",
+          "ExternalFunctions": []
+        },
+        {
+          "Variant": 1,
+          "Output": 0,
+          "OutputType": "<inType1>",
+          "InputTypes": [],
+          "Expression": "<inType1> <name> = radians(<val1>);",
           "ExternalFunctions": []
         }
       ]

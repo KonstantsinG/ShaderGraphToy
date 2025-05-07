@@ -41,7 +41,8 @@ namespace Nodes2Shader.Compilation
                 {
                     f = loaded.FirstOrDefault(l => l.Path == extf);
 
-                    if (f == null)
+                    if (f != null) continue; // if this entry is already here - skip it
+                    else
                     {
                         f = GraphNodeExpressionsSerializer.DeserializeExternalFunction(extf);
                         loaded.Add(f);

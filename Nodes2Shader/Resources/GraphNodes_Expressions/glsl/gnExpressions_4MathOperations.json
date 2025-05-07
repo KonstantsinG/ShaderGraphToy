@@ -377,7 +377,7 @@
     {
       // MatOperations_Matrices_MatDecomp
       "TypeId": 435,
-      "Name": "matDecomp<idx>",
+      "Name": "matDecomp<idx>_out<outIdx>",
       "ExpressionVariants": [
         {
           "Variant": 0,
