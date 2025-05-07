@@ -45,6 +45,7 @@ void main()
     vec2 N = (gl_FragCoord.xy / R.xy )- .5;
     FragColor = 1.-pow(1.-FragColor, vec4(30.));// curve
     FragColor.rgb += hash32(gl_FragCoord.xy + u_Time).r*.07;//noise
-    FragColor *= 1.0-dot(N,N*1.7);// vingette
+    FragColor *= 1.0-dot(N,N*1.2);// vingette
+    FragColor = pow(FragColor, vec4(1.75)); // gamma correction
     FragColor.a = 1.;
 }

@@ -2,6 +2,208 @@
   "GraphNodesExpressions": [
 
     {
+      // MatOperations_Basic_Sum
+      "TypeId": 411,
+      "Name": "sum<idx>",
+      "ExpressionVariants": [
+        {
+          "Variant": 0,
+          "Output": 0,
+          "OutputType": "<inType1>",
+          "InputTypes": [],
+          "Expression": "<inType1> <name> = <val1> + <val2>;",
+          "ExternalFunctions": []
+        }
+      ]
+    },
+
+    {
+      // MatOperations_Basic_Sub
+      "TypeId": 412,
+      "Name": "sub<idx>",
+      "ExpressionVariants": [
+        {
+          "Variant": 0,
+          "Output": 0,
+          "OutputType": "<inType1>",
+          "InputTypes": [],
+          "Expression": "<inType1> <name> = <val1> - <val2>;",
+          "ExternalFunctions": []
+        }
+      ]
+    },
+
+    {
+      // MatOperations_Basic_Mul
+      "TypeId": 413,
+      "Name": "mul<idx>",
+      "ExpressionVariants": [
+        {
+          "Variant": 0,
+          "Output": 0,
+          "OutputType": "<inType1>",
+          "InputTypes": [],
+          "Expression": "<inType1> <name> = <val1> * <val2>;",
+          "ExternalFunctions": []
+        }
+      ]
+    },
+
+    {
+      // MatOperations_Basic_Div
+      "TypeId": 414,
+      "Name": "div<idx>",
+      "ExpressionVariants": [
+        {
+          "Variant": 0,
+          "Output": 0,
+          "OutputType": "<inType1>",
+          "InputTypes": [],
+          "Expression": "<inType1> <name> = <val1> / <val2>;",
+          "ExternalFunctions": []
+        }
+      ]
+    },
+
+    {
+      // MatOperations_Basic_DivRem
+      "TypeId": 415,
+      "Name": "divRem<idx>",
+      "ExpressionVariants": [
+        {
+          "Variant": 0,
+          "Output": 0,
+          "OutputType": "<inType1>",
+          "InputTypes": [],
+          "Expression": "<inType1> <name> = mod(<val1>, <val2>);",
+          "ExternalFunctions": []
+        }
+      ]
+    },
+
+    ///////////////////////////////////////////////////////////////////// 42
+
+    {
+      // MatOperations_Vectors_Cross
+      "TypeId": 421,
+      "Name": "cross<idx>",
+      "ExpressionVariants": [
+        {
+          "Variant": 0,
+          "Output": 0,
+          "OutputType": "vec3",
+          "InputTypes": [],
+          "Expression": "vec3 <name> = cross(<val1>, <val2>);",
+          "ExternalFunctions": []
+        }
+      ]
+    },
+
+    {
+      // MatOperations_Vectors_Dot
+      "TypeId": 422,
+      "Name": "dot<idx>",
+      "ExpressionVariants": [
+        {
+          "Variant": 0,
+          "Output": 0,
+          "OutputType": "float",
+          "InputTypes": [],
+          "Expression": "float <name> = dot(<val1>, <val2>);",
+          "ExternalFunctions": []
+        }
+      ]
+    },
+
+    {
+      // MatOperations_Vectors_Len
+      "TypeId": 423,
+      "Name": "len<idx>",
+      "ExpressionVariants": [
+        {
+          "Variant": 0,
+          "Output": 0,
+          "OutputType": "float",
+          "InputTypes": [],
+          "Expression": "float <name> = length(<val1>);",
+          "ExternalFunctions": []
+        }
+      ]
+    },
+
+    {
+      // MatOperations_Vectors_Norm
+      "TypeId": 424,
+      "Name": "norm<idx>",
+      "ExpressionVariants": [
+        {
+          "Variant": 0,
+          "Output": 0,
+          "OutputType": "<inType1>",
+          "InputTypes": [],
+          "Expression": "<inType1> <name> = normalize(<val1>);",
+          "ExternalFunctions": []
+        }
+      ]
+    },
+
+    {
+      // MatOperations_Vectors_VecMatMul
+      "TypeId": 425,
+      "Name": "vm_mul<idx>",
+      "ExpressionVariants": [
+        {
+          "Variant": 0,
+          "Output": 0,
+          "OutputType": "<inType1>",
+          "InputTypes": [],
+          "Expression": "<inType1> <name> = vecMat_mul(<val1>, <val2>);",
+          "ExternalFunctions": [ "vecMat_mul<vec, mat>" ]
+        }
+      ]
+    },
+
+    {
+      // MatOperations_Vectors_VecComp
+      "TypeId": 426,
+      "Name": "vecComp<idx>",
+      "ExpressionVariants": [
+        {
+          "Variant": 0,
+          "Output": 0,
+          "OutputType": "vec2",
+          "InputTypes": [ "float,float,null,null" ],
+          "Expression": "vec2 <name> = vec2(<val1>, <val2>);",
+          "ExternalFunctions": []
+        },
+        {
+          "Variant": 0,
+          "Output": 0,
+          "OutputType": "vec3",
+          "InputTypes": [ "float,float,float,null" ],
+          "Expression": "vec3 <name> = vec3(<val1>, <val2>, <val3>);",
+          "ExternalFunctions": []
+        },
+        {
+          "Variant": 0,
+          "Output": 0,
+          "OutputType": "vec4",
+          "InputTypes": [ "float,float,null,float" ],
+          "Expression": "vec4 <name> = vec4(<val1>, <val2>, 0.0, <val3>);",
+          "ExternalFunctions": []
+        },
+        {
+          "Variant": 0,
+          "Output": 0,
+          "OutputType": "vec4",
+          "InputTypes": [ "float,float,float,float" ],
+          "Expression": "vec4 <name> = vec4(<val1>, <val2>, <val3>, <val4>);",
+          "ExternalFunctions": []
+        }
+      ]
+    },
+
+    {
       // MatOperations_Vectors_VecDecomp
       "TypeId": 427,
       "Name": "vecDecomp<idx>_out<outIdx>",
@@ -36,6 +238,170 @@
           "OutputType": "float",
           "InputTypes": [ "Vec4" ],
           "Expression": "float <name> = <val1>.w;",
+          "ExternalFunctions": []
+        }
+      ]
+    },
+
+    ///////////////////////////////////////////////////////////////////// 43
+
+    {
+      // MatOperations_Matrices_MatMatMul
+      "TypeId": 431,
+      "Name": "mm_mul<idx>",
+      "ExpressionVariants": [
+        {
+          "Variant": 0,
+          "Output": 0,
+          "OutputType": "<inType1>",
+          "InputTypes": [],
+          "Expression": "<inType1> <name> = matMat_mul(<val1>, <val2>);",
+          "ExternalFunctions": [ "matMat_mul<mat, mat>" ]
+        }
+      ]
+    },
+
+    {
+      // MatOperations_Matrices_MatDet
+      "TypeId": 432,
+      "Name": "matDet<idx>",
+      "ExpressionVariants": [
+        {
+          "Variant": 0,
+          "Output": 0,
+          "OutputType": "float",
+          "InputTypes": [],
+          "Expression": "float <name> = determinant(<val1>);",
+          "ExternalFunctions": []
+        }
+      ]
+    },
+
+    {
+      // MatOperations_Matrices_MatTransp
+      "TypeId": 433,
+      "Name": "matTransp<idx>",
+      "ExpressionVariants": [
+        {
+          "Variant": 0,
+          "Output": 0,
+          "OutputType": "mat2",
+          "InputTypes": [ "mat2" ],
+          "Expression": "mat2 <name> = determinant(<val1>);",
+          "ExternalFunctions": []
+        },
+        {
+          "Variant": 0,
+          "Output": 0,
+          "OutputType": "mat3",
+          "InputTypes": [ "mat3" ],
+          "Expression": "mat3 <name> = determinant(<val1>);",
+          "ExternalFunctions": []
+        },
+        {
+          "Variant": 0,
+          "Output": 0,
+          "OutputType": "mat4",
+          "InputTypes": [ "mat4" ],
+          "Expression": "mat4 <name> = determinant(<val1>);",
+          "ExternalFunctions": []
+        },
+        {
+          "Variant": 0,
+          "Output": 0,
+          "OutputType": "mat3x2",
+          "InputTypes": [ "mat2x3" ],
+          "Expression": "mat3x2 <name> = determinant(<val1>);",
+          "ExternalFunctions": []
+        },
+        {
+          "Variant": 0,
+          "Output": 0,
+          "OutputType": "mat4x2",
+          "InputTypes": [ "mat2x4" ],
+          "Expression": "mat4x2 <name> = determinant(<val1>);",
+          "ExternalFunctions": []
+        },
+        {
+          "Variant": 0,
+          "Output": 0,
+          "OutputType": "mat2x3",
+          "InputTypes": [ "mat3x2" ],
+          "Expression": "mat2x3 <name> = determinant(<val1>);",
+          "ExternalFunctions": []
+        },
+        {
+          "Variant": 0,
+          "Output": 0,
+          "OutputType": "mat4x3",
+          "InputTypes": [ "mat3x4" ],
+          "Expression": "mat4x3 <name> = determinant(<val1>);",
+          "ExternalFunctions": []
+        },
+        {
+          "Variant": 0,
+          "Output": 0,
+          "OutputType": "mat2x4",
+          "InputTypes": [ "mat4x2" ],
+          "Expression": "mat2x4 <name> = determinant(<val1>);",
+          "ExternalFunctions": []
+        },
+        {
+          "Variant": 0,
+          "Output": 0,
+          "OutputType": "mat3x4",
+          "InputTypes": [ "mat4x3" ],
+          "Expression": "mat3x4 <name> = determinant(<val1>);",
+          "ExternalFunctions": []
+        }
+      ]
+    },
+
+    {
+      // MatOperations_Matrices_MatComp
+      "TypeId": 434,
+      "Name": "matComp<idx>",
+      "ExpressionVariants": [
+        {
+          "Variant": 0,
+          "Output": 0,
+          "OutputType": "matLALALA",
+          "InputTypes": [],
+          "Expression": "matLALALA <name> = matLALALA(<val1>);",
+          "ExternalFunctions": []
+          // ADD OVERLOADS ----- (WITH GENERIC VARIANTS)
+        }
+      ]
+    },
+
+    {
+      // MatOperations_Matrices_MatDecomp
+      "TypeId": 435,
+      "Name": "matDecomp<idx>",
+      "ExpressionVariants": [
+        {
+          "Variant": 0,
+          "Output": 0,
+          "OutputType": "matLALALA",
+          "InputTypes": [],
+          "Expression": "matLALALA <name> = <val1>[<outId>];",
+          "ExternalFunctions": []
+          // ADD OVERLOADS ----- (WITH GENERIC VARIANTS)
+        }
+      ]
+    },
+
+    {
+      // MatOperations_Matrices_MatEl
+      "TypeId": 436,
+      "Name": "matEl<idx>",
+      "ExpressionVariants": [
+        {
+          "Variant": 0,
+          "Output": 0,
+          "OutputType": "float",
+          "InputTypes": [],
+          "Expression": "float <name> = <val1>[<val2>][<val3>];",
           "ExternalFunctions": []
         }
       ]

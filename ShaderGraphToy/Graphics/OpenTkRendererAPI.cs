@@ -1,6 +1,4 @@
-﻿
-
-using ShaderGraphToy.Representation.Components;
+﻿using ShaderGraphToy.Representation.Components;
 
 namespace ShaderGraphToy.Graphics
 {

@@ -3,7 +3,6 @@ using OpenTK.Graphics.OpenGL;
 using ShaderGraphToy.Graphics;
 using ShaderGraphToy.Utilities.DataBindings;
 using ShaderGraphToy.Utilities.Common;
-using Microsoft.Xaml.Behaviors.Media;
 
 namespace ShaderGraphToy.Representation.Components
 {
@@ -141,7 +140,7 @@ namespace ShaderGraphToy.Representation.Components
             GL.BufferData(BufferTarget.ElementArrayBuffer, inds.Length * sizeof(float), inds, BufferUsageHint.StaticDraw);
 
             string vertPath = System.IO.Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "Shaders/plane.vert");
-            string fragPath = System.IO.Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "Shaders/disco.frag");
+            string fragPath = System.IO.Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "Shaders/lava.frag");
             _shaderProgram = new Shader(vertPath, fragPath);
             _shaderProgram.Use();
 
@@ -235,7 +234,7 @@ namespace ShaderGraphToy.Representation.Components
             _shaderProgram = new Shader(vertPath, code, false, true);
 
             _shaderProgram.Use();
-            _timer!.Restart();
+            OnBreakRendering();
         }
     }
 }

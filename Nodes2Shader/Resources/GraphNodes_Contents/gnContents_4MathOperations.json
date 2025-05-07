@@ -168,7 +168,7 @@
       "Components": [
         {
           "Type": "Inscription",
-          "Title": "A % B",
+          "Title": "Остаток от деления A на B",
           "Formatting": [ "Centred", "Bold", "Margin" ],
           "HasInput": false,
           "HasOutput": false,
@@ -635,7 +635,8 @@
 
         {
           "Type": "Inscription",
-          "Title": "Строка 1",
+          "Title": "Столбец 1",
+          "DefaultInput": "vec2(0.0, 0.0)",
           "Formatting": [],
           "HasInput": true,
           "HasOutput": false,
@@ -645,7 +646,8 @@
 
         {
           "Type": "Inscription",
-          "Title": "Строка 2",
+          "Title": "Столбец 2",
+          "DefaultInput": "vec2(0.0, 0.0)",
           "Formatting": [],
           "HasInput": true,
           "HasOutput": false,
@@ -655,7 +657,7 @@
 
         {
           "Type": "Inscription",
-          "Title": "Строка 3",
+          "Title": "Столбец 3",
           "Formatting": [],
           "HasInput": true,
           "HasOutput": false,
@@ -665,7 +667,7 @@
 
         {
           "Type": "Inscription",
-          "Title": "Строка 4",
+          "Title": "Столбец 4",
           "Formatting": [],
           "HasInput": true,
           "HasOutput": false,
@@ -767,7 +769,7 @@
 
         {
           "Type": "Input",
-          "Title": "Строка",
+          "Title": "Столбец",
           "Content": "0",
           "IsReadonly": false,
           "HasInput": true,
@@ -776,7 +778,7 @@
 
         {
           "Type": "Input",
-          "Title": "Столбец",
+          "Title": "Строка",
           "Content": "0",
           "IsReadonly": false,
           "HasInput": true,
