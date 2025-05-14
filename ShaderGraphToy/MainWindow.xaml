@@ -7,38 +7,193 @@
         xmlns:comps="clr-namespace:ShaderGraphToy.Representation.Components"
         mc:Ignorable="d"
         Title="Визуальный редактор шейдеров" Height="800" Width="1300"
-        PreviewKeyDown="Window_PreviewKeyDown" PreviewKeyUp="Window_PreviewKeyUp">
+        PreviewKeyDown="Window_PreviewKeyDown" PreviewKeyUp="Window_PreviewKeyUp"
+        Loaded="Window_Loaded"
+        WindowStyle="None" ResizeMode="CanResize">
+
+    <WindowChrome.WindowChrome>
+        <WindowChrome CaptionHeight="35" ResizeBorderThickness="6" GlassFrameThickness="3"
+                      UseAeroCaptionButtons="True" CornerRadius="5"/>
+    </WindowChrome.WindowChrome>
+
+    <Window.Resources>
+        <Style TargetType="{x:Type Menu}">
+            <Setter Property="Background" Value="{StaticResource Gray_005}"/>
+            <Setter Property="BorderBrush" Value="{StaticResource Gray_01}"/>
+            <Setter Property="Foreground" Value="{StaticResource Gray_05}"/>
+            <Setter Property="FontSize" Value="12"/>
+            <Setter Property="BorderThickness" Value="1"/>
+        </Style>
+
+        <Style TargetType="{x:Type MenuItem}">
+            <Setter Property="Background" Value="{StaticResource Gray_005}"/>
+            <Setter Property="BorderBrush" Value="{StaticResource Gray_01}"/>
+            <Setter Property="Foreground" Value="{StaticResource Gray_05}"/>
+            <Setter Property="FontSize" Value="12"/>
+            <Setter Property="Padding" Value="8,4,8,4"/>
+        </Style>
+    </Window.Resources>
 
     <Grid Background="#FF27282D">
 
-        <Grid.ColumnDefinitions>
-            <ColumnDefinition x:Name="canvasColumn" Width="70*"/>
-            <ColumnDefinition x:Name="viewportColumn" Width="30*"/>
-        </Grid.ColumnDefinitions>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="35"/>
+            <RowDefinition/>
+        </Grid.RowDefinitions>
 
-        <comps:GraphCanvas x:Name="graphCanvas"/>
+        <Border Grid.Row="0">
 
-        <Border Background="{StaticResource Gray_005}" Width="3"
-                HorizontalAlignment="Right"/>
+            <Grid Background="{StaticResource Gray_005}">
 
-        <Rectangle Width="10" Height="96" RadiusX="5" RadiusY="5" 
-                   HorizontalAlignment="Right" x:Name="resizeRect"
-                   MouseLeftButtonDown="ResizeRect_MouseLeftButtonDown"
-                   MouseLeftButtonUp="ResizeRect_MouseLeftButtonUp"
-                   MouseMove="ResizeRect_MouseMove" Cursor="SizeWE">
-            <Rectangle.Style>
-                <Style TargetType="Rectangle">
-                    <Setter Property="Fill" Value="{StaticResource Gray_005}"/>
-                    <Style.Triggers>
-                        <Trigger Property="IsMouseOver" Value="True">
-                            <Setter Property="Fill" Value="{StaticResource Gray_00}"/>
-                        </Trigger>
-                    </Style.Triggers>
-                </Style>
-            </Rectangle.Style>
-        </Rectangle>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="35"/>
+                    <ColumnDefinition Width="50"/>
+                    <ColumnDefinition Width="100"/>
+                    <ColumnDefinition/>
+                    <ColumnDefinition Width="45"/>
+                    <ColumnDefinition Width="45"/>
+                    <ColumnDefinition Width="45"/>
+                </Grid.ColumnDefinitions>
 
-        <comps:RenderingViewport Grid.Column="1"/>
+                <Image Source="pack://application:,,,/ShaderGraphToy;component/Resources/Icons/toy_icon.png"
+                       Height="15" Width="15"/>
+
+                <Menu Grid.Column="1" VerticalAlignment="Center">
+                    <MenuItem Header="Файл" WindowChrome.IsHitTestVisibleInChrome="True">
+
+                        <MenuItem Header="Новый проект"/>
+                        <MenuItem Header="Открыть проект"/>
+                        <MenuItem Header="Сохранить"/>
+                        <MenuItem Header="Сохранить как"/>
+
+                    </MenuItem>
+                </Menu>
+
+                <Menu Grid.Column="2" VerticalAlignment="Center">
+                    <MenuItem Header="Проект" WindowChrome.IsHitTestVisibleInChrome="True">
+
+                        <MenuItem Header="Экспорт"/>
+
+                    </MenuItem>
+                </Menu>
+
+                <Grid Grid.Column="4">
+
+                    <Rectangle Height="35" Width="45" x:Name="minRect" MouseLeftButtonDown="MinRect_MouseLeftButtonDown"
+                                WindowChrome.IsHitTestVisibleInChrome="True">
+
+                        <Rectangle.Style>
+                            <Style TargetType="Rectangle">
+                                <Setter Property="Fill" Value="{StaticResource Gray_005}"/>
+                                <Setter Property="Stroke" Value="Transparent"/>
+                                <Setter Property="StrokeThickness" Value="1"/>
+
+                                <Style.Triggers>
+                                    <Trigger Property="IsMouseOver" Value="True">
+                                        <Setter Property="Fill" Value="{StaticResource Gray_02}"/>
+                                    </Trigger>
+                                </Style.Triggers>
+                            </Style>
+                        </Rectangle.Style>
+
+                    </Rectangle>
+
+                    <Image Source="pack://application:,,,/ShaderGraphToy;component/Resources/Icons/minus_icon.png"
+                           Height="15" Width="15" IsHitTestVisible="False"/>
+
+                </Grid>
+
+                <Grid Grid.Column="5">
+
+                    <Rectangle Height="35" Width="45" x:Name="maxRect" MouseLeftButtonDown="MaxRect_MouseLeftButtonDown"
+                                WindowChrome.IsHitTestVisibleInChrome="True">
+
+                        <Rectangle.Style>
+                            <Style TargetType="Rectangle">
+                                <Setter Property="Fill" Value="{StaticResource Gray_005}"/>
+                                <Setter Property="Stroke" Value="Transparent"/>
+                                <Setter Property="StrokeThickness" Value="1"/>
+
+                                <Style.Triggers>
+                                    <Trigger Property="IsMouseOver" Value="True">
+                                        <Setter Property="Fill" Value="{StaticResource Gray_02}"/>
+                                    </Trigger>
+                                </Style.Triggers>
+                            </Style>
+                        </Rectangle.Style>
+
+                    </Rectangle>
+
+                    <Image Source="pack://application:,,,/ShaderGraphToy;component/Resources/Icons/winMax_icon.png"
+                           Height="15" Width="15" IsHitTestVisible="False"/>
+
+                </Grid>
+
+                <Grid Grid.Column="6">
+
+                    <Rectangle Height="35" Width="45" x:Name="crossRect" MouseLeftButtonDown="CrossRect_MouseLeftButtonDown"
+                                WindowChrome.IsHitTestVisibleInChrome="True">
+
+                        <Rectangle.Style>
+                            <Style TargetType="Rectangle">
+                                <Setter Property="Fill" Value="{StaticResource Gray_005}"/>
+                                <Setter Property="Stroke" Value="Transparent"/>
+                                <Setter Property="StrokeThickness" Value="1"/>
+
+                                <Style.Triggers>
+                                    <Trigger Property="IsMouseOver" Value="True">
+                                        <Setter Property="Fill" Value="{StaticResource HighlightRed}"/>
+                                    </Trigger>
+                                </Style.Triggers>
+                            </Style>
+                        </Rectangle.Style>
+
+                    </Rectangle>
+
+                    <Image Source="pack://application:,,,/ShaderGraphToy;component/Resources/Icons/winClose_icon.png"
+                           Height="15" Width="15" IsHitTestVisible="False"/>
+
+                </Grid>
+
+                <Border Grid.ColumnSpan="10" Height="3" VerticalAlignment="Bottom"
+                        Background="{StaticResource Gray_01}"/>
+
+            </Grid>
+
+        </Border>
+
+        <Grid Grid.Row="1">
+
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition x:Name="canvasColumn" Width="70*"/>
+                <ColumnDefinition x:Name="viewportColumn" Width="30*"/>
+            </Grid.ColumnDefinitions>
+
+            <comps:GraphCanvas x:Name="graphCanvas"/>
+
+            <Border Background="{StaticResource Gray_005}" Width="3"
+                    HorizontalAlignment="Right"/>
+
+            <Rectangle Width="10" Height="96" RadiusX="5" RadiusY="5" 
+                       HorizontalAlignment="Right" x:Name="resizeRect"
+                       MouseLeftButtonDown="ResizeRect_MouseLeftButtonDown"
+                       MouseLeftButtonUp="ResizeRect_MouseLeftButtonUp"
+                       MouseMove="ResizeRect_MouseMove" Cursor="SizeWE">
+                <Rectangle.Style>
+                    <Style TargetType="Rectangle">
+                        <Setter Property="Fill" Value="{StaticResource Gray_005}"/>
+                        <Style.Triggers>
+                            <Trigger Property="IsMouseOver" Value="True">
+                                <Setter Property="Fill" Value="{StaticResource Gray_00}"/>
+                            </Trigger>
+                        </Style.Triggers>
+                    </Style>
+                </Rectangle.Style>
+            </Rectangle>
+
+            <comps:RenderingViewport Grid.Column="1"/>
+
+        </Grid>
 
     </Grid>
     

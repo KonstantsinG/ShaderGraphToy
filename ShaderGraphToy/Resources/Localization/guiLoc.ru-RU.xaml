@@ -2,6 +2,12 @@
                     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
                     xmlns:v="clr-namespace:System;assembly=mscorlib">
 
+    <v:String x:Key="common_yes">Да</v:String>
+    <v:String x:Key="common_no">Нет</v:String>
+
     <v:String x:Key="garphCanvas_title">- Графический холст фрагментного шейдера -</v:String>
+
+    <v:String x:Key="renderingViewport_nvapiStatusYes">Принудительный выбор GPU</v:String>
+    <v:String x:Key="renderingViewport_nvapiStatusNo">Недоступен</v:String>
 
 </ResourceDictionary>

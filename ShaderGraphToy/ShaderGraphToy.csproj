@@ -19,10 +19,15 @@
     <Copyright>MIT License , Copyright (c) 2025 Konstantsin Galajchuk</Copyright>
     <Title>ShaderGraphToy</Title>
     <Authors>Konstantsin Galajchuk</Authors>
+    <ApplicationIcon>toy_icon.ico</ApplicationIcon>
   </PropertyGroup>
 
   <ItemGroup>
     <None Remove="Resources\Icons\clear_icon.png" />
+    <None Remove="Resources\Icons\toy_icon.ico" />
+    <None Remove="Resources\Icons\toy_icon.png" />
+    <None Remove="Resources\Icons\winClose_icon.png" />
+    <None Remove="Resources\Icons\winMax_icon.png" />
     <None Remove="Shaders\disco.frag" />
     <None Remove="Shaders\lava.frag" />
     <None Remove="Shaders\plane.vert" />
@@ -67,6 +72,18 @@
     <EmbeddedResource Include="Resources\Cursors\zoom_cursor.cur">
       <CopyToOutputDirectory>Never</CopyToOutputDirectory>
     </EmbeddedResource>
+    <Resource Include="Resources\Icons\toy_icon.ico">
+      <CopyToOutputDirectory>Never</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="Resources\Icons\toy_icon.png">
+      <CopyToOutputDirectory>Never</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="Resources\Icons\winClose_icon.png">
+      <CopyToOutputDirectory>Never</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="Resources\Icons\winMax_icon.png">
+      <CopyToOutputDirectory>Never</CopyToOutputDirectory>
+    </Resource>
     <Resource Include="Resources\Icons\zoom_icon.png">
       <CopyToOutputDirectory>Never</CopyToOutputDirectory>
     </Resource>
@@ -82,6 +99,7 @@
     <Content Include="Shaders\rainbowSlices.frag">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
+    <Content Include="toy_icon.ico" />
   </ItemGroup>
 
   <ItemGroup>
