@@ -22,6 +22,7 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <None Remove="Resources\Icons\clear_icon.png" />
     <None Remove="Shaders\disco.frag" />
     <None Remove="Shaders\lava.frag" />
     <None Remove="Shaders\plane.vert" />
@@ -32,6 +33,7 @@
     <Resource Include="Resources\Icons\arrowDown_icon.png">
       <CopyToOutputDirectory>Never</CopyToOutputDirectory>
     </Resource>
+    <Resource Include="Resources\Icons\clear_icon.png" />
     <Resource Include="Resources\Icons\cross_icon.png">
       <CopyToOutputDirectory>Never</CopyToOutputDirectory>
     </Resource>

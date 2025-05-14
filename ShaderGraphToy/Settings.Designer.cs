@@ -25,7 +25,7 @@ namespace ShaderGraphToy {
         
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("en-US")]
+        [global::System.Configuration.DefaultSettingValueAttribute("ru-RU")]
         public global::System.Globalization.CultureInfo DefaultLanguage {
             get {
                 return ((global::System.Globalization.CultureInfo)(this["DefaultLanguage"]));

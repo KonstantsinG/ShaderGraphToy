@@ -63,7 +63,7 @@ namespace Nodes2Shader.Compilation
             if (uniformSb.Length > 0) constSb.AppendLine(uniformSb.ToString());
             if (funcSb.Length > 0) constSb.AppendLine(funcSb.ToString());
 
-            uniforms = unifs.ToArray();
+            uniforms = [.. unifs];
             return constSb.ToString();
         }
 
@@ -73,7 +73,6 @@ namespace Nodes2Shader.Compilation
             int constCtr = 0, inCtr = 0, outCtr = 0, opCtr = 0, funcCtr = 0;
             List<GraphNodeExpression> exps = [];
             GraphNodeExpression? ex;
-            string matchingInput;
             int lastLayer = graph.Nodes[0].Layer;
 
             foreach (NodeData nd in graph.Nodes)
@@ -110,7 +109,7 @@ namespace Nodes2Shader.Compilation
                     lastLayer = nd.Layer;
 
                     // find matching expression variant
-                    nd.Expression = ex.FindMatchingExpressionVariant(nodeVariant, i, nd.GetInputTypes(), out matchingInput);
+                    nd.Expression = ex.FindMatchingExpressionVariant(nodeVariant, i, nd.GetInputTypes(), out string matchingInput);
                     nd.VarInput = matchingInput;
 
                     if (nd.Expression.Expression.Length > 0)

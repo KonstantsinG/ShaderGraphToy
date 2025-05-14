@@ -4,8 +4,6 @@ using ShaderGraphToy.Graphics;
 using ShaderGraphToy.Representation.GraphNodes;
 using ShaderGraphToy.Utilities.DataBindings;
 using ShaderGraphToy.Windows;
-using System.Diagnostics;
-using System.Xml.Linq;
 
 namespace ShaderGraphToy.Representation.Components
 {
@@ -48,6 +46,7 @@ namespace ShaderGraphToy.Representation.Components
         private GraphNodeBase? _outputNode = null;
 
         public Action<GraphNodeBase>? placeNodeOnCanvas;
+        public Action<string>? raiseError;
 
 
         private void OnAddNodeClicked()
@@ -96,17 +95,24 @@ namespace ShaderGraphToy.Representation.Components
 
         public void CompileGraph()
         {
-            if (_nodes.Count < 2) throw new ArgumentException("Graph must contain at least 2 nodes!");
-            if (_outputNode == null) throw new ArgumentException("Graph must contain output nodoe!");
+            try
+            {
+                if (_nodes.Count < 2) throw new ArgumentException("Graph must contain at least 2 nodes!");
+                if (_outputNode == null) throw new ArgumentException("Graph must contain output nodoe!");
 
-            List<NodeData> nodesData = [];
-            RevealGraphLayer([ _outputNode ], nodesData, 0);
+                List<NodeData> nodesData = [];
+                RevealGraphLayer([_outputNode], nodesData, 0);
 
-            if (nodesData.Count < 2) throw new ArgumentException("Graph must contain output node!");
-            GraphData graphData = new() { Nodes = nodesData };
+                if (nodesData.Count < 2) throw new ArgumentException("Graph must contain output node!");
+                GraphData graphData = new() { Nodes = nodesData };
 
-            string code = GraphCompiler.Compile(graphData, out string[] uniforms);
-            OpenTkRendererAPI.RenderFragmentShader(code, uniforms);
+                string code = GraphCompiler.Compile(graphData, out string[] uniforms);
+                OpenTkRendererAPI.RenderFragmentShader(code, uniforms);
+            }
+            catch (Exception ex)
+            {
+                raiseError?.Invoke(ex.Message);
+            }
         }
 
         private void RevealGraphLayer(List<GraphNodeBase> startNodes, List<NodeData> revealed, int layer)

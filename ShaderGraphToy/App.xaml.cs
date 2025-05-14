@@ -29,13 +29,17 @@ namespace ShaderGraphToy
                 CultureInfo culture = (CultureInfo)value.Clone();
                 culture.NumberFormat.NumberDecimalSeparator = ".";
                 culture.NumberFormat.CurrencyDecimalSeparator = ".";
-                Thread.CurrentThread.CurrentCulture = culture;
-                Thread.CurrentThread.CurrentUICulture = culture;
 
                 if (culture == Thread.CurrentThread.CurrentUICulture)
+                {
+                    // set decimal separators manually
+                    Thread.CurrentThread.CurrentCulture = culture;
+                    Thread.CurrentThread.CurrentUICulture = culture;
                     return;
+                }
 
                 Thread.CurrentThread.CurrentUICulture = culture;
+                Thread.CurrentThread.CurrentCulture = culture;
                 ResourceDictionary dict = ResourceManager.GetLocalizationDictionaryFromResources(culture.Name);
                 ResourceManager.SwitchLocalizationDictionaries(dict);
 

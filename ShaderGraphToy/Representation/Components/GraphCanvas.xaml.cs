@@ -80,7 +80,11 @@ namespace ShaderGraphToy.Representation.Components
 
             cursorLine.Background = (SolidColorBrush)FindResource("Gray_03");
 
-            GraphCanvasVM vm = new() { placeNodeOnCanvas = PlaceNodeOnCanvas };
+            GraphCanvasVM vm = new()
+            {
+                placeNodeOnCanvas = PlaceNodeOnCanvas,
+                raiseError = RaiseError
+            };
             DataContext = vm;
         }
 
@@ -833,6 +837,14 @@ namespace ShaderGraphToy.Representation.Components
             );
 
             return con;
+        }
+        #endregion
+
+
+        #region NOTOFICATIONS
+        public void RaiseError(string text)
+        {
+            notificationsPanel.AppendError(text);
         }
         #endregion
     }

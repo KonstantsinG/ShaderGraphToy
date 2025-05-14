@@ -4,6 +4,7 @@
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:local="clr-namespace:ShaderGraphToy.Representation.Components"
+             xmlns:contrs="clr-namespace:ShaderGraphToy.Representation.Controls"
              mc:Ignorable="d" Loaded="UserControl_Loaded"
              d:DesignHeight="800" d:DesignWidth="700">
 
@@ -33,6 +34,7 @@
         <Grid.RowDefinitions>
             <RowDefinition Height="40"/>
             <RowDefinition/>
+            <RowDefinition Height="Auto"/>
         </Grid.RowDefinitions>
 
         <Grid Grid.Row="0" Background="{StaticResource Gray_005}">
@@ -132,6 +134,12 @@
                 <ItemsControl/>
 
             </Canvas>
+
+        </Grid>
+
+        <Grid Grid.Row="2" Margin="0,0,3,0">
+
+            <contrs:NotificationsPanel x:Name="notificationsPanel"/>
 
         </Grid>
 
