@@ -42,11 +42,11 @@ namespace ShaderGraphToy.Representation.GraphNodes
             vm.RaiseConnectorPressedEvent = RaiseConnectorPressedEvent;
             vm.RaiseNodeSizeChangedEvent = RaiseNodeSizeChangedEvent;
             vm.HideOperationsCBoxes = HideOperationsCBoxes;
-            operationsCBox.SelectionChanged += vm.OperationsComboBox_SelectionChanged;
-            subOperationsCBox.SelectionChanged += vm.SubOperationsComboBox_SelectionChanged;
 
             operationsCBox.SelectionChanged += RaiseNodeStateChangedEvent;
-            subOperationsCBox.SelectionChanged += RaiseNodeStateChangedEvent;
+            operationsCBox.SelectionChanged += vm.OperationsComboBox_SelectionChanged;
+            subOperationsCBox.SelectionChanged += RaiseNodeStateChangedEvent;         
+            subOperationsCBox.SelectionChanged += vm.SubOperationsComboBox_SelectionChanged;
         }
 
 

@@ -98,12 +98,14 @@ namespace ShaderGraphToy.Representation.Components
             try
             {
                 if (_nodes.Count < 2) throw new ArgumentException("Graph must contain at least 2 nodes!");
-                if (_outputNode == null) throw new ArgumentException("Graph must contain output nodoe!");
+                if (_outputNode == null) throw new ArgumentException("Graph must contain output node!");
 
                 List<NodeData> nodesData = [];
                 RevealGraphLayer([_outputNode], nodesData, 0);
+                // nodes that have no outputs have been excluded from the graph, so you need to remove all connections to these nodes
+                RemoveExcludedOutputs(nodesData);
 
-                if (nodesData.Count < 2) throw new ArgumentException("Graph must contain output node!");
+                if (nodesData.Count < 2) throw new ArgumentException("Graph must contain at least 2 nodes!");
                 GraphData graphData = new() { Nodes = nodesData };
 
                 string code = GraphCompiler.Compile(graphData, out string[] uniforms);
@@ -147,6 +149,28 @@ namespace ShaderGraphToy.Representation.Components
             }
 
             return nodes;
+        }
+
+        private static void RemoveExcludedOutputs(List<NodeData> nodes)
+        {
+            List<int> ids = nodes.Select(n => n.Id).ToList();
+            List<NodesConnection> corpses = [];
+
+            foreach (NodeData nd in nodes)
+            {
+                foreach (NodesConnection con in nd.OutputConnections)
+                {
+                    if (!ids.Contains(con.FirstNodeId) || !ids.Contains(con.SecondNodeId))
+                        corpses.Add(con);
+                }
+
+                if (corpses.Count > 0)
+                {
+                    foreach (NodesConnection corp in corpses)
+                        nd.OutputConnections.Remove(corp);
+                    corpses.Clear();
+                }
+            }
         }
     }
 }

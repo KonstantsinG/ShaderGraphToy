@@ -1,18 +1,7 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Diagnostics.Eventing.Reader;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.Windows;
+﻿using System.Windows;
 using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
 using System.Windows.Input;
 using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Navigation;
-using System.Windows.Shapes;
 
 namespace ShaderGraphToy.Representation.GraphNodes
 {
@@ -38,8 +27,8 @@ namespace ShaderGraphToy.Representation.GraphNodes
         public bool IsInput { get; set; }
         public int NodeId { get; set; }
         public int ConnectorId { get; set; }
-        public int ConnectedNodeId { get; set; }
-        public int ConnectedConnectorId { get; set; }
+        public List<int> ConnectedNodesIds { get; set; } = [];
+        public List<int> ConnectedConnectorsIds { get; set; } = [];
         public string NodeColor { get; set; } = string.Empty;
 
 
@@ -57,9 +46,11 @@ namespace ShaderGraphToy.Representation.GraphNodes
             return transform.Transform(localCenter);
         }
 
-        public void Disconnect()
+        public void Disconnect(int nodeId, int connectorId)
         {
             ConnectionsCount--;
+            ConnectedNodesIds.Remove(nodeId);
+            ConnectedConnectorsIds.Remove(connectorId);
             
             if (IsInput || (!IsInput && ConnectionsCount == 0))
                 IsBusy = false;

@@ -77,7 +77,7 @@ namespace ShaderGraphToy
         private void Window_Loaded(object sender, RoutedEventArgs e)
         {
             myHWND = new WindowInteropHelper(this).Handle;
-            IntPtr myStyle = new IntPtr(WS.WS_CAPTION | WS.WS_CLIPCHILDREN | WS.WS_MINIMIZEBOX | WS.WS_MAXIMIZEBOX | WS.WS_SYSMENU | WS.WS_SIZEBOX);
+            IntPtr myStyle = new (WS.WS_CAPTION | WS.WS_CLIPCHILDREN | WS.WS_MINIMIZEBOX | WS.WS_MAXIMIZEBOX | WS.WS_SYSMENU | WS.WS_SIZEBOX);
             SetWindowLongPtr(new HandleRef(null, myHWND), GWL_STYLE, myStyle);
         }
         #endregion

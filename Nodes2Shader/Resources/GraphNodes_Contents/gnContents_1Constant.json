@@ -33,7 +33,7 @@
         {
           "Type": "Vector",
           "Title": "Определение вектора",
-          "Contents": [],
+          "Contents": [ "0.0", "0.0", "0.0", "0.0" ],
           "IsReadonly": false,
           "IsControlable": true
         }
@@ -52,7 +52,12 @@
         {
           "Type": "Matrix",
           "Title": "Определение матрицы",
-          "Contents": [],
+          "Contents": [
+            [ "0.0", "0.0", "0.0", "0.0" ],
+            [ "0.0", "0.0", "0.0", "0.0" ],
+            [ "0.0", "0.0", "0.0", "0.0" ],
+            [ "0.0", "0.0", "0.0", "0.0" ]
+          ],
           "IsReadonly": false,
           "IsControlable": true
         }

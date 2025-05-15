@@ -30,7 +30,7 @@ namespace ShaderGraphToy.Representation.Controls
         public void ClearText()
         {
             textContainer.Children.Clear();
-            bgGrid.Background = null;
+            bgGrid.Background = (SolidColorBrush)FindResource("Gray_02");
         }
 
         public void AppendMessage(string text)

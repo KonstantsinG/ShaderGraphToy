@@ -841,7 +841,7 @@ namespace ShaderGraphToy.Representation.Components
         #endregion
 
 
-        #region NOTOFICATIONS
+        #region NOTIFICATIONS
         public void RaiseError(string text)
         {
             notificationsPanel.AppendError(text);

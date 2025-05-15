@@ -35,11 +35,11 @@ namespace ShaderGraphToy.Representation.GraphNodes
             InputConnector!.ConnectionsCount++;
             OutputConnector!.ConnectionsCount++;
 
-            InputConnector!.ConnectedNodeId = OutputConnector!.NodeId;
-            InputConnector.ConnectedConnectorId = OutputConnector!.ConnectorId;
+            InputConnector!.ConnectedNodesIds.Add(OutputConnector!.NodeId);
+            InputConnector.ConnectedConnectorsIds.Add(OutputConnector!.ConnectorId);
 
-            OutputConnector!.ConnectedNodeId = InputConnector!.NodeId;
-            OutputConnector.ConnectedConnectorId = InputConnector!.ConnectorId;
+            OutputConnector!.ConnectedNodesIds.Add(InputConnector!.NodeId);
+            OutputConnector.ConnectedConnectorsIds.Add(InputConnector!.ConnectorId);
         }
 
         public void Define(Point startPoint, Color color1, Color color2, bool direction)
@@ -92,8 +92,8 @@ namespace ShaderGraphToy.Representation.GraphNodes
 
         public void Break()
         {
-            InputConnector?.Disconnect();
-            OutputConnector?.Disconnect();
+            InputConnector?.Disconnect(OutputConnector!.NodeId, OutputConnector.ConnectorId);
+            OutputConnector?.Disconnect(InputConnector!.NodeId, InputConnector.ConnectorId);
         }
 
         public Point GetStartPoint() => ((PathGeometry)Path!.Data).Figures[0].StartPoint;

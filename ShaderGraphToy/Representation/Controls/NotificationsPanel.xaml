@@ -7,7 +7,7 @@
              mc:Ignorable="d"  Height="0"
              d:DesignHeight="150" d:DesignWidth="800">
     
-    <Grid Background="{x:Null}" x:Name="bgGrid">
+    <Grid Background="{StaticResource Gray_02}" x:Name="bgGrid">
 
         <Grid.RowDefinitions>
             <RowDefinition Height="35"/>

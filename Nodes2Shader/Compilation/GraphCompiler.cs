@@ -2,7 +2,6 @@
 using Nodes2Shader.DataTypes;
 using Nodes2Shader.GraphNodesImplementation.Expressions;
 using Nodes2Shader.Serializers;
-using System.Diagnostics;
 using System.Text;
 
 namespace Nodes2Shader.Compilation

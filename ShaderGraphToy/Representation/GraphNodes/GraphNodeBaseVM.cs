@@ -122,7 +122,9 @@ namespace ShaderGraphToy.Representation.GraphNodes
             foreach (NodesConnector nc in Connectors)
             {
                 if (!nc.IsBusy || !nc.IsInput) continue;
-                cons.Add(new(nc.NodeId, nc.ConnectedNodeId, nc.ConnectorId, nc.ConnectedConnectorId));
+                for (int i = 0; i < nc.ConnectedNodesIds.Count; i++)
+                    cons.Add(new(nc.NodeId, nc.ConnectedNodesIds[i], nc.ConnectorId, nc.ConnectedConnectorsIds[i]));
+
             }
 
             return cons;
@@ -135,7 +137,8 @@ namespace ShaderGraphToy.Representation.GraphNodes
             foreach (NodesConnector nc in Connectors)
             {
                 if (!nc.IsBusy || nc.IsInput) continue;
-                cons.Add(new(nc.NodeId, nc.ConnectedNodeId, nc.ConnectorId, nc.ConnectedConnectorId));
+                for (int i = 0; i < nc.ConnectedNodesIds.Count; i++)
+                    cons.Add(new(nc.NodeId, nc.ConnectedNodesIds[i], nc.ConnectorId, nc.ConnectedConnectorsIds[i]));
             }
 
             return cons;
@@ -215,6 +218,9 @@ namespace ShaderGraphToy.Representation.GraphNodes
 
         private void DefineConnectors()
         {
+            _inputsCounter = 0; _outputsCounter = 0;
+            Connectors.Clear();
+
             Connectors.AddRange(GetOwnConnectors!.Invoke(ContentModel!.HasInput, ContentModel.HasOutput));
 
             foreach (INodeComponentView comp in NodeComponents)
