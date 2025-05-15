@@ -28,4 +28,7 @@
     <SolidColorBrush x:Key="WarningText" Color="#FFA9A513"/>
     <SolidColorBrush x:Key="ErrorText" Color="#FFBB4B4B"/>
 
+
+    <SolidColorBrush x:Key="DarkNight" Color="#FF1F1621"/>
+
 </ResourceDictionary>
