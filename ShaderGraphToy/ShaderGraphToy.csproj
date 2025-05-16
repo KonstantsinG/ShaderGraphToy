@@ -103,6 +103,7 @@
   </ItemGroup>
 
   <ItemGroup>
+    <PackageReference Include="Newtonsoft.Json" Version="13.0.3" />
     <PackageReference Include="OpenTK" Version="4.8.2" />
     <PackageReference Include="OpenTK.GLWpfControl" Version="4.3.2" />
     <PackageReference Include="PixiEditor.ColorPicker" Version="3.4.2" />

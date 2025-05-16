@@ -20,6 +20,7 @@ namespace ShaderGraphToy.Representation.GraphNodes
         public bool IsMinimized { get; private set; } = false;
         public int NodeId { get => ((GraphNodeBaseVM)DataContext).NodeId; }
         public uint NodeTypeId { get => ((GraphNodeBaseVM)DataContext).NodeModel!.Id; }
+        public uint NodeSubTypeId { get => ((GraphNodeBaseVM)DataContext).ContentModel!.Id; }
 
         public delegate void NodeStateHandler(GraphNodeBase sender);
 
@@ -49,6 +50,9 @@ namespace ShaderGraphToy.Representation.GraphNodes
             subOperationsCBox.SelectionChanged += vm.SubOperationsComboBox_SelectionChanged;
         }
 
+
+        public List<NodesConnector> GetAllConnectors() => ((GraphNodeBaseVM)DataContext).Connectors;
+        public TranslateTransform GetTranslate() => (TranslateTransform)RenderTransform;
 
         public bool ContainsConnector(NodesConnector? nc)
         {

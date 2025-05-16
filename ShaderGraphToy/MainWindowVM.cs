@@ -1,7 +1,6 @@
 ﻿using ShaderGraphToy.Utilities.DataBindings;
 using ShaderGraphToy.Windows;
 using System.Windows;
-using System.Windows.Input;
 
 
 namespace ShaderGraphToy
