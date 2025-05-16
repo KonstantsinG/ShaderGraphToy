@@ -1,4 +1,5 @@
-﻿using System.Runtime.InteropServices;
+﻿using ShaderGraphToy.Windows;
+using System.Runtime.InteropServices;
 using System.Windows;
 using System.Windows.Input;
 using System.Windows.Interop;
@@ -17,6 +18,8 @@ namespace ShaderGraphToy
         public MainWindow()
         {
             InitializeComponent();
+            MainWindowVM vm = new();
+            exportCodeMenu.Click += vm.OpenCodeExportWindow;
         }
 
 

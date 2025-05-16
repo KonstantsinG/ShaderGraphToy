@@ -103,7 +103,8 @@ namespace Nodes2Shader.DataTypes
 
         private static string CastType(string val, DataType typeFrom, DataType typeTo)
         {
-            if (IsGeneric(typeTo)) throw new InvalidOperationException("Cast to generic type is invalid.");
+            if (IsGeneric(typeTo)) 
+                throw new InvalidOperationException("Cast to generic type is invalid.");
 
             if (IsGeneric(typeFrom)) return CastGenericType(val, typeFrom, typeTo);
             else return CastBasicType(val, typeFrom, typeTo);

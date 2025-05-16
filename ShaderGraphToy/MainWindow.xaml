@@ -54,7 +54,8 @@
                 <Menu Grid.Column="2" VerticalAlignment="Center">
                     <MenuItem Header="Проект" WindowChrome.IsHitTestVisibleInChrome="True">
 
-                        <MenuItem Header="Экспорт"/>
+                        <MenuItem Header="Экспорт кода" x:Name="exportCodeMenu"/>
+                        <MenuItem Header="Экспорт изображения"/>
 
                     </MenuItem>
                 </Menu>

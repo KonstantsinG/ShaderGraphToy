@@ -81,8 +81,8 @@ namespace ShaderGraphToy.Representation.GraphNodes.GraphNodeComponents
                 case 0:
                     ValidateTextBoxes(tb00, tb10, tb01, tb11);
 
-                    type = "Mat2x2";
-                    value = $"mat2x2({tb00.Text}, {tb10.Text}, {tb01.Text}, {tb11.Text})";
+                    type = "Mat2";
+                    value = $"mat2({tb00.Text}, {tb10.Text}, {tb01.Text}, {tb11.Text})";
                     break;
 
                 case 1:
@@ -109,8 +109,8 @@ namespace ShaderGraphToy.Representation.GraphNodes.GraphNodeComponents
                 case 4:
                     ValidateTextBoxes(tb00, tb10, tb20, tb01, tb11, tb21, tb02, tb12, tb22);
 
-                    type = "Mat3x3";
-                    value = $"mat3x3({tb00.Text}, {tb10.Text}, {tb20.Text}, {tb01.Text}, {tb11.Text}, {tb21.Text}, {tb02.Text}, {tb12.Text}, {tb22.Text})";
+                    type = "Mat3";
+                    value = $"mat3({tb00.Text}, {tb10.Text}, {tb20.Text}, {tb01.Text}, {tb11.Text}, {tb21.Text}, {tb02.Text}, {tb12.Text}, {tb22.Text})";
                     break;
 
                 case 5:
@@ -137,8 +137,8 @@ namespace ShaderGraphToy.Representation.GraphNodes.GraphNodeComponents
                 case 8:
                     ValidateTextBoxes(tb00, tb10, tb20, tb30, tb01, tb11, tb21, tb31, tb02, tb12, tb22, tb32, tb03, tb13, tb23, tb33);
 
-                    type = "Mat4x4";
-                    value = $"mat4x4({tb00.Text}, {tb10.Text}, {tb20.Text}, {tb30.Text}, {tb01.Text}, {tb11.Text}, {tb21.Text}, {tb31.Text}, {tb02.Text}, {tb12.Text}, {tb22.Text}, {tb32.Text}, " +
+                    type = "Mat4";
+                    value = $"mat4({tb00.Text}, {tb10.Text}, {tb20.Text}, {tb30.Text}, {tb01.Text}, {tb11.Text}, {tb21.Text}, {tb31.Text}, {tb02.Text}, {tb12.Text}, {tb22.Text}, {tb32.Text}, " +
                             $"{tb03.Text}, {tb13.Text}, {tb23.Text}, {tb33.Text})";
                     break;
 
