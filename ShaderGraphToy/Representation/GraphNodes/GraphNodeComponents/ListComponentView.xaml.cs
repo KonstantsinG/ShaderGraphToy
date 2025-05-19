@@ -26,6 +26,9 @@ namespace ShaderGraphToy.Representation.GraphNodes.GraphNodeComponents
         }
 
 
+        public string GetContent() => cBox.SelectedIndex.ToString();
+        public void SetContent(string content) => cBox.SelectedIndex = int.Parse(content);
+
         public NodeEntry GetData()
         {
             return new("Int", cBox.SelectedIndex.ToString(), NodeEntry.EntryType.Variant);

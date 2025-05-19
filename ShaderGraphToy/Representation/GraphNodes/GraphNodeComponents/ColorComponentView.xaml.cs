@@ -1,11 +1,13 @@
 ﻿using Nodes2Shader.Compilation.MathGraph;
 using Nodes2Shader.DataTypes;
 using Nodes2Shader.GraphNodesImplementation.Components;
+using ShaderGraphToy.Utilities.XamlConverters;
 using System.ComponentModel;
 using System.Runtime.CompilerServices;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Input;
+using System.Windows.Media;
 
 namespace ShaderGraphToy.Representation.GraphNodes.GraphNodeComponents
 {
@@ -53,10 +55,10 @@ namespace ShaderGraphToy.Representation.GraphNodes.GraphNodeComponents
             colorHex = colorHex.Trim().Replace("#", "").Replace(" ", "");
             if (colorHex.Length == 6) colorHex = "FF" + colorHex;
 
-            byte a = Convert.ToByte(colorHex.Substring(0, 2), 16);
-            byte r = Convert.ToByte(colorHex.Substring(2, 2), 16);
-            byte g = Convert.ToByte(colorHex.Substring(4, 2), 16);
-            byte b = Convert.ToByte(colorHex.Substring(6, 2), 16);
+            byte a = Convert.ToByte(colorHex[0..2], 16);
+            byte r = Convert.ToByte(colorHex[2..4], 16);
+            byte g = Convert.ToByte(colorHex[4..6], 16);
+            byte b = Convert.ToByte(colorHex[6..8], 16);
 
             string rstr = DataTypesConverter.FormatFloat(r / 255f);
             string gstr = DataTypesConverter.FormatFloat(g / 255f);
@@ -66,6 +68,9 @@ namespace ShaderGraphToy.Representation.GraphNodes.GraphNodeComponents
             return $"vec4({rstr}, {gstr}, {bstr}, {astr})";
         }
 
+
+        public string GetContent() => Model.Content;
+        public void SetContent(string content) => Model.Content = content;
 
         public NodeEntry GetData()
         {

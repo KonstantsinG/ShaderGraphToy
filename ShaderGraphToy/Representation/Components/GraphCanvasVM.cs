@@ -4,7 +4,9 @@ using Nodes2Shader.Compilation.MathGraph;
 using ShaderGraphToy.Graphics;
 using ShaderGraphToy.Representation.GraphNodes;
 using ShaderGraphToy.Utilities.DataBindings;
+using ShaderGraphToy.Utilities.Serializers;
 using ShaderGraphToy.Windows;
+using System.Windows.Media;
 
 namespace ShaderGraphToy.Representation.Components
 {
@@ -70,7 +72,10 @@ namespace ShaderGraphToy.Representation.Components
             }
 
             foreach (GraphNodeBase corp in corpses)
+            {
+                if (corp == _outputNode) _outputNode = null;
                 _nodes.Remove(corp);
+            }
         }
 
 
@@ -82,7 +87,7 @@ namespace ShaderGraphToy.Representation.Components
             if (nodeId != null)
             {
                 GraphNodeBase node = new();
-                ((GraphNodeBaseVM)node.DataContext!).ConstructNode((int)nodeId);
+                node.Construct((int)nodeId);
 
                 _nodes.Add(node);
                 if (nodeId == 3)
@@ -92,6 +97,22 @@ namespace ShaderGraphToy.Representation.Components
                 }
                 placeNodeOnCanvas?.Invoke(node);
             }
+        }
+
+        public void CreateGraphNode(NodeModel model)
+        {
+            GraphNodeBase node = new(model.Id);
+            node.Construct(model.TypeId);
+
+            _nodes.Add(node);
+            if (model.TypeId == 3) _outputNode = node;
+            placeNodeOnCanvas?.Invoke(node);
+            // update node layout to load content (events will only work after update)
+            node.UpdateLayout();
+
+            node.RenderTransform = new TranslateTransform(model.TranslateX, model.TranslateY);
+            node.SetContents(model.Contents);
+            node.UpdateLayout(); // wrong output node connectors positions fix
         }
 
         public void CompileGraph()
@@ -119,7 +140,7 @@ namespace ShaderGraphToy.Representation.Components
             }
         }
 
-        private void CheckForNotImplemented(NodeData node)
+        private static void CheckForNotImplemented(NodeData node)
         {
             int[] mats = [ 113, 124, 125, 425, 431, 432, 433, 434, 435, 436 ];
 

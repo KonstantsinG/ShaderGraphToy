@@ -72,6 +72,17 @@ namespace ShaderGraphToy.Representation.GraphNodes.GraphNodeComponents
         }
 
 
+        public string GetContent() => $"{cBox.SelectedIndex}|{tb00.Text},{tb10.Text},{tb20.Text},{tb30.Text}\n{tb01.Text},{tb11.Text},{tb21.Text},{tb31.Text}\n{tb02.Text},{tb12.Text},{tb22.Text},{tb32.Text}\n" +
+                                                           $"{tb03.Text},{tb13.Text},{tb23.Text},{tb33.Text}";
+        public void SetContent(string content)
+        {
+            string[] data = content.Split('|');
+            string[] vals = data[1].Split("\n");
+
+            cBox.SelectedIndex = int.Parse(data[0]);
+            Model.Contents = [ [..vals[0].Split(',')], [.. vals[1].Split(',')], [.. vals[2].Split(',')], [.. vals[3].Split(',')]];
+        }
+
         public NodeEntry GetData()
         {
             string type, value;

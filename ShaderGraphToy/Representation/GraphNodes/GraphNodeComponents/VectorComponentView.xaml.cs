@@ -50,6 +50,16 @@ namespace ShaderGraphToy.Representation.GraphNodes.GraphNodeComponents
         }
 
 
+        public string GetContent() => $"{cBox.SelectedIndex}|{tb0.Text},{tb1.Text},{tb2.Text},{tb3.Text}";
+        public void SetContent(string content)
+        {
+            string[] data = content.Split('|');
+            string[] vals = data[1].Split(",");
+
+            cBox.SelectedIndex = int.Parse(data[0]);
+            Model.Contents = [.. vals];
+        }
+
         public NodeEntry GetData()
         {
             string type, value;

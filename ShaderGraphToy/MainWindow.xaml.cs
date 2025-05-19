@@ -18,8 +18,15 @@ namespace ShaderGraphToy
         public MainWindow()
         {
             InitializeComponent();
-            MainWindowVM vm = new();
+            MainWindowVM vm = new()
+            {
+                getNodes = graphCanvas.GetNodes,
+                openProject = graphCanvas.OpenProject
+            };
             exportCodeMenu.Click += vm.OpenCodeExportWindow;
+            saveMenu.Click += vm.SaveProjectChanges;
+            saveAsMenu.Click += vm.SaveProject;
+            loadMenu.Click += vm.LoadProject;
         }
 
 

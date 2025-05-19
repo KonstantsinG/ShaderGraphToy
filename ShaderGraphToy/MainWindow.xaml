@@ -44,9 +44,9 @@
                     <MenuItem Header="Файл" WindowChrome.IsHitTestVisibleInChrome="True">
 
                         <MenuItem Header="Новый проект"/>
-                        <MenuItem Header="Открыть проект"/>
-                        <MenuItem Header="Сохранить"/>
-                        <MenuItem Header="Сохранить как"/>
+                        <MenuItem Header="Открыть проект" x:Name="loadMenu"/>
+                        <MenuItem Header="Сохранить" x:Name="saveMenu"/>
+                        <MenuItem Header="Сохранить как" x:Name="saveAsMenu"/>
 
                     </MenuItem>
                 </Menu>

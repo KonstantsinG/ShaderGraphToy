@@ -1,6 +1,6 @@
 ﻿namespace ShaderGraphToy.Utilities.Serializers
 {
-    internal class NodeModel
+    public class NodeModel
     {
         public required int Id { get; set; }
         public required int TypeId { get; set; }

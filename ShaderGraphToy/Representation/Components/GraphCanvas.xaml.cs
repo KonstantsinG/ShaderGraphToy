@@ -1,6 +1,7 @@
 ﻿using ShaderGraphToy.Representation.Controls;
 using ShaderGraphToy.Representation.GraphNodes;
 using ShaderGraphToy.Resources;
+using ShaderGraphToy.Utilities.Serializers;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Input;
@@ -68,6 +69,42 @@ namespace ShaderGraphToy.Representation.Components
         private MouseInputModes _mouseInputMode = MouseInputModes.Cursor;
         private MouseInputModes _prevInputMode = MouseInputModes.Cursor;
         private Cursor _prevCursor = Cursors.Arrow;
+        #endregion
+
+
+        #region INTERFACES
+        public List<GraphNodeBase> GetNodes() => _nodes;
+        public void ClearCanvas()
+        {
+            _selectedNodes.Clear();
+            foreach (GraphNodeBase nb in _nodes)
+            {
+                nb.ToggleSelection(true);
+                _selectedNodes.Add(nb);
+            }
+            RemoveSelectedNodes();
+        }
+        public void OpenProject(GraphModel graph)
+        {
+            // clear workspace
+            ClearCanvas();
+
+            // add all necassary nodes
+            foreach (NodeModel model in graph.Nodes)
+                ((GraphCanvasVM)DataContext).CreateGraphNode(model);
+
+            // bind nodes
+            NodesConnector input, output;
+            foreach (ConnectionModel cm in graph.Connections)
+            {
+                input = FindNodeConnector(cm.InputNode, cm.InputConnector, true);
+                output = FindNodeConnector(cm.OutputNode, cm.OutputConnector, false);
+                BindTwoNodes(input, output);
+            }
+
+            // draw shader
+            ((GraphCanvasVM)DataContext).CompileGraph();
+        }        
         #endregion
 
 
@@ -662,6 +699,14 @@ namespace ShaderGraphToy.Representation.Components
 
             _selectionOffset = currentPosition;
         }
+
+        private NodesConnector FindNodeConnector(int nodeId, int connId, bool isInput)
+        {
+            GraphNodeBase node = _nodes.First(n => n.NodeId == nodeId);
+            List<NodesConnector> conns = isInput ? node.GetInputs() : node.GetOutputs();
+
+            return conns[connId];
+        }
         #endregion
 
         #region SELECTION_AREA CONTROLS
@@ -837,6 +882,27 @@ namespace ShaderGraphToy.Representation.Components
             );
 
             return con;
+        }
+
+        private void BindTwoNodes(NodesConnector input, NodesConnector output)
+        {
+            input.IsBusy = true;
+            output.IsBusy = true;
+
+            Color inColor = ((SolidColorBrush)FindResource(input.NodeColor)).Color;
+            Color outColor = ((SolidColorBrush)FindResource(output.NodeColor)).Color;
+
+            ConnectorsSpline spline = new()
+            {
+                InputConnector = input,
+                OutputConnector = output
+            };
+            spline.SetConnectionIds();
+            spline.Define(input.GetGlobalCenter(mainCanvas), inColor, outColor, false);
+            spline.UpdatePoint(output.GetGlobalCenter(mainCanvas), false);
+
+            _splines.Add(spline);
+            mainCanvas.Children.Add(spline.Path!);
         }
         #endregion
 

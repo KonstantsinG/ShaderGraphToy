@@ -34,6 +34,13 @@ namespace ShaderGraphToy.Representation.GraphNodes.GraphNodeComponents
             else return null;
         }
 
+        public string GetContent() => Model.Content;
+        public void SetContent(string content)
+        {
+            Model.Content = content;
+            
+        }
+
         public NodeEntry? GetData()
         {
             if (inputConnector.IsBusy)

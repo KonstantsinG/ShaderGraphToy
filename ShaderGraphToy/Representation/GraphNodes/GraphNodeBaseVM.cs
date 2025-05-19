@@ -100,6 +100,29 @@ namespace ShaderGraphToy.Representation.GraphNodes
         {
             NodeId = _nodesCounter++;
         }
+        public GraphNodeBaseVM(int id)
+        {
+            _nodesCounter = id + 1;
+            NodeId = id;
+        }
+
+
+        #region FUNCTIONS
+        public List<string> GetEntriesContents()
+        {
+            List<string> contents = [];
+
+            foreach (INodeComponentView compView in NodeComponents)
+                contents.Add(compView.GetContent());
+
+            return contents;
+        }
+
+        public void SetEntriesContents(List<string> contents)
+        {
+            for (int i = 0; i < contents.Count; i++)
+                NodeComponents[i].SetContent(contents[i]);
+        }
 
         public List<NodeEntry> GetComponentsEntries()
         {
@@ -187,35 +210,6 @@ namespace ShaderGraphToy.Representation.GraphNodes
             return data;
         }
 
-        public void OperationsComboBox_SelectionChanged(object sender, SelectionChangedEventArgs e)
-        {
-            if (!NodeModel!.UsingSubOperations)
-            {
-                uint id = (((ComboBox)sender).SelectedItem as OperationType)!.Id;
-                LoadNodeContent(id);
-            }
-            else
-            {
-                NodeSubOperations.Clear();
-                var subs = (((ComboBox)sender).SelectedItem as OperationType)!.OperationsSubTypes;
-                foreach (var sub in subs) NodeSubOperations.Add(sub);
-            }
-        }
-
-        public void SubOperationsComboBox_SelectionChanged(object sender, SelectionChangedEventArgs e)
-        {
-            if (((ComboBox)sender).SelectedItem is OperationSubType item)
-            {
-                LoadNodeContent(item.Id);
-            }
-            else
-            {
-                ContentModel = null;
-                NodeComponents.Clear();
-                IsConnectorsVisible = false;
-            }
-        }
-
         private void DefineConnectors()
         {
             _inputsCounter = 0; _outputsCounter = 0;
@@ -297,6 +291,37 @@ namespace ShaderGraphToy.Representation.GraphNodes
                 }
             }
         }
+        #endregion
+
+        #region EVENTS
+        public void OperationsComboBox_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            if (!NodeModel!.UsingSubOperations)
+            {
+                uint id = (((ComboBox)sender).SelectedItem as OperationType)!.Id;
+                LoadNodeContent(id);
+            }
+            else
+            {
+                NodeSubOperations.Clear();
+                var subs = (((ComboBox)sender).SelectedItem as OperationType)!.OperationsSubTypes;
+                foreach (var sub in subs) NodeSubOperations.Add(sub);
+            }
+        }
+
+        public void SubOperationsComboBox_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            if (((ComboBox)sender).SelectedItem is OperationSubType item)
+            {
+                LoadNodeContent(item.Id);
+            }
+            else
+            {
+                ContentModel = null;
+                NodeComponents.Clear();
+                IsConnectorsVisible = false;
+            }
+        }
 
         public void NodesConnector_MouseDown(object sender, MouseEventArgs e)
         {
@@ -307,5 +332,6 @@ namespace ShaderGraphToy.Representation.GraphNodes
         {
             RaiseNodeSizeChangedEvent?.Invoke();
         }
+        #endregion
     }
 }

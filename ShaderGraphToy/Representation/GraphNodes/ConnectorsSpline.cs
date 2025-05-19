@@ -27,7 +27,9 @@ namespace ShaderGraphToy.Representation.GraphNodes
             }
         }
 
-
+        /// <summary>
+        /// Set ConnectedNode and ConnectedConnector properties for spline points
+        /// </summary>
         public void SetConnectionIds()
         {
             if (InputConnector == null || OutputConnector == null) return;
@@ -42,6 +44,13 @@ namespace ShaderGraphToy.Representation.GraphNodes
             OutputConnector.ConnectedConnectorsIds.Add(InputConnector!.ConnectorId);
         }
 
+        /// <summary>
+        /// Define spline connection
+        /// </summary>
+        /// <param name="startPoint">first spline point</param>
+        /// <param name="color1">first point color</param>
+        /// <param name="color2">second point color</param>
+        /// <param name="direction">spline direction (true - left to right (output to input), false - right to left (input to output))</param>
         public void Define(Point startPoint, Color color1, Color color2, bool direction)
         {
             Color1 = color1;
@@ -66,6 +75,11 @@ namespace ShaderGraphToy.Representation.GraphNodes
             _prevDir = InitDirection;
         }
 
+        /// <summary>
+        /// Redefine spline from connected state
+        /// </summary>
+        /// <param name="sp">New spline</param>
+        /// <param name="mouseColor">Color for "searching for connection" state</param>
         public void Define(ConnectorsSpline sp, Color mouseColor)
         {
             Point stPoint = sp.InitDirection == 1 ? sp.Bezier!.Point3 : sp.GetStartPoint();
@@ -76,6 +90,11 @@ namespace ShaderGraphToy.Representation.GraphNodes
             OutputConnector = sp.OutputConnector;
         }
 
+        /// <summary>
+        /// Recalculate start and middle points for new endpoint
+        /// </summary>
+        /// <param name="startPoint">Spline start point</param>
+        /// <param name="newPoint">New spline endpoint</param>
         public void Update(Point startPoint, Point newPoint)
         {
             double len = newPoint.X - startPoint.X;
@@ -90,14 +109,26 @@ namespace ShaderGraphToy.Representation.GraphNodes
             _prevDir = len;
         }
 
+        /// <summary>
+        /// Break connectors connection
+        /// </summary>
         public void Break()
         {
             InputConnector?.Disconnect(OutputConnector!.NodeId, OutputConnector.ConnectorId);
             OutputConnector?.Disconnect(InputConnector!.NodeId, InputConnector.ConnectorId);
         }
 
+        /// <summary>
+        /// Get spline start point
+        /// </summary>
+        /// <returns>Start point</returns>
         public Point GetStartPoint() => ((PathGeometry)Path!.Data).Figures[0].StartPoint;
 
+        /// <summary>
+        /// Set new color for spline start or end
+        /// </summary>
+        /// <param name="newColor">New color</param>
+        /// <param name="first">Spline start or end</param>
         public void UpdateColor(Color newColor, bool first)
         {
             if (first)
@@ -112,6 +143,11 @@ namespace ShaderGraphToy.Representation.GraphNodes
             }
         }
 
+        /// <summary>
+        /// Recalculate spline point position
+        /// </summary>
+        /// <param name="newPoint">New position</param>
+        /// <param name="isInput">Recalculate position for input or output connector</param>
         public void UpdatePoint(Point newPoint, bool isInput)
         {
             if (isInput)
@@ -142,6 +178,9 @@ namespace ShaderGraphToy.Representation.GraphNodes
             }
         }
 
+        /// <summary>
+        /// Reverse start and end colors for spline when it is flipped
+        /// </summary>
         private void ReverseSplineGradient()
         {
             ((LinearGradientBrush)Path!.Stroke).StartPoint = new(Math.Abs(((LinearGradientBrush)Path!.Stroke).StartPoint.X - 1), 0);

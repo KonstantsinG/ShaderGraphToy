@@ -42,6 +42,9 @@ namespace ShaderGraphToy.Representation.GraphNodes.GraphNodeComponents
             return conns;
         }
 
+        public string GetContent() => string.Empty;
+        public void SetContent(string content) { }
+
         public NodeEntry? GetData()
         {
             NodeEntry entry = new();

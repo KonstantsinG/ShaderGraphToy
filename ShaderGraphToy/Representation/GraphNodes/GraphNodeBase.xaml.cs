@@ -13,6 +13,7 @@ namespace ShaderGraphToy.Representation.GraphNodes
     /// </summary>
     public partial class GraphNodeBase : UserControl
     {
+        #region PROPS
         private static readonly BitmapImage _minusImg = ResourceManager.GetIconFromResources("minus_icon.png");
         private static readonly BitmapImage _arrowDownImg = ResourceManager.GetIconFromResources("arrowDown_icon.png");
 
@@ -28,16 +29,26 @@ namespace ShaderGraphToy.Representation.GraphNodes
         public event MouseEventHandler ConnectorPressed = delegate { };
         public event NodeStateHandler NodeStateChanged = delegate { };
         public event NodeStateHandler NodeSizeChanged = delegate { };
+        #endregion
 
 
         public GraphNodeBase()
         {
             InitializeComponent();
+            BindVm();
+        }
+        public GraphNodeBase(int id)
+        {
+            InitializeComponent();
+            BindVm(id);
+        }
 
+        private void BindVm(int id = -1)
+        {
             inputConnector.IsInput = true;
             outputConnector.IsInput = false;
 
-            GraphNodeBaseVM vm = new();
+            GraphNodeBaseVM vm = id == -1 ? new() : new(id);
             DataContext = vm;
             vm.GetOwnConnectors = GetConnectors;
             vm.RaiseConnectorPressedEvent = RaiseConnectorPressedEvent;
@@ -46,27 +57,45 @@ namespace ShaderGraphToy.Representation.GraphNodes
 
             operationsCBox.SelectionChanged += RaiseNodeStateChangedEvent;
             operationsCBox.SelectionChanged += vm.OperationsComboBox_SelectionChanged;
-            subOperationsCBox.SelectionChanged += RaiseNodeStateChangedEvent;         
+            subOperationsCBox.SelectionChanged += RaiseNodeStateChangedEvent;
             subOperationsCBox.SelectionChanged += vm.SubOperationsComboBox_SelectionChanged;
         }
 
 
+        #region INTERFACES
         public List<NodesConnector> GetAllConnectors() => ((GraphNodeBaseVM)DataContext).Connectors;
         public TranslateTransform GetTranslate() => (TranslateTransform)RenderTransform;
+        public List<string> GetContents() => ((GraphNodeBaseVM)DataContext).GetEntriesContents();
+        public void SetContents(List<string> contents) => ((GraphNodeBaseVM)DataContext).SetEntriesContents(contents);
+
+        public List<NodesConnector> GetInputs() => ((GraphNodeBaseVM)DataContext).Inputs;
+        public List<NodesConnector> GetOutputs() => ((GraphNodeBaseVM)DataContext).Outputs;
+        public NodeData GetNodeData() => ((GraphNodeBaseVM)DataContext).GetNodeData();
+
+        public Rect GetBoundsRect() => new(GetTranslate().X, GetTranslate().Y, RenderSize.Width, RenderSize.Height);
+        public void Construct(int nodeId) => ((GraphNodeBaseVM)DataContext).ConstructNode(nodeId);
+        #endregion
+
+        #region OWN_FUNCTIONS
+        public List<NodesConnector> GetConnectors(bool hasInput, bool hasOutput)
+        {
+            List<NodesConnector> conns = [];
+
+            if (hasInput) conns.Add(inputConnector);
+            if (hasOutput) conns.Add(outputConnector);
+
+            return conns;
+        }
 
         public bool ContainsConnector(NodesConnector? nc)
         {
             if (nc == null) return false;
 
-            foreach (NodesConnector nc2 in ((GraphNodeBaseVM)DataContext!).Connectors)
-            {
+            foreach (NodesConnector nc2 in GetAllConnectors())
                 if (nc2 == nc) return true;
-            }
 
             return false;
         }
-
-        public Rect GetBoundsRect() => new(((TranslateTransform)RenderTransform).X, ((TranslateTransform)RenderTransform).Y, RenderSize.Width, RenderSize.Height);
 
 
         public void ToggleSelection(bool isSelected)
@@ -84,28 +113,13 @@ namespace ShaderGraphToy.Representation.GraphNodes
                 borderRect.Margin = new Thickness(-1);
             }
         }
+        #endregion
 
+        #region EVENTS
         private void HeaderPanel_MouseLeftButtonDown(object sender, MouseButtonEventArgs e)
         {
             HeaderPressed.Invoke(this, e);
         }
-
-
-
-        public List<NodesConnector> GetConnectors(bool hasInput, bool hasOutput)
-        {
-            List<NodesConnector> conns = [];
-
-            if (hasInput) conns.Add(inputConnector);
-            if (hasOutput) conns.Add(outputConnector);
-
-            return conns;
-        }
-
-        public List<NodesConnector> GetInputs() => ((GraphNodeBaseVM)DataContext).Inputs;
-
-        public NodeData GetNodeData() => ((GraphNodeBaseVM) DataContext).GetNodeData();
-
 
 
         public void RaiseConnectorPressedEvent(object sender, MouseEventArgs e)
@@ -172,5 +186,6 @@ namespace ShaderGraphToy.Representation.GraphNodes
         {
             if (!Selected) borderRect.Fill = (Brush)FindResource("Gray_00");
         }
+        #endregion
     }
 }
