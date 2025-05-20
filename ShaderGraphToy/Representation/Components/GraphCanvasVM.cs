@@ -1,5 +1,4 @@
-﻿using Microsoft.Win32.SafeHandles;
-using Nodes2Shader.Compilation;
+﻿using Nodes2Shader.Compilation;
 using Nodes2Shader.Compilation.MathGraph;
 using ShaderGraphToy.Graphics;
 using ShaderGraphToy.Representation.GraphNodes;

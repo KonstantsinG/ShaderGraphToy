@@ -26,7 +26,7 @@ namespace ShaderGraphToy.Representation.Components
 
         // Canvas zoom params
         private const double ZOOM_RATE = 1.1;
-        private const double MIN_ZOOM = 0.4;
+        private const double MIN_ZOOM = 0.15;
         private const double MAX_ZOOM = 2.0;
 
         // Canvas markup params

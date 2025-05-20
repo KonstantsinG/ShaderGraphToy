@@ -422,6 +422,22 @@
           "ExternalFunctions": []
         }
       ]
+    },
+
+    {
+      // MatFunctions_Trigonometry_TwocompAtan
+      "TypeId": 536,
+      "Name": "atan2<idx>",
+      "ExpressionVariants": [
+        {
+          "Variant": 0,
+          "Output": 0,
+          "OutputType": "<inType1>",
+          "InputTypes": [],
+          "Expression": "<inType1> <name> = atan(<val1>, <val2>);",
+          "ExternalFunctions": []
+        }
+      ]
     }
 
   ]

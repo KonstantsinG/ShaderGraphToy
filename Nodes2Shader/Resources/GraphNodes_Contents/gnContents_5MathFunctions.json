@@ -779,6 +779,45 @@
           "Contents": [ "Радианы в градусы", "Градусы в радианы" ]
         }
       ]
+    },
+
+    {
+      // MatFunctions_Trigonometry_TwocompAtan
+      "TypeId": 536,
+      "HasInput": false,
+      "HasOutput": true,
+      "InputType": null,
+      "OutputType": "Any",
+
+      "Components": [
+        {
+          "Type": "Inscription",
+          "Title": "Двухаргументный арктангенс",
+          "Formatting": [ "Centred", "Bold", "Margin" ],
+          "HasInput": false,
+          "HasOutput": false,
+          "InputType": null,
+          "OutputType": null
+        },
+
+        {
+          "Type": "Input",
+          "Title": "Числитель аргумента",
+          "Content": "1.0",
+          "IsReadonly": false,
+          "HasInput": true,
+          "InputType": "Any"
+        },
+
+        {
+          "Type": "Input",
+          "Title": "Знаменатель аргумента",
+          "Content": "1.0",
+          "IsReadonly": false,
+          "HasInput": true,
+          "InputType": "Any"
+        }
+      ]
     }
 
   ]
