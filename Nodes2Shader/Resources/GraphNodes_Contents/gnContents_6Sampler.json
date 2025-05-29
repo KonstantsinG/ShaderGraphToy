@@ -1,0 +1,20 @@
+﻿{
+  "GraphNodesContents": [
+
+    {
+      // 2D-texture
+      "TypeId": 61,
+      "HasInput": false,
+      "HasOutput": true,
+      "InputType": null,
+      "OutputType": "Vec4",
+
+      "Components": [
+        {
+          "Type": "Texture"
+        }
+      ]
+    }
+
+  ]
+}

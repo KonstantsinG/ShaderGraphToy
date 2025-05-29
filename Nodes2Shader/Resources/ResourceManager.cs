@@ -13,7 +13,7 @@ namespace Nodes2Shader.Resources
 
         public static List<string> GraphNodesTypesIds
         {
-            get => [ "1", "2", "3", "4", "5" ];
+            get => [ "1", "2", "3", "4", "5", "6" ];
         }
 
 
@@ -41,6 +41,7 @@ namespace Nodes2Shader.Resources
                 "3" => "3OutputData",
                 "4" => "4MathOperations",
                 "5" => "5MathFunctions",
+                "6" => "6Sampler",
                 _ => string.Empty
             };
         }

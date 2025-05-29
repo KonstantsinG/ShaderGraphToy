@@ -22,7 +22,7 @@ namespace ShaderGraphToy.Representation.GraphNodes.GraphNodeComponents
                 SetValue(ModelProperty, value);
                 SetFormatting(Model?.Formatting!);
             }
-        } 
+        }
 
         public InscriptionComponentView()
         {

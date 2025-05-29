@@ -14,11 +14,13 @@
     <None Remove="Resources\GraphNodes_Contents\gnContents_3OutputData.json" />
     <None Remove="Resources\GraphNodes_Contents\gnContents_4MathOperations.json" />
     <None Remove="Resources\GraphNodes_Contents\gnContents_5MathFunctions.json" />
+    <None Remove="Resources\GraphNodes_Contents\gnContents_6Sampler.json" />
     <None Remove="Resources\GraphNodes_Expressions\glsl\gnExpressions_1Constant.json" />
     <None Remove="Resources\GraphNodes_Expressions\glsl\gnExpressions_2InputData.json" />
     <None Remove="Resources\GraphNodes_Expressions\glsl\gnExpressions_3OutputData.json" />
     <None Remove="Resources\GraphNodes_Expressions\glsl\gnExpressions_4MathOperations.json" />
     <None Remove="Resources\GraphNodes_Expressions\glsl\gnExpressions_5MathFunctions.json" />
+    <None Remove="Resources\GraphNodes_Expressions\glsl\gnExpressions_6Sampler.json" />
     <None Remove="Resources\GraphNodes_Expressions\glsl\gnExpressions_ExternalFunctions.json" />
   </ItemGroup>
 
@@ -28,11 +30,13 @@
     <EmbeddedResource Include="Resources\GraphNodes_Contents\gnContents_3OutputData.json" />
     <EmbeddedResource Include="Resources\GraphNodes_Contents\gnContents_4MathOperations.json" />
     <EmbeddedResource Include="Resources\GraphNodes_Contents\gnContents_5MathFunctions.json" />
+    <EmbeddedResource Include="Resources\GraphNodes_Contents\gnContents_6Sampler.json" />
     <EmbeddedResource Include="Resources\GraphNodes_Expressions\glsl\gnExpressions_1Constant.json" />
     <EmbeddedResource Include="Resources\GraphNodes_Expressions\glsl\gnExpressions_2InputData.json" />
     <EmbeddedResource Include="Resources\GraphNodes_Expressions\glsl\gnExpressions_3OutputData.json" />
     <EmbeddedResource Include="Resources\GraphNodes_Expressions\glsl\gnExpressions_4MathOperations.json" />
     <EmbeddedResource Include="Resources\GraphNodes_Expressions\glsl\gnExpressions_5MathFunctions.json" />
+    <EmbeddedResource Include="Resources\GraphNodes_Expressions\glsl\gnExpressions_6Sampler.json" />
     <EmbeddedResource Include="Resources\GraphNodes_Expressions\glsl\gnExpressions_ExternalFunctions.json" />
     <EmbeddedResource Include="Resources\GraphNodes_TypesInfo\gnTypes.json">
       <CopyToOutputDirectory>Never</CopyToOutputDirectory>
@@ -41,6 +45,7 @@
 
   <ItemGroup>
     <PackageReference Include="Newtonsoft.Json" Version="13.0.3" />
+    <PackageReference Include="StbImageSharp" Version="2.30.15" />
   </ItemGroup>
 
 </Project>

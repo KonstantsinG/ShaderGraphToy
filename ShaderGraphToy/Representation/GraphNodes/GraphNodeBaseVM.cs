@@ -224,6 +224,11 @@ namespace ShaderGraphToy.Representation.GraphNodes
                     NodesConnector? conn = inputComp.GetConnector();
                     if (conn != null) Connectors.Add(conn);
                 }
+                else if (comp is TextureComponentView texComp)
+                {
+                    NodesConnector conn = texComp.GetConnector();
+                    Connectors.Add(conn);
+                }
                 else if (comp is InscriptionComponentView inscComp)
                     Connectors.AddRange(inscComp.GetConnectors());
             }

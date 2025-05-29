@@ -63,6 +63,13 @@
         "uniform float u_Time;"
       ]
     },
+    {
+      "Type": "uniform",
+      "Path": "texture<idx>",
+      "Body": [
+        "uniform sampler2D texture<idx>;"
+      ]
+    },
 
     // Preprocessors
     {

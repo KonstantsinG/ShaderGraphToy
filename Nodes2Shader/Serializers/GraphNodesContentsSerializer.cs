@@ -152,6 +152,8 @@ namespace Nodes2Shader.Serializers
                         InputType = (jo["InputType"]?.Value<string>()) ?? string.Empty,
                         OutputType = (jo["OutputType"]?.Value<string>()) ?? string.Empty
                     },
+                    "Texture" => new TextureComponent(),
+
                     _ => throw new JsonSerializationException($"Unknown component type: {type}")
                 };
 
@@ -164,6 +166,20 @@ namespace Nodes2Shader.Serializers
                         inscription.Formatting = jo["Formatting"]!.ToObject<List<string>>()!;
                     if (jo["DefaultInput"] != null)
                         inscription.DefaultInput = jo["DefaultInput"]!.ToObject<string>()!;
+                }
+
+                if (component is TextureComponent texture)
+                {
+                    if (jo["ImageData"] != null)
+                        texture.ImageData = jo["ImageData"]!.ToObject<byte[]>()!;
+                    if (jo["WrapS"] != null)
+                        texture.WrapS = jo["WrapS"]!.ToObject<int>()!;
+                    if (jo["WrapT"] != null)
+                        texture.WrapT = jo["WrapT"]!.ToObject<int>()!;
+                    if (jo["FilterMag"] != null)
+                        texture.FilterMag = jo["FilterMag"]!.ToObject<int>()!;
+                    if (jo["FilterMin"] != null)
+                        texture.FilterMin = jo["FilterMin"]!.ToObject<int>()!;
                 }
 
                 return component;

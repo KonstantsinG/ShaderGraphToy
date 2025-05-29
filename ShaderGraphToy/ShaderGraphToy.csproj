@@ -28,6 +28,7 @@
     <None Remove="Resources\Icons\toy_icon.png" />
     <None Remove="Resources\Icons\winClose_icon.png" />
     <None Remove="Resources\Icons\winMax_icon.png" />
+    <None Remove="Resources\Images\texture_img.png" />
     <None Remove="Shaders\disco.frag" />
     <None Remove="Shaders\lava.frag" />
     <None Remove="Shaders\plane.vert" />
@@ -85,6 +86,9 @@
       <CopyToOutputDirectory>Never</CopyToOutputDirectory>
     </Resource>
     <Resource Include="Resources\Icons\zoom_icon.png">
+      <CopyToOutputDirectory>Never</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="Resources\Images\texture_img.png">
       <CopyToOutputDirectory>Never</CopyToOutputDirectory>
     </Resource>
     <Content Include="Shaders\disco.frag">

@@ -16,6 +16,7 @@ namespace ShaderGraphToy.Utilities
                 MatrixComponent matData => new MatrixComponentView() { Model = matData },
                 ListComponent lstData => new ListComponentView() { Model = lstData },
                 ColorComponent colorData => new ColorComponentView() { Model = colorData },
+                TextureComponent textureData => new TextureComponentView() { Model = textureData },
                 _ => throw new ArgumentException("Unsupported component type")
             };
         }
