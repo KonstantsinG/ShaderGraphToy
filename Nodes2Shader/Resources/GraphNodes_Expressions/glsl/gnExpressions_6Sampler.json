@@ -4,15 +4,15 @@
     {
       // 2D-texture
       "TypeId": 61,
-      "Name": "2dtex<idx>",
+      "Name": "tex2d<idx>",
       "ExpressionVariants": [
         {
           "Variant": 0,
           "Output": 0,
           "OutputType": "vec4",
           "InputTypes": [],
-          "Expression": "vec4 <name> = texture(texture<idx>, <val1>);",
-          "ExternalFunctions": [ "texture<idx>" ]
+          "Expression": "vec4 <name> = texture(texture0, <val1>);",
+          "ExternalFunctions": [ "texture0" ]
         }
       ]
     }

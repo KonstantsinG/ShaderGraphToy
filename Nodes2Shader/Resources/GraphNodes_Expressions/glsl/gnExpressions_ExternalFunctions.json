@@ -65,9 +65,9 @@
     },
     {
       "Type": "uniform",
-      "Path": "texture<idx>",
+      "Path": "texture0",
       "Body": [
-        "uniform sampler2D texture<idx>;"
+        "uniform sampler2D texture0;"
       ]
     },
 

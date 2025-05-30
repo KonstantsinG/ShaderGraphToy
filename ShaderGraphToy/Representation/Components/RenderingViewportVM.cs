@@ -184,6 +184,12 @@ namespace ShaderGraphToy.Representation.Components
             {
 
             }
+
+            if (_uniforms.Contains("texture0"))
+            {
+                GL.ActiveTexture(TextureUnit.Texture0);
+                GL.BindTexture(TextureTarget.Texture2D, _tex);
+            }
         }
 
         private void OnBreakRendering()
@@ -235,6 +241,24 @@ namespace ShaderGraphToy.Representation.Components
 
             _shaderProgram.Use();
             OnBreakRendering();
+        }
+
+        private uint _tex;
+        public void RegisterTexture(byte[] data, int width, int height)
+        {
+            GL.GenTextures(1, out _tex);
+            GL.BindTexture(TextureTarget.Texture2D, _tex);
+
+            GL.TexParameter(TextureTarget.Texture2D, TextureParameterName.TextureWrapS, (int)TextureWrapMode.Repeat);
+            GL.TexParameter(TextureTarget.Texture2D, TextureParameterName.TextureWrapT, (int)TextureWrapMode.Repeat);
+            GL.TexParameter(TextureTarget.Texture2D, TextureParameterName.TextureMinFilter, (int)TextureMinFilter.Linear);
+            GL.TexParameter(TextureTarget.Texture2D, TextureParameterName.TextureMagFilter, (int)TextureMagFilter.Linear);
+
+            GL.TexImage2D(TextureTarget.Texture2D, 0, PixelInternalFormat.Rgba, width, height, 0, PixelFormat.Rgba, PixelType.UnsignedByte, data);
+            GL.GenerateMipmap(GenerateMipmapTarget.Texture2D);
+
+            _shaderProgram!.Use();
+            GL.Uniform1(GL.GetUniformLocation(_shaderProgram.Handle, "texture0"), 0);
         }
     }
 }

@@ -19,5 +19,10 @@ namespace ShaderGraphToy.Graphics
             FragmentCode = shader;
             _renderer?.ChangeFragmentShader(shader, uniforms);
         }
+
+        internal static void RegisterTexture(byte[] data, int width, int height)
+        {
+            _renderer?.RegisterTexture(data, width, height);
+        }
     }
 }
