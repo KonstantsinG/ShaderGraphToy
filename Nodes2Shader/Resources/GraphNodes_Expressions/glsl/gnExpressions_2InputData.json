@@ -4,7 +4,7 @@
     {
       // InputData_PixCoords
       "TypeId": 21,
-      "Name": "gl_FragCoord",
+      "Name": "gl_FragCoord.xy",
       "ExpressionVariants": [
         {
           "Variant": 0,

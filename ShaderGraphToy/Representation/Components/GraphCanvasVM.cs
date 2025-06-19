@@ -5,6 +5,7 @@ using ShaderGraphToy.Representation.GraphNodes;
 using ShaderGraphToy.Utilities.DataBindings;
 using ShaderGraphToy.Utilities.Serializers;
 using ShaderGraphToy.Windows;
+using System.Diagnostics;
 using System.Windows.Media;
 
 namespace ShaderGraphToy.Representation.Components
