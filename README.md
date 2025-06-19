@@ -3,10 +3,10 @@
 >[!warning]
 >This app is in early access and may be unstable and have many bugs. At the moment it only supports Russian localization, English is in development.
 
-![[Jewels-graph.png]]
+![Jewels example project](Jewels-graph.png)
 *- Jewels example project*
 
-![[Flame-graph.png]]
+![Flame example project](Flame-graph.png)
 *- Flame example project*
 
 #### Key Features
