@@ -66,7 +66,7 @@ Solution contains four projects:
 #### Special thanks
 - RedSphere shader (modified) by ***jimmikaelkael*** https://www.shadertoy.com/view/XlXGDj
 - Jewels shader by ***conceptionist*** https://www.shadertoy.com/view/WXsXDH
-- Balatro shader (modified) by **xxidbr9*** https://www.shadertoy.com/view/XXtBRr
+- Balatro shader (modified) by ***xxidbr9*** https://www.shadertoy.com/view/XXtBRr
 - Flame shader (modified) by ***supah*** https://www.shadertoy.com/view/3XfXRN
 - LavaLamp shader by ***edankwan*** https://www.shadertoy.com/view/3sySRK
 - Icons by ***Icons8*** https://icons8.com/icons
